@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{851D9BA2-9C00-4769-84BA-AD8A168F733E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "callfire-api-client-csharp", "src\callfire-api-client-csharp\callfire-api-client-csharp.csproj", "{7C6961C8-3576-4499-92B6-3B5D798BDBFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "callfire-api-client-csharp-tests", "src\callfire-api-client-csharp-tests\callfire-api-client-csharp-tests.csproj", "{17AF49CB-38AF-484D-9151-B470F320221D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{17AF49CB-38AF-484D-9151-B470F320221D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17AF49CB-38AF-484D-9151-B470F320221D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17AF49CB-38AF-484D-9151-B470F320221D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17AF49CB-38AF-484D-9151-B470F320221D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C6961C8-3576-4499-92B6-3B5D798BDBFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C6961C8-3576-4499-92B6-3B5D798BDBFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C6961C8-3576-4499-92B6-3B5D798BDBFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C6961C8-3576-4499-92B6-3B5D798BDBFC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7C6961C8-3576-4499-92B6-3B5D798BDBFC} = {851D9BA2-9C00-4769-84BA-AD8A168F733E}
+		{17AF49CB-38AF-484D-9151-B470F320221D} = {851D9BA2-9C00-4769-84BA-AD8A168F733E}
+	EndGlobalSection
+EndGlobal
