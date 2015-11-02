@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7C6961C8-3576-4499-92B6-3B5D798BDBFC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>CallfireApiClient</RootNamespace>
+    <AssemblyName>callfire-api-client-csharp</AssemblyName>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="RestSharp">
+      <HintPath>..\..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Api\Account\MeApi.cs" />
+    <Compile Include="Api\Account\OrdersApi.cs" />
+    <Compile Include="CallfireClient.cs" />
+    <Compile Include="Api\Common\Model\CallfireModel.cs" />
+    <Compile Include="RestApiClient.cs" />
+    <Compile Include="ClientConstants.cs" />
+    <Compile Include="Api\Common\Model\ErrorMessage.cs" />
+    <Compile Include="Api\Common\Model\Request\FindRequest.cs" />
+    <Compile Include="Api\Common\Model\Request\AbstractBuilder.cs" />
+    <Compile Include="CallfireApiException.cs" />
+    <Compile Include="ClientUtils.cs" />
+    <Compile Include="Api\Common\Model\Request\CommonFindRequest.cs" />
+    <Compile Include="RequestFilter.cs" />
+    <Compile Include="Api\Account\Model\Account.cs" />
+    <Compile Include="UnauthorizedException.cs" />
+    <Compile Include="ResourceNotFoundException.cs" />
+    <Compile Include="InternalServerErrorException.cs" />
+    <Compile Include="AccessForbiddenException.cs" />
+    <Compile Include="BadRequestException.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Api\" />
+    <Folder Include="Api\Account\" />
+    <Folder Include="Api\Account\Model\" />
+    <Folder Include="Api\Common\" />
+    <Folder Include="Api\Common\Model\" />
+    <Folder Include="Api\Common\Model\Request\" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedHierarchical" ResourceNamePolicy="MSBuild" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>
