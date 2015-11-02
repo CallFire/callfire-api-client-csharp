@@ -1,3 +1,4 @@
+using CallfireApiClient.Api.Common.Model;
 
 namespace CallfireApiClient
 {

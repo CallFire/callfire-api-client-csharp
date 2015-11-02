@@ -32,6 +32,7 @@
     <Reference Include="RestSharp">
       <HintPath>..\..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
     </Reference>
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="InternalServerErrorException.cs" />
     <Compile Include="AccessForbiddenException.cs" />
     <Compile Include="BadRequestException.cs" />
+    <Compile Include="ObjectDumper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -75,5 +77,7 @@
   </ProjectExtensions>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="CallfireApiClient.csproj" />
+    <None Include="app.config" />
   </ItemGroup>
 </Project>

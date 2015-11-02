@@ -1,4 +1,7 @@
 using System;
+using CallfireApiClient.Api.Common.Model;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CallfireApiClient.Api.Account.Model
 {
@@ -7,23 +10,29 @@ namespace CallfireApiClient.Api.Account.Model
     /// <summary>/
     public class Account : CallfireModel
     {
-        public Long id { get; set; }
+        public long Id { get; set; }
 
-        public String email { get; set; }
+        public String Email { get; set; }
 
-        public String name { get; set; }
+        public String Name { get; set; }
 
-        public String firstName { get; set; }
+        public String FirstName { get; set; }
 
-        public String lastName { get; set; }
+        public String LastName { get; set; }
 
-        public List<UserPermission> permissions { get; set; }
+        public List<UserPermission> Permissions { get; set; }
 
         public enum UserPermission
         {
             API,
             ACCOUNT_HOLDER,
             AGENT,
+        }
+
+        public override string ToString()
+        {
+            return string.Format("[Account: Id={0}, Email={1}, Name={2}, FirstName={3}, LastName={4}, Permissions={5}]",
+                Id, Email, Name, FirstName, LastName, String.Join(",", Permissions ?? Enumerable.Empty<UserPermission>()));
         }
     }
 }

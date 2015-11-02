@@ -1,97 +1,75 @@
 
 
-namespace 
+namespace  CallfireApiClient.Api.Common.Model.Request
+{
+    /// <summary>
+    /// Contains common fields for finder endpoints
+    /// </summary>
+    public abstract class FindRequest : CallfireModel
+    {
+        /// <summary>
+        /// Get max number of records per page to return. If items.size() less than limit assume no more items.
+        /// If value not set, default is 100
+        /// </summary
+        protected long Limit { get; set; }
 
-///
-/// Contains common fields for finder endpoints
-///
-public abstract class FindRequest extends CallfireModel {
-    protected Long limit;
-    protected Long offset;
-    protected String fields;
+        /// <summary>
+        /// Get offset to start of page. If value not set, default is 0
+        /// </summary>
+        protected long Offset { get; set; }
 
-    /**
-     * Get max number of records per page to return. If items.size() less than limit assume no more items.
-     * If value not set, default is 100
-     *
-     * @return limit number
-     */
-    public Long getLimit() {
-        return limit;
-    }
+        /// <summary>
+        /// Get limit fields returned. Example fields=id,items(name,agents(id))
+        ///</summary>
+        protected string Fields { get; set; }
 
-    /**
-     * Get offset to start of page
-     * If value not set, default is 0
-     *
-     * @return offset
-     */
-    public Long getOffset() {
-        return offset;
-    }
+        /// <summary>
+        /// Abstract builder for find requests
+        /// <summary>/
+        /// <typeparam name="B">type of builder</typeparam>
+        public abstract class FindRequestBuilder<B, R> : AbstractBuilder<R>
+            where B: FindRequestBuilder<B, R>
+            where R: FindRequest
+        {
 
-    /**
-     * Get limit fields returned. Example fields=id,items(name,agents(id))
-     *
-     * @return field to return
-     */
-    public String getFields() {
-        return fields;
-    }
+            protected FindRequestBuilder(R request)
+                : base(request)
+            {
+            }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("limit", limit)
-            .append("offset", offset)
-            .append("fields", fields)
-            .toString();
-    }
+            ///
+            /// Set max number of items returned.
+            ///
+            /// <param name="limit"/> limit max number of items
+            /// <returns>builder object</returns>
+            ///
+            public B Limit(long limit)
+            {
+                Request.Limit = limit;
+                return (B)this;
+            }
 
-    /**
-     * Abstract builder for find requests
-     *
-     * @param <B> type of builder
-     */
-    @SuppressWarnings("unchecked")
-    public static abstract class FindRequestBuilder<B extends FindRequestBuilder, R extends FindRequest>
-        extends AbstractBuilder<R> {
+            /// <summary>
+            /// Offset from start of paging source
+            /// <summary>/
+            /// <param name="offset">offset value</param>
+            /// <returns>builder object</returns>
+            public B Offset(long offset)
+            {
+                Request.Offset = offset;
+                return (B)this;
+            }
 
-        protected FindRequestBuilder(R request) {
-            super(request);
-        }
-
-        /**
-         * Set max number of items returned.
-         *
-         * @param limit max number of items
-         * @return builder object
-         */
-        public B limit(Long limit) {
-            request.limit = limit;
-            return (B) this;
-        }
-
-        /**
-         * Offset from start of paging source
-         *
-         * @param offset offset value
-         * @return builder object
-         */
-        public B offset(Long offset) {
-            request.offset = offset;
-            return (B) this;
-        }
-
-        /**
-         * Set limit fields returned. Example fields=id,items(name,agents(id))
-         *
-         * @param fields fields to return
-         * @return builder object
-         */
-        public B fields(String fields) {
-            request.fields = fields;
-            return (B) this;
+            /// <summary>
+            /// Set limit fields returned. Example fields=id,items(name,agents(id))
+            /// <summary>/
+            /// <param name="fields">fields fields to return</param>
+            /// <returns>builder object</returns>
+            public B Fields(string fields)
+            {
+                Request.Fields = fields;
+                return (B)this;
+            }
         }
     }
 }

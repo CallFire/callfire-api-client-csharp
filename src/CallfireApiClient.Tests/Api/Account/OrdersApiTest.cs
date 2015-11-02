@@ -2,12 +2,11 @@
 
 namespace CallfireApiClient.Tests.Api.Account
 {
-    public class MeApiTests
+    public class OrdersApiTest
     {
-        public MeApiTests()
+        public OrdersApiTest()
         {
         }
     }
-
 }
 

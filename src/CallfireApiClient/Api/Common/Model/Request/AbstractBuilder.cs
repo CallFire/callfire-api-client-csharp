@@ -1,25 +1,27 @@
-package com.callfire.api.client.api.common.model.request;
+using CallfireApiClient.Api.Common.Model;
 
-import com.callfire.api.client.api.common.model.CallfireModel;
+namespace CallfireApiClient.Api.Common.Model.Request
+{
+    /// <summary>
+    /// Common builder for request objects
+    /// <summary>/
+    /// <typeparam name="R">Request type</typeparam>
+    public class AbstractBuilder<R> where  R: CallfireModel
+    {
+        protected R Request;
 
-/**
- * Common builder for request objects
- *
- * @param <R> request type
- */
-public class AbstractBuilder<R extends CallfireModel> {
-    protected final R request;
+        protected AbstractBuilder(R request)
+        {
+            Request = request;
+        }
 
-    protected AbstractBuilder(R request) {
-        this.request = request;
-    }
-
-    /**
-     * Build request
-     *
-     * @return find request pojo
-     */
-    public R build() {
-        return request;
+        /// <summary>
+        /// Build request
+        /// </summary>
+        /// <returns>find request pojo</returns>
+        public R build()
+        {
+            return Request;
+        }
     }
 }

@@ -2,11 +2,8 @@
 
 namespace CallfireApiClient.Api.Common.Model
 {
-    public class CallfireModel
+    public abstract class CallfireModel
     {
-        public CallfireModel()
-        {
-        }
     }
 }
 

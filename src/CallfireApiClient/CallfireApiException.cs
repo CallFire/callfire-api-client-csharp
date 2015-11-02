@@ -1,44 +1,28 @@
-package com.callfire.api.client;
+using System;
+using CallfireApiClient.Api.Common.Model;
 
-import com.callfire.api.client.api.common.model.ErrorMessage;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
-/**
- * Callfire API exception is thrown by client in case of 4xx or 5xx HTTP code
- * response
- *
- * @since 1.0
- */
-public class CallfireApiException extends RuntimeException {
-    protected ErrorMessage apiErrorMessage;
+namespace CallfireApiClient
+{
+    /// <summary>
+    /// Callfire API exception is thrown by client in case of 4xx or 5xx HTTP code response
+    /// <summary>/
+    public class CallfireApiException : Exception
+    {
+        /// <summary>
+        /// Gets or sets detailed error message with HTTP code, help link, etc.
+        /// </summary>
+        /// <value>The API error message.</value>
+        public ErrorMessage ApiErrorMessage { get; set; }
 
-    public CallfireApiException(ErrorMessage apiErrorMessage) {
-        this.apiErrorMessage = apiErrorMessage;
-    }
+        public CallfireApiException(ErrorMessage apiErrorMessage)
+        {
+            ApiErrorMessage = apiErrorMessage;
+        }
 
-    /**
-     * Get detailed error message with HTTP code, help link, etc.
-     *
-     * @return detailed message
-     */
-    public ErrorMessage getApiErrorMessage() {
-        return apiErrorMessage;
-    }
-
-    /**
-     * Set detailed error message with HTTP code, help link, etc.
-     *
-     * @param apiErrorMessage detailed message
-     */
-    public void setApiErrorMessage(ErrorMessage apiErrorMessage) {
-        this.apiErrorMessage = apiErrorMessage;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-            .appendSuper(super.toString())
-            .append("apiErrorMessage", apiErrorMessage)
-            .toString();
+        public override string ToString()
+        {
+            return string.Format("[CallfireApiException: ApiErrorMessage={0}]", ApiErrorMessage);
+        }
     }
 }
