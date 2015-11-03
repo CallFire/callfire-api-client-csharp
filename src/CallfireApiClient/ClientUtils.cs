@@ -1,5 +1,6 @@
 using CallfireApiClient.Api.Common.Model;
 using System.Collections.Specialized;
+using System.Text;
 
 namespace CallfireApiClient
 {
@@ -11,6 +12,21 @@ namespace CallfireApiClient
     {
         private ClientUtils()
         {
+        }
+
+        /// <summary>
+        /// Converts NameValueCollection to string
+        /// </summary>
+        /// <returns>string representation of collection</returns>
+        /// <param name="queryParams">collection to convert</param>
+        public static string ParamsToString(NameValueCollection queryParams)
+        {
+            var result = new StringBuilder();
+            foreach (string key in queryParams.AllKeys)
+            {
+                result.AppendFormat("{0} = {1} ", key, string.Join(",", queryParams.GetValues(key)));
+            }
+            return result.ToString();
         }
 
         /**

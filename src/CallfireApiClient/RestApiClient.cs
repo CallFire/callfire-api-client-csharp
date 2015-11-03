@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Diagnostics;
 using CallfireApiClient.Api.Common.Model;
 using RestSharp.Deserializers;
+using System.Text;
 
 
 namespace CallfireApiClient
@@ -17,15 +18,15 @@ namespace CallfireApiClient
     /// </summary>
     public class RestApiClient
     {
-        private static TraceSource TraceSource = new TraceSource("CallfireApiClient");
-        private readonly NameValueCollection EMPTY_PARAMS = new NameValueCollection();
+        private readonly Logger Logger = new Logger();
         private readonly JsonDeserializer Deserializer;
+        private readonly NameValueCollection EmptyParams = new NameValueCollection();
 
         /// <summary>
         /// RestSharp client configured to query Callfire API
         /// <summary>/
         /// <returns>RestSharp client interface</returns>
-        public IRestClient RestClient { get; }
+        public IRestClient RestClient { get; internal set; }
 
         /// <summary>
         /// Returns base URL path for all Callfire's API 2.0 endpoints
@@ -35,7 +36,7 @@ namespace CallfireApiClient
         {
             get
             {
-                return ConfigurationManager.AppSettings["CallFireBasePath"];
+                return ConfigurationManager.AppSettings[ClientConstants.CONFIG_API_BASE_PATH];
             }
         }
 
@@ -55,7 +56,7 @@ namespace CallfireApiClient
         {
             RestClient = new RestClient(ApiBasePath);
             RestClient.Authenticator = authenticator;
-            RestClient.UserAgent = ConfigurationManager.AppSettings["CallFireClientVersion"];
+            RestClient.UserAgent = ConfigurationManager.AppSettings[ClientConstants.CONFIG_CLIENT_NAME];
             Deserializer = new JsonDeserializer();
             Filters = new SortedSet<RequestFilter>();
         }
@@ -75,7 +76,7 @@ namespace CallfireApiClient
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public T Get<T>(String path) where T: new()
         {
-            return Get<T>(path, EMPTY_PARAMS);
+            return Get<T>(path, EmptyParams);
         }
 
         /// <summary>
@@ -113,9 +114,9 @@ namespace CallfireApiClient
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public T Get<T>(string path, NameValueCollection queryParams) where T: new()
         {
-            TraceSource.TraceEvent(TraceEventType.Verbose, 1, "GET request to {0} with params: {1}", path, queryParams);
+            Logger.Debug("GET request to {0} with params: {1}", path, queryParams);
             var restRequest = new RestRequest(path, Method.GET);
-            addQueryParams(restRequest, queryParams);
+            AddQueryParams(restRequest, queryParams);
             return DoRequest<T>(restRequest);
         }
 
@@ -124,7 +125,6 @@ namespace CallfireApiClient
         /// <summary>
         /// <typeparam name="T">The type of object to create and populate with the returned data.</typeparam>
         /// <param name="path">relative API request path</param>
-        /// <param name="queryParams">query parameters</param>
         /// <returns>mapped object</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
@@ -154,7 +154,7 @@ namespace CallfireApiClient
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public T Post<T>(String path, object payload) where T: new()
         {
-            return Post<T>(path, payload, EMPTY_PARAMS);
+            return Post<T>(path, payload, EmptyParams);
         }
 
         /// <summary>
@@ -175,15 +175,15 @@ namespace CallfireApiClient
         public T Post<T>(String path, object payload, NameValueCollection queryParams) where T: new()
         {
             var restRequest = new RestRequest(path, Method.POST);
-            addQueryParams(restRequest, queryParams);
+            AddQueryParams(restRequest, queryParams);
             if (payload != null)
             {
                 restRequest.AddJsonBody(payload);
-                TraceSource.TraceEvent(TraceEventType.Verbose, 1, "POST request to {0} params: {1} entity \n{2}", path, queryParams, payload);
+                Logger.Debug("POST request to {0} params: {1} entity \n{2}", path, queryParams, payload);
             }
             else
             {
-                TraceSource.TraceEvent(TraceEventType.Verbose, 1, "POST request to {0} params: {1}", path, queryParams);
+                Logger.Debug("POST request to {0} params: {1}", path, queryParams);
             }
             return DoRequest<T>(restRequest);
         }
@@ -211,7 +211,7 @@ namespace CallfireApiClient
                 restRequest.AddParameter("name", queryParams["name"]);
             }
 
-            TraceSource.TraceEvent(TraceEventType.Verbose, 1, "POST file upload request to {0} with params {1}", path, queryParams);
+            Logger.Debug("POST file upload request to {0} with params {1}", path, queryParams);
             return DoRequest<T>(restRequest);
         }
 
@@ -231,7 +231,7 @@ namespace CallfireApiClient
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public T Put<T>(String path, object payload) where T: new()
         {
-            return Put<T>(path, payload, EMPTY_PARAMS);
+            return Put<T>(path, payload, EmptyParams);
         }
 
         /// <summary>
@@ -252,15 +252,15 @@ namespace CallfireApiClient
         public T Put<T>(String path, object payload, NameValueCollection queryParams) where T: new()
         {
             var restRequest = new RestRequest(path, Method.PUT);
-            addQueryParams(restRequest, queryParams);
+            AddQueryParams(restRequest, queryParams);
             if (payload != null)
             {
                 restRequest.AddJsonBody(payload);
-                TraceSource.TraceEvent(TraceEventType.Verbose, 1, "PUT request to {0} params: {1} entity: \n{2}", path, queryParams, payload);
+                Logger.Debug("PUT request to {0} params: {1} entity: \n{2}", path, queryParams, payload);
             }
             else
             {
-                TraceSource.TraceEvent(TraceEventType.Verbose, 1, "PUT request to {0} params: {1}", path, queryParams);
+                Logger.Debug("PUT request to {0} params: {1}", path, queryParams);
             }
             return DoRequest<T>(restRequest);
         }
@@ -278,7 +278,7 @@ namespace CallfireApiClient
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public void Delete(String path)
         {
-            Delete(path, EMPTY_PARAMS);
+            Delete(path, EmptyParams);
         }
 
         /// <summary>
@@ -295,9 +295,9 @@ namespace CallfireApiClient
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public void Delete(String path, NameValueCollection queryParams)
         {
-            TraceSource.TraceEvent(TraceEventType.Verbose, 1, "DELETE request to {0} with params {1}", path, queryParams);
+            Logger.Debug("DELETE request to {0} with params {1}", path, queryParams);
             var restRequest = new RestRequest(path, Method.DELETE);
-            addQueryParams(restRequest, queryParams);
+            AddQueryParams(restRequest, queryParams);
             DoRequest<object>(restRequest);
         }
 
@@ -310,15 +310,15 @@ namespace CallfireApiClient
             var response = RestClient.Execute<T>(request);
             if (response.Content == null)
             {
-                TraceSource.TraceEvent(TraceEventType.Verbose, 1, "received http code {0} with null entity, returning null", 
-                    response.StatusCode);
+                Logger.Debug("received http code {0} with null entity, returning null", response.StatusCode);
                 return default(T);
             }
-            Console.WriteLine(ObjectDumper.Dump("data: " + response.Data));
+            Logger.Debug("received entity: {0}", response.Content);
             VerifyResponse(response);
-            TraceSource.TraceEvent(TraceEventType.Verbose, 1, "received entity \n{0}", response.Data);
+
             return response.Data;
         }
+
 
         private void VerifyResponse(IRestResponse response)
         {
@@ -343,7 +343,7 @@ namespace CallfireApiClient
             }
         }
 
-        private static void addQueryParams(IRestRequest restRequest, NameValueCollection queryParams)
+        private static void AddQueryParams(IRestRequest restRequest, NameValueCollection queryParams)
         {
             foreach (string key in queryParams.AllKeys)
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using CallfireApiClient.Api.Account.Model;
+using System.Collections.Specialized;
 
 namespace CallfireApiClient.Api.Account
 {

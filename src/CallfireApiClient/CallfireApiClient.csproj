@@ -8,13 +8,14 @@
     <RootNamespace>CallfireApiClient</RootNamespace>
     <AssemblyName>callfire-api-client-csharp</AssemblyName>
     <ReleaseVersion>1.0.0</ReleaseVersion>
+    <CodePage>65001</CodePage>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
+    <DefineConstants>DEBUG; TRACE;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -55,7 +56,7 @@
     <Compile Include="InternalServerErrorException.cs" />
     <Compile Include="AccessForbiddenException.cs" />
     <Compile Include="BadRequestException.cs" />
-    <Compile Include="ObjectDumper.cs" />
+    <Compile Include="Logger.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

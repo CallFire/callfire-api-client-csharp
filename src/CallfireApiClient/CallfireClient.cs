@@ -1,6 +1,7 @@
 ﻿using System;
 using RestSharp.Authenticators;
 using CallfireApiClient.Api.Account;
+using System.Diagnostics;
 
 namespace CallfireApiClient
 {
