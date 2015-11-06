@@ -1,0 +1,13 @@
+{
+  "name": "Example API SMS",
+  "fromNumber": "19206596476",
+  "message": "Hello World!",
+  "recipients": [
+    {
+      "phoneNumber": "13233832214"
+    },
+    {
+      "phoneNumber": "13233832215"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "items": [
+    {
+      "id": 13395,
+      "fromNumber": "12135551189",
+      "toNumber": "12135551101",
+      "campaignId": 10,
+      "batchId": 6,
+      "contact": {
+        "id": 4097,
+        "homePhone": "12135551101"
+      },
+      "inbound": false,
+      "created": 1443373386000,
+      "modified": 1443373412000,
+      "state": "FINISHED",
+      "records": [
+        {
+          "id": 10306,
+          "billedAmount": 1.1667,
+          "finishTime": 1443373425000,
+          "result": "AM"
+        }
+      ],
+      "finalCallResult": "AM",
+      "agentCall": false
+    },
+    {
+      "id": 13394,
+      "fromNumber": "12135551189",
+      "toNumber": "12135551100",
+      "campaignId": 10,
+      "batchId": 6,
+      "contact": {
+        "id": 4096,
+        "homePhone": "12135551100"
+      },
+      "inbound": false,
+      "created": 1443373382000,
+      "modified": 1443373412000,
+      "state": "FINISHED",
+      "records": [
+        {
+          "id": 10305,
+          "billedAmount": 0.0,
+          "finishTime": 1443373408000,
+          "result": "CARRIER_ERROR"
+        }
+      ],
+      "finalCallResult": "CARRIER_ERROR",
+      "agentCall": false
+    }
+  ],
+  "limit": 2,
+  "offset": 0,
+  "totalCount": 7160
+}

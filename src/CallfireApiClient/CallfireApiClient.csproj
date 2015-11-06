@@ -34,6 +34,10 @@
       <HintPath>..\..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -50,13 +54,30 @@
     <Compile Include="ClientUtils.cs" />
     <Compile Include="Api\Common\Model\Request\CommonFindRequest.cs" />
     <Compile Include="RequestFilter.cs" />
-    <Compile Include="Api\Account\Model\Account.cs" />
     <Compile Include="UnauthorizedException.cs" />
     <Compile Include="ResourceNotFoundException.cs" />
     <Compile Include="InternalServerErrorException.cs" />
     <Compile Include="AccessForbiddenException.cs" />
     <Compile Include="BadRequestException.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="Api\Account\Model\BillingPlanUsage.cs" />
+    <Compile Include="Api\Account\Model\CallerId.cs" />
+    <Compile Include="Validate.cs" />
+    <Compile Include="Api\Account\Model\Request\CallerIdVerificationRequest.cs" />
+    <Compile Include="Api\Account\Model\ApiCredentials.cs" />
+    <Compile Include="Api\Common\Model\ListHolder.cs" />
+    <Compile Include="Api\Common\Model\Page.cs" />
+    <Compile Include="Api\Common\Model\ResourceId.cs" />
+    <Compile Include="Api\Account\Model\NumberOrderItem.cs" />
+    <Compile Include="Api\Account\Model\NumberOrder.cs" />
+    <Compile Include="Api\Account\Model\Status.cs" />
+    <Compile Include="Api\Keywords\Model\Request\KeywordPurchaseRequest.cs" />
+    <Compile Include="Api\Numbers\Model\Request\NumberPurchaseRequest.cs" />
+    <Compile Include="Api\Account\Model\UserAccount.cs" />
+    <Compile Include="CallfireClientException.cs" />
+    <Compile Include="UnixTimeJsonConverter.cs" />
+    <Compile Include="CallfireJsonConverter.cs" />
+    <Compile Include="CallfireContractResolver.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -66,6 +87,13 @@
     <Folder Include="Api\Common\" />
     <Folder Include="Api\Common\Model\" />
     <Folder Include="Api\Common\Model\Request\" />
+    <Folder Include="Api\Account\Model\Request\" />
+    <Folder Include="Api\Keywords\" />
+    <Folder Include="Api\Keywords\Model\" />
+    <Folder Include="Api\Keywords\Model\Request\" />
+    <Folder Include="Api\Numbers\" />
+    <Folder Include="Api\Numbers\Model\" />
+    <Folder Include="Api\Numbers\Model\Request\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

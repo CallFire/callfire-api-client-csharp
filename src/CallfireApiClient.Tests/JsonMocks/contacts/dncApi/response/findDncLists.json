@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "id": 100500,
+      "size": 100500,
+      "campaignId": 100500,
+      "name": "test",
+      "created": 123456
+    }
+  ],
+  "totalCount": 1
+}
+
+

@@ -1,0 +1,12 @@
+{
+  "name": "contact batch for text",
+  "scrubDuplicates": true,
+  "recipients": [
+    {
+      "phoneNumber": "12135551122"
+    },
+    {
+      "phoneNumber": "12135551123"
+    }
+  ]
+}

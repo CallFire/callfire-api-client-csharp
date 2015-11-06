@@ -1,0 +1,23 @@
+{
+  "items": [
+    {
+      "shortCode": "67076",
+      "keyword": "CALLFIRE",
+      "leaseBegin": 1000000000000,
+      "leaseEnd": 1000000000000,
+      "autoRenew": true,
+      "status": "ACTIVE"
+    },
+    {
+      "shortCode": "67076",
+      "keyword": "CF",
+      "leaseBegin": 1000000000000,
+      "leaseEnd": 1000000000000,
+      "autoRenew": true,
+      "status": "ACTIVE"
+    }
+  ],
+  "limit": 100,
+  "offset": 0,
+  "totalCount": 1
+}

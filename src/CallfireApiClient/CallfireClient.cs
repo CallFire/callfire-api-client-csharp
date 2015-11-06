@@ -7,7 +7,7 @@ namespace CallfireApiClient
 {
     public class CallfireClient
     {
-        readonly RestApiClient RestApiClient;
+        public RestApiClient RestApiClient { get; set; }
 
         readonly Lazy<MeApi> _MeApi;
         readonly Lazy<OrdersApi> _OrdersApi;

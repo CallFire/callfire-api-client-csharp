@@ -1,0 +1,22 @@
+{
+  "number": "12135551100",
+  "nationalFormat": "(213) 555-1100",
+  "tollFree": false,
+  "region": {
+    "prefix": "1920659",
+    "city": "APPLETON",
+    "state": "WI",
+    "zipcode": "54911",
+    "lata": "350",
+    "rateCenter": "APPLETON",
+    "latitude": 44.2563,
+    "longitude": -88.4018,
+    "timeZone": "America/Chicago"
+  },
+  "leaseBegin": 1305097200000,
+  "leaseEnd": 1448606871000,
+  "autoRenew": true,
+  "status": "ACTIVE",
+  "callFeatureStatus": "ENABLED",
+  "textFeatureStatus": "ENABLED"
+}

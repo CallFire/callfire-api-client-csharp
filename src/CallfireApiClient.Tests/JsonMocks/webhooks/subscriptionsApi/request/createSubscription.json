@@ -1,0 +1,7 @@
+{
+  "enabled": true,
+  "endpoint": "http://www.example.com/endpoint",
+  "notificationFormat": "JSON",
+  "triggerEvent": "CAMPAIGN_STARTED",
+  "broadcastId": 14
+}

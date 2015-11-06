@@ -1,0 +1,20 @@
+{
+  "items": [
+    {
+      "id": 463633187003,
+      "firstName": "testFirstName",
+      "lastName": "testLastName",
+      "zipcode": "",
+      "homePhone": "12132212384",
+      "workPhone": "",
+      "mobilePhone": "",
+      "externalId": "",
+      "externalSystem": "",
+      "deleted": false,
+      "properties": {"test": "test"}
+    }
+  ],
+  "totalCount": 1
+}
+
+

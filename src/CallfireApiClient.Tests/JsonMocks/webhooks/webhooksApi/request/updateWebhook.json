@@ -1,0 +1,9 @@
+{
+  "id": 11,
+  "name": "API hook",
+  "resource": "textCampaign",
+  "callback": "https://callfire.com/stopTextsOnly",
+  "events": [
+    "stop"
+  ]
+}

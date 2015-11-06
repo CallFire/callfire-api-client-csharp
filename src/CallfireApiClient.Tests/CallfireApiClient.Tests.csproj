@@ -34,22 +34,156 @@
     <Reference Include="nunit.framework">
       <HintPath>..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\..\packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\Account\OrdersApiTest.cs" />
     <Compile Include="Api\Account\MeApiTest.cs" />
     <Compile Include="Api\AbstractApiTest.cs" />
+    <Compile Include="Api\Account\MeApiIntegrationTest.cs" />
+    <Compile Include="Api\Account\OrdersApiIntegrationTest.cs" />
+    <Compile Include="MockRestClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="CallfireApiClient.Tests.csproj" />
     <None Include="packages.config" />
     <None Include="app.config" />
+    <None Include="JsonMocks\common\sampleErrorMessage.json" />
+    <None Include="JsonMocks\contacts\contactsApi\request\createContactsList.csv" />
+    <None Include="JsonMocks\contacts\contactsApi\request\updateContactList.json" />
+    <None Include="JsonMocks\contacts\contactsApi\response\addContactsToContactList.json" />
+    <None Include="JsonMocks\contacts\contactsApi\response\createContact.json" />
+    <None Include="JsonMocks\contacts\contactsApi\response\createContactList.json" />
+    <None Include="JsonMocks\contacts\contactsApi\response\findContactLists.json" />
+    <None Include="JsonMocks\contacts\contactsApi\response\findContacts.json" />
+    <None Include="JsonMocks\contacts\contactsApi\response\getContactById.json" />
+    <None Include="JsonMocks\contacts\contactsApi\response\getContactHistory.json" />
+    <None Include="JsonMocks\contacts\contactsApi\response\getContactList.json" />
+    <None Include="JsonMocks\contacts\dncApi\request\addDncItems.json" />
+    <None Include="JsonMocks\contacts\dncApi\request\createDncList.json" />
+    <None Include="JsonMocks\contacts\dncApi\request\updateDnc.json" />
+    <None Include="JsonMocks\contacts\dncApi\response\createDncList.json" />
+    <None Include="JsonMocks\contacts\dncApi\response\findDncList.json" />
+    <None Include="JsonMocks\contacts\dncApi\response\findDncLists.json" />
+    <None Include="JsonMocks\contacts\dncApi\response\getDncList.json" />
+    <None Include="JsonMocks\contacts\dncApi\response\getUniversalDncNumbers.json" />
+    <None Include="JsonMocks\numbers\numberLeasesApi\request\updateNumberLease.json" />
+    <None Include="JsonMocks\numbers\numberLeasesApi\request\updateNumberLeaseConfig.json" />
+    <None Include="JsonMocks\numbers\numberLeasesApi\response\findNumberLeaseConfigs.json" />
+    <None Include="JsonMocks\numbers\numberLeasesApi\response\findNumberLeases.json" />
+    <None Include="JsonMocks\numbers\numberLeasesApi\response\getNumberLease.json" />
+    <None Include="JsonMocks\numbers\numberLeasesApi\response\getNumberLeaseConfig.json" />
+    <None Include="JsonMocks\numbers\numbersApi\response\findNumberRegions.json" />
+    <None Include="JsonMocks\numbers\numbersApi\response\findNumbersLocal.json" />
+    <None Include="JsonMocks\numbers\numbersApi\response\findNumbersTollfree.json" />
+    <None Include="JsonMocks\keywords\keywordLeasesApi\request\updateKeywordLease.json" />
+    <None Include="JsonMocks\keywords\keywordLeasesApi\response\findKeywordLeases.json" />
+    <None Include="JsonMocks\keywords\keywordLeasesApi\response\getKeywordLease.json" />
+    <None Include="JsonMocks\keywords\keywordsApi\response\findKeywords.json" />
+    <None Include="JsonMocks\webhooks\subscriptionsApi\request\createSubscription.json" />
+    <None Include="JsonMocks\webhooks\subscriptionsApi\request\updateSubscription.json" />
+    <None Include="JsonMocks\webhooks\subscriptionsApi\response\createSubscription.json" />
+    <None Include="JsonMocks\webhooks\subscriptionsApi\response\findSubscriptions.json" />
+    <None Include="JsonMocks\webhooks\subscriptionsApi\response\getSubscription.json" />
+    <None Include="JsonMocks\webhooks\webhooksApi\request\createWebhook.json" />
+    <None Include="JsonMocks\webhooks\webhooksApi\request\updateWebhook.json" />
+    <None Include="JsonMocks\webhooks\webhooksApi\response\createWebhook.json" />
+    <None Include="JsonMocks\webhooks\webhooksApi\response\findWebhooks.json" />
+    <None Include="JsonMocks\webhooks\webhooksApi\response\getWebhook.json" />
+    <None Include="JsonMocks\campaigns\agentGroupsApi\request\createAgentGroup.json" />
+    <None Include="JsonMocks\campaigns\agentGroupsApi\response\createAgentGroup.json" />
+    <None Include="JsonMocks\campaigns\agentGroupsApi\response\findAgentGroups.json" />
+    <None Include="JsonMocks\campaigns\agentGroupsApi\response\getAgentGroup.json" />
+    <None Include="JsonMocks\campaigns\agentsApi\response\findAgents.json" />
+    <None Include="JsonMocks\campaigns\agentsApi\response\findSessions.json" />
+    <None Include="JsonMocks\campaigns\agentsApi\response\getAgent.json" />
+    <None Include="JsonMocks\campaigns\agentsApi\response\getSession.json" />
+    <None Include="JsonMocks\campaigns\batchesApi\request\updateBatch.json" />
+    <None Include="JsonMocks\campaigns\batchesApi\response\getBatch.json" />
+    <None Include="JsonMocks\campaigns\campaignSoundsApi\request\createFromTts.json" />
+    <None Include="JsonMocks\campaigns\campaignSoundsApi\request\recordViaPhone.json" />
+    <None Include="JsonMocks\campaigns\campaignSoundsApi\response\findCampaignSounds.json" />
+    <None Include="JsonMocks\campaigns\campaignSoundsApi\response\getCampaignSound.json" />
+    <None Include="JsonMocks\campaigns\campaignSoundsApi\response\uploadSound.json" />
+    <None Include="JsonMocks\campaigns\ivrBroadcastsApi\request\addBatch.json" />
+    <None Include="JsonMocks\campaigns\ivrBroadcastsApi\request\addRecipients.json" />
+    <None Include="JsonMocks\campaigns\ivrBroadcastsApi\request\createIvrBroadcast.json" />
+    <None Include="JsonMocks\campaigns\ivrBroadcastsApi\request\updateIvrBroadcast.json" />
+    <None Include="JsonMocks\campaigns\ivrBroadcastsApi\response\addBatch.json" />
+    <None Include="JsonMocks\campaigns\ivrBroadcastsApi\response\addRecipients.json" />
+    <None Include="JsonMocks\campaigns\ivrBroadcastsApi\response\createIvrBroadcast.json" />
+    <None Include="JsonMocks\campaigns\ivrBroadcastsApi\response\findIvrBroadcasts.json" />
+    <None Include="JsonMocks\campaigns\ivrBroadcastsApi\response\getBatches.json" />
+    <None Include="JsonMocks\campaigns\ivrBroadcastsApi\response\getCalls.json" />
+    <None Include="JsonMocks\campaigns\ivrBroadcastsApi\response\getIvrBroadcast.json" />
+    <None Include="JsonMocks\campaigns\textAutoRepliesApi\request\createTextAutoReply.json" />
+    <None Include="JsonMocks\campaigns\textAutoRepliesApi\response\createTextAutoReply.json" />
+    <None Include="JsonMocks\campaigns\textAutoRepliesApi\response\findTextAutoReplies.json" />
+    <None Include="JsonMocks\campaigns\textAutoRepliesApi\response\getTextAutoReply.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\request\addBatch.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\request\addRecipients.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\request\createTextBroadcast.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\request\updateBatch.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\request\updateTextBroadcast.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\addBatch.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\addRecipients.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\createTextBroadcast.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\findTextBroadcasts.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\getBatch.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\getBatches.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\getTextBroadcast.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\getTexts.json" />
+    <None Include="JsonMocks\campaigns\voiceBroadcastsApi\request\addBatch.json" />
+    <None Include="JsonMocks\campaigns\voiceBroadcastsApi\request\addRecipients.json" />
+    <None Include="JsonMocks\campaigns\voiceBroadcastsApi\request\createVoiceBroadcast.json" />
+    <None Include="JsonMocks\campaigns\voiceBroadcastsApi\request\updateVoiceBroadcast.json" />
+    <None Include="JsonMocks\campaigns\voiceBroadcastsApi\response\addBatch.json" />
+    <None Include="JsonMocks\campaigns\voiceBroadcastsApi\response\addRecipients.json" />
+    <None Include="JsonMocks\campaigns\voiceBroadcastsApi\response\createVoiceBroadcast.json" />
+    <None Include="JsonMocks\campaigns\voiceBroadcastsApi\response\findVoiceBroadcasts.json" />
+    <None Include="JsonMocks\campaigns\voiceBroadcastsApi\response\getBatches.json" />
+    <None Include="JsonMocks\campaigns\voiceBroadcastsApi\response\getCalls.json" />
+    <None Include="JsonMocks\campaigns\voiceBroadcastsApi\response\getVoiceBroadcast.json" />
+    <None Include="JsonMocks\callstexts\callsApi\request\sendCalls.json" />
+    <None Include="JsonMocks\callstexts\callsApi\response\findCalls.json" />
+    <None Include="JsonMocks\callstexts\callsApi\response\getCall.json" />
+    <None Include="JsonMocks\callstexts\callsApi\response\sendCalls.json" />
+    <None Include="JsonMocks\callstexts\textsApi\request\sendTexts.json" />
+    <None Include="JsonMocks\callstexts\textsApi\response\findTexts.json" />
+    <None Include="JsonMocks\callstexts\textsApi\response\getText.json" />
+    <None Include="JsonMocks\callstexts\textsApi\response\sendTexts.json" />
+    <None Include="JsonMocks\account\meApi\request\createApiCredentials.json" />
+    <None Include="JsonMocks\account\meApi\response\createApiCredentials.json" />
+    <None Include="JsonMocks\account\meApi\response\findApiCredentials.json" />
+    <None Include="JsonMocks\account\meApi\response\getAccount.json" />
+    <None Include="JsonMocks\account\meApi\response\getApiCredentials.json" />
+    <None Include="JsonMocks\account\meApi\response\getBillingPlanUsage.json" />
+    <None Include="JsonMocks\account\meApi\response\getCallerIds.json" />
+    <None Include="JsonMocks\account\meApi\response\verifyCallerId.json" />
+    <None Include="JsonMocks\account\ordersApi\request\orderKeywords.json" />
+    <None Include="JsonMocks\account\ordersApi\request\orderNumbers.json" />
+    <None Include="JsonMocks\account\ordersApi\response\getOrder.json" />
+    <None Include="JsonMocks\account\ordersApi\response\orderKeywords.json" />
+    <None Include="JsonMocks\account\ordersApi\response\orderNumbers.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CallfireApiClient\CallfireApiClient.csproj">
       <Project>{7C6961C8-3576-4499-92B6-3B5D798BDBFC}</Project>
       <Name>CallfireApiClient</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="JsonMocks\" />
+    <Folder Include="JsonMocks\common\" />
+    <Folder Include="JsonMocks\contacts\" />
+    <Folder Include="JsonMocks\numbers\" />
+    <Folder Include="JsonMocks\keywords\" />
+    <Folder Include="JsonMocks\webhooks\" />
+    <Folder Include="JsonMocks\campaigns\" />
+    <Folder Include="JsonMocks\callstexts\" />
+    <Folder Include="JsonMocks\account\" />
   </ItemGroup>
 </Project>

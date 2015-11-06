@@ -1,0 +1,7 @@
+{
+  "httpStatusCode": 100,
+  "internalCode": 2,
+  "message": "error msg",
+  "developerMessage": "dev error msg",
+  "helpLink": "https://callfire.com"
+}

@@ -1,0 +1,71 @@
+{
+  "items": [
+    {
+      "id": 13405,
+      "fromNumber": "12135551100",
+      "toNumber": "12135551123",
+      "campaignId": 13,
+      "batchId": 11,
+      "contact": {
+        "id": 4101,
+        "homePhone": "12135551123"
+      },
+      "inbound": false,
+      "created": 1443382358000,
+      "modified": 1443382358000,
+      "state": "READY",
+      "message": "a new test message"
+    },
+    {
+      "id": 13404,
+      "fromNumber": "12135551100",
+      "toNumber": "12135551122",
+      "campaignId": 13,
+      "batchId": 10,
+      "contact": {
+        "id": 4099,
+        "homePhone": "12135551122"
+      },
+      "inbound": false,
+      "created": 1443382248000,
+      "modified": 1443382248000,
+      "state": "READY",
+      "message": "a new test message"
+    },
+    {
+      "id": 13403,
+      "fromNumber": "12135551100",
+      "toNumber": "13233832214",
+      "campaignId": 13,
+      "batchId": 9,
+      "contact": {
+        "id": 4100,
+        "homePhone": "13233832214"
+      },
+      "inbound": false,
+      "created": 1443380774000,
+      "modified": 1443380774000,
+      "state": "READY",
+      "message": "a new test message"
+    },
+    {
+      "id": 13402,
+      "fromNumber": "12135551100",
+      "toNumber": "13233832214",
+      "campaignId": 13,
+      "batchId": 9,
+      "contact": {
+        "id": 4100,
+        "homePhone": "13233832214"
+      },
+      "inbound": false,
+      "created": 1443380774000,
+      "modified": 1443380774000,
+      "state": "READY",
+      "message": "a new test message"
+    }
+  ],
+  "limit": 100,
+  "offset": 0,
+  "totalCount": 4
+}

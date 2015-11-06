@@ -1,0 +1,9 @@
+{
+  "name": "API hook",
+  "resource": "textCampaign",
+  "callback": "http://cool.site.xyz/webhook",
+  "events": [
+    "stop",
+    "start"
+  ]
+}

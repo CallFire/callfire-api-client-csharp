@@ -1,0 +1,25 @@
+{
+  "id": 13393,
+  "fromNumber": "12135551189",
+  "toNumber": "12135551101",
+  "campaignId": 10,
+  "batchId": 6,
+  "contact": {
+    "id": 4097,
+    "homePhone": "12135551101"
+  },
+  "inbound": false,
+  "created": 1443333911000,
+  "modified": 1443333978000,
+  "state": "FINISHED",
+  "records": [
+    {
+      "id": 10304,
+      "billedAmount": 1.1667,
+      "finishTime": 1443333972000,
+      "result": "LA"
+    }
+  ],
+  "finalCallResult": "LA",
+  "agentCall": false
+}

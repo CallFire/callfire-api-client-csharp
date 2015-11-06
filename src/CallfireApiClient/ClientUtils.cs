@@ -4,14 +4,26 @@ using System.Text;
 
 namespace CallfireApiClient
 {
-
     /// <summary>
     /// Utility class
     /// </summary>
-    public class ClientUtils
+    internal static class ClientUtils
     {
-        private ClientUtils()
+        /// <summary>
+        /// Replaces the first occurence of given string
+        /// </summary>
+        /// <returns>updated string</returns>
+        /// <param name="text">initial string</param>
+        /// <param name="search">substring to replace</param>
+        /// <param name="replace">replacement string</param>
+        public static string ReplaceFirst(this string text, string search, string replace)
         {
+            int pos = text.IndexOf(search);
+            if (pos < 0)
+            {
+                return text;
+            }
+            return text.Substring(0, pos) + replace + text.Substring(pos + search.Length);
         }
 
         /// <summary>
@@ -29,18 +41,21 @@ namespace CallfireApiClient
             return result.ToString();
         }
 
-        /**
-     * Add query param to name-value query list if it's value not null
-     *
-     * @param name        parameter name
-     * @param value       parameter value
-     * @param queryParams parameters list
-     */
-        //    public static void addQueryParamIfSet(String name, Object value, List<NameValuePair> queryParams) {
-        //        if (name != null && value != null && queryParams != null) {
-        //            queryParams.add(new BasicNameValuePair(name, Objects.toString(value)));
-        //        }
-        //    }
+        /// <summary>
+        /// Add query param to name-value query list if it's value not null
+        /// </summary>
+        /// <param name="name">param name</param>
+        /// <param name="value">param value</param>
+        /// <returns>NameValueCollection with one item</returns>
+        public static NameValueCollection BuildQueryParams(string name, string value)
+        {
+            var queryParams = new NameValueCollection(1);
+            if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(value))
+            {
+                queryParams.Add(name, value);
+            }
+            return queryParams;
+        }
 
         /**
      * Add {@link Iterable} value as query param to name-value query list
@@ -68,6 +83,10 @@ namespace CallfireApiClient
         public static NameValueCollection BuildQueryParams<T>(T request)
             where T : CallfireModel
         {
+            if (request == null)
+            {
+                return new NameValueCollection(0);
+            }
             NameValueCollection parameters = new NameValueCollection();
 //        Class<?> superclass = request.getClass().getSuperclass();
 //        while (superclass != null) {

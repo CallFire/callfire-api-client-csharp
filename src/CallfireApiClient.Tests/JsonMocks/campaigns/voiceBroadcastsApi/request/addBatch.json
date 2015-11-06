@@ -1,0 +1,11 @@
+{
+  "name": "batch name",
+  "recipients": [
+    {
+      "phoneNumber": "12135551100"
+    },
+    {
+      "phoneNumber": "12135551101"
+    }
+  ]
+}

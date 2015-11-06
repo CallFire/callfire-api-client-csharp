@@ -1,0 +1,75 @@
+{
+  "id": 100500,
+  "calls": [
+            {
+              "id": 123456,
+              "fromNumber": "233545658",
+              "toNumber": "523548485",
+              "campaignId": 12345,
+              "batchId": 12345,
+              "contact": {},
+              "inbound": false,
+              "created": 12345,
+              "modified": 12345,
+              "state": "READY",
+              "labels": ["test"],
+              "attributes": {"test": "test"},
+              "records": [
+                {
+                  "id": 100500,
+                  "billedAmount": 100.0,
+                  "finishTime": 12345,
+                  "result": "NO_ANS",
+                  "notes": [
+                        {
+                          "text": "test",
+                          "created": 12345
+                        }
+                  ]
+                }
+              ],
+              "finalCallResult": "NO_ANS",
+              "agentCall": false,
+              "notes": [
+                    {
+                      "text": "test",
+                      "created": 12345
+                    }
+              ]
+            }
+  ],
+  "texts": [
+            {
+              "id": 123645,
+              "fromNumber": "123541658",
+              "toNumber": "123552354",
+              "campaignId": 12345,
+              "batchId": 12345,
+              "contact": {},
+              "inbound": false,
+              "created": 12345,
+              "modified": 12345,
+              "state": "READY",
+              "labels": ["test"],
+              "attributes": {"test": "test"},
+              "records": [
+                    {
+                      "id": 100500,
+                      "billedAmount": 100.0,
+                      "finishTime": 12345,
+                      "message": "test",
+                      "textResult": "RECEIVED"
+                    }
+              ],
+              "message": "test",
+              "finalTextResult": "SENT"
+            }
+  ]
+}
+
+
+
+
+
+
+

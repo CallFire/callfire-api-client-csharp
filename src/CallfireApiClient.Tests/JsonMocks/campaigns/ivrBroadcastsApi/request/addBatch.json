@@ -1,0 +1,9 @@
+{
+  "name": "contact batch name1",
+  "scrubDuplicates": true,
+  "recipients": [
+    {
+      "phoneNumber": "12135551100"
+    }
+  ]
+}

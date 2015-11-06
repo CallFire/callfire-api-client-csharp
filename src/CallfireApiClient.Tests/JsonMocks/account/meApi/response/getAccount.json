@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "email": "test-account@callfire.com",
+  "name": "Test Account",
+  "firstName": "CallFire",
+  "lastName": "Developer",
+  "permissions": [
+    "ACCOUNT_HOLDER",
+    "API"
+  ]
+}

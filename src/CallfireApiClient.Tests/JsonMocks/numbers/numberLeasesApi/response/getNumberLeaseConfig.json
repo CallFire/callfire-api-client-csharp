@@ -1,0 +1,12 @@
+{
+  "number": "12135551100",
+  "configType": "TRACKING",
+  "callTrackingConfig": {
+    "screen": false,
+    "recorded": true,
+    "transferNumbers": [
+      "12135551189",
+      "12135551122"
+    ]
+  }
+}

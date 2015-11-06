@@ -1,0 +1,24 @@
+{
+  "items": [
+    {
+      "id": 11,
+      "name": "Example API IVR",
+      "status": "STOPPED",
+      "lastModified": 1443374636000,
+      "fromNumber": "12135551189",
+      "localTimeRestriction": {
+        "enabled": false
+      },
+      "retryConfig": {
+        "maxAttempts": 1,
+        "minutesBetweenAttempts": 60,
+        "retryPhoneTypes": [
+          "FIRST_NUMBER"
+        ]
+      },
+      "inbound": false,
+      "dialplanXml": "<dialplan name=\"Root\"><play type=\"tts\">Congratulations! You have successfully configured a CallFire I V R.</play></dialplan>"
+    }
+  ],
+  "totalCount": 1
+}

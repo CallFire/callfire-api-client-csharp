@@ -1,0 +1,36 @@
+{
+  "items": [
+    {
+      "id": 13413,
+      "fromNumber": "67076",
+      "toNumber": "12135551100",
+      "campaignId": 20,
+      "batchId": 14,
+      "contact": {
+        "id": 4096,
+        "homePhone": "12135551100"
+      },
+      "inbound": false,
+      "created": 1443403042000,
+      "modified": 1443403042000,
+      "state": "READY",
+      "message": "Hello World!"
+    },
+    {
+      "id": 13414,
+      "fromNumber": "67076",
+      "toNumber": "12135551101",
+      "campaignId": 20,
+      "batchId": 14,
+      "contact": {
+        "id": 4097,
+        "homePhone": "12135551101"
+      },
+      "inbound": false,
+      "created": 1443403044000,
+      "modified": 1443403044000,
+      "state": "READY",
+      "message": "Testing 1 2 3"
+    }
+  ]
+}

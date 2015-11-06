@@ -1,0 +1,5 @@
+{
+  "id": 11,
+  "name": "Example API IVR updated",
+  "dialplanXml": "<dialplan name=\"Root\"><record background=\"true\"/><play type=\"tts\">Congratulations! You have successfully configured a CallFire I V R.</play></dialplan>"
+}

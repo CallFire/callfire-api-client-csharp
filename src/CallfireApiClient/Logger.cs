@@ -29,6 +29,16 @@ namespace CallfireApiClient
 
         public void Debug(string format, params object[] values)
         {
+            WriteToLog("Debug", format, values);
+        }
+
+        public void Error(string format, params object[] values)
+        {
+            WriteToLog("Error", format, values);
+        }
+
+        private void WriteToLog(string level, string format, params object[] values)
+        {
             if (TraceSource.Switch.Level == SourceLevels.Off)
             {
                 return;
@@ -45,8 +55,8 @@ namespace CallfireApiClient
                 }
             }
 
-            CallfireLogFile.WriteLine(string.Format("{0} - {1} Debug: {2}", DateTime.Now.ToString(ClientConstants.LOG_DATETIME_PATTERN),
-                    TraceSource.Name, string.Format(format, values)));
+            CallfireLogFile.WriteLine(string.Format("{0} - {1} [{2}] {3}", DateTime.Now.ToString(ClientConstants.LOG_DATETIME_PATTERN),
+                    TraceSource.Name, level, string.Format(format, values)));
         }
     }
 }
