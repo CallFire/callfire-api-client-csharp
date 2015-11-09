@@ -1,0 +1,13 @@
+{
+  "id": 100500,
+  "firstName": "testFirstName",
+  "lastName": "testLastName",
+  "zipcode": "12345",
+  "homePhone": "",
+  "workPhone": "231554254",
+  "mobilePhone": "",
+  "externalId": "",
+  "externalSystem": "",
+  "deleted": false,
+  "properties": {"test": "test"}
+}

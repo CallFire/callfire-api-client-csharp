@@ -5,10 +5,10 @@ using System.Collections.Specialized;
 using RestSharp.Authenticators;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Diagnostics;
 using CallfireApiClient.Api.Common.Model;
 using RestSharp.Deserializers;
-
+using RestSharp.Serializers;
+using Newtonsoft.Json;
 
 namespace CallfireApiClient
 {
@@ -17,15 +17,16 @@ namespace CallfireApiClient
     /// </summary>
     public class RestApiClient
     {
-        private static TraceSource TraceSource = new TraceSource("CallfireApiClient");
-        private readonly NameValueCollection EMPTY_PARAMS = new NameValueCollection();
-        private readonly JsonDeserializer Deserializer;
+        private readonly Logger Logger = new Logger();
+        private readonly ISerializer JsonSerializer;
+        private readonly IDeserializer JsonDeserializer;
+        private readonly NameValueCollection EmptyParams = new NameValueCollection();
 
         /// <summary>
         /// RestSharp client configured to query Callfire API
         /// <summary>/
         /// <returns>RestSharp client interface</returns>
-        public IRestClient RestClient { get; }
+        public IRestClient RestClient { get; set; }
 
         /// <summary>
         /// Returns base URL path for all Callfire's API 2.0 endpoints
@@ -35,7 +36,7 @@ namespace CallfireApiClient
         {
             get
             {
-                return ConfigurationManager.AppSettings["CallFireBasePath"];
+                return ConfigurationManager.AppSettings[ClientConstants.CONFIG_API_BASE_PATH];
             }
         }
 
@@ -53,10 +54,13 @@ namespace CallfireApiClient
         /// </param>
         public RestApiClient(IAuthenticator authenticator)
         {
+            JsonSerializer = new CallfireJsonConverter();
+            JsonDeserializer = JsonSerializer as IDeserializer;
+
             RestClient = new RestClient(ApiBasePath);
             RestClient.Authenticator = authenticator;
-            RestClient.UserAgent = ConfigurationManager.AppSettings["CallFireClientVersion"];
-            Deserializer = new JsonDeserializer();
+            RestClient.UserAgent = ConfigurationManager.AppSettings[ClientConstants.CONFIG_CLIENT_NAME];
+            RestClient.AddHandler("application/json", JsonDeserializer);
             Filters = new SortedSet<RequestFilter>();
         }
 
@@ -65,6 +69,7 @@ namespace CallfireApiClient
         /// <summary>
         /// <typeparam name="T">The type of object to create and populate with the returned data.</typeparam>
         /// <param name="path">relative API request path</param>
+        /// <param name="request">optional finder request with query parameters</param>
         /// <returns>mapped object</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
@@ -73,26 +78,7 @@ namespace CallfireApiClient
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public T Get<T>(String path) where T: new()
-        {
-            return Get<T>(path, EMPTY_PARAMS);
-        }
-
-        /// <summary>
-        /// Performs GET request to specified path
-        /// <summary>
-        /// <typeparam name="T">The type of object to create and populate with the returned data.</typeparam>
-        /// <param name="path">relative API request path</param>
-        /// <param name="request">finder request with query parameters</param>
-        /// <returns>mapped object</returns>
-        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
-        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
-        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
-        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
-        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
-        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
-        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public T Get<T>(String path, FindRequest request) where T: new()
+        public T Get<T>(String path, FindRequest request = null) where T: new()
         {
             return Get<T>(path, ClientUtils.BuildQueryParams(request));
         }
@@ -113,29 +99,9 @@ namespace CallfireApiClient
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public T Get<T>(string path, NameValueCollection queryParams) where T: new()
         {
-            TraceSource.TraceEvent(TraceEventType.Verbose, 1, "GET request to {0} with params: {1}", path, queryParams);
-            var restRequest = new RestRequest(path, Method.GET);
-            addQueryParams(restRequest, queryParams);
+            Logger.Debug("GET request to {0} with params: {1}", path, queryParams);
+            var restRequest = CreateRestRequest(path, Method.GET, queryParams);
             return DoRequest<T>(restRequest);
-        }
-
-        /// <summary>
-        /// Performs POST request to specified path with empty body
-        /// <summary>
-        /// <typeparam name="T">The type of object to create and populate with the returned data.</typeparam>
-        /// <param name="path">relative API request path</param>
-        /// <param name="queryParams">query parameters</param>
-        /// <returns>mapped object</returns>
-        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
-        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
-        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
-        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
-        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
-        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
-        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public T Post<T>(String path) where T: new()
-        {
-            return Post<T>(path, null);
         }
 
         /// <summary>
@@ -143,7 +109,7 @@ namespace CallfireApiClient
         /// <summary>
         /// <typeparam name="T">The type of object to create and populate with the returned data.</typeparam>
         /// <param name="path">relative API request path</param>
-        /// <param name="payload">object to send</param>
+        /// <param name="payload">optional object to send</param>
         /// <returns>mapped object</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
@@ -152,9 +118,9 @@ namespace CallfireApiClient
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public T Post<T>(String path, object payload) where T: new()
+        public T Post<T>(String path, object payload = null) where T: new()
         {
-            return Post<T>(path, payload, EMPTY_PARAMS);
+            return Post<T>(path, payload, EmptyParams);
         }
 
         /// <summary>
@@ -174,16 +140,15 @@ namespace CallfireApiClient
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public T Post<T>(String path, object payload, NameValueCollection queryParams) where T: new()
         {
-            var restRequest = new RestRequest(path, Method.POST);
-            addQueryParams(restRequest, queryParams);
+            var restRequest = CreateRestRequest(path, Method.POST, queryParams);
             if (payload != null)
             {
                 restRequest.AddJsonBody(payload);
-                TraceSource.TraceEvent(TraceEventType.Verbose, 1, "POST request to {0} params: {1} entity \n{2}", path, queryParams, payload);
+                Logger.Debug("POST request to {0} params: {1} entity \n{2}", path, queryParams, payload);
             }
             else
             {
-                TraceSource.TraceEvent(TraceEventType.Verbose, 1, "POST request to {0} params: {1}", path, queryParams);
+                Logger.Debug("POST request to {0} params: {1}", path, queryParams);
             }
             return DoRequest<T>(restRequest);
         }
@@ -204,14 +169,14 @@ namespace CallfireApiClient
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public T PostFile<T>(String path, NameValueCollection queryParams) where T: new()
         {
-            var restRequest = new RestRequest(path, Method.POST);
+            var restRequest = CreateRestRequest(path, Method.POST, null);
             restRequest.AddFile("file", queryParams["file"]);
             if (queryParams["name"] != null)
             {
                 restRequest.AddParameter("name", queryParams["name"]);
             }
 
-            TraceSource.TraceEvent(TraceEventType.Verbose, 1, "POST file upload request to {0} with params {1}", path, queryParams);
+            Logger.Debug("POST file upload request to {0} with params {1}", path, queryParams);
             return DoRequest<T>(restRequest);
         }
 
@@ -220,7 +185,7 @@ namespace CallfireApiClient
         /// <summary>
         /// <typeparam name="T">The type of object to create and populate with the returned data.</typeparam>
         /// <param name="path">relative API request path</param>
-        /// <param name="payload">object to send</param>
+        /// <param name="payload">optional object to send</param>
         /// <returns>mapped object</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
@@ -229,9 +194,9 @@ namespace CallfireApiClient
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public T Put<T>(String path, object payload) where T: new()
+        public T Put<T>(String path, object payload = null) where T: new()
         {
-            return Put<T>(path, payload, EMPTY_PARAMS);
+            return Put<T>(path, payload, EmptyParams);
         }
 
         /// <summary>
@@ -251,16 +216,15 @@ namespace CallfireApiClient
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public T Put<T>(String path, object payload, NameValueCollection queryParams) where T: new()
         {
-            var restRequest = new RestRequest(path, Method.PUT);
-            addQueryParams(restRequest, queryParams);
+            var restRequest = CreateRestRequest(path, Method.PUT, queryParams);
             if (payload != null)
             {
                 restRequest.AddJsonBody(payload);
-                TraceSource.TraceEvent(TraceEventType.Verbose, 1, "PUT request to {0} params: {1} entity: \n{2}", path, queryParams, payload);
+                Logger.Debug("PUT request to {0} params: {1} entity: \n{2}", path, queryParams, payload);
             }
             else
             {
-                TraceSource.TraceEvent(TraceEventType.Verbose, 1, "PUT request to {0} params: {1}", path, queryParams);
+                Logger.Debug("PUT request to {0} params: {1}", path, queryParams);
             }
             return DoRequest<T>(restRequest);
         }
@@ -278,7 +242,7 @@ namespace CallfireApiClient
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public void Delete(String path)
         {
-            Delete(path, EMPTY_PARAMS);
+            Delete(path, EmptyParams);
         }
 
         /// <summary>
@@ -295,9 +259,8 @@ namespace CallfireApiClient
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public void Delete(String path, NameValueCollection queryParams)
         {
-            TraceSource.TraceEvent(TraceEventType.Verbose, 1, "DELETE request to {0} with params {1}", path, queryParams);
-            var restRequest = new RestRequest(path, Method.DELETE);
-            addQueryParams(restRequest, queryParams);
+            Logger.Debug("DELETE request to {0} with params {1}", path, queryParams);
+            var restRequest = CreateRestRequest(path, Method.DELETE, queryParams);
             DoRequest<object>(restRequest);
         }
 
@@ -310,22 +273,36 @@ namespace CallfireApiClient
             var response = RestClient.Execute<T>(request);
             if (response.Content == null)
             {
-                TraceSource.TraceEvent(TraceEventType.Verbose, 1, "received http code {0} with null entity, returning null", 
-                    response.StatusCode);
+                Logger.Debug("received http code {0} with null entity, returning null", response.StatusCode);
                 return default(T);
             }
-            Console.WriteLine(ObjectDumper.Dump("data: " + response.Data));
             VerifyResponse(response);
-            TraceSource.TraceEvent(TraceEventType.Verbose, 1, "received entity \n{0}", response.Data);
+            Logger.Debug("received entity: {0}", response.Content);
+
             return response.Data;
         }
 
         private void VerifyResponse(IRestResponse response)
         {
-            if ((int)response.StatusCode >= 400)
+            int statusCode = (int)response.StatusCode;
+            if (statusCode < 400 && response.ErrorException != null)
             {
-                var message = Deserializer.Deserialize<ErrorMessage>(response);
-                switch ((int)response.StatusCode)
+                Logger.Error("request has failed: {0}", response.ErrorException);
+                throw new CallfireClientException(response.ErrorMessage, response.ErrorException);
+            }
+            else if (statusCode >= 400)
+            {
+                ErrorMessage message;
+                try
+                {
+                    message = JsonDeserializer.Deserialize<ErrorMessage>(response);
+                }
+                catch (Exception e)
+                {
+                    Logger.Error("deserialization of ErrorMessage has failed: {0}", e);
+                    message = new  ErrorMessage(statusCode, response.Content, ClientConstants.GENERIC_HELP_LINK);
+                }
+                switch (statusCode)
                 {
                     case 400:
                         throw new BadRequestException(message);
@@ -343,12 +320,19 @@ namespace CallfireApiClient
             }
         }
 
-        private static void addQueryParams(IRestRequest restRequest, NameValueCollection queryParams)
+        private IRestRequest CreateRestRequest(string path, Method method, NameValueCollection queryParams)
         {
-            foreach (string key in queryParams.AllKeys)
+            var request = new RestRequest(path, method);
+            request.RequestFormat = DataFormat.Json;
+            request.JsonSerializer = JsonSerializer;
+            if (queryParams != null)
             {
-                restRequest.AddQueryParameter(key, queryParams[key]);
+                foreach (string key in queryParams.AllKeys)
+                {
+                    request.AddQueryParameter(key, queryParams[key]);
+                }
             }
+            return request;
         }
     }
 }

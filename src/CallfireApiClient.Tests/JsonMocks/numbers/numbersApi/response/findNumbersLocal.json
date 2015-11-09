@@ -1,0 +1,34 @@
+[
+  {
+    "number": "13102308654",
+    "nationalFormat": "(310) 230-8654",
+    "tollFree": false,
+    "region": {
+      "prefix": "1310230",
+      "city": "SANTA MONICA",
+      "state": "CA",
+      "zipcode": "90401",
+      "lata": "730",
+      "rateCenter": "SNMN SNMN",
+      "latitude": 34.0428,
+      "longitude": -118.5249,
+      "timeZone": "America/Los_Angeles"
+    }
+  },
+  {
+    "number": "13102301603",
+    "nationalFormat": "(310) 230-1603",
+    "tollFree": false,
+    "region": {
+      "prefix": "1310230",
+      "city": "SANTA MONICA",
+      "state": "CA",
+      "zipcode": "90401",
+      "lata": "730",
+      "rateCenter": "SNMN SNMN",
+      "latitude": 34.0428,
+      "longitude": -118.5249,
+      "timeZone": "America/Los_Angeles"
+    }
+  }
+]

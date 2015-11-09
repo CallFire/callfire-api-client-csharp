@@ -1,12 +1,13 @@
 ﻿using System;
 using RestSharp.Authenticators;
 using CallfireApiClient.Api.Account;
+using System.Diagnostics;
 
 namespace CallfireApiClient
 {
     public class CallfireClient
     {
-        readonly RestApiClient RestApiClient;
+        public RestApiClient RestApiClient { get; set; }
 
         readonly Lazy<MeApi> _MeApi;
         readonly Lazy<OrdersApi> _OrdersApi;

@@ -38,3 +38,6 @@ Thumbs.db
 
 #dotCover
 *.dotCover
+
+# Integration tests
+src/IntegrationTests/

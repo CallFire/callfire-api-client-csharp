@@ -1,0 +1,18 @@
+{
+  "items": [
+    {
+      "id": 4,
+      "match": ".*",
+      "message": "Short code reply. Echo - ${text.message}!"
+    },
+    {
+      "id": 15,
+      "number": "67076",
+      "keyword": "CALLFIRE",
+      "message": "I am a leaf on the wind"
+    }
+  ],
+  "limit": 100,
+  "offset": 0,
+  "totalCount": 2
+}

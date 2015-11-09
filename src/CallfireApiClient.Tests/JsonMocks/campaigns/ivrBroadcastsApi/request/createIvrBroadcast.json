@@ -1,0 +1,13 @@
+{
+  "name": "Example API IVR",
+  "fromNumber": "12135551189",
+  "dialplanXml": "<dialplan name=\"Root\"><play type=\"tts\">Congratulations! You have successfully configured a CallFire I V R.</play></dialplan>",
+  "recipients": [
+    {
+      "phoneNumber": "12135551100"
+    },
+    {
+      "phoneNumber": "12135551101"
+    }
+  ]
+}

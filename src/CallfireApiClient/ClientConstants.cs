@@ -6,11 +6,14 @@ namespace CallfireApiClient
     ///</summary>
     public static class ClientConstants
     {
-        public const string BASE_PATH_PROPERTY = "com.callfire.api.client.path";
-        public const string USER_AGENT_PROPERTY = "com.callfire.api.client.version";
-        public const string CLIENT_CONFIG_FILE = "/com/callfire/api/client/callfire.properties";
+        public const string LOG_DATETIME_PATTERN = "yyyy-MM-dd HH:mm:ss.fff";
+        public const string LOG_TRACE_SOURCE_NAME = "CallfireApiClient";
+        public const string LOG_FILE_LISTENER_NAME = "CallfireLogFile";
 
-        public const string PLACEHOLDER = "\\{\\}";
+        public const string CONFIG_API_BASE_PATH = "CallFireBasePath";
+        public const string CONFIG_CLIENT_NAME = "CallFireClientVersion";
+
+        public const string PLACEHOLDER = "{}";
         public const string GENERIC_HELP_LINK = "https://answers.callfire.com/hc/en-us";
     }
 }

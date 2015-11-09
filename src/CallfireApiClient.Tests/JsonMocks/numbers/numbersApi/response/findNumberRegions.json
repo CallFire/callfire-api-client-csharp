@@ -1,0 +1,29 @@
+{
+  "items": [
+    {
+      "prefix": "1310230",
+      "city": "SANTA MONICA",
+      "state": "CA",
+      "zipcode": "90401",
+      "lata": "730",
+      "rateCenter": "SNMN SNMN",
+      "latitude": 34.0428,
+      "longitude": -118.5249,
+      "timeZone": "America/Los_Angeles"
+    },
+    {
+      "prefix": "1310239",
+      "city": "SANTA MONICA",
+      "state": "CA",
+      "zipcode": "90401",
+      "lata": "730",
+      "rateCenter": "SNMN SNMN",
+      "latitude": 34.02,
+      "longitude": -118.4904,
+      "timeZone": "America/Los_Angeles"
+    }
+  ],
+  "limit": 2,
+  "offset": 0,
+  "totalCount": 24
+}

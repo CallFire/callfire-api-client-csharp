@@ -1,0 +1,20 @@
+{
+  "items": [
+    {
+      "id": 13405,
+      "fromNumber": "12135551100",
+      "toNumber": "12135551123",
+      "campaignId": 13,
+      "batchId": 11,
+      "contact": {
+        "id": 4101,
+        "homePhone": "12135551123"
+      },
+      "inbound": false,
+      "created": 1443382358000,
+      "modified": 1443382358000,
+      "state": "READY",
+      "message": "a new test message"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "items": [
+    {
+      "id": 13398,
+      "fromNumber": "12135551189",
+      "toNumber": "12135551100",
+      "campaignId": 11,
+      "batchId": 8,
+      "contact": {
+        "id": 4096,
+        "homePhone": "12135551100"
+      },
+      "inbound": false,
+      "created": 1443375666000,
+      "modified": 1443375667000,
+      "state": "DUP",
+      "agentCall": false
+    },
+    {
+      "id": 13397,
+      "fromNumber": "12135551189",
+      "toNumber": "12135551101",
+      "campaignId": 11,
+      "batchId": 7,
+      "contact": {
+        "id": 4097,
+        "homePhone": "12135551101"
+      },
+      "inbound": false,
+      "created": 1443374636000,
+      "modified": 1443374636000,
+      "state": "READY",
+      "agentCall": false
+    },
+    {
+      "id": 13396,
+      "fromNumber": "12135551189",
+      "toNumber": "12135551100",
+      "campaignId": 11,
+      "batchId": 7,
+      "contact": {
+        "id": 4096,
+        "homePhone": "12135551100"
+      },
+      "inbound": false,
+      "created": 1443374636000,
+      "modified": 1443374636000,
+      "state": "READY",
+      "agentCall": false
+    }
+  ],
+  "limit": 100,
+  "offset": 0,
+  "totalCount": 3
+}

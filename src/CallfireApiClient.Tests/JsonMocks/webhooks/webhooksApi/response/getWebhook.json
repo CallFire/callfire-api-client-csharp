@@ -1,0 +1,13 @@
+{
+  "id": 4321,
+  "enabled": false,
+  "name": "API hook",
+  "resource": "textCampaign",
+  "callback": "http://webhook.receiver.xyz/endpoint",
+  "createdAt": 1443408255000,
+  "updatedAt": 1443408255000,
+  "events": [
+    "stop",
+    "start"
+  ]
+}

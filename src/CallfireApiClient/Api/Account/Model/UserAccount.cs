@@ -8,17 +8,17 @@ namespace CallfireApiClient.Api.Account.Model
     /// <summary>
     /// User's account representation
     /// <summary>/
-    public class Account : CallfireModel
+    public class UserAccount : CallfireModel
     {
-        public long Id { get; set; }
+        public long? Id { get; set; }
 
-        public String Email { get; set; }
+        public string Email { get; set; }
 
-        public String Name { get; set; }
+        public string Name { get; set; }
 
-        public String FirstName { get; set; }
+        public string FirstName { get; set; }
 
-        public String LastName { get; set; }
+        public string LastName { get; set; }
 
         public List<UserPermission> Permissions { get; set; }
 

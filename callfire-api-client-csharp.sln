@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CallfireApiClient", "src\Ca
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CallfireApiClient.Tests", "src\CallfireApiClient.Tests\CallfireApiClient.Tests.csproj", "{17AF49CB-38AF-484D-9151-B470F320221D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "src\IntegrationTests\IntegrationTests.csproj", "{CAE3C5E6-7BBB-4673-BF70-7AA012A57F2C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,10 +23,15 @@ Global
 		{7C6961C8-3576-4499-92B6-3B5D798BDBFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C6961C8-3576-4499-92B6-3B5D798BDBFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C6961C8-3576-4499-92B6-3B5D798BDBFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAE3C5E6-7BBB-4673-BF70-7AA012A57F2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAE3C5E6-7BBB-4673-BF70-7AA012A57F2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAE3C5E6-7BBB-4673-BF70-7AA012A57F2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAE3C5E6-7BBB-4673-BF70-7AA012A57F2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7C6961C8-3576-4499-92B6-3B5D798BDBFC} = {851D9BA2-9C00-4769-84BA-AD8A168F733E}
 		{17AF49CB-38AF-484D-9151-B470F320221D} = {851D9BA2-9C00-4769-84BA-AD8A168F733E}
+		{CAE3C5E6-7BBB-4673-BF70-7AA012A57F2C} = {851D9BA2-9C00-4769-84BA-AD8A168F733E}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0

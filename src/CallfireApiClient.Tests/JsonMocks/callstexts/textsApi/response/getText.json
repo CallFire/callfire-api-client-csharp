@@ -1,0 +1,26 @@
+{
+  "id": 13413,
+  "fromNumber": "67076",
+  "toNumber": "12135551100",
+  "campaignId": 20,
+  "batchId": 14,
+  "contact": {
+    "id": 4096,
+    "homePhone": "12135551100"
+  },
+  "inbound": false,
+  "created": 1443403042000,
+  "modified": 1443403045000,
+  "state": "FINISHED",
+  "records": [
+    {
+      "id": 10310,
+      "billedAmount": 0.0,
+      "finishTime": 1443403043000,
+      "message": "Hello World!",
+      "textResult": "DNT"
+    }
+  ],
+  "message": "Hello World!",
+  "finalTextResult": "DNT"
+}

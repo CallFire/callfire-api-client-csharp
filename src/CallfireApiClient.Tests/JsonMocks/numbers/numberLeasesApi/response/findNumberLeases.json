@@ -1,0 +1,49 @@
+{
+  "items": [
+    {
+      "number": "12135551100",
+      "nationalFormat": "(213) 555-1100",
+      "tollFree": false,
+      "region": {
+        "prefix": "1920659",
+        "city": "APPLETON",
+        "state": "WI",
+        "zipcode": "54911",
+        "lata": "350",
+        "rateCenter": "APPLETON",
+        "latitude": 44.2563,
+        "longitude": -88.4018,
+        "timeZone": "America/Chicago"
+      },
+      "leaseBegin": 1305097200000,
+      "leaseEnd": 1448606871000,
+      "autoRenew": true,
+      "status": "ACTIVE",
+      "callFeatureStatus": "ENABLED",
+      "textFeatureStatus": "ENABLED"
+    },
+    {
+      "number": "13025178999",
+      "nationalFormat": "(302) 517-8999",
+      "tollFree": false,
+      "region": {
+        "prefix": "1302517",
+        "city": "HOCKESSIN",
+        "state": "DE",
+        "zipcode": "19707",
+        "lata": "228",
+        "rateCenter": "HOCKESSIN",
+        "latitude": 39.7851,
+        "longitude": -75.6984,
+        "timeZone": "America/New_York"
+      },
+      "autoRenew": true,
+      "status": "ACTIVE",
+      "callFeatureStatus": "UNSUPPORTED",
+      "textFeatureStatus": "ENABLED"
+    }
+  ],
+  "limit": 100,
+  "offset": 0,
+  "totalCount": 2
+}

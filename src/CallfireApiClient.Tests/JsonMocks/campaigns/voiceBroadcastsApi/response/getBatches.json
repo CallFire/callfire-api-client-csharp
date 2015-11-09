@@ -1,0 +1,26 @@
+{
+  "items": [
+    {
+      "id": 12,
+      "name": "API 14",
+      "status": "ACTIVE",
+      "broadcastId": 14,
+      "created": 1443382635000,
+      "size": 1,
+      "remaining": 1,
+      "enabled": true
+    },
+    {
+      "id": 13,
+      "name": "batch name",
+      "status": "ACTIVE",
+      "broadcastId": 14,
+      "created": 1443383158000,
+      "size": 2,
+      "remaining": 2,
+      "enabled": true
+    }
+  ],
+  "limit": 100,
+  "offset": 0
+}

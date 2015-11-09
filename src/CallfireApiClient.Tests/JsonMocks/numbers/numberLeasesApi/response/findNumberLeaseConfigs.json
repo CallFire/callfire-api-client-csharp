@@ -1,0 +1,17 @@
+{
+  "items": [
+    {
+      "number": "12135551100",
+      "configType": "IVR",
+      "ivrInboundConfig": {
+        "dialplanXml": "<dialplan name=\"Root\">\n\t\n\t<setvar varname=\"pin\">0</setvar>\n\t<setvar varname=\"account_id\">false</setvar>\n\t<setvar varname=\"recording_sent\">false</setvar>\n\t\n    <menu maxDigits=\"10\" timeout=\"10000\">\n\t\t<setvar varname=\"recording_sent\">false</setvar>\n\t\t<play name=\"enter_pin_prompt\" type=\"tts\" cache=\"true\">Enter your pin number</play>\n\t\t<keypress pressed=\"Default\">\n\t\t    <setvar varname=\"pin\">${call.lastinput}</setvar>\n\t\t\t<play type=\"tts\" cache=\"true\">authenticating</play>\n               <post varname=\"account_id\">http://localhost:8080/callfire-api-impl/authentication/call-in/?pin=${call.lastinput}&amp;callId=${call.id}</post>\n               <if expr=\"isNaN('${account_id}')\">\n                   <play type=\"tts\" cache=\"true\">Couldn't find that pin</play>\n                   <goto>enter_pin_prompt</goto>\n               </if>\t\t\t\t\n               <!-- start recording thing with the press 1 to review 2 to send 3 to start again -->\n               <menu maxDigits=\"1\" timeout=\"3500\">\n                   <play name=\"record_prompt\" type=\"tts\" cache=\"true\">Record after the beep. Press pound when done.</play>\n                   <record name=\"record\" varname=\"recording\" />\n                   <play name=\"recording_options\" type=\"tts\">Listen to recording, press 1. Save recording, press 2. Record again, press 3.</play>\n                   <keypress pressed=\"1\">\n                       <play type=\"url\" cache=\"false\">${recording}</play>\n                       <goto>recording_options</goto>\n                   </keypress>\n                   <keypress pressed=\"2\">\n                       <!-- Should we handle an error response here by sending logs and letting the user know?? -->\n                       <setvar varname=\"recording_sent\">true</setvar>\n                       <play type=\"tts\">Recording Saved. It will be available shortly.</play>\n                   </keypress>\n                   <keypress pressed=\"3\">\n                       <goto>record</goto>\n                   </keypress>\n               </menu> \n\t\t</keypress>\n\t</menu>\n\t\n</dialplan>\n"
+      }
+    },
+    {
+      "number": "13025178999"
+    }
+  ],
+  "limit": 100,
+  "offset": 0,
+  "totalCount": 2
+}

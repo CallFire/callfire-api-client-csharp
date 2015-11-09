@@ -1,0 +1,33 @@
+{
+  "items": [
+    {
+      "id": 4321,
+      "enabled": false,
+      "name": "API hook",
+      "resource": "textCampaign",
+      "callback": "https://callfire.com/newText",
+      "createdAt": 1443408255000,
+      "updatedAt": 1443408255000,
+      "events": [
+        "stop",
+        "start"
+      ]
+    },
+    {
+      "id": 2,
+      "enabled": false,
+      "name": "API hook",
+      "resource": "textCampaign",
+      "callback": "https://www.callfire.com/stoppedTexts",
+      "createdAt": 1443408445000,
+      "updatedAt": 1443408445000,
+      "events": [
+        "stop",
+        "start"
+      ]
+    }
+  ],
+  "limit": 1000,
+  "offset": 0,
+  "totalCount": 2
+}

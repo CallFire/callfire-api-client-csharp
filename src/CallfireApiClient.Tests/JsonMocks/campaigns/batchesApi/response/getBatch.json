@@ -1,0 +1,10 @@
+{
+  "id": 1,
+  "name": "CF2 Campaign Sample",
+  "status": "ACTIVE",
+  "broadcastId": 1,
+  "created": 1297474980000,
+  "size": 6198,
+  "remaining": 0,
+  "enabled": true
+}
