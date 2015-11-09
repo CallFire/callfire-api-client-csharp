@@ -10,6 +10,8 @@ namespace CallfireApiClient.Tests.Api
 {
     public class AbstractApiTest
     {
+        protected const string FIELDS = "id,name,created";
+        protected string ENCODED_FIELDS = "fields=" + WebUtility.UrlEncode(FIELDS);
         protected const string BASE_PATH = "../../JsonMocks";
         protected CallfireClient Client;
         protected ISerializer Serializer;
@@ -35,7 +37,7 @@ namespace CallfireApiClient.Tests.Api
             return result.ToString();
         }
 
-        protected void MockRestResponse(string responseData, HttpStatusCode statusCode = HttpStatusCode.OK)
+        protected Ref<IRestRequest> MockRestResponse(string responseData = "", HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             byte[] payload = Encoding.ASCII.GetBytes(responseData);
             Client.RestApiClient.RestClient = new MockRestClient(Client.RestApiClient.RestClient, Deserializer,
@@ -45,6 +47,7 @@ namespace CallfireApiClient.Tests.Api
                     RawBytes = payload,
                     ContentLength = payload.Length
                 });
+            return ((MockRestClient)Client.RestApiClient.RestClient).CapturedRequest;
         }
     }
 }

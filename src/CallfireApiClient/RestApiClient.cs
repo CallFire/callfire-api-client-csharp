@@ -100,8 +100,7 @@ namespace CallfireApiClient
         public T Get<T>(string path, NameValueCollection queryParams) where T: new()
         {
             Logger.Debug("GET request to {0} with params: {1}", path, queryParams);
-            var restRequest = CreateRestRequest(path, Method.GET);
-            AddQueryParams(restRequest, queryParams);
+            var restRequest = CreateRestRequest(path, Method.GET, queryParams);
             return DoRequest<T>(restRequest);
         }
 
@@ -141,8 +140,7 @@ namespace CallfireApiClient
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public T Post<T>(String path, object payload, NameValueCollection queryParams) where T: new()
         {
-            var restRequest = CreateRestRequest(path, Method.POST);
-            AddQueryParams(restRequest, queryParams);
+            var restRequest = CreateRestRequest(path, Method.POST, queryParams);
             if (payload != null)
             {
                 restRequest.AddJsonBody(payload);
@@ -171,7 +169,7 @@ namespace CallfireApiClient
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public T PostFile<T>(String path, NameValueCollection queryParams) where T: new()
         {
-            var restRequest = CreateRestRequest(path, Method.POST);
+            var restRequest = CreateRestRequest(path, Method.POST, null);
             restRequest.AddFile("file", queryParams["file"]);
             if (queryParams["name"] != null)
             {
@@ -218,8 +216,7 @@ namespace CallfireApiClient
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public T Put<T>(String path, object payload, NameValueCollection queryParams) where T: new()
         {
-            var restRequest = CreateRestRequest(path, Method.PUT);
-            AddQueryParams(restRequest, queryParams);
+            var restRequest = CreateRestRequest(path, Method.PUT, queryParams);
             if (payload != null)
             {
                 restRequest.AddJsonBody(payload);
@@ -263,8 +260,7 @@ namespace CallfireApiClient
         public void Delete(String path, NameValueCollection queryParams)
         {
             Logger.Debug("DELETE request to {0} with params {1}", path, queryParams);
-            var restRequest = CreateRestRequest(path, Method.DELETE);
-            AddQueryParams(restRequest, queryParams);
+            var restRequest = CreateRestRequest(path, Method.DELETE, queryParams);
             DoRequest<object>(restRequest);
         }
 
@@ -288,15 +284,25 @@ namespace CallfireApiClient
 
         private void VerifyResponse(IRestResponse response)
         {
-            if (response.ErrorException != null)
+            int statusCode = (int)response.StatusCode;
+            if (statusCode < 400 && response.ErrorException != null)
             {
-                Logger.Error("request has failed: {0}", response.ErrorMessage);
+                Logger.Error("request has failed: {0}", response.ErrorException);
                 throw new CallfireClientException(response.ErrorMessage, response.ErrorException);
             }
-            if ((int)response.StatusCode >= 400)
+            else if (statusCode >= 400)
             {
-                var message = JsonDeserializer.Deserialize<ErrorMessage>(response);
-                switch ((int)response.StatusCode)
+                ErrorMessage message;
+                try
+                {
+                    message = JsonDeserializer.Deserialize<ErrorMessage>(response);
+                }
+                catch (Exception e)
+                {
+                    Logger.Error("deserialization of ErrorMessage has failed: {0}", e);
+                    message = new  ErrorMessage(statusCode, response.Content, ClientConstants.GENERIC_HELP_LINK);
+                }
+                switch (statusCode)
                 {
                     case 400:
                         throw new BadRequestException(message);
@@ -314,20 +320,19 @@ namespace CallfireApiClient
             }
         }
 
-        private IRestRequest CreateRestRequest(string path, Method method)
+        private IRestRequest CreateRestRequest(string path, Method method, NameValueCollection queryParams)
         {
             var request = new RestRequest(path, method);
             request.RequestFormat = DataFormat.Json;
             request.JsonSerializer = JsonSerializer;
-            return request;
-        }
-
-        private static void AddQueryParams(IRestRequest restRequest, NameValueCollection queryParams)
-        {
-            foreach (string key in queryParams.AllKeys)
+            if (queryParams != null)
             {
-                restRequest.AddQueryParameter(key, queryParams[key]);
+                foreach (string key in queryParams.AllKeys)
+                {
+                    request.AddQueryParameter(key, queryParams[key]);
+                }
             }
+            return request;
         }
     }
 }

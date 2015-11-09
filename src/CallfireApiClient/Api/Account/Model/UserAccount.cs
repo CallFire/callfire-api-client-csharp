@@ -10,7 +10,7 @@ namespace CallfireApiClient.Api.Account.Model
     /// <summary>/
     public class UserAccount : CallfireModel
     {
-        public long Id { get; set; }
+        public long? Id { get; set; }
 
         public string Email { get; set; }
 

@@ -13,12 +13,12 @@ namespace CallfireApiClient
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            return reader.Value == null ? (DateTime?)null : Epoch.AddSeconds(Convert.ToInt64(reader.Value)).ToLocalTime();
+            return reader.Value == null ? (DateTime?)null : Epoch.AddMilliseconds(Convert.ToInt64(reader.Value)).ToLocalTime();
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            long unixTime = (long)(Convert.ToDateTime(value).ToUniversalTime() - Epoch).TotalSeconds;
+            long unixTime = (long)(Convert.ToDateTime(value).ToUniversalTime() - Epoch).TotalMilliseconds;
             writer.WriteValue(unixTime);
         }
     }

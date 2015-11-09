@@ -11,6 +11,8 @@ namespace CallfireApiClient.Tests
     {
         private HttpResponse MockResponse;
 
+        public Ref<IRestRequest> CapturedRequest { get; set; }
+
         public MockRestClient(IRestClient restClient, IDeserializer deserializer = null)
             : this(restClient, deserializer, null)
         {
@@ -18,6 +20,7 @@ namespace CallfireApiClient.Tests
 
         public MockRestClient(IRestClient restClient, IDeserializer deserializer, HttpResponse response = null)
         {
+            CapturedRequest = new Ref<IRestRequest>(null);
             MockResponse = response ?? new HttpResponse();
             BaseUrl = restClient.BaseUrl;
             Authenticator = restClient.Authenticator;
@@ -27,6 +30,7 @@ namespace CallfireApiClient.Tests
 
         public override IRestResponse Execute(IRestRequest request)
         {
+            CapturedRequest.Value = request;
             string method = Enum.GetName(typeof(Method), request.Method);
             return InvokePrivateExecute(request, method);
         }
@@ -60,6 +64,16 @@ namespace CallfireApiClient.Tests
             Assert.NotNull(method);
             var response = method.Invoke(this, new object[] { request, httpMethod, (Func<IHttp, string, HttpResponse>)DoReturnMockResponse });
             return (IRestResponse)response;
+        }
+    }
+
+    public class Ref<T>
+    {
+        public T Value { get; set; }
+
+        public Ref(T value)
+        {
+            Value = value;
         }
     }
 }

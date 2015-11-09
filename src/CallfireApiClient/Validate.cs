@@ -7,7 +7,7 @@ namespace CallfireApiClient
     /// </summary>
     internal static class Validate
     {
-        public static void notBlank(string value, string message)
+        public static void NotBlank(string value, string message)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
@@ -15,7 +15,7 @@ namespace CallfireApiClient
             }
         }
 
-        public static void notNull(object value, string message)
+        public static void NotNull(object value, string message)
         {
             if (value == null)
             {

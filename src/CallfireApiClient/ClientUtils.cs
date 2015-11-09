@@ -1,13 +1,18 @@
 using CallfireApiClient.Api.Common.Model;
 using System.Collections.Specialized;
 using System.Text;
+using System.Collections;
+using System.Collections.Generic;
+using RestSharp;
+using System;
+using System.Reflection;
 
 namespace CallfireApiClient
 {
     /// <summary>
     /// Utility class
     /// </summary>
-    internal static class ClientUtils
+    public static class ClientUtils
     {
         /// <summary>
         /// Replaces the first occurence of given string
@@ -57,6 +62,11 @@ namespace CallfireApiClient
             return queryParams;
         }
 
+        public static void PrintParams(List<Parameter> parameters)
+        {
+            parameters.ForEach(Console.WriteLine);
+        }
+
         /**
      * Add {@link Iterable} value as query param to name-value query list
      *
@@ -72,14 +82,12 @@ namespace CallfireApiClient
         //        }
         //    }
 
-        /**
-     * Method traverses request object using reflection and build {@link List} of {@link NameValuePair} from it
-     *
-     * @param request request
-     * @param <T>     type of request
-     * @return list contains query parameters
-     * @throws CallfireClientException in case IllegalAccessException occurred
-     */
+        /// <summary>
+        /// Method traverses request object using reflection and build NameValueCollection from it
+        /// <summary>/
+        /// <param name="request">request object
+        /// <typeparam name="T">type of request<typeparam>/
+        /// <returns>collection of query parameters, empty collection if request is null</returns>
         public static NameValueCollection BuildQueryParams<T>(T request)
             where T : CallfireModel
         {
@@ -87,52 +95,18 @@ namespace CallfireApiClient
             {
                 return new NameValueCollection(0);
             }
-            NameValueCollection parameters = new NameValueCollection();
-//        Class<?> superclass = request.getClass().getSuperclass();
-//        while (superclass != null) {
-//            readFields(request, params, superclass);
-//            superclass = superclass.getSuperclass();
-//        }
-//        readFields(request, params, request.getClass());
+            var parameters = new NameValueCollection();
+            foreach (PropertyInfo pi in request.GetType().GetProperties())
+            {
+                object value = pi.GetValue(request, null);
+                if (value != null)
+                {
+                    parameters.Add(pi.Name.ToLower(), value.ToString());
+                }
+//                TODO vmikhailov remove commented code
+//                Console.WriteLine(pi.ToString());
+            }
             return parameters;
         }
-        //
-        //    private static void readFields(Object request, List<NameValuePair> params, Class<?> clazz) {
-        //        for (Field field : clazz.getDeclaredFields()) {
-        //            try {
-        //                readField(request, params, field);
-        //            } catch (IllegalAccessException e) {
-        //                throw new CallfireClientException(e);
-        //            }
-        //        }
-        //    }
-        //
-        //    private static void readField(Object request, List<NameValuePair> params, Field field)
-        //        throws IllegalAccessException {
-        //        field.setAccessible(true);
-        //        if (field.isAnnotationPresent(QueryParamIgnore.class) &&
-        //            field.getAnnotation(QueryParamIgnore.class).enabled()) {
-        //            return;
-        //        }
-        //        Object value = field.get(request);
-        //        if (value != null) {
-        //            if (field.isAnnotationPresent(ConvertToString.class) && value instanceof Iterable) {
-        //                value = StringUtils.join((Iterable) value, field.getAnnotation(ConvertToString.class).separator());
-        //                if (StringUtils.isEmpty((String) value)) {
-        //                    return;
-        //                }
-        //            }
-        //            if (value instanceof Iterable) {
-        //                for (Object o : (Iterable) value) {
-        //                    params.add(new BasicNameValuePair(field.getName(), o.toString()));
-        //                }
-        //                return;
-        //            }
-        //            if (value instanceof Date) {
-        //                value = ((Date) value).getTime();
-        //            }
-        //            params.add(new BasicNameValuePair(field.getName(), value.toString()));
-        //        }
-        //    }
     }
 }

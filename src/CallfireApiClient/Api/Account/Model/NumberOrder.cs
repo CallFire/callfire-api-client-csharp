@@ -9,7 +9,7 @@ namespace CallfireApiClient.Api.Account.Model
     /// </summary>
     public class NumberOrder : CallfireModel
     {
-        public long Id { get; set; }
+        public long? Id { get; set; }
 
         public Status Status { get; }
 

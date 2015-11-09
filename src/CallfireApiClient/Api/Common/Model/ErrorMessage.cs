@@ -3,9 +3,9 @@ namespace CallfireApiClient.Api.Common.Model
 {
     public class ErrorMessage : CallfireModel
     {
-        public int HttpStatusCode { get; set; }
+        public int? HttpStatusCode { get; set; }
 
-        public int InternalCode { get; set; }
+        public int? InternalCode { get; set; }
 
         public string Message { get; set; }
 

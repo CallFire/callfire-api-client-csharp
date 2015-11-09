@@ -1,6 +1,5 @@
 using System;
 using CallfireApiClient.Api.Common.Model;
-using Newtonsoft.Json;
 
 namespace CallfireApiClient.Api.Account.Model
 {
@@ -13,7 +12,7 @@ namespace CallfireApiClient.Api.Account.Model
         /// Gets start of usage period
         /// </summary>
         /// <value>start of usage period</value>
-        public DateTime IntervalStart { get; set; }
+        public DateTime IntervalStart { get; private set; }
 
         /// <summary>
         /// Gets end of usage period

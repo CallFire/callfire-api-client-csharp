@@ -71,7 +71,7 @@ namespace CallfireApiClient.Api.Account
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public IList<CallerId> GetCallerIds()
         {
-            return Client.Get<List<CallerId>>(ME_CALLERIDS_PATH);
+            return Client.Get<ListHolder<CallerId>>(ME_CALLERIDS_PATH).Items;
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace CallfireApiClient.Api.Account
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public void SendVerificationCode(String callerid)
         {
-            Validate.notBlank(callerid, "callerid cannot be blank");
+            Validate.NotBlank(callerid, "callerid cannot be blank");
             Client.Post<object>(ME_CALLERIDS_CODE_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, callerid));
         }
 
@@ -105,11 +105,11 @@ namespace CallfireApiClient.Api.Account
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public bool VerifyCallerId(CallerIdVerificationRequest request)
+        public bool? VerifyCallerId(CallerIdVerificationRequest request)
         {
-            Validate.notBlank(request.CallerId, "callerid cannot be blank");
+            Validate.NotBlank(request.CallerId, "callerid cannot be blank");
             string path = ME_CALLERIDS_VERIFY_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, request.CallerId);
-            return Client.Post<bool>(path, request);
+            return Convert.ToBoolean(Client.Post<object>(path, request));
         }
 
         /// <summary>

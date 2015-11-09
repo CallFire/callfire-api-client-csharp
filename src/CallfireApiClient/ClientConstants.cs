@@ -13,7 +13,7 @@ namespace CallfireApiClient
         public const string CONFIG_API_BASE_PATH = "CallFireBasePath";
         public const string CONFIG_CLIENT_NAME = "CallFireClientVersion";
 
-        public const string PLACEHOLDER = "\\{\\}";
+        public const string PLACEHOLDER = "{}";
         public const string GENERIC_HELP_LINK = "https://answers.callfire.com/hc/en-us";
     }
 }

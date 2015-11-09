@@ -9,7 +9,7 @@ namespace CallfireApiClient.Api.Account.Model
     /// </summary>
     public class NumberOrderItem : CallfireModel
     {
-        public int Ordered { get; set; }
+        public int? Ordered { get; set; }
 
         public Double UnitCost { get; }
 

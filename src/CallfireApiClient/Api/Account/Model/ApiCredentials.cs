@@ -8,15 +8,15 @@ namespace CallfireApiClient.Api.Account.Model
     /// </summary>
     public class ApiCredentials : CallfireModel
     {
-        public long Id { get; }
+        public long? Id { get; private set; }
 
-        public String Name { get; set; }
+        public string Name { get; set; }
 
-        public String Username { get; }
+        public string Username { get; private set; }
 
-        public String Password { get; }
+        public string Password { get; private set; }
 
-        public Boolean Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
         public override string ToString()
         {

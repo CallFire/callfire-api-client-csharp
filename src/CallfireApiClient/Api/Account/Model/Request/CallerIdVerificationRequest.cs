@@ -1,6 +1,6 @@
 using System;
-using System.Runtime.Serialization;
 using CallfireApiClient.Api.Common.Model;
+using Newtonsoft.Json;
 
 namespace CallfireApiClient.Api.Account.Model.Request
 {
@@ -11,7 +11,7 @@ namespace CallfireApiClient.Api.Account.Model.Request
     {
         public string VerificationCode { get; set; }
 
-        [IgnoreDataMemberAttribute]
+        [JsonIgnore]
         public string CallerId { get; set; }
 
         public override string ToString()
