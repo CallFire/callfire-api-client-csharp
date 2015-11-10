@@ -54,12 +54,14 @@ namespace CallfireApiClient
         /// <returns>NameValueCollection with one item</returns>
         public static NameValueCollection BuildQueryParams(string name, string value)
         {
-            var queryParams = new NameValueCollection(1);
             if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(value))
             {
-                queryParams.Add(name, value);
+                return new NameValueCollection(1) { { name, value } };
             }
-            return queryParams;
+            else
+            {
+                return new NameValueCollection(0);
+            }
         }
 
         public static void PrintParams(List<Parameter> parameters)

@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CallfireApiClient", "src\Ca
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CallfireApiClient.Tests", "src\CallfireApiClient.Tests\CallfireApiClient.Tests.csproj", "{17AF49CB-38AF-484D-9151-B470F320221D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "src\IntegrationTests\IntegrationTests.csproj", "{CAE3C5E6-7BBB-4673-BF70-7AA012A57F2C}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "CallfireApiClient.IntegrationTests", "src\CallfireApiClient.IntegrationTests\CallfireApiClient.IntegrationTests.csproj", "{CAE3C5E6-7BBB-4673-BF70-7AA012A57F2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
