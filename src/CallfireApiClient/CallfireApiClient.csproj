@@ -78,6 +78,9 @@
     <Compile Include="UnixTimeJsonConverter.cs" />
     <Compile Include="CallfireJsonConverter.cs" />
     <Compile Include="CallfireContractResolver.cs" />
+    <Compile Include="Api\Webhooks\Model\Webhook.cs" />
+    <Compile Include="Api\Webhooks\Model\Request\FindWebhooksRequest.cs" />
+    <Compile Include="Api\Webhooks\WebhooksApi.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -94,6 +97,9 @@
     <Folder Include="Api\Numbers\" />
     <Folder Include="Api\Numbers\Model\" />
     <Folder Include="Api\Numbers\Model\Request\" />
+    <Folder Include="Api\Webhooks\" />
+    <Folder Include="Api\Webhooks\Model\" />
+    <Folder Include="Api\Webhooks\Model\Request\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

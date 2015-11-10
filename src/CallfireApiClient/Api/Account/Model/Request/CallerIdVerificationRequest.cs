@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 namespace CallfireApiClient.Api.Account.Model.Request
 {
     /// <summary>
-    /// Request object for POST /admin/callerids/{callerid}/verification-code
+    /// Request object for POST /me/callerids/{callerid}/verification-code
     /// <summary>
     public class CallerIdVerificationRequest : CallfireModel
     {
