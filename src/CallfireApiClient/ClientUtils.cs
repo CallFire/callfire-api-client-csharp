@@ -12,7 +12,7 @@ namespace CallfireApiClient
     /// <summary>
     /// Utility class
     /// </summary>
-    public static class ClientUtils
+    internal static class ClientUtils
     {
         /// <summary>
         /// Replaces the first occurence of given string

@@ -49,7 +49,6 @@
     <Compile Include="ClientConstants.cs" />
     <Compile Include="Api\Common\Model\ErrorMessage.cs" />
     <Compile Include="Api\Common\Model\Request\FindRequest.cs" />
-    <Compile Include="Api\Common\Model\Request\AbstractBuilder.cs" />
     <Compile Include="CallfireApiException.cs" />
     <Compile Include="ClientUtils.cs" />
     <Compile Include="Api\Common\Model\Request\CommonFindRequest.cs" />

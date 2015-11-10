@@ -11,9 +11,9 @@ namespace CallfireApiClient.Api.Account.Model
     {
         public int? Ordered { get; set; }
 
-        public Double UnitCost { get; }
+        public double? UnitCost { get; private set; }
 
-        public IList<string> Fulfilled { get; }
+        public IList<string> Fulfilled { get; private set; }
 
         public NumberOrderItem()
         {

@@ -11,11 +11,11 @@ namespace CallfireApiClient.Api.Account.Model
     {
         public long? Id { get; set; }
 
-        public Status Status { get; }
+        public Status? Status { get; private set; }
 
-        public DateTime Created { get; }
+        public DateTime? Created { get; private set; }
 
-        public Double TotalCost { get; }
+        public double? TotalCost { get; private set; }
 
         public NumberOrderItem LocalNumbers { get; set; }
 
