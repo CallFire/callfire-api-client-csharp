@@ -20,7 +20,7 @@ namespace CallfireApiClient.Api.Account.Model
 
         public string LastName { get; set; }
 
-        public List<UserPermission> Permissions { get; set; }
+        public IList<UserPermission> Permissions { get; set; }
 
         public enum UserPermission
         {
