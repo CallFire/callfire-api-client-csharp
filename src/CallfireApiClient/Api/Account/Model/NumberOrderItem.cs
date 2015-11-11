@@ -1,6 +1,7 @@
 using System;
 using CallfireApiClient.Api.Common.Model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CallfireApiClient.Api.Account.Model
 {
@@ -18,12 +19,12 @@ namespace CallfireApiClient.Api.Account.Model
         public NumberOrderItem()
         {
             Ordered = 0;
-            Fulfilled = new List<string>();
         }
 
         public override string ToString()
         {
-            return string.Format("[NumberOrderItem: Ordered={0}, UnitCost={1}, Fulfilled={2}]", Ordered, UnitCost, Fulfilled);
+            return string.Format("[NumberOrderItem: Ordered={0}, UnitCost={1}, Fulfilled={2}]", Ordered, UnitCost,
+                Fulfilled?.ToPrettyString());
         }
     }
 }

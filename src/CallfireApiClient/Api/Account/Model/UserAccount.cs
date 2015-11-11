@@ -32,7 +32,7 @@ namespace CallfireApiClient.Api.Account.Model
         public override string ToString()
         {
             return string.Format("[Account: Id={0}, Email={1}, Name={2}, FirstName={3}, LastName={4}, Permissions={5}]",
-                Id, Email, Name, FirstName, LastName, String.Join(",", Permissions ?? Enumerable.Empty<UserPermission>()));
+                Id, Email, Name, FirstName, LastName, Permissions?.ToPrettyString());
         }
     }
 }

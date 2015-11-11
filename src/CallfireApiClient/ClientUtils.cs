@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using RestSharp;
 using System;
 using System.Reflection;
+using System.Linq;
 
 namespace CallfireApiClient
 {
@@ -14,6 +15,16 @@ namespace CallfireApiClient
     /// </summary>
     internal static class ClientUtils
     {
+        /// <summary>
+        /// Convert IEnumerable to pretty string
+        /// </summary>
+        /// <returns>string representation of IEnumerable object</returns>
+        /// <param name="enumerable">Enumerable.</param>
+        public static string ToPrettyString(this IEnumerable enumerable)
+        {
+            return String.Join(",", enumerable);
+        }
+
         /// <summary>
         /// Replaces the first occurence of given string
         /// </summary>

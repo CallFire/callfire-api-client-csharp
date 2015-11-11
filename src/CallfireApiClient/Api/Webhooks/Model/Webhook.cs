@@ -1,6 +1,7 @@
 ﻿using System;
 using CallfireApiClient.Api.Common.Model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CallfireApiClient.Api.Webhooks.Model
 {
@@ -22,16 +23,16 @@ namespace CallfireApiClient.Api.Webhooks.Model
 
         public string Secret { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
 
-        public DateTime UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
         public ISet<string> Events { get; set; }
 
         public override string ToString()
         {
             return string.Format("[Webhook: Id={0}, Enabled={1}, Name={2}, Resource={3}, NonStrictSsl={4}, Fields={5}, Callback={6}, Secret={7}, CreatedAt={8}, UpdatedAt={9}, Events={10}]",
-                Id, Enabled, Name, Resource, NonStrictSsl, Fields, Callback, Secret, CreatedAt, UpdatedAt, Events);
+                Id, Enabled, Name, Resource, NonStrictSsl, Fields, Callback, Secret, CreatedAt, UpdatedAt, Events?.ToPrettyString());
         }
     }
 }

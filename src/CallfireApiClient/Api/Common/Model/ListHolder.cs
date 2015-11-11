@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using System;
+using System.Linq;
 
 namespace CallfireApiClient.Api.Common.Model
 {
@@ -11,7 +12,6 @@ namespace CallfireApiClient.Api.Common.Model
 
         public ListHolder()
         {
-            Items = new List<T>();
         }
 
         public ListHolder(IList<T> items)
@@ -21,7 +21,7 @@ namespace CallfireApiClient.Api.Common.Model
 
         public override string ToString()
         {
-            return string.Format("[ListHolder: Items={0}]", String.Join(",", Items));
+            return string.Format("[ListHolder: Items={0}]", Items?.ToPrettyString());
         }
     }
 }

@@ -50,7 +50,6 @@ namespace CallfireApiClient.Api.Webhooks
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public Webhook Get(long id, string fields = null)
         {
-            Validate.NotNull(id, "id cannot be null");
             var queryParams = ClientUtils.BuildQueryParams("fields", fields);
             String path = WEBHOOKS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString());
             return Client.Get<Webhook>(path, queryParams);
@@ -89,7 +88,6 @@ namespace CallfireApiClient.Api.Webhooks
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public void Update(Webhook webhook)
         {
-            Validate.NotNull(webhook.Id, "webhook.id cannot be null");
             string path = WEBHOOKS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, webhook.Id.ToString());
             Client.Put<object>(path, webhook);
         }
@@ -107,7 +105,6 @@ namespace CallfireApiClient.Api.Webhooks
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public void Delete(long id)
         {
-            Validate.NotNull(id, "id cannot be null");
             Client.Delete(WEBHOOKS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString()));
         }
     }
