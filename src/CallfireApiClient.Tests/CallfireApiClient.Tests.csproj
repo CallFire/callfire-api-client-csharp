@@ -43,6 +43,7 @@
     <Compile Include="Api\AbstractApiTest.cs" />
     <Compile Include="MockRestClient.cs" />
     <Compile Include="Api\Webhooks\WebhooksApiTest.cs" />
+    <Compile Include="Api\Contacts\ContactsApiTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -161,6 +162,8 @@
     <None Include="JsonMocks\account\ordersApi\response\getOrder.json" />
     <None Include="JsonMocks\account\ordersApi\response\orderKeywords.json" />
     <None Include="JsonMocks\account\ordersApi\response\orderNumbers.json" />
+    <None Include="JsonMocks\contacts\contactsApi\request\updateContact.json" />
+    <None Include="JsonMocks\contacts\contactsApi\request\createContact.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CallfireApiClient\CallfireApiClient.csproj">

@@ -7,7 +7,6 @@ namespace CallfireApiClient.Api.Common.Model
 {
     public class ListHolder<T> : CallfireModel
     {
-        [JsonProperty(Order = -2)]
         public IList<T> Items { get; set; }
 
         public ListHolder()

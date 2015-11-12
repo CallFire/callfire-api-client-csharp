@@ -20,6 +20,8 @@ namespace CallfireApiClient
             ApiErrorMessage = apiErrorMessage;
         }
 
+        public override string Message { get { return ApiErrorMessage.ToString(); } }
+
         public override string ToString()
         {
             return string.Format("[CallfireApiException: ApiErrorMessage={0}]", ApiErrorMessage);

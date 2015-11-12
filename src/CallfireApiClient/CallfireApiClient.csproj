@@ -80,6 +80,19 @@
     <Compile Include="Api\Webhooks\Model\Webhook.cs" />
     <Compile Include="Api\Webhooks\Model\Request\FindWebhooksRequest.cs" />
     <Compile Include="Api\Webhooks\WebhooksApi.cs" />
+    <Compile Include="Api\Contacts\ContactsApi.cs" />
+    <Compile Include="Api\Contacts\Model\Request\FindContactsRequest.cs" />
+    <Compile Include="Api\Contacts\Model\Contact.cs" />
+    <Compile Include="Api\Contacts\Model\ContactHistory.cs" />
+    <Compile Include="Api\CallsTexts\Model\Call.cs" />
+    <Compile Include="Api\CallsTexts\Model\Text.cs" />
+    <Compile Include="Api\Common\Model\Request\GetByIdRequest.cs" />
+    <Compile Include="Api\CallsTexts\Model\Action.cs" />
+    <Compile Include="Api\CallsTexts\Model\Note.cs" />
+    <Compile Include="Api\CallsTexts\Model\CallRecord.cs" />
+    <Compile Include="Api\CallsTexts\Model\ActionRecord.cs" />
+    <Compile Include="Api\Campaigns\Model\CallRecording.cs" />
+    <Compile Include="Api\CallsTexts\Model\TextRecord.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -99,6 +112,13 @@
     <Folder Include="Api\Webhooks\" />
     <Folder Include="Api\Webhooks\Model\" />
     <Folder Include="Api\Webhooks\Model\Request\" />
+    <Folder Include="Api\Contacts\" />
+    <Folder Include="Api\Contacts\Model\" />
+    <Folder Include="Api\Contacts\Model\Request\" />
+    <Folder Include="Api\CallsTexts\" />
+    <Folder Include="Api\CallsTexts\Model\" />
+    <Folder Include="Api\Campaigns\" />
+    <Folder Include="Api\Campaigns\Model\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

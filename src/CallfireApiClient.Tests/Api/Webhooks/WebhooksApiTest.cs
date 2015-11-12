@@ -1,9 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
-using CallfireApiClient.Api.Keywords.Model.Request;
 using RestSharp;
 using System.Linq;
-using CallfireApiClient.Api.Numbers.Model.Request;
 using CallfireApiClient.Api.Webhooks.Model;
 using CallfireApiClient.Api.Webhooks.Model.Request;
 using CallfireApiClient.Api.Common.Model;
