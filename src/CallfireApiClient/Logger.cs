@@ -3,6 +3,9 @@ using System.Diagnostics;
 using System.Collections.Specialized;
 using CallfireApiClient.Api.Common.Model;
 using RestSharp.Serializers;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CallfireApiClient
 {
@@ -49,9 +52,9 @@ namespace CallfireApiClient
                 {
                     values[i] = Serializer.Serialize(values[i]);
                 }
-                else if (values[i].GetType() == typeof(NameValueCollection))
+                else if (values[i] is ICollection)
                 {
-                    values[i] = ClientUtils.ParamsToString((NameValueCollection)values[i]);
+                    values[i] = (((ICollection)values[i]).Cast<object>().ToList().ToPrettyString());
                 }
             }
 

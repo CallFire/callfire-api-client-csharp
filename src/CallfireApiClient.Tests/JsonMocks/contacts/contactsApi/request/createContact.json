@@ -1,0 +1,12 @@
+﻿[
+    {
+        "firstName":"Test",
+        "lastName":"Contact",
+        "homePhone":"12135551124"
+    },
+    {
+        "firstName":"Test2",
+        "lastName":"Contact2",
+        "homePhone":"12135551125"
+    }
+]

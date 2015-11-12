@@ -42,6 +42,8 @@
     <Compile Include="Api\Account\MeApiTest.cs" />
     <Compile Include="Api\AbstractApiTest.cs" />
     <Compile Include="MockRestClient.cs" />
+    <Compile Include="Api\Webhooks\WebhooksApiTest.cs" />
+    <Compile Include="Api\Contacts\ContactsApiTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -80,11 +82,6 @@
     <None Include="JsonMocks\keywords\keywordLeasesApi\response\findKeywordLeases.json" />
     <None Include="JsonMocks\keywords\keywordLeasesApi\response\getKeywordLease.json" />
     <None Include="JsonMocks\keywords\keywordsApi\response\findKeywords.json" />
-    <None Include="JsonMocks\webhooks\subscriptionsApi\request\createSubscription.json" />
-    <None Include="JsonMocks\webhooks\subscriptionsApi\request\updateSubscription.json" />
-    <None Include="JsonMocks\webhooks\subscriptionsApi\response\createSubscription.json" />
-    <None Include="JsonMocks\webhooks\subscriptionsApi\response\findSubscriptions.json" />
-    <None Include="JsonMocks\webhooks\subscriptionsApi\response\getSubscription.json" />
     <None Include="JsonMocks\webhooks\webhooksApi\request\createWebhook.json" />
     <None Include="JsonMocks\webhooks\webhooksApi\request\updateWebhook.json" />
     <None Include="JsonMocks\webhooks\webhooksApi\response\createWebhook.json" />
@@ -165,6 +162,8 @@
     <None Include="JsonMocks\account\ordersApi\response\getOrder.json" />
     <None Include="JsonMocks\account\ordersApi\response\orderKeywords.json" />
     <None Include="JsonMocks\account\ordersApi\response\orderNumbers.json" />
+    <None Include="JsonMocks\contacts\contactsApi\request\updateContact.json" />
+    <None Include="JsonMocks\contacts\contactsApi\request\createContact.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CallfireApiClient\CallfireApiClient.csproj">
@@ -182,5 +181,7 @@
     <Folder Include="JsonMocks\campaigns\" />
     <Folder Include="JsonMocks\callstexts\" />
     <Folder Include="JsonMocks\account\" />
+    <Folder Include="Api\Webhooks\" />
+    <Folder Include="Api\Contacts\" />
   </ItemGroup>
 </Project>

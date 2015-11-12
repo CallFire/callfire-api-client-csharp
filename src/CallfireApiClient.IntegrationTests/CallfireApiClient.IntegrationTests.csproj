@@ -40,6 +40,7 @@
     <Compile Include="Api\Account\OrdersApiIntegrationTest.cs" />
     <Compile Include="Api\AbstractIntegrationTest.cs" />
     <Compile Include="Api\Webhooks\WebhooksApiIntegrationTest.cs" />
+    <Compile Include="Api\Contacts\ContactsApiIntegrationTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -54,5 +55,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Api\Webhooks\" />
+    <Folder Include="Api\Contacts\" />
   </ItemGroup>
 </Project>

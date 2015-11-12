@@ -22,5 +22,10 @@ namespace  CallfireApiClient.Api.Common.Model.Request
         /// Get limit fields returned. Example fields=id,items(name,agents(id))
         ///</summary>
         public string Fields { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("[FindRequest: Limit={0}, Offset={1}, Fields={2}]", Limit, Offset, Fields);
+        }
     }
 }

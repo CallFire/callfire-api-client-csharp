@@ -1,6 +1,7 @@
 ﻿using System;
 using CallfireApiClient.Api.Common.Model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CallfireApiClient.Api.Keywords.Model.Request
 {
@@ -11,6 +12,11 @@ namespace CallfireApiClient.Api.Keywords.Model.Request
         public KeywordPurchaseRequest()
         {
             Keywords = new List<string>();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("[KeywordPurchaseRequest: Keywords={0}]", Keywords?.ToPrettyString());
         }
     }
 }
