@@ -19,7 +19,7 @@ namespace CallfireApiClient
         /// Convert ICollection<T> to pretty string
         /// </summary>
         /// <returns>string representation of IEnumerable object</returns>
-        /// <param name="collection">Enumerable.</param>
+        /// <param name="collection">any collection.</param>
         public static string ToPrettyString<T>(this ICollection<T> collection)
         {
             var builder = new StringBuilder();
@@ -96,21 +96,6 @@ namespace CallfireApiClient
             parameters.ForEach(Console.WriteLine);
         }
 
-        /**
-     * Add {@link Iterable} value as query param to name-value query list
-     *
-     * @param name        parameter name
-     * @param value       collection with values
-     * @param queryParams parameters list
-     */
-        //    public static void addQueryParamIfSet(String name, Iterable value, List<NameValuePair> queryParams) {
-        //        if (name != null && value != null && queryParams != null) {
-        //            for (Object o : value) {
-        //                queryParams.add(new BasicNameValuePair(name, o.toString()));
-        //            }
-        //        }
-        //    }
-
         /// <summary>
         /// Method traverses request object using reflection and build NameValueCollection from it
         /// <summary>/
@@ -130,21 +115,37 @@ namespace CallfireApiClient
                 object value = pi.GetValue(request, null);
                 if (value != null)
                 {
-
-
                     if (value is ICollection)
                     {
-                        parameters.Add(pi.Name.ToLower(), value);
+                        parameters.Add(ToCamelCase(pi.Name), value);
                     }
                     else
                     {
-                        parameters.Add(pi.Name.ToLower(), value.ToString());
+                        parameters.Add(ToCamelCase(pi.Name), value.ToString());
                     }
                 }
             }
-            //                TODO vmikhailov remove commented code
-            Console.WriteLine("request:" + parameters.ToPrettyString());
             return parameters;
+        }
+
+        public static string ToCamelCase(string s)
+        {
+            if (string.IsNullOrEmpty(s) || !char.IsUpper(s[0]))
+            {
+                return s;
+            }
+
+            char[] chars = s.ToCharArray();
+            for (int i = 0; i < chars.Length; i++)
+            {
+                bool hasNext = (i + 1 < chars.Length);
+                if (i > 0 && hasNext && !char.IsUpper(chars[i + 1]))
+                {
+                    break;
+                }
+                chars[i] = char.ToLowerInvariant(chars[i]);
+            }
+            return new string(chars);
         }
     }
 }
