@@ -41,6 +41,8 @@
     <Compile Include="Api\AbstractIntegrationTest.cs" />
     <Compile Include="Api\Webhooks\WebhooksApiIntegrationTest.cs" />
     <Compile Include="Api\Contacts\ContactsApiIntegrationTest.cs" />
+    <Compile Include="Api\Numbers\NumberLeasesApiIntegrationTest.cs" />
+    <Compile Include="Api\Numbers\NumbersApiIntegrationTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -56,5 +58,6 @@
   <ItemGroup>
     <Folder Include="Api\Webhooks\" />
     <Folder Include="Api\Contacts\" />
+    <Folder Include="Api\Numbers\" />
   </ItemGroup>
 </Project>
