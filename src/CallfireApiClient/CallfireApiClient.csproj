@@ -93,6 +93,20 @@
     <Compile Include="Api\CallsTexts\Model\ActionRecord.cs" />
     <Compile Include="Api\Campaigns\Model\CallRecording.cs" />
     <Compile Include="Api\CallsTexts\Model\TextRecord.cs" />
+    <Compile Include="Api\Numbers\NumbersApi.cs" />
+    <Compile Include="Api\Numbers\Model\Number.cs" />
+    <Compile Include="Api\Numbers\Model\Region.cs" />
+    <Compile Include="Api\Numbers\Model\Request\FindByRegionDataRequest.cs" />
+    <Compile Include="Api\Numbers\Model\Request\FindNumberRegionsRequest.cs" />
+    <Compile Include="Api\Numbers\Model\Request\FindNumbersLocalRequest.cs" />
+    <Compile Include="Api\Numbers\NumberLeasesApi.cs" />
+    <Compile Include="Api\Numbers\Model\Request\FindNumberLeasesRequest.cs" />
+    <Compile Include="Api\Numbers\Model\NumberLease.cs" />
+    <Compile Include="Api\Keywords\Model\LeaseStatus.cs" />
+    <Compile Include="Api\Numbers\Model\NumberConfig.cs" />
+    <Compile Include="Api\Numbers\Model\IvrInboundConfig.cs" />
+    <Compile Include="Api\Numbers\Model\CallTrackingConfig.cs" />
+    <Compile Include="Api\Numbers\Model\Request\FindNumberLeaseConfigsRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

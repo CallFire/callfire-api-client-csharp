@@ -44,6 +44,8 @@
     <Compile Include="MockRestClient.cs" />
     <Compile Include="Api\Webhooks\WebhooksApiTest.cs" />
     <Compile Include="Api\Contacts\ContactsApiTest.cs" />
+    <Compile Include="Api\Numbers\NumbersApiTest.cs" />
+    <Compile Include="Api\Numbers\NumberLeasesApiTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -183,5 +185,6 @@
     <Folder Include="JsonMocks\account\" />
     <Folder Include="Api\Webhooks\" />
     <Folder Include="Api\Contacts\" />
+    <Folder Include="Api\Numbers\" />
   </ItemGroup>
 </Project>
