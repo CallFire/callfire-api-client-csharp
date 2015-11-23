@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,6 +9,8 @@
     <AssemblyName>callfire-api-client-csharp</AssemblyName>
     <ReleaseVersion>1.0.0</ReleaseVersion>
     <CodePage>65001</CodePage>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -19,6 +21,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -27,6 +30,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -40,6 +44,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\Contacts\DncApi.cs" />
+    <Compile Include="Api\Contacts\DncListsApi.cs" />
+    <Compile Include="Api\Contacts\Model\DncList.cs" />
+    <Compile Include="Api\Contacts\Model\DoNotContact.cs" />
+    <Compile Include="Api\Contacts\Model\Request\AddContactsRequest.cs" />
+    <Compile Include="Api\Contacts\Model\Request\AddDncListItemsRequest.cs" />
+    <Compile Include="Api\Contacts\Model\Request\FindDncContactsRequest.cs" />
+    <Compile Include="Api\Contacts\Model\Request\FindDncListsRequest.cs" />
+    <Compile Include="Api\Contacts\Model\UniversalDnc.cs" />
+    <Compile Include="Api\Keywords\KeywordLeasesApi.cs" />
+    <Compile Include="Api\Keywords\KeywordsApi.cs" />
+    <Compile Include="Api\Keywords\Model\Keyword.cs" />
+    <Compile Include="Api\Keywords\Model\KeywordLease.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Api\Account\MeApi.cs" />
     <Compile Include="Api\Account\OrdersApi.cs" />
@@ -109,31 +126,7 @@
     <Compile Include="Api\Numbers\Model\Request\FindNumberLeaseConfigsRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Api\" />
-    <Folder Include="Api\Account\" />
-    <Folder Include="Api\Account\Model\" />
-    <Folder Include="Api\Common\" />
-    <Folder Include="Api\Common\Model\" />
-    <Folder Include="Api\Common\Model\Request\" />
-    <Folder Include="Api\Account\Model\Request\" />
-    <Folder Include="Api\Keywords\" />
-    <Folder Include="Api\Keywords\Model\" />
-    <Folder Include="Api\Keywords\Model\Request\" />
-    <Folder Include="Api\Numbers\" />
-    <Folder Include="Api\Numbers\Model\" />
-    <Folder Include="Api\Numbers\Model\Request\" />
-    <Folder Include="Api\Webhooks\" />
-    <Folder Include="Api\Webhooks\Model\" />
-    <Folder Include="Api\Webhooks\Model\Request\" />
-    <Folder Include="Api\Contacts\" />
-    <Folder Include="Api\Contacts\Model\" />
-    <Folder Include="Api\Contacts\Model\Request\" />
-    <Folder Include="Api\CallsTexts\" />
-    <Folder Include="Api\CallsTexts\Model\" />
-    <Folder Include="Api\Campaigns\" />
-    <Folder Include="Api\Campaigns\Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>

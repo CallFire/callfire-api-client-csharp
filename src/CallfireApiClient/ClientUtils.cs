@@ -5,6 +5,7 @@ using RestSharp;
 using System;
 using System.Reflection;
 using System.Collections;
+using Newtonsoft.Json;
 
 namespace CallfireApiClient
 {
@@ -13,7 +14,7 @@ namespace CallfireApiClient
     /// </summary>
     internal static class ClientUtils
     {
-        public static readonly IDictionary<string, object> EMPTY_MAP = new Dictionary<string,object>(0);
+        public static readonly IDictionary<string, object> EMPTY_MAP = new Dictionary<string, object>(0);
 
         /// <summary>
         /// Convert ICollection<T> to pretty string
@@ -79,11 +80,11 @@ namespace CallfireApiClient
         /// <param name="name">param name</param>
         /// <param name="value">param value</param>
         /// <returns>NameValueCollection with one item</returns>
-        public static IDictionary<string,object> BuildQueryParams(string name, string value)
+        public static IDictionary<string, object> BuildQueryParams(string name, string value)
         {
             if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(value))
             {
-                return new Dictionary<string,object>(1) { { name, value } };
+                return new Dictionary<string, object>(1) { { name, value } };
             }
             else
             {
@@ -102,7 +103,7 @@ namespace CallfireApiClient
         /// <param name="request">request object
         /// <typeparam name="T">type of request<typeparam>/
         /// <returns>collection of query parameters, empty collection if request is null</returns>
-        public static IDictionary<string,object> BuildQueryParams<T>(T request)
+        public static IDictionary<string, object> BuildQueryParams<T>(T request)
             where T : CallfireModel
         {
             if (request == null)
@@ -112,6 +113,11 @@ namespace CallfireApiClient
             var parameters = new Dictionary<string, object>();
             foreach (PropertyInfo pi in request.GetType().GetProperties())
             {
+                // TODO vmalinovskiy change JsonIgnoreAttribute to some custom IgnoreAsParameter attribure
+                var attr = GetPropertyAttributes(pi);
+                if (attr.ContainsKey(typeof(JsonIgnoreAttribute).Name))
+                    continue;
+
                 object value = pi.GetValue(request, null);
                 if (value != null)
                 {
@@ -146,6 +152,29 @@ namespace CallfireApiClient
                 chars[i] = char.ToLowerInvariant(chars[i]);
             }
             return new string(chars);
+        }
+
+        public static void AddQueryParamIfSet(string name, IEnumerable<object> value, IList<KeyValuePair<string, object>> queryParams)
+        {
+            if (name != null && value != null && queryParams != null)
+            {
+                foreach (string o in value)
+                {
+                    queryParams.Add(new KeyValuePair<string, object>(name, o.ToString()));
+                }
+            }
+        }
+
+        private static Dictionary<string, CustomAttributeData> GetPropertyAttributes(PropertyInfo property)
+        {
+            Dictionary<string, CustomAttributeData> attribs = new Dictionary<string, CustomAttributeData>();
+
+            foreach (CustomAttributeData attribData in property.GetCustomAttributesData())
+            {
+                string typeName = attribData.Constructor.DeclaringType.Name;
+                attribs[typeName] = attribData;
+            }
+            return attribs;
         }
     }
 }
