@@ -2,7 +2,7 @@ namespace CallfireApiClient.Api.Common.Model
 {
     public class ResourceId : CallfireModel
     {
-        public long? Id { get; set; }
+        public long Id { get; set; }
 
         public override string ToString()
         {
