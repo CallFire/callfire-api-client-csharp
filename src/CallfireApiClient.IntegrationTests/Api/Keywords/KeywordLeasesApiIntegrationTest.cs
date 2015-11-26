@@ -23,12 +23,12 @@ namespace CallfireApiClient.IntegrationTests.Api.Keywords
         {
             ///get testing
             var keywordLease = Client.KeywordLeasesApi.Get("TEST_KEYWORD");
-            Assert.AreEqual(keywordLease.keyword, "TEST_KEYWORD");
-            Assert.AreEqual(keywordLease.status, LeaseStatus.ACTIVE);
+            Assert.AreEqual(keywordLease.KeywordName, "TEST_KEYWORD");
+            Assert.AreEqual(keywordLease.Status, LeaseStatus.ACTIVE);
 
             ///update testing
-            bool? savedAutoRenew = keywordLease.autoRenew;
-            keywordLease.autoRenew = !savedAutoRenew;
+            bool? savedAutoRenew = keywordLease.AutoRenew;
+            keywordLease.AutoRenew = !savedAutoRenew;
 
             if (savedAutoRenew == false)
             {
@@ -40,12 +40,12 @@ namespace CallfireApiClient.IntegrationTests.Api.Keywords
             }
             
             ///get testing with params
-            var keywordLeaseUpdated = Client.KeywordLeasesApi.Get(keywordLease.keyword, "autoRenew");
-            Assert.AreEqual(keywordLeaseUpdated.keyword, null);
-            Assert.AreEqual(keywordLeaseUpdated.autoRenew, savedAutoRenew);
+            var keywordLeaseUpdated = Client.KeywordLeasesApi.Get(keywordLease.KeywordName, "autoRenew");
+            Assert.AreEqual(keywordLeaseUpdated.KeywordName, null);
+            Assert.AreEqual(keywordLeaseUpdated.AutoRenew, savedAutoRenew);
 
             ///get back stage before test
-            keywordLease.autoRenew = savedAutoRenew;
+            keywordLease.AutoRenew = savedAutoRenew;
            
             var ex2 = Assert.Throws<CallfireApiClient.BadRequestException>(() => Client.KeywordLeasesApi.Update(keywordLease));
             Assert.That(ex2.ApiErrorMessage.Message, Is.StringMatching("Can't change autoRenew once it is false")); 

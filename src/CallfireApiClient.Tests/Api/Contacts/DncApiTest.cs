@@ -23,11 +23,11 @@ namespace CallfireApiClient.Tests.Api.Contacts
             request.Limit = 1;
             request.Offset = 5;
             request.Fields = FIELDS;
-            request.prefix = "1";
-            request.dncListId = TEST_LONG;
-            request.dncListName = TEST_STRING;
-            request.callDnc = true;
-            request.textDnc = true;
+            request.Prefix = "1";
+            request.DncListId = TEST_LONG;
+            request.DncListName = TEST_STRING;
+            request.CallDnc = true;
+            request.TextDnc = true;
  
             Page<DoNotContact> dncs = Client.DncApi.Find(request);
             
@@ -43,10 +43,10 @@ namespace CallfireApiClient.Tests.Api.Contacts
             var restRequest = MockRestResponse();
 
             DoNotContact dnc = new DoNotContact();
-            dnc.call = true;
-            dnc.listId = TEST_LONG;
-            dnc.number = TEST_LONG.ToString();
-            dnc.text = true;
+            dnc.Call = true;
+            dnc.ListId = TEST_LONG;
+            dnc.Number = TEST_LONG.ToString();
+            dnc.Text = true;
            
             Client.DncApi.Update(dnc);
 

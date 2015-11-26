@@ -8,7 +8,7 @@
     <RootNamespace>CallfireApiClient.Tests</RootNamespace>
     <AssemblyName>callfire-api-client-csharp-tests</AssemblyName>
     <ReleaseVersion>1.0.0</ReleaseVersion>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -45,6 +45,8 @@
     <Compile Include="Api\Account\OrdersApiTest.cs" />
     <Compile Include="Api\Account\MeApiTest.cs" />
     <Compile Include="Api\AbstractApiTest.cs" />
+    <Compile Include="Api\CallsTexts\TextsApiTest.cs" />
+    <Compile Include="Api\CallsTexts\CallsApiTest.cs" />
     <Compile Include="Api\Contacts\DncApiTest.cs" />
     <Compile Include="Api\Contacts\DncListsApiTest.cs" />
     <Compile Include="Api\Keywords\KeywordLeasesApiTest.cs" />

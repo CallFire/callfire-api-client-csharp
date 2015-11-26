@@ -7,7 +7,7 @@ using System;
 namespace CallfireApiClient.Tests.Api.Keywords
 {
     [TestFixture]
-    public class KeywordsTest : AbstractApiTest
+    public class KeywordsApiTest : AbstractApiTest
     {
         [Test]
         public void Find()

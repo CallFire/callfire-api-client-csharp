@@ -5,13 +5,13 @@ namespace CallfireApiClient.Api.Keywords.Model
 {
     public class Keyword : CallfireModel
     {
-        public string shortCode { get; set; }
-        public string keyword { get; set; }
+        public string ShortCode { get; set; }
+        public string KeywordName { get; set; }
 
         public override string ToString()
         {
             return string.Format("[Keyword: shortCode={0}, keyword={1}",
-                shortCode, keyword);
+                ShortCode, KeywordName);
         }
     }
 }

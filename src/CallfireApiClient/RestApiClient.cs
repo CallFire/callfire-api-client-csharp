@@ -139,7 +139,7 @@ namespace CallfireApiClient
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public T Post<T>(String path, object payload, IDictionary<string, object> queryParams) where T : new()
+        public T Post<T>(String path, object payload, IEnumerable<KeyValuePair<string, object>> queryParams) where T : new()
         {
             var restRequest = CreateRestRequest(path, Method.POST, queryParams);
             if (payload != null)
@@ -168,16 +168,19 @@ namespace CallfireApiClient
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public T PostFile<T>(String path, IDictionary<string, object> queryParams) where T : new()
+        public T PostFile<T>(String path, IEnumerable<KeyValuePair<string, object>> queryParams) where T : new()
         {
             var restRequest = CreateRestRequest(path, Method.POST);
-            restRequest.AddFile("file", queryParams["file"].ToString());
-            if (queryParams["name"] != null)
+            var fileParamValue = ClientUtils.GetQueryParamByName("file", queryParams).ToString();
+            var nameParamValue = ClientUtils.GetQueryParamByName("name", queryParams).ToString();
+
+            restRequest.AddFile("file", fileParamValue);
+            if (nameParamValue != null)
             {
-                restRequest.AddParameter("name", queryParams["name"]);
+                restRequest.AddParameter("name", nameParamValue);
             }
 
-            Logger.Debug("POST file upload request to {0} with params: {1}", path, queryParams);
+            Logger.Debug("POST file upload request to {0} with params: file={1}, name={2}", path, fileParamValue, nameParamValue);
             return DoRequest<T>(restRequest);
         }
 
@@ -215,7 +218,7 @@ namespace CallfireApiClient
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public T Put<T>(String path, object payload, IDictionary<string, object> queryParams) where T : new()
+        public T Put<T>(String path, object payload, IEnumerable<KeyValuePair<string, object>> queryParams) where T : new()
         {
             var restRequest = CreateRestRequest(path, Method.PUT, queryParams);
             if (payload != null)

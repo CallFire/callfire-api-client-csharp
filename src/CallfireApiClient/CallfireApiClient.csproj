@@ -9,7 +9,7 @@
     <AssemblyName>callfire-api-client-csharp</AssemblyName>
     <ReleaseVersion>1.0.0</ReleaseVersion>
     <CodePage>65001</CodePage>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -44,6 +44,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\CallsTexts\Model\TextRecipient.cs" />
+    <Compile Include="Api\CallsTexts\TextsApi.cs" />
+    <Compile Include="Api\CallsTexts\CallsApi.cs" />
+    <Compile Include="Api\CallsTexts\Model\CallRecipient.cs" />
+    <Compile Include="Api\CallsTexts\Model\Request\FindTextsRequest.cs" />
+    <Compile Include="Api\CallsTexts\Model\Request\FindCallsTextsRequest.cs" />
+    <Compile Include="Api\CallsTexts\Model\Request\FindCallsRequest.cs" />
+    <Compile Include="Api\Campaigns\Model\Voice.cs" />
+    <Compile Include="Api\Campaigns\Model\Recipient.cs" />
     <Compile Include="Api\Contacts\DncApi.cs" />
     <Compile Include="Api\Contacts\DncListsApi.cs" />
     <Compile Include="Api\Contacts\Model\DncList.cs" />

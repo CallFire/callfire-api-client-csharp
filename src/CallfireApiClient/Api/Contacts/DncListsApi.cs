@@ -61,23 +61,6 @@ namespace CallfireApiClient.Api.Contacts
         /// Search Universal Do Not Contact by number
         /// </summary>
         /// <param name="toNumber">Phone Number in Do Not Contact list</param>
-        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
-        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
-        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
-        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
-        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
-        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
-        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public IList<UniversalDnc> GetUniversalDncNumber(string toNumber)
-        {
-            return GetUniversalDncNumber(toNumber, null, null);
-        }
-
-
-        /// <summary>
-        /// Search Universal Do Not Contact by number
-        /// </summary>
-        /// <param name="toNumber">Phone Number in Do Not Contact list</param>
         /// <param name="fromNumber">Searches for entries where fromNumber is communicating with toNumber, or vice versa.</param>
         /// <param name="fields">Limit fields returned. Example fields=limit,offset,items(id,name)</param>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
@@ -87,7 +70,7 @@ namespace CallfireApiClient.Api.Contacts
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public IList<UniversalDnc> GetUniversalDncNumber(string toNumber, string fromNumber, string fields)
+        public IList<UniversalDnc> GetUniversalDncNumber(string toNumber, string fromNumber = null, string fields = null)
         {
             Validate.NotBlank(toNumber, "toNumber cannot be blank");
             string path = DNC_LISTS_UNIVERSAL_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER,
@@ -97,23 +80,6 @@ namespace CallfireApiClient.Api.Contacts
             queryParams.Add("fromNumber", fromNumber);
             queryParams.Add("fields", fields);
             return Client.Get<ListHolder<UniversalDnc>>(path, queryParams).Items;
-        }
-
-
-        /// <summary>
-        /// Get DNC list by id
-        /// </summary>
-        /// <param name="id">id of DNC list</param>
-        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
-        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
-        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
-        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
-        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
-        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
-        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public DncList Get(long id)
-        {
-            return Get(id, null);
         }
 
 
@@ -129,7 +95,7 @@ namespace CallfireApiClient.Api.Contacts
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public DncList Get(long id, string fields)
+        public DncList Get(long id, string fields = null)
         {
             Validate.NotBlank(id.ToString(), "id cannot be blank");
             string path = DNC_LISTS_LIST_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER,
@@ -192,10 +158,10 @@ namespace CallfireApiClient.Api.Contacts
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public void AddListItems(AddDncListItemsRequest<DoNotContact> request)
         {
-            Validate.NotBlank(request.contactListId.ToString(), "request.contactListId cannot be null");
+            Validate.NotBlank(request.ContactListId.ToString(), "request.contactListId cannot be null");
             string path = DNC_LISTS_LIST_ITEMS_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER,
-                    request.contactListId.ToString());
-            Client.Post<object>(path, request.contacts);
+                    request.ContactListId.ToString());
+            Client.Post<object>(path, request.Contacts);
         }
 
         /// <summary>
