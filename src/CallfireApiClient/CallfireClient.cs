@@ -1,10 +1,10 @@
-﻿﻿using System;
+﻿using System;
 using RestSharp.Authenticators;
 using CallfireApiClient.Api.Account;
+using System.Diagnostics;
 using CallfireApiClient.Api.Webhooks;
 using CallfireApiClient.Api.Contacts;
 using CallfireApiClient.Api.Numbers;
-using CallfireApiClient.Api.Keywords;
 
 namespace CallfireApiClient
 {
@@ -17,10 +17,6 @@ namespace CallfireApiClient
         readonly Lazy<ContactsApi> _ContactsApi;
         readonly Lazy<NumbersApi> _NumbersApi;
         readonly Lazy<NumberLeasesApi> _NumberLeasesApi;
-        readonly Lazy<KeywordsApi> _KeywordsApi;
-        readonly Lazy<KeywordLeasesApi> _KeywordLeasesApi;
-        readonly Lazy<DncApi> _DncApi;
-        readonly Lazy<DncListsApi> _DncListsApi;
 
         readonly Lazy<WebhooksApi> _WebhooksApi;
 
@@ -36,13 +32,6 @@ namespace CallfireApiClient
 
         public WebhooksApi WebhooksApi { get { return _WebhooksApi.Value; } }
 
-        public KeywordsApi KeywordsApi { get { return _KeywordsApi.Value; } }
-        public KeywordLeasesApi KeywordLeasesApi { get { return _KeywordLeasesApi.Value; } }
-
-        public DncApi DncApi { get { return _DncApi.Value; } }
-        public DncListsApi DncListsApi { get { return _DncListsApi.Value; } }
-
-
         public CallfireClient(string username, string password)
         {
             RestApiClient = new RestApiClient(new HttpBasicAuthenticator(username, password));
@@ -53,10 +42,7 @@ namespace CallfireApiClient
             _NumbersApi = new Lazy<NumbersApi>(() => new NumbersApi(RestApiClient));
             _NumberLeasesApi = new Lazy<NumberLeasesApi>(() => new NumberLeasesApi(RestApiClient));
             _WebhooksApi = new Lazy<WebhooksApi>(() => new WebhooksApi(RestApiClient));
-            _KeywordsApi = new Lazy<KeywordsApi>(() => new KeywordsApi(RestApiClient));
-            _KeywordLeasesApi = new Lazy<KeywordLeasesApi>(() => new KeywordLeasesApi(RestApiClient));
-            _DncApi = new Lazy<DncApi>(() => new DncApi(RestApiClient));
-            _DncListsApi = new Lazy<DncListsApi>(() => new DncListsApi(RestApiClient));
         }
     }
 }
+
