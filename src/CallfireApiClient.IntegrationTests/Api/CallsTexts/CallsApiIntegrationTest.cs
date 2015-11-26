@@ -42,10 +42,10 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
         {
             CallRecipient recipient1 = new CallRecipient();
             recipient1.ContactId = 463633187003;
-            recipient1.liveMessage = "testMessage";
+            recipient1.LiveMessage = "testMessage";
             CallRecipient recipient2 = new CallRecipient();
             recipient2.ContactId = 463633187003;
-            recipient2.liveMessage = "testMessage";
+            recipient2.LiveMessage = "testMessage";
             var recipients = new List<CallRecipient> { recipient1, recipient2 };
             IList<Call> calls = Client.CallsApi.Send(recipients, null, "items(id,fromNumber,state)");
             Console.WriteLine("Calls: " + calls);

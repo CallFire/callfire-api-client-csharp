@@ -20,10 +20,10 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
 
             CallRecipient r1 = new CallRecipient();
             r1.PhoneNumber = "12135551100";
-            r1.liveMessage = "Why hello there!";
+            r1.LiveMessage = "Why hello there!";
             CallRecipient r2 = new CallRecipient();
             r2.PhoneNumber = "12135551101";
-            r2.liveMessage = "And hello to you too.";
+            r2.LiveMessage = "And hello to you too.";
             IList<Call> calls = Client.CallsApi.Send(new List<CallRecipient> { r1, r2 });
 
             Assert.That(Serializer.Serialize(new ListHolder<Call>(calls)), Is.EqualTo(responseJson));
