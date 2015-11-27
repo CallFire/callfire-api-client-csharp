@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 
 namespace CallfireApiClient.Api.Common.Model.Request
 {
@@ -6,7 +7,8 @@ namespace CallfireApiClient.Api.Common.Model.Request
     /// </summary>
     public class GetByIdRequest : FindRequest
     {
-        public long Id { get; set; }
+        [JsonIgnore]
+        public long? Id { get; set; }
 
         public override string ToString()
         {

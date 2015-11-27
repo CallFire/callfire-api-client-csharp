@@ -10,9 +10,13 @@ namespace CallfireApiClient.Tests.Api
 {
     public class AbstractApiTest
     {
+        protected const long TEST_LONG = 100500;
+        protected const string TEST_STRING = "test";
         protected const string FIELDS = "id,name,created";
         protected string ENCODED_FIELDS = "fields=" + WebUtility.UrlEncode(FIELDS);
         protected const string BASE_PATH = "../../JsonMocks";
+        protected const string EMPTY_ID_MSG = "id cannot be null";
+        protected const string EMPTY_REQUEST_ID_MSG = "request.id cannot be null";
         protected CallfireClient Client;
         protected ISerializer Serializer;
         protected IDeserializer Deserializer;
@@ -27,7 +31,7 @@ namespace CallfireApiClient.Tests.Api
 
         protected string GetJsonPayload(string path)
         {
-            var result = new StringBuilder(); 
+            var result = new StringBuilder();
             string[] jsonLines = File.ReadAllLines(BASE_PATH + path);
             foreach (var line in jsonLines)
             {
