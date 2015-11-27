@@ -28,30 +28,30 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
             string prefix = "13234";
         
             DoNotContact dncToUpdate = new DoNotContact();
-            dncToUpdate.listId = listId;
-            dncToUpdate.text = true;
-            dncToUpdate.call = true;
-            dncToUpdate.number = number;
+            dncToUpdate.ListId = listId;
+            dncToUpdate.Text = true;
+            dncToUpdate.Call = true;
+            dncToUpdate.Number = number;
             Client.DncApi.Update(dncToUpdate);
 
             var request = new FindDncContactsRequest();
-            request.dncListId = listId;
-            request.prefix = prefix;
-            request.callDnc = true;
-            request.textDnc = true;
+            request.DncListId = listId;
+            request.Prefix = prefix;
+            request.CallDnc = true;
+            request.TextDnc = true;
             request.Limit = 1;
             request.Offset = 0;
             Page<DoNotContact> dnc = Client.DncApi.Find(request);
             Assert.NotNull(dnc);
             Assert.AreEqual(dnc.Items.Count, 1);
-            Assert.AreEqual(dnc.Items[0].listId, listId);
-            Assert.AreEqual(dnc.Items[0].number, number);
-            Assert.AreEqual(dnc.Items[0].text, true);
-            Assert.AreEqual(dnc.Items[0].call, true);
+            Assert.AreEqual(dnc.Items[0].ListId, listId);
+            Assert.AreEqual(dnc.Items[0].Number, number);
+            Assert.AreEqual(dnc.Items[0].Text, true);
+            Assert.AreEqual(dnc.Items[0].Call, true);
 
             //get back initial db stage as before test
-            dncToUpdate.text = true;
-            dncToUpdate.call = true;
+            dncToUpdate.Text = true;
+            dncToUpdate.Call = true;
             Client.DncApi.Update(dncToUpdate);
         }
 

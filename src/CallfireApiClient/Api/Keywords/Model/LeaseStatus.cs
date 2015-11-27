@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 
 namespace CallfireApiClient.Api.Keywords.Model
 {

@@ -5,12 +5,12 @@ namespace CallfireApiClient.Api.Contacts.Model.Request
     public class AddDncListItemsRequest<T> : AddContactsRequest<T>
     {
         [JsonIgnore]
-        public long? contactListId { get; set; }
+        public long? ContactListId { get; set; }
 
-        public AddDncListItemsRequest()
+        public override string ToString()
         {
+            return string.Format("[AddDncListItemsRequest: {0}, ContactListId={1}]", base.ToString(), ContactListId);
         }
-
     }
 }
 

@@ -17,35 +17,35 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
         {
             //test add and get dnc list
             DncList dncList = new DncList();
-            dncList.name = "dncList1";
+            dncList.Name = "dncList1";
             ResourceId dncListId = Client.DncListsApi.Create(dncList);
             DncList created = Client.DncListsApi.Get(dncListId.Id);
-            Assert.AreEqual("dncList1", created.name);
-            Assert.Greater(created.created, DateTime.Now.AddMinutes(-3));
+            Assert.AreEqual("dncList1", created.Name);
+            Assert.Greater(created.Created, DateTime.Now.AddMinutes(-3));
 
             //test find dnc list
             FindDncListsRequest findRequest = new FindDncListsRequest();
-            findRequest.name = "dncList1";
+            findRequest.Name = "dncList1";
             Page<DncList> doNotCallLists = Client.DncListsApi.Find(findRequest);
             Assert.Greater(doNotCallLists.TotalCount, 0);
             Console.WriteLine("Page of dnc list:" + doNotCallLists);
 
             //test add dnc list items
             DoNotContact dnc1 = new DoNotContact();
-            dnc1.number = "12135543211";
-            dnc1.text = true;
-            dnc1.call = false;
+            dnc1.Number = "12135543211";
+            dnc1.Text = true;
+            dnc1.Call = false;
             DoNotContact dnc2 = new DoNotContact();
-            dnc2.number = "12135543212";
-            dnc2.text = true;
-            dnc2.call = false;
+            dnc2.Number = "12135543212";
+            dnc2.Text = true;
+            dnc2.Call = false;
             DoNotContact dnc3 = new DoNotContact();
-            dnc3.number = "12135543213";
-            dnc3.text = true;
-            dnc3.call = false;
+            dnc3.Number = "12135543213";
+            dnc3.Text = true;
+            dnc3.Call = false;
             AddDncListItemsRequest<DoNotContact> addItemsRequest = new AddDncListItemsRequest<DoNotContact>();
-            addItemsRequest.contactListId = dncListId.Id;
-            addItemsRequest.contacts = new List<DoNotContact> { dnc1, dnc2, dnc3 };
+            addItemsRequest.ContactListId = dncListId.Id;
+            addItemsRequest.Contacts = new List<DoNotContact> { dnc1, dnc2, dnc3 };
             Client.DncListsApi.AddListItems(addItemsRequest);
   
             //test get dnc list items

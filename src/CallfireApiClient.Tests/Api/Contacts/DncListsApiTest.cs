@@ -27,8 +27,8 @@ namespace CallfireApiClient.Tests.Api.Contacts
             request.Limit = 1;
             request.Offset = 5;
             request.Fields = FIELDS; 
-            request.campaignId = TEST_LONG;
-            request.name = TEST_STRING;
+            request.CampaignId = TEST_LONG;
+            request.Name = TEST_STRING;
 
             Page<DncList> dncList = Client.DncListsApi.Find(request);
 
@@ -50,10 +50,10 @@ namespace CallfireApiClient.Tests.Api.Contacts
             var restRequest = MockRestResponse(responseJson);
 
             DncList dncList = new DncList();
-            dncList.id = TEST_LONG;
-            dncList.campaignId = TEST_LONG;
-            dncList.size = unchecked((int)TEST_LONG);
-            dncList.name = TEST_STRING;
+            dncList.Id = TEST_LONG;
+            dncList.CampaignId = TEST_LONG;
+            dncList.Size = unchecked((int)TEST_LONG);
+            dncList.Name = TEST_STRING;
             ResourceId res = Client.DncListsApi.Create(dncList);
 
             Assert.That(Serializer.Serialize(res), Is.EqualTo(responseJson));
@@ -71,7 +71,7 @@ namespace CallfireApiClient.Tests.Api.Contacts
             Assert.That(ex1.Message, Is.EqualTo(EMPTY_TO_NUMBER_MSG));
         }
 
-
+        [Test]
         public void GetUniversalDncNumbers()
         {
             string expectedJson = GetJsonPayload("/contacts/dncApi/response/getUniversalDncNumbers.json");
@@ -154,12 +154,12 @@ namespace CallfireApiClient.Tests.Api.Contacts
 
             List<DoNotContact> dncs = new List<DoNotContact>();
             DoNotContact dnc = new DoNotContact();
-            dnc.listId = TEST_LONG;
-            dnc.number = TEST_LONG.ToString();
+            dnc.ListId = TEST_LONG;
+            dnc.Number = TEST_LONG.ToString();
             dncs.Add(dnc);
             AddDncListItemsRequest<DoNotContact> request = new AddDncListItemsRequest<DoNotContact>();
-            request.contactListId = TEST_LONG;
-            request.contacts = dncs;
+            request.ContactListId = TEST_LONG;
+            request.Contacts = dncs;
 
             Client.DncListsApi.AddListItems(request);
 

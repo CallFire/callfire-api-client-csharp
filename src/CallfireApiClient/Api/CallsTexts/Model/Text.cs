@@ -6,7 +6,7 @@ namespace CallfireApiClient.Api.CallsTexts.Model
     {
         public string Message { get; set; }
 
-        public TextResult FinalTextResult { get; set; }
+        public TextResult? FinalTextResult { get; set; }
 
         public enum TextResult
         {

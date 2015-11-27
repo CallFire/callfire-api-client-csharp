@@ -165,6 +165,21 @@ namespace CallfireApiClient
             }
         }
 
+        public static object GetQueryParamByName(string name, IEnumerable<KeyValuePair<string, object>> queryParams)
+        {
+            if (name != null && queryParams != null)
+            {
+                foreach (KeyValuePair<string, object> kvp in queryParams)
+                {
+                    if (kvp.Key.Equals(name))
+                    {
+                        return kvp.Value;
+                    }
+                }
+            }
+            return null;
+        }
+
         private static Dictionary<string, CustomAttributeData> GetPropertyAttributes(PropertyInfo property)
         {
             Dictionary<string, CustomAttributeData> attribs = new Dictionary<string, CustomAttributeData>();

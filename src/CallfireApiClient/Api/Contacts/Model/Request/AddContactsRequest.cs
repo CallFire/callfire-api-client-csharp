@@ -8,10 +8,15 @@ namespace CallfireApiClient.Api.Contacts.Model.Request
     {
        
         [JsonIgnore]
-        public List<T> contacts { get; set; }
+        public List<T> Contacts { get; set; }
 
         protected AddContactsRequest()
         {
+        }
+
+        public override string ToString()
+        {
+            return string.Format("[AddContactsRequest: Contacts={0}]", Contacts?.ToPrettyString());
         }
 
     }

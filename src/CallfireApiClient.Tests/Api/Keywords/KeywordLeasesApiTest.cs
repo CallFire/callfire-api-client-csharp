@@ -10,7 +10,7 @@ namespace CallfireApiClient.Tests.Api.Keywords
 {
     
     [TestFixture]
-    public class KeywordLeasesTest : AbstractApiTest
+    public class KeywordLeasesApiTest : AbstractApiTest
     {
         private const string EMPTY_KEYWORD_MSG = "keyword cannot be blank";
         private const string EMPTY_LEASE_KEYWORD_MSG = "keyword in keywordLease cannot be null";
@@ -65,8 +65,8 @@ namespace CallfireApiClient.Tests.Api.Keywords
             var restRequest = MockRestResponse();
         
             KeywordLease keywordLease = new KeywordLease();
-            keywordLease.keyword = TEST_STRING;
-            keywordLease.autoRenew = false;
+            keywordLease.KeywordName = TEST_STRING;
+            keywordLease.AutoRenew = false;
             Client.KeywordLeasesApi.Update(keywordLease);
 
             Assert.AreEqual(Method.PUT, restRequest.Value.Method);

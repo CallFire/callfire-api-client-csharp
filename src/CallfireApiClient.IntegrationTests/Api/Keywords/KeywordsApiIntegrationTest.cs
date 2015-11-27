@@ -23,8 +23,8 @@ namespace CallfireApiClient.IntegrationTests.Api.Keywords
             }
 
             Assert.AreEqual(2, keywords.Count);
-            Assert.AreEqual(KW1, keywords[0].keyword);
-            Assert.AreEqual(KW2, keywords[1].keyword);
+            Assert.AreEqual(KW1, keywords[0].KeywordName);
+            Assert.AreEqual(KW2, keywords[1].KeywordName);
         }
 
         [Test]

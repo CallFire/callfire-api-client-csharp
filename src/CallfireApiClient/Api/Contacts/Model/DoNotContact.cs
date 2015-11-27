@@ -5,15 +5,15 @@ namespace CallfireApiClient.Api.Contacts.Model
 {
     public class DoNotContact : CallfireModel
     {
-        public string number { get; set; }
-        public bool? call { get; set; }
-        public bool? text { get; set; }
-        public long? listId { get; set; }
+        public string Number { get; set; }
+        public bool? Call { get; set; }
+        public bool? Text { get; set; }
+        public long? ListId { get; set; }
 
         public override string ToString()
         {
             return string.Format("[DoNotContact: number={0}, call={1}, text={2}, listId={3}",
-                number, call, text, listId);
+                Number, Call, Text, ListId);
         }
     }
 }
