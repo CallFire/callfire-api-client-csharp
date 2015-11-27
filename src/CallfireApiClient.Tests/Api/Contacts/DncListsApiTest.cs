@@ -78,9 +78,9 @@ namespace CallfireApiClient.Tests.Api.Contacts
             var restRequest = MockRestResponse(expectedJson);
 
             IList<UniversalDnc> universalDncNumbers = Client.DncListsApi.GetUniversalDncNumber(TEST_LONG.ToString(), TEST_LONG.ToString(), FIELDS);
-
+            
             Assert.NotNull(universalDncNumbers);
-            Assert.That(Serializer.Serialize(universalDncNumbers), Is.EqualTo(expectedJson));
+            Assert.That(Serializer.Serialize(new ListHolder<UniversalDnc>(universalDncNumbers)), Is.EqualTo(expectedJson));
             Assert.AreEqual(Method.GET, restRequest.Value.Method);
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fromNumber") && p.Value.Equals(TEST_LONG.ToString())));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
