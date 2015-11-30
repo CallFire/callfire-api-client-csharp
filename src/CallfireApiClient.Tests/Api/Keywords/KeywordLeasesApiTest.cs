@@ -64,9 +64,11 @@ namespace CallfireApiClient.Tests.Api.Keywords
             string requestJson = GetJsonPayload("/keywords/keywordLeasesApi/request/updateKeywordLease.json");
             var restRequest = MockRestResponse();
         
-            KeywordLease keywordLease = new KeywordLease();
-            keywordLease.KeywordName = TEST_STRING;
-            keywordLease.AutoRenew = false;
+            var keywordLease = new KeywordLease
+            {
+                KeywordName = TEST_STRING,
+                AutoRenew = false
+            };
             Client.KeywordLeasesApi.Update(keywordLease);
 
             Assert.AreEqual(Method.PUT, restRequest.Value.Method);

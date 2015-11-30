@@ -5,7 +5,7 @@ using CallfireApiClient.Api.Keywords.Model;
 
 namespace CallfireApiClient.IntegrationTests.Api.Keywords
 {
-    [TestFixture]
+    [TestFixture, Ignore("temporary disabled")]
     public class KeywordsApiIntegrationTest : AbstractIntegrationTest
     {
         [Test]

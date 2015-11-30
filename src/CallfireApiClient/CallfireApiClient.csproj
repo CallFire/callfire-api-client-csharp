@@ -133,6 +133,9 @@
     <Compile Include="Api\Numbers\Model\IvrInboundConfig.cs" />
     <Compile Include="Api\Numbers\Model\CallTrackingConfig.cs" />
     <Compile Include="Api\Numbers\Model\Request\FindNumberLeaseConfigsRequest.cs" />
+    <Compile Include="Api\Campaigns\BatchesApi.cs" />
+    <Compile Include="Api\Campaigns\Model\Batch.cs" />
+    <Compile Include="Api\CallsTexts\Model\StateType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

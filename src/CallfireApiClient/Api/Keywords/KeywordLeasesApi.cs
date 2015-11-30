@@ -56,7 +56,7 @@ namespace CallfireApiClient.Api.Keywords
         /// <summary>
         /// Update keyword lease
         /// </summary>
-        /// <param name="lease">lkeyword lease payload</param>
+        /// <param name="keywordLease">keyword lease payload</param>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
         /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
@@ -68,7 +68,7 @@ namespace CallfireApiClient.Api.Keywords
         {
             Validate.NotBlank(keywordLease.KeywordName, "keyword in keywordLease cannot be null");
             string path = KEYWORD_LEASES_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER,
-                    keywordLease.KeywordName);
+                              keywordLease.KeywordName);
             Client.Put<object>(path, keywordLease);
         }
 

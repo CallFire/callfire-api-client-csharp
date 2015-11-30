@@ -42,7 +42,7 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             string expectedJson = GetJsonPayload("/callstexts/callsApi/response/findCalls.json");
             var restRequest = MockRestResponse(expectedJson);
             var request = new FindCallsRequest();
-            request.States = new List<Call.StateType> { Call.StateType.CALLBACK, Call.StateType.DISABLED };
+            request.States = new List<StateType> { StateType.CALLBACK, StateType.DISABLED };
             request.Id = new List<long> { 1, 2, 3 };
             request.Limit = 5;
             request.Offset = 0;
