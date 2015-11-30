@@ -33,22 +33,6 @@ namespace CallfireApiClient.Api.CallsTexts.Model
 
         public IList<T> Records { get; set; }
 
-        public enum StateType
-        {
-            // non-terminal
-            READY,
-            SELECTED,
-            CALLBACK,
-            // terminal
-            FINISHED,
-            DISABLED,
-            DNC,
-            DUP,
-            INVALID,
-            TIMEOUT,
-            PERIOD_LIMIT,
-        }
-
         public override string ToString()
         {
             return string.Format("[Action: Id={0}, FromNumber={1}, ToNumber={2}, CampaignId={3}, BatchId={4}, Contact={5},"

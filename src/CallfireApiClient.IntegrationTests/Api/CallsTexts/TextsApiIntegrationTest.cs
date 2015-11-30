@@ -7,17 +7,19 @@ using NUnit.Framework;
 
 namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
 {
-    [TestFixture]
+    [TestFixture, Ignore("temporary disabled")]
     public class TextsApiIntegrationTest : AbstractIntegrationTest
     {
 
         [Test]
         public void FindAndGetParticularTexts()
         {
-            FindTextsRequest request = new FindTextsRequest();
-            request.States = new List<CallfireApiClient.Api.CallsTexts.Model.Text.StateType> { CallfireApiClient.Api.CallsTexts.Model.Text.StateType.FINISHED, CallfireApiClient.Api.CallsTexts.Model.Text.StateType.READY };
-            request.Results = new List<TextRecord.TextResult> { TextRecord.TextResult.SENT, TextRecord.TextResult.RECEIVED };
-            request.Limit = 2;
+            var request = new FindTextsRequest
+            {
+                States = new List<StateType> { StateType.FINISHED, StateType.READY },
+                Results = new List<TextRecord.TextResult> { TextRecord.TextResult.SENT, TextRecord.TextResult.RECEIVED },
+                Limit = 2
+            };
 
             Page<CallfireApiClient.Api.CallsTexts.Model.Text> texts = Client.TextsApi.Find(request);
             Assert.IsNotEmpty(texts.Items);
@@ -46,7 +48,7 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
             Assert.AreEqual(2, texts.Count);
             Assert.NotNull(texts[0].Id);
             Assert.IsNull(texts[0].CampaignId);
-            Assert.IsTrue(CallfireApiClient.Api.CallsTexts.Model.Text.StateType.READY == texts[0].State || CallfireApiClient.Api.CallsTexts.Model.Text.StateType.FINISHED == texts[0].State);
+            Assert.IsTrue(StateType.READY == texts[0].State || StateType.FINISHED == texts[0].State);
         }
     }
 }

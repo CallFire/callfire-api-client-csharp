@@ -44,7 +44,7 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             var request = new FindTextsRequest();
             request.Limit = 5;
             request.Offset = 0;
-            request.States = new List<CallfireApiClient.Api.CallsTexts.Model.Text.StateType> { CallfireApiClient.Api.CallsTexts.Model.Text.StateType.CALLBACK, CallfireApiClient.Api.CallsTexts.Model.Text.StateType.DISABLED };
+            request.States = new List<StateType> { StateType.CALLBACK, StateType.DISABLED };
             request.Id = new List<long> { 1, 2, 3 };
 
             Page<CallfireApiClient.Api.CallsTexts.Model.Text> texts = Client.TextsApi.Find(request);

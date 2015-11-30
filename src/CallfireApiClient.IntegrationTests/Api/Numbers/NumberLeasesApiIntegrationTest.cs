@@ -5,7 +5,7 @@ using CallfireApiClient.Api.Numbers.Model.Request;
 
 namespace CallfireApiClient.IntegrationTests.Api.Numbers
 {
-    [TestFixture]
+    [TestFixture, Ignore("temporary disabled")]
     public class NumberLeasesApiIntegrationTest : AbstractIntegrationTest
     {
         [Test]

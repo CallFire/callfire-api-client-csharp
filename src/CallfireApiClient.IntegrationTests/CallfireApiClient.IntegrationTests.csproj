@@ -53,6 +53,7 @@
     <Compile Include="Api\Contacts\ContactsApiIntegrationTest.cs" />
     <Compile Include="Api\Numbers\NumberLeasesApiIntegrationTest.cs" />
     <Compile Include="Api\Numbers\NumbersApiIntegrationTest.cs" />
+    <Compile Include="Api\Campaigns\BatchesApiIntegrationTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -66,4 +67,7 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Api\Campaigns\" />
+  </ItemGroup>
 </Project>

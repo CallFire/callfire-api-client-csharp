@@ -8,7 +8,7 @@ using CallfireApiClient.Api.Common.Model.Request;
 
 namespace CallfireApiClient.IntegrationTests.Api.Contacts
 {
-    [TestFixture]
+    [TestFixture, Ignore("temporary disabled")]
     public class DncListsApiIntegrationTest : AbstractIntegrationTest
     {
 

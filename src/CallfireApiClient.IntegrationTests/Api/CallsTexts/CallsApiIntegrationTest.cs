@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
 {
-    [TestFixture]
+    [TestFixture, Ignore("temporary disabled")]
     public class CallsApiIntegrationTest : AbstractIntegrationTest
     {
 
@@ -19,14 +19,14 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
 
             Assert.AreEqual(1, call.Id);
             Assert.AreEqual("18088395900", call.ToNumber);
-            Assert.AreEqual(Call.StateType.FINISHED, call.State); 
+            Assert.AreEqual(StateType.FINISHED, call.State); 
         }
 
         [Test]
         public void FindCalls()
         {
             FindCallsRequest request = new FindCallsRequest();
-            request.States = new List<Call.StateType> { Call.StateType.FINISHED, Call.StateType.READY }; 
+            request.States = new List<StateType> { StateType.FINISHED, StateType.READY }; 
             request.IntervalBegin = new DateTime().AddMonths(1).AddDays(-1);
             request.IntervalEnd = new DateTime();
             request.Limit = 3;
@@ -53,7 +53,7 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
             Assert.AreEqual(2, calls.Count);
             Assert.NotNull(calls[0].Id);
             Assert.IsNull(calls[0].CampaignId);
-            Assert.AreEqual(Call.StateType.READY, calls[0].State);
+            Assert.AreEqual(StateType.READY, calls[0].State);
         }
     }
 }
