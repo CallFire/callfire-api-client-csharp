@@ -47,7 +47,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
             addItemsRequest.ContactListId = dncListId.Id;
             addItemsRequest.Contacts = new List<DoNotContact> { dnc1, dnc2, dnc3 };
             Client.DncListsApi.AddListItems(addItemsRequest);
-  
+
             //test get dnc list items
             GetByIdRequest getItemsRequest = new GetByIdRequest();
             getItemsRequest.Id = dncListId.Id;

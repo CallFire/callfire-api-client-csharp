@@ -10,6 +10,9 @@ using RestSharp.Deserializers;
 using RestSharp.Serializers;
 using Newtonsoft.Json;
 using System.Collections;
+using System.Text;
+using System.IO;
+using System.Net;
 
 namespace CallfireApiClient
 {
@@ -168,19 +171,13 @@ namespace CallfireApiClient
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public T PostFile<T>(String path, IEnumerable<KeyValuePair<string, object>> queryParams) where T : new()
+        public T PostFile<T>(String path, string fileName, string filePath, string contentType = null) where T : new()
         {
-            var restRequest = CreateRestRequest(path, Method.POST);
-            var fileParamValue = ClientUtils.GetQueryParamByName("file", queryParams).ToString();
-            var nameParamValue = ClientUtils.GetQueryParamByName("name", queryParams).ToString();
-
-            restRequest.AddFile("file", fileParamValue);
-            if (nameParamValue != null)
-            {
-                restRequest.AddParameter("name", nameParamValue);
-            }
-
-            Logger.Debug("POST file upload request to {0} with params: file={1}, name={2}", path, fileParamValue, nameParamValue);
+            var queryParams = ClientUtils.BuildQueryParams("name", fileName);
+            var restRequest = CreateRestRequest(path, Method.POST, queryParams);
+            restRequest.AddHeader("Content-Type", "multipart/form-data");
+            restRequest.AddFileBytes("file", File.ReadAllBytes(filePath), Path.GetFileName(filePath), "application/octet-stream");
+            restRequest.AddParameter("name", fileName);
             return DoRequest<T>(restRequest);
         }
 

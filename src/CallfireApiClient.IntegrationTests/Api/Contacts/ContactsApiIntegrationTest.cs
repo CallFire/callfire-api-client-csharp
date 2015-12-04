@@ -1,8 +1,5 @@
 ﻿using System;
 using NUnit.Framework;
-using CallfireApiClient.Api.Webhooks.Model;
-using CallfireApiClient.Api.Webhooks.Model.Request;
-using CallfireApiClient;
 using CallfireApiClient.Api.Contacts.Model.Request;
 using System.Collections.Generic;
 using CallfireApiClient.Api.Common.Model.Request;

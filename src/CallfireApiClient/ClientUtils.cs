@@ -154,11 +154,11 @@ namespace CallfireApiClient
             return new string(chars);
         }
 
-        public static void AddQueryParamIfSet(string name, IEnumerable<object> value, IList<KeyValuePair<string, object>> queryParams)
+        public static void AddQueryParamIfSet<T>(string name, IEnumerable<T> value, IList<KeyValuePair<string, object>> queryParams)
         {
             if (name != null && value != null && queryParams != null)
             {
-                foreach (string o in value)
+                foreach (T o in value)
                 {
                     queryParams.Add(new KeyValuePair<string, object>(name, o.ToString()));
                 }

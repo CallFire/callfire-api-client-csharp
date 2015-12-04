@@ -42,6 +42,7 @@
     <Compile Include="Api\CallsTexts\TextsApiIntegrationTest.cs" />
     <Compile Include="Api\CallsTexts\CallsApiIntegrationTest.cs" />
     <Compile Include="Api\Contacts\DncApiIntegrationTest.cs" />
+    <Compile Include="Api\Contacts\ContactListsApiIntegrationTest.cs" />
     <Compile Include="Api\Contacts\DncListsApiIntegrationTest.cs" />
     <Compile Include="Api\Keywords\KeywordLeasesApiIntegrationTest.cs" />
     <Compile Include="Api\Keywords\KeywordsApiIntegrationTest.cs" />
@@ -65,9 +66,12 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="app.config" />
+    <EmbeddedResource Include="Resources\File-examples\contacts1.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="Api\Campaigns\" />
-  </ItemGroup>
 </Project>
