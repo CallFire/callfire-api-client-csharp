@@ -28,6 +28,7 @@ namespace CallfireApiClient.Api.Contacts
         /// Find contact lists by id, name, number, etc...
         /// </summary>
         /// <param name="request">request object with fields to filter</param>
+        /// <returns>paged list with contact lists</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
         /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
@@ -53,16 +54,27 @@ namespace CallfireApiClient.Api.Contacts
         /// </summary>
         /// <example>
         /// <code>
-        /// Contact c1 = new Contact();
-        /// c1.Name = "Name";
-        /// Contact c2 = new Contact();
-        /// c2.Name = "Name";
-        /// CreateContactListRequest<Contact> addItemsRequest = new CreateContactListRequest<Contact>();
-        /// addItemsRequest.Name = "Name";
-        /// addItemsRequest.Contacts = new List<Contact> { c1, c2 };
+        /// var request = new CreateContactListRequest<Contact>
+        /// {
+        ///     Contacts = new List<Contact>
+        ///     {
+        ///         new Contact
+        ///         {
+        ///             FirstName = "Name1",
+        ///             HomePhone = "16506190257"
+        ///         },
+        ///         new Contact
+        ///         {
+        ///             FirstName = "Name2",
+        ///             HomePhone = "18778973473"
+        ///         }
+        ///     },
+        ///     Name = "Name"
+        /// };
         /// </code>
         /// </example>
         /// <param name="request">request object with provided contacts, list name and other values</param>
+        /// <returns>newly created contact list id</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
         /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
@@ -82,6 +94,7 @@ namespace CallfireApiClient.Api.Contacts
         /// </summary>
         /// <param name="name">contact list name</param>
         /// <param name="file">CSV file with contacts to upload</param>
+        /// <returns>newly created contact list id</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
         /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
@@ -100,6 +113,7 @@ namespace CallfireApiClient.Api.Contacts
         /// </summary>
         /// <param name="id">id of contact list</param>
         /// <param name="fields">limit fields returned. Example fields=name,status</param>
+        /// <returns>contact list object</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
         /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
@@ -162,6 +176,7 @@ namespace CallfireApiClient.Api.Contacts
         /// </summary>
         /// Property <b>request.id</b> required
         /// <param name="request">request object with properties to filter</param>
+        /// <returns>paged list with contact objects from contact list</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
         /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>

@@ -51,6 +51,11 @@
     <Compile Include="Api\CallsTexts\Model\Request\FindTextsRequest.cs" />
     <Compile Include="Api\CallsTexts\Model\Request\FindCallsTextsRequest.cs" />
     <Compile Include="Api\CallsTexts\Model\Request\FindCallsRequest.cs" />
+    <Compile Include="Api\Campaigns\CampaignSoundsApi.cs" />
+    <Compile Include="Api\Campaigns\Model\CallCreateSound.cs" />
+    <Compile Include="Api\Campaigns\Model\TextToSpeech.cs" />
+    <Compile Include="Api\Campaigns\Model\CampaignSound.cs" />
+    <Compile Include="Api\Campaigns\Model\Request\FindSoundsRequest.cs" />
     <Compile Include="Api\Campaigns\Model\Voice.cs" />
     <Compile Include="Api\Campaigns\Model\Recipient.cs" />
     <Compile Include="Api\Contacts\ContactListsApi.cs" />

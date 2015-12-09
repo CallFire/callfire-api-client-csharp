@@ -1,18 +1,15 @@
 using System;
 using RestSharp;
 using CallfireApiClient.Api.Common.Model.Request;
-using System.Collections.Specialized;
 using RestSharp.Authenticators;
 using System.Collections.Generic;
 using System.Configuration;
 using CallfireApiClient.Api.Common.Model;
 using RestSharp.Deserializers;
 using RestSharp.Serializers;
-using Newtonsoft.Json;
 using System.Collections;
 using System.Text;
 using System.IO;
-using System.Net;
 
 namespace CallfireApiClient
 {
@@ -104,9 +101,38 @@ namespace CallfireApiClient
         {
             Logger.Debug("GET request to {0} with params: {1}", path, queryParams);
             var restRequest = CreateRestRequest(path, Method.GET, queryParams);
+            restRequest.AddHeader("Accept", "*/*");
             return DoRequest<T>(restRequest);
         }
 
+        /// <summary>
+        /// Performs GET request to specified path
+        /// <summary>
+        /// <param name="path">relative API request path</param>
+        /// <param name="queryParams">query parameters</param>
+        /// <returns>byte array with file data</returns>
+        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
+        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
+        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
+        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
+        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
+        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
+        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        public byte[] GetFileData(string path, IEnumerable<KeyValuePair<string, object>> queryParams = null)
+        { 
+            Logger.Debug("GET request to {0} with params: {1}", path, queryParams);
+            var restRequest = CreateRestRequest(path, Method.GET, queryParams);
+
+            restRequest.OnBeforeDeserialization = resp =>
+            {
+                string byteOrderMarkUtf8 = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
+                if (resp.Content.StartsWith(byteOrderMarkUtf8))
+                    resp.Content = resp.Content.Remove(0, byteOrderMarkUtf8.Length);
+            };
+
+            restRequest.AddHeader("Accept", "*/*");
+            return DoRequestForGettingFileData(restRequest);
+        }
 
         /// <summary>
         /// Performs POST request with body to specified path
@@ -265,12 +291,9 @@ namespace CallfireApiClient
             DoRequest<object>(restRequest);
         }
 
-        private T DoRequest<T>(IRestRequest request) where T: new()
+        private T DoRequest<T>(IRestRequest request) where T : new()
         {
-            foreach (RequestFilter filter in Filters)
-            {
-                filter.Filter(request);
-            }
+            FilterRequest(request);
             var response = RestClient.Execute<T>(request);
             if (response.Content == null)
             {
@@ -282,7 +305,22 @@ namespace CallfireApiClient
 
             return response.Data;
         }
+        
+        private byte[] DoRequestForGettingFileData(IRestRequest request)
+        {
+            FilterRequest(request);
+            var response = RestClient.Execute(request);
+            if (response.Content == null)
+            {
+                Logger.Debug("received http code {0} with null file data, returning null", response.StatusCode);
+                return null;
+            }
+            Logger.Debug("received file data: {0}", response.Content);
+            VerifyResponse(response);
 
+            return response.RawBytes;
+        }
+        
         private void VerifyResponse(IRestResponse response)
         {
             int statusCode = (int)response.StatusCode;
@@ -347,5 +385,12 @@ namespace CallfireApiClient
             return request;
         }
 
+        private void FilterRequest(IRestRequest request)
+        {
+            foreach (RequestFilter filter in Filters)
+            {
+                filter.Filter(request);
+            }
+        }
     }
 }

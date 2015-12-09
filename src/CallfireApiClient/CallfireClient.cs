@@ -17,6 +17,7 @@ namespace CallfireApiClient
         readonly Lazy<MeApi> _MeApi;
         readonly Lazy<OrdersApi> _OrdersApi;
         readonly Lazy<BatchesApi> _BatchesApi;
+        readonly Lazy<CampaignSoundsApi> _CampaignSoundsApi;
         readonly Lazy<ContactsApi> _ContactsApi;
         readonly Lazy<ContactListsApi> _ContactListsApi;
         readonly Lazy<NumbersApi> _NumbersApi;
@@ -35,6 +36,8 @@ namespace CallfireApiClient
         public OrdersApi OrdersApi { get { return _OrdersApi.Value; } }
 
         public BatchesApi BatchesApi { get { return _BatchesApi.Value; } }
+
+        public CampaignSoundsApi CampaignSoundsApi { get { return _CampaignSoundsApi.Value; } }
 
         public ContactsApi ContactsApi { get { return _ContactsApi.Value; } }
 
@@ -66,6 +69,7 @@ namespace CallfireApiClient
             _MeApi = new Lazy<MeApi>(() => new MeApi(RestApiClient));
             _OrdersApi = new Lazy<OrdersApi>(() => new OrdersApi(RestApiClient));
             _BatchesApi = new Lazy<BatchesApi>(() => new BatchesApi(RestApiClient));
+            _CampaignSoundsApi = new Lazy<CampaignSoundsApi>(() => new CampaignSoundsApi(RestApiClient));
             _ContactsApi = new Lazy<ContactsApi>(() => new ContactsApi(RestApiClient));
             _ContactListsApi = new Lazy<ContactListsApi>(() => new ContactListsApi(RestApiClient));
             _NumbersApi = new Lazy<NumbersApi>(() => new NumbersApi(RestApiClient));

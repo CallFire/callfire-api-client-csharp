@@ -22,6 +22,7 @@ namespace CallfireApiClient.Api.Keywords
         /// Find keyword objects by list of keyword names
         /// </summary>
         /// <param name="keywords">list of keyword names</param>
+        /// <returns>list with keyword objects</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
         /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
@@ -40,6 +41,7 @@ namespace CallfireApiClient.Api.Keywords
         /// Find an individual keyword for purchase on the CallFire platform.
         /// </summary>
         /// <param name="keyword">keyword name</param>
+        /// <returns>boolean with keyword purchase availability</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
         /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>

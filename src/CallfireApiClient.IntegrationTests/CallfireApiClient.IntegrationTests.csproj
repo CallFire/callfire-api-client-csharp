@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Api\CallsTexts\TextsApiIntegrationTest.cs" />
     <Compile Include="Api\CallsTexts\CallsApiIntegrationTest.cs" />
+    <Compile Include="Api\Campaigns\CampaignSoundsApiIntegrationTest.cs" />
     <Compile Include="Api\Contacts\DncApiIntegrationTest.cs" />
     <Compile Include="Api\Contacts\ContactListsApiIntegrationTest.cs" />
     <Compile Include="Api\Contacts\DncListsApiIntegrationTest.cs" />
@@ -70,8 +71,16 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\File-examples\train.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\File-examples\train.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <Folder Include="Api\Campaigns\" />
   </ItemGroup>
+  <ItemGroup />
 </Project>

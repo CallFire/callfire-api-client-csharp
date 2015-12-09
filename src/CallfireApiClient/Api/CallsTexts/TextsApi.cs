@@ -25,6 +25,7 @@ namespace CallfireApiClient.Api.CallsTexts
         /// If no limit is given then the last 100 texts will be returned.
         /// </summary>
         /// <param name="request">request object with different fields to filter</param>
+        /// <returns>paged list with text objects</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
         /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
@@ -42,6 +43,7 @@ namespace CallfireApiClient.Api.CallsTexts
         /// </summary>
         /// <param name="id">id of text</param>
         /// <param name="fields">limit fields returned. Example fields=id,name</param>
+        /// <returns>text object</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
         /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
@@ -68,6 +70,7 @@ namespace CallfireApiClient.Api.CallsTexts
         /// <param name="recipients">call recipients</param>
         /// <param name="campaignId">specify a campaignId to send calls quickly on a previously created campaign</param>
         /// <param name="fields">limit fields returned. Example fields=id,name</param>
+        /// <returns>list with created text objects</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
         /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>

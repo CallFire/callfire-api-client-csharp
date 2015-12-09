@@ -48,13 +48,16 @@ namespace CallfireApiClient
             }
             for (int i = 0; i < values.Length; i++)
             {
-                if (values[i].GetType() == typeof(CallfireModel))
+                if (values[i] != null)
                 {
-                    values[i] = Serializer.Serialize(values[i]);
-                }
-                else if (values[i] is ICollection)
-                {
-                    values[i] = (((ICollection)values[i]).Cast<object>().ToList().ToPrettyString());
+                    if (values[i].GetType() == typeof(CallfireModel))
+                    {
+                        values[i] = Serializer.Serialize(values[i]);
+                    }
+                    else if (values[i] is ICollection)
+                    {
+                        values[i] = (((ICollection)values[i]).Cast<object>().ToList().ToPrettyString());
+                    }
                 }
             }
 

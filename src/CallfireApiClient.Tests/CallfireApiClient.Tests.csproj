@@ -47,6 +47,7 @@
     <Compile Include="Api\AbstractApiTest.cs" />
     <Compile Include="Api\CallsTexts\TextsApiTest.cs" />
     <Compile Include="Api\CallsTexts\CallsApiTest.cs" />
+    <Compile Include="Api\Campaigns\CampaignSoundsApiTest.cs" />
     <Compile Include="Api\Contacts\DncApiTest.cs" />
     <Compile Include="Api\Contacts\ContactListsApiTest.cs" />
     <Compile Include="Api\Contacts\DncListsApiTest.cs" />
@@ -188,7 +189,16 @@
       <Name>CallfireApiClient</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\File-examples\train.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\File-examples\train.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <Folder Include="Api\Campaigns\" />
   </ItemGroup>

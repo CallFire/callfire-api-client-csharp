@@ -10,24 +10,24 @@ namespace CallfireApiClient.Api.Contacts.Model.Request
         private const string FIELD_CONTACT_NUMBERS = "contactNumbers";
         private const string FIELD_CONTACTS = "contacts";
 
-        private List<T> contacts { get; set; }
+        private List<T> _contacts;
 
         [JsonExtensionData]
-        public IDictionary<string, object> ContactsToSerialize;
+        private IDictionary<string, object> ContactsToSerialize;
 
         [JsonIgnore]
         public List<T> Contacts
         {
-            get { return contacts; }
+            get { return _contacts; }
 
             set
             {
-                contacts = value;
+                _contacts = value;
                 setPropertiesToSend();
             }
         }
 
-        public void setPropertiesToSend()
+        private void setPropertiesToSend()
         {
             ContactsToSerialize = new Dictionary<string, object>(1);
             if (Contacts.Count > 0)
@@ -40,7 +40,7 @@ namespace CallfireApiClient.Api.Contacts.Model.Request
                 } else if (item is Contact || item is DoNotContact) {
                     ContactsToSerialize.Add(FIELD_CONTACTS, Contacts);
                 } else {
-                    throw new BadRequestException(new ErrorMessage(400, "Type " + item.GetType().ToString() + " isn\'t supported to create contacts. Use Long, String or Contact/DoNotContact types instead.", null));
+                    throw new System.InvalidOperationException("Type " + item.GetType().ToString() + " isn't supported to create contacts. Use long, string or Contact/DoNotComtact types instead.");
                 }
             }
         }
