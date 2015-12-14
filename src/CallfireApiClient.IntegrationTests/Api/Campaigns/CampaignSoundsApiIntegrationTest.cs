@@ -4,7 +4,6 @@ using CallfireApiClient.Api.Campaigns.Model;
 using CallfireApiClient.Api.CallsTexts.Model.Request;
 using CallfireApiClient.Api.Common.Model;
 using System.IO;
-using System.Text;
 
 namespace CallfireApiClient.IntegrationTests.Api.Campaigns
 {
@@ -14,10 +13,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
         [Test]
         public void TestFind()
         {
-            FindSoundsRequest request = new FindSoundsRequest();
-            request.Limit = 3;
-            request.Filter = "sample";
-
+            FindSoundsRequest request = new FindSoundsRequest { Limit = 3, Filter = "sample" };
             Page<CampaignSound> campaignSounds = Client.CampaignSoundsApi.Find(request);
 
             Assert.AreEqual(4, campaignSounds.TotalCount);
@@ -32,9 +28,11 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
         [Test, Ignore("performs real call to specified number")]
         public void TestCallInToRecord()
         {
-            CallCreateSound callCreateSound = new CallCreateSound();
-            callCreateSound.Name = "call_in_sound_" + new DateTime().Millisecond;
-            callCreateSound.ToNumber = "12132212384";
+            CallCreateSound callCreateSound = new CallCreateSound
+            {
+                Name = "call_in_sound_" + new DateTime().Millisecond,
+                ToNumber = "12132212384"
+            };
 
             ResourceId resourceId = Client.CampaignSoundsApi.RecordViaPhone(callCreateSound);
 
@@ -58,9 +56,9 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
             CampaignSound campaignSound = Client.CampaignSoundsApi.Get(mp3ResourceId.Id, "name,status,lengthInSeconds");
             Assert.Null(campaignSound.Id);
             Assert.AreEqual(campaignSound.Name, soundName);
-            Assert.AreEqual(CampaignSound.Status.ACTIVE, campaignSound.StatusString);
+            Assert.AreEqual(CampaignSound.SoundStatus.ACTIVE, campaignSound.Status);
             Assert.AreEqual(6, campaignSound.LengthInSeconds);
-            
+
             // get mp3
             byte[] ms = Client.CampaignSoundsApi.GetMp3(mp3ResourceId.Id);
             string existingFilePath = Path.GetFullPath("Resources/File-examples/train.mp3");
@@ -72,13 +70,13 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
             existingFilePath = Path.GetFullPath("Resources/File-examples/train.wav");
             pathToSaveNewFile = existingFilePath.Replace("train.wav", "wav_sound.wav");
             File.WriteAllBytes(pathToSaveNewFile, ms);
+            
         }
 
         [Test, Ignore("need TTS setup")]
         public void TestCreateFromTts()
         {
-            TextToSpeech tts = new TextToSpeech();
-            tts.Message = "this is TTS message from csharp client";
+            TextToSpeech tts = new TextToSpeech { Message = "this is TTS message from csharp client" };
             ResourceId resourceId = Client.CampaignSoundsApi.CreateFromTts(tts);
             CampaignSound campaignSound = Client.CampaignSoundsApi.Get(resourceId.Id);
             Assert.AreEqual(resourceId.Id, campaignSound.Id);

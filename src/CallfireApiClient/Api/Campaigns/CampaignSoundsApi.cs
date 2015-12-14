@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using CallfireApiClient.Api.Campaigns.Model;
+﻿using CallfireApiClient.Api.Campaigns.Model;
 using CallfireApiClient.Api.Common.Model;
 using CallfireApiClient.Api.CallsTexts.Model.Request;
-using System.IO;
-using System.Web;
 
 namespace CallfireApiClient.Api.Campaigns
 {

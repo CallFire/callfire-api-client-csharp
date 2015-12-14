@@ -6,18 +6,17 @@ namespace CallfireApiClient.Api.Campaigns.Model
 {
     public class CampaignSound : CallfireModel
     {
-        public long? Id { get; set; }
+        public long? Id { get; private set; }
 
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
-        public DateTime? Created { get; set; }
+        public DateTime? Created { get; private set; }
 
-        public int? LengthInSeconds { get; set; }
+        public int? LengthInSeconds { get; private set; }
 
-        [JsonProperty("status")]
-        public Status? StatusString { get; set; }
+        public SoundStatus? Status { get; private set; }
 
-        public enum Status
+        public enum SoundStatus
         {
             UPLOAD, RECORDING, ACTIVE, FAILED, ARCHIVED
         }
@@ -25,7 +24,7 @@ namespace CallfireApiClient.Api.Campaigns.Model
         public override string ToString()
         {
             return string.Format("[CampaignSound: Id={0}, Name={1}, StatusString={2}, Created={3}, lengthInSeconds={4}]",
-                Id, Name, StatusString, Created, Created, LengthInSeconds);
+                Id, Name, Status, Created, Created, LengthInSeconds);
         }
     }
 }

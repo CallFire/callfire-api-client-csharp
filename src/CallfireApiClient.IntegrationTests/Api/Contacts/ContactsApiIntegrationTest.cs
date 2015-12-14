@@ -40,7 +40,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
                 HomePhone = "12345678902"
             };
 
-            var contacts = Client.ContactsApi.Create(new List<Contact>{ contact1, contact2 });
+            var contacts = Client.ContactsApi.Create(new List<Contact> { contact1, contact2 });
             Console.WriteLine(String.Join(",", contacts));
 
             Assert.AreEqual(2, contacts.Count);

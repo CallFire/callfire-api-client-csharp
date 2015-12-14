@@ -14,7 +14,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Keywords
             string KW1 = "TEST1";
             string KW2 = "TEST2";
 
-            IList<string> keywordsNames = new List<string>(new string[] { KW1, KW2 });
+            IList<string> keywordsNames = new List<string>{ KW1, KW2 };
             var keywords = Client.KeywordsApi.Find(keywordsNames);
 
             foreach (Keyword keyword in keywords)
