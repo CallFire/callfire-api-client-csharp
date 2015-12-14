@@ -21,6 +21,7 @@ namespace CallfireApiClient.Api.Contacts
         /// These DoNotContact entries only affect calls/texts/campaigns on this account.
         /// </summary>
         /// <param name="request">find request with different properties to filter</param>
+        /// <returns>paged list with dnc objects</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
         /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>

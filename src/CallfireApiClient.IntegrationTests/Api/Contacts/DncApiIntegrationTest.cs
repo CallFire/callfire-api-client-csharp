@@ -27,20 +27,24 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
             string number = "13234324554";
             string prefix = "13234";
         
-            DoNotContact dncToUpdate = new DoNotContact();
-            dncToUpdate.ListId = listId;
-            dncToUpdate.Text = true;
-            dncToUpdate.Call = true;
-            dncToUpdate.Number = number;
+            DoNotContact dncToUpdate = new DoNotContact
+            {
+                ListId = listId,
+                Text = true,
+                Call = true,
+                Number = number
+            };
             Client.DncApi.Update(dncToUpdate);
 
-            var request = new FindDncContactsRequest();
-            request.DncListId = listId;
-            request.Prefix = prefix;
-            request.CallDnc = true;
-            request.TextDnc = true;
-            request.Limit = 1;
-            request.Offset = 0;
+            var request = new FindDncContactsRequest
+            {
+                DncListId = listId,
+                Prefix = prefix,
+                CallDnc = true,
+                TextDnc = true,
+                Limit = 1,
+                Offset = 0
+            };
             Page<DoNotContact> dnc = Client.DncApi.Find(request);
             Assert.NotNull(dnc);
             Assert.AreEqual(dnc.Items.Count, 1);

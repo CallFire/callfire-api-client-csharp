@@ -125,6 +125,10 @@ namespace CallfireApiClient
                     {
                         parameters.Add(ToCamelCase(pi.Name), value);
                     }
+                    else if (value is DateTime)
+                    {
+                        parameters.Add(ToCamelCase(pi.Name), GetMillisecondsFromEpoch((DateTime) value));
+                    }
                     else
                     {
                         parameters.Add(ToCamelCase(pi.Name), value.ToString());
@@ -154,11 +158,11 @@ namespace CallfireApiClient
             return new string(chars);
         }
 
-        public static void AddQueryParamIfSet(string name, IEnumerable<object> value, IList<KeyValuePair<string, object>> queryParams)
+        public static void AddQueryParamIfSet<T>(string name, IEnumerable<T> value, IList<KeyValuePair<string, object>> queryParams)
         {
             if (name != null && value != null && queryParams != null)
             {
-                foreach (string o in value)
+                foreach (T o in value)
                 {
                     queryParams.Add(new KeyValuePair<string, object>(name, o.ToString()));
                 }
@@ -191,5 +195,11 @@ namespace CallfireApiClient
             }
             return attribs;
         }
+
+        private static long GetMillisecondsFromEpoch(DateTime utcDt)
+        {
+            DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            return (long)((utcDt - epoch).TotalMilliseconds);
+        } 
     }
 }

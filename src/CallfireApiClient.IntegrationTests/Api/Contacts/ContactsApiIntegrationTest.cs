@@ -1,8 +1,5 @@
 ﻿using System;
 using NUnit.Framework;
-using CallfireApiClient.Api.Webhooks.Model;
-using CallfireApiClient.Api.Webhooks.Model.Request;
-using CallfireApiClient;
 using CallfireApiClient.Api.Contacts.Model.Request;
 using System.Collections.Generic;
 using CallfireApiClient.Api.Common.Model.Request;
@@ -43,7 +40,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
                 HomePhone = "12345678902"
             };
 
-            var contacts = Client.ContactsApi.Create(new List<Contact>{ contact1, contact2 });
+            var contacts = Client.ContactsApi.Create(new List<Contact> { contact1, contact2 });
             Console.WriteLine(String.Join(",", contacts));
 
             Assert.AreEqual(2, contacts.Count);
@@ -57,7 +54,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
             contact2.Id = contacts[1].Id;
             contact2.FirstName = "contact2";
             contact2.Zipcode = "12345";
-            contact2.Properties = new Dictionary<string, string>{ { "key1", "value1" }, { "key2", "value2" } };
+            contact2.Properties = new Dictionary<string, string> { { "key1", "value1" }, { "key2", "value2" } };
             Client.ContactsApi.Update(contact2);
 
             var savedContact2 = Client.ContactsApi.Get((long)contact2.Id, "homePhone,zipcode,properties");

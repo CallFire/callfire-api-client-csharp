@@ -21,6 +21,7 @@ namespace CallfireApiClient.Api.Keywords
         /// Find all owned keyword leases for a user. A keyword lease is the ownership information involving a keyword.
         /// </summary>
         /// <param name="request">request payload</param>
+        /// <returns>paged list with keyword lease objects</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
         /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
@@ -38,6 +39,7 @@ namespace CallfireApiClient.Api.Keywords
         /// </summary>
         /// <param name="keyword">leased keyword</param>
         /// <param name="fields">Limit fields returned. Example fields=id,name</param>
+        /// <returns>keyword lease object</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
         /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>

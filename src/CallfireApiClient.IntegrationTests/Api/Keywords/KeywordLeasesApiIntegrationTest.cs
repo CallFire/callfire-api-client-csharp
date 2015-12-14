@@ -32,7 +32,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Keywords
 
             if (savedAutoRenew == false)
             {
-                var ex1 = Assert.Throws<CallfireApiClient.BadRequestException>(() => Client.KeywordLeasesApi.Update(keywordLease));
+                var ex1 = Assert.Throws<BadRequestException>(() => Client.KeywordLeasesApi.Update(keywordLease));
                 Assert.That(ex1.ApiErrorMessage.Message, Is.StringMatching("Can't change autoRenew once it is false"));
             }
             else

@@ -35,13 +35,10 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
         [Test]
         public void SendText()
         {
-            TextRecipient recipient1 = new TextRecipient();
-            recipient1.Message = "msg";
-            recipient1.PhoneNumber = "12132212384";
-            TextRecipient recipient2 = new TextRecipient();
-            recipient2.Message = "msg";
-            recipient2.PhoneNumber = "12132212384";
+            var recipient1 = new TextRecipient { Message = "msg", PhoneNumber = "12132212384" };
+            var recipient2 = new TextRecipient { Message = "msg", PhoneNumber = "12132212384" };
             var recipients = new List<TextRecipient> { recipient1, recipient2 };
+            
             IList<CallfireApiClient.Api.CallsTexts.Model.Text> texts = Client.TextsApi.Send(recipients, null, "items(id,fromNumber,state)");
             Console.WriteLine("Texts: " + texts);
 
