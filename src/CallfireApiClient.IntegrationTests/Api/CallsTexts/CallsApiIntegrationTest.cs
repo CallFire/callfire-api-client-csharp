@@ -26,12 +26,12 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
         public void FindCalls()
         {
             var request = new FindCallsRequest
-			{
-				States = { StateType.FINISHED, StateType.READY },
-				IntervalBegin = DateTime.UtcNow.AddMonths(-2),
-				IntervalEnd = DateTime.UtcNow,
-				Limit = 3
-			};
+            {
+                States = { StateType.FINISHED, StateType.READY },
+                IntervalBegin = DateTime.UtcNow.AddMonths(-2),
+                IntervalEnd = DateTime.UtcNow,
+                Limit = 3
+            };
 
             Page<Call> calls = Client.CallsApi.Find(request);
             Console.WriteLine("Calls: " + calls);
@@ -43,9 +43,9 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
         public void SendCall()
         {
             var recipient1 = new CallRecipient { ContactId = 463633187003, LiveMessage = "testMessage" };
-			var recipient2 = new CallRecipient { ContactId = 463633187003, LiveMessage = "testMessage" };
+            var recipient2 = new CallRecipient { ContactId = 463633187003, LiveMessage = "testMessage" };
             var recipients = new List<CallRecipient> { recipient1, recipient2 };
-			
+            
             IList<Call> calls = Client.CallsApi.Send(recipients, null, "items(id,fromNumber,state)");
             Console.WriteLine("Calls: " + calls);
 

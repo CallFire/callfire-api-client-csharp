@@ -37,10 +37,10 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
         {
             // create from numbers
             CreateContactListRequest<string> request = new CreateContactListRequest<string>
-			{
-				Contacts = new List<string> { "12135543211", "12135678882" },
-				Name = "listFromNumbers"
-			};
+            {
+                Contacts = new List<string> { "12135543211", "12135678882" },
+                Name = "listFromNumbers"
+            };
             ResourceId numbersListId = Client.ContactListsApi.Create(request);
 
             ContactList contactList = Client.ContactListsApi.Get(numbersListId.Id);
@@ -55,10 +55,10 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
 
             // create from ids
             CreateContactListRequest<long> request2 = new CreateContactListRequest<long>
-			{
-				Contacts = new List<long> { (long)items[0].Id, (long)items[1].Id },
-				Name = "listFromExistingContacts"
-			};
+            {
+                Contacts = new List<long> { (long)items[0].Id, (long)items[1].Id },
+                Name = "listFromExistingContacts"
+            };
             ResourceId idsListId = Client.ContactListsApi.Create(request);
 
             contactList = Client.ContactListsApi.Get(idsListId.Id);
@@ -72,10 +72,10 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
 
             // update
             UpdateContactListRequest updateListRequest = new UpdateContactListRequest 
-			{ 
-				Id = idsListId.Id,  
-				Name = "new_name"
-			};
+            { 
+                Id = idsListId.Id,  
+                Name = "new_name"
+            };
             Client.ContactListsApi.Update(updateListRequest);
             ContactList updatedList = Client.ContactListsApi.Get((long)updateListRequest.Id);
             Assert.AreEqual("new_name", updatedList.Name);
@@ -89,19 +89,19 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
         public void TestContactListItemsCRUD()
         {
             Contact c1 = new Contact { FirstName = "name1", HomePhone = "12345678901" };
-			Contact c2 = new Contact { FirstName = "name2", HomePhone = "12345678902" };
+            Contact c2 = new Contact { FirstName = "name2", HomePhone = "12345678902" };
             CreateContactListRequest<Contact> request = new CreateContactListRequest<Contact>
-			{
-				Contacts = new List<Contact> { c1, c2 },
-				Name = "listFromContacts"
-			};
+            {
+                Contacts = new List<Contact> { c1, c2 },
+                Name = "listFromContacts"
+            };
             ResourceId id = Client.ContactListsApi.Create(request);
 
             AddContactListContactsRequest<string> addItemsRequest = new AddContactListContactsRequest<string>
-			{
-				ContactListId = id.Id,
-				Contacts = new List<string> { "12345543211" }
-			};
+            {
+                ContactListId = id.Id,
+                Contacts = new List<string> { "12345543211" }
+            };
             Client.ContactListsApi.AddListItems(addItemsRequest);
 
             GetByIdRequest getItemsRequest = new GetByIdRequest { Id = id.Id };

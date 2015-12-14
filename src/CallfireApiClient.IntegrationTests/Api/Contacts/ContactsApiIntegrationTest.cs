@@ -54,7 +54,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
             contact2.Id = contacts[1].Id;
             contact2.FirstName = "contact2";
             contact2.Zipcode = "12345";
-            contact2.Properties = new Dictionary<string, string>{ { "key1", "value1" }, { "key2", "value2" } };
+            contact2.Properties = new Dictionary<string, string> { { "key1", "value1" }, { "key2", "value2" } };
             Client.ContactsApi.Update(contact2);
 
             var savedContact2 = Client.ContactsApi.Get((long)contact2.Id, "homePhone,zipcode,properties");
