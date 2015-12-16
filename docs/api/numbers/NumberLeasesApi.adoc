@@ -1,0 +1,67 @@
+= Number leases API
+
+
+=== Find number leases
+'''
+Example how to find number leases of particular local numbers for the user. This API is useful for finding all numbers
+ currently owned by an account. In that case send empty find request: *new FindNumberLeasesRequest()*.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    var request = new FindNumberLeasesRequest { City = "REDWOOD CITY" };
+    Page<NumberLease> leases = Client.NumberLeasesApi.Find(request);
+    Console.WriteLine(leases);
+
+=== Get number lease
+'''
+Example how to return a single NumberLease instance for a given number.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    NumberLease lease = Client.NumberLeasesApi.Get("16502572135");
+    Console.WriteLine(lease);
+
+=== Update number lease
+'''
+Example how to update a number lease instance. Ability to turn off autoRenew and toggle call/text features for a
+ particular number.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    NumberLease lease = new NumberLease { PhoneNumber = "16502572135", AutoRenew = true };
+    Client.NumberLeasesApi.Update(lease);
+
+=== Find number leases configs
+'''
+Example how to find all number lease configs for the user.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    var request = new FindNumberLeaseConfigsRequest();
+    Page<NumberConfig> configs = Client.NumberLeasesApi.FindConfigs(request);
+    Console.WriteLine(configs);
+
+=== Get number leases config
+'''
+Example how to return a single NumberConfig instance for a given number.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    NumberConfig config = Client.NumberLeasesApi.GetConfig("16502572135");
+    Console.WriteLine(config);
+
+=== Update number lease config
+'''
+Example how to update a number lease config. Use this API endpoint to add an Inbound IVR or Call Tracking
+ feature to a CallFire phone number.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    // create call tracking config
+    CallTrackingConfig callTrackingConfig = new CallTrackingConfig
+    {
+        Screen = true,
+        Recorded = true,
+        TransferNumbers = new List<string> { "16502572136", "16502572137" }
+    };
+    NumberConfig config = new NumberConfig
+    {
+        Number = "16502572135",
+        ConfigType = NumberConfig.NumberConfigType.TRACKING,
+        CallTrackingConfig = callTrackingConfig
+    };
+    Client.NumberLeasesApi.UpdateConfig(config);

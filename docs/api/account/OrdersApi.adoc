@@ -1,0 +1,35 @@
+= Account orders API
+
+=== Buy a keyword
+'''
+Example below shows how to buy a couple keywords.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    var request = new KeywordPurchaseRequest { Keywords = { "TEST1", "TEST2" } };
+    ResourceId resourceId = Client.OrdersApi.OrderKeywords(request);
+
+OrdersApi.OrderKeywords(KeywordPurchaseRequest) will return an order ID.
+
+=== Buy a number
+'''
+Example below shows how to buy a specific number.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    var request = new NumberPurchaseRequest { Numbers = new List<string> { "12132212289" } };
+    ResourceId resourceId = Client.OrdersApi.OrderNumbers(request);
+
+Buy a couple local numbers:
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    var request = new NumberPurchaseRequest { Zipcode = "90401", LocalCount = 2 };
+    ResourceId resourceId = Client.OrdersApi.OrderNumbers(request);
+
+OrdersApi.OrderNumbers(NumberPurchaseRequest) will return an order ID.
+
+=== Get particular order
+'''
+Get specific order by ID. You can set optional 2nd argument to return only certain fields to reduce network traffic.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    long orderId = 123456;
+    NumberOrder order = Client.OrdersApi.GetOrder(orderId, "id,status");

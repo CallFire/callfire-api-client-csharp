@@ -1,0 +1,41 @@
+= Texts API
+
+
+=== Find text
+'''
+Example how to find all texts sent or received by the user. Use "CampaignId=0" parameter to query for all texts sent through
+ the POST /texts API. If no limit is given then the last 100 texts will be returned.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    //No one parameter is required
+    var request = new FindTextsRequest
+    {
+        States = new List<StateType> { StateType.FINISHED, StateType.READY },
+        Results = new List<TextRecord.TextResult> { TextRecord.TextResult.SENT, TextRecord.TextResult.RECEIVED },
+        Limit = 2
+    };
+    Page<Text> texts = Client.TextsApi.Find(request);
+
+
+=== Send text
+'''
+Example how to use the /calls API to quickly send individual calls via existing campaign. A verified Caller ID and
+ sufficient credits are required to make a call.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    //Only "recipients" param required
+    var recipient1 = new TextRecipient { Message = "msg", PhoneNumber = "12132212384" };
+    var recipient2 = new TextRecipient { Message = "msg", PhoneNumber = "12132212384" };
+    var recipients = new List<TextRecipient> { recipient1, recipient2 };
+    IList<Text> texts = Client.TextsApi.Send(recipients);
+
+In case you want to send text via default campaign use *Send(List<TextRecipient> recipients, long? campaignId)* method.
+
+=== Get text
+'''
+Example how to return a single Text instance for a given text id.
+[source]
+    //Only "id" param required
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    Text text = Client.TextsApi.Get(600537356003, "id,fromNumber,state");
+
