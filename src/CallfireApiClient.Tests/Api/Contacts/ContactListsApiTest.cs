@@ -25,9 +25,11 @@ namespace CallfireApiClient.Tests.Api.Contacts
         [Test]
         public void TestDynamicPropertiesSerializationStringNumbers()
         {
-            CreateContactListRequest<string> requestString = new CreateContactListRequest<string>();
-            requestString.Name = "listFromNumbers";
-            requestString.Contacts = new List<string> { "12345678881", "12345678882" };
+            CreateContactListRequest<string> requestString = new CreateContactListRequest<string>
+            {
+                Name = "listFromNumbers",
+                Contacts = new List<string> { "12345678881", "12345678882" }
+            };
 
             String serialized = Serializer.Serialize(requestString);
             Assert.That(serialized, Is.StringContaining("\"contactNumbers\":"));
@@ -36,9 +38,11 @@ namespace CallfireApiClient.Tests.Api.Contacts
         [Test]
         public void TestDynamicPropertiesSerializationContactIds()
         {
-            CreateContactListRequest<long> requestLong = new CreateContactListRequest<long>();
-            requestLong.Name = "listFromIds";
-            requestLong.Contacts = new List<long> { 1, 2 };
+            CreateContactListRequest<long> requestLong = new CreateContactListRequest<long>
+            {
+                Name = "listFromIds",
+                Contacts = new List<long> { 1, 2 }
+            };
 
             String serialized = Serializer.Serialize(requestLong);
             Assert.That(serialized, Is.StringContaining("\"contactIds\":"));
@@ -48,10 +52,9 @@ namespace CallfireApiClient.Tests.Api.Contacts
         [Test]
         public void TestDynamicPropertiesSerializationContactPojos()
         {
-            Contact c1 = new Contact();
-            c1.FirstName = "name1";
-            Contact c2 = new Contact();
-            c2.FirstName = "name2";
+            Contact c1 = new Contact { FirstName = "name1" };
+            Contact c2 = new Contact { FirstName = "name1" };
+
             CreateContactListRequest<Contact> requestContact = new CreateContactListRequest<Contact>();
             requestContact.Name = "listFromContacts";
             requestContact.Contacts = new List<Contact> { c1, c2 };
@@ -64,10 +67,12 @@ namespace CallfireApiClient.Tests.Api.Contacts
         [Test]
         public void TestDynamicPropertiesSerializationWithOtherProps()
         {
-            AddContactListContactsRequest<long> requestObjects = new AddContactListContactsRequest<long>();
-            requestObjects.ContactNumbersField = "field";
-            requestObjects.ContactListId = 5;
-            requestObjects.Contacts = new List<long> { 1, 2 };
+            AddContactListContactsRequest<long> requestObjects = new AddContactListContactsRequest<long>
+            {
+                ContactNumbersField = "field",
+                ContactListId = 5,
+                Contacts = new List<long> { 1, 2 }
+            };
 
             String serialized = Serializer.Serialize(requestObjects);
             Assert.That(serialized, Is.StringContaining("\"contactIds\":"));
@@ -80,11 +85,13 @@ namespace CallfireApiClient.Tests.Api.Contacts
             string expectedJson = GetJsonPayload("/contacts/contactsApi/response/findContactLists.json");
             var restRequest = MockRestResponse(expectedJson);
 
-            FindContactListsRequest request = new FindContactListsRequest();
-            request.Limit = 1;
-            request.Offset = 5;
-            request.Fields = FIELDS;
-            request.Name = TEST_STRING;
+            FindContactListsRequest request = new FindContactListsRequest
+            {
+                Limit = 1,
+                Offset = 5,
+                Fields = FIELDS,
+                Name = TEST_STRING
+            };
 
             Page<ContactList> contactLists = Client.ContactListsApi.Find(request);
 
@@ -103,14 +110,15 @@ namespace CallfireApiClient.Tests.Api.Contacts
             string responseJson = GetJsonPayload("/contacts/contactsApi/response/createContactList.json");
             var restRequest = MockRestResponse(responseJson);
 
-            Contact c1 = new Contact();
-            c1.HomePhone = "123456";
-            Contact c2 = new Contact();
-            c2.HomePhone = "123457";
+            Contact c1 = new Contact { HomePhone = "123456" };
+            Contact c2 = new Contact { HomePhone = "123457" };
 
-            CreateContactListRequest<Contact> requestContact = new CreateContactListRequest<Contact>();
-            requestContact.Name = "listFromContacts";
-            requestContact.Contacts = new List<Contact> { c1, c2 };
+            CreateContactListRequest<Contact> requestContact = new CreateContactListRequest<Contact>
+            {
+                Name = "listFromContacts",
+                Contacts = new List<Contact> { c1, c2 }
+            };
+
             ResourceId res = Client.ContactListsApi.Create(requestContact);
 
             Assert.That(Serializer.Serialize(res), Is.EqualTo(responseJson));
@@ -156,9 +164,7 @@ namespace CallfireApiClient.Tests.Api.Contacts
             string requestJson = GetJsonPayload("/contacts/contactsApi/request/updateContactList.json");
             var restRequest = MockRestResponse();
 
-            UpdateContactListRequest request = new UpdateContactListRequest();
-            request.Id = TEST_LONG;
-            request.Name = TEST_STRING;
+            UpdateContactListRequest request = new UpdateContactListRequest { Id = TEST_LONG, Name = TEST_STRING };
 
             Client.ContactListsApi.Update(request);
 
@@ -192,11 +198,13 @@ namespace CallfireApiClient.Tests.Api.Contacts
             string expectedJson = GetJsonPayload("/contacts/contactsApi/response/findContacts.json");
             var restRequest = MockRestResponse(expectedJson);
 
-            GetByIdRequest request = new GetByIdRequest();
-            request.Id = TEST_LONG;
-            request.Limit = 1;
-            request.Offset = 5;
-            request.Fields = FIELDS;
+            GetByIdRequest request = new GetByIdRequest
+            {
+                Id = TEST_LONG,
+                Limit = 1,
+                Offset = 5,
+                Fields = FIELDS
+            };
 
             Page<Contact> contactsList = Client.ContactListsApi.GetListItems(request);
 
@@ -222,15 +230,16 @@ namespace CallfireApiClient.Tests.Api.Contacts
             string expectedJson = GetJsonPayload("/contacts/contactsApi/response/addContactsToContactList.json");
             var restRequest = MockRestResponse(expectedJson);
 
-            Contact c1 = new Contact();
-            c1.HomePhone = "123456";
-            Contact c2 = new Contact();
-            c2.HomePhone = "123457";
+            Contact c1 = new Contact { HomePhone = "123456" };
+            Contact c2 = new Contact { HomePhone = "123457" };
 
-            AddContactListContactsRequest<Contact> request = new AddContactListContactsRequest<Contact>();
-            request.ContactNumbersField = "homePhone";
-            request.ContactListId = TEST_LONG;
-            request.Contacts = new List<Contact> { c1, c2 };
+            AddContactListContactsRequest<Contact> request = new AddContactListContactsRequest<Contact>
+            {
+                ContactNumbersField = "homePhone",
+                ContactListId = TEST_LONG,
+                Contacts = new List<Contact> { c1, c2 }
+            };
+
             Client.ContactListsApi.AddListItems(request);
 
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);

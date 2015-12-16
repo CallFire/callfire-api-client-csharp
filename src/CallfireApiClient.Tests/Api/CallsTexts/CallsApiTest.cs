@@ -18,12 +18,9 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             string responseJson = GetJsonPayload("/callstexts/callsApi/response/sendCalls.json");
             var restRequest = MockRestResponse(responseJson);
 
-            CallRecipient r1 = new CallRecipient();
-            r1.PhoneNumber = "12135551100";
-            r1.LiveMessage = "Why hello there!";
-            CallRecipient r2 = new CallRecipient();
-            r2.PhoneNumber = "12135551101";
-            r2.LiveMessage = "And hello to you too.";
+            CallRecipient r1 = new CallRecipient { PhoneNumber = "12135551100" , LiveMessage = "Why hello there!" };
+            CallRecipient r2 = new CallRecipient { PhoneNumber = "12135551101", LiveMessage = "And hello to you too." };
+
             IList<Call> calls = Client.CallsApi.Send(new List<CallRecipient> { r1, r2 });
 
             Assert.That(Serializer.Serialize(new ListHolder<Call>(calls)), Is.EqualTo(responseJson));
@@ -41,11 +38,13 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
         {
             string expectedJson = GetJsonPayload("/callstexts/callsApi/response/findCalls.json");
             var restRequest = MockRestResponse(expectedJson);
-            var request = new FindCallsRequest();
-            request.States = new List<StateType> { StateType.CALLBACK, StateType.DISABLED };
-            request.Id = new List<long> { 1, 2, 3 };
-            request.Limit = 5;
-            request.Offset = 0;
+            var request = new FindCallsRequest
+            {
+                States = new List<StateType> { StateType.CALLBACK, StateType.DISABLED },
+                Id = new List<long> { 1, 2, 3 },
+                Limit = 5,
+                Offset = 0
+            };
 
             Page<Call> calls = Client.CallsApi.Find(request);
 

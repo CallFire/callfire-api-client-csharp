@@ -1,7 +1,7 @@
 ﻿using System;
-using CallfireApiClient.Api.Webhooks.Model.Request;
 using CallfireApiClient.Api.Common.Model;
 using CallfireApiClient.Api.Webhooks.Model;
+using CallfireApiClient.Api.Webhooks.Model.Request;
 
 namespace CallfireApiClient.Api.Webhooks
 {
