@@ -1,6 +1,7 @@
 ﻿using CallfireApiClient.Api.Common.Model;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace CallfireApiClient.Api.Contacts.Model.Request
 {
@@ -11,35 +12,34 @@ namespace CallfireApiClient.Api.Contacts.Model.Request
         private const string FIELD_CONTACTS = "contacts";
 
         [JsonExtensionData]
-        private IDictionary<string, object> ContactsData;
+        private Dictionary<string, object> ContactsData;
 
         [JsonIgnore]
-        public List<T> Contacts
-        {
-            get { return Contacts; }
+        public List<T> Contacts { get; set; }
 
-            set
+        [OnSerializing]
+        private void OnSerializing(StreamingContext context)
+        {
+            if (Contacts != null && Contacts.Count > 0)
             {
                 ContactsData = new Dictionary<string, object>(1);
-                if (value.Count > 0)
+                object item = Contacts[0];
+                if (item is long)
                 {
-                    object item = value[0];
-                    if (item is long)
-                    {
-                        ContactsData.Add(FIELD_CONTACT_IDS, Contacts);
-                    }
-                    else if (item is string)
-                    {
-                        ContactsData.Add(FIELD_CONTACT_NUMBERS, Contacts);
-                    }
-                    else if (item is Contact || item is DoNotContact)
-                    {
-                        ContactsData.Add(FIELD_CONTACTS, Contacts);
-                    }
-                    else
-                    {
-                        throw new System.InvalidOperationException("Type " + item.GetType().ToString() + " isn't supported to create contacts. Use long, string or Contact/DoNotComtact types instead.");
-                    }
+                    ContactsData.Add(FIELD_CONTACT_IDS, Contacts);
+                }
+                else if (item is string)
+                {
+                    ContactsData.Add(FIELD_CONTACT_NUMBERS, Contacts);
+                }
+                else if (item is Contact || item is DoNotContact)
+                {
+                    ContactsData.Add(FIELD_CONTACTS, Contacts);
+                }
+                else
+                {
+                    throw new System.InvalidOperationException("Type " + item.GetType().ToString() +
+                        " isn't supported to create contacts. Use long, string or Contact/DoNotComtact types instead.");
                 }
             }
         }

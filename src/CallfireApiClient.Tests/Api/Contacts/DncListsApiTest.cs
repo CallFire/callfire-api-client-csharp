@@ -152,14 +152,20 @@ namespace CallfireApiClient.Tests.Api.Contacts
             string requestJson = GetJsonPayload("/contacts/dncApi/request/addDncItems.json");
             var restRequest = MockRestResponse();
 
+<<<<<<< HEAD
             List<DoNotContact> dncs = new List<DoNotContact>();
             DoNotContact dnc = new DoNotContact();
             dnc.ListId = TEST_LONG;
             dnc.Number = TEST_LONG.ToString();
+=======
+            var dncs = new List<DoNotContact>();
+            var dnc = new DoNotContact { ListId = TEST_LONG, Number = TEST_LONG.ToString() };
+>>>>>>> a38ac4e... added TextAutoRepliesApi and fixed segfault in AddContactsRequest class
             dncs.Add(dnc);
-            AddDncListItemsRequest<DoNotContact> request = new AddDncListItemsRequest<DoNotContact>();
+            var request = new AddDncListItemsRequest<DoNotContact>();
             request.ContactListId = TEST_LONG;
-            request.Contacts = dncs;
+            request.Contacts = new List<DoNotContact>();
+            request.Contacts.Add(dnc);
 
             Client.DncListsApi.AddListItems(request);
 
@@ -205,6 +211,6 @@ namespace CallfireApiClient.Tests.Api.Contacts
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("number") && p.Value.Equals("123457")));
         }
 
-    }  
+    }
 }
 
