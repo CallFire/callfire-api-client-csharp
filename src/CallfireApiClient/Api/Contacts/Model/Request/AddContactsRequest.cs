@@ -12,7 +12,7 @@ namespace CallfireApiClient.Api.Contacts.Model.Request
         private const string FIELD_CONTACTS = "contacts";
 
         [JsonExtensionData]
-        private Dictionary<string, object> ContactsData;
+        private IDictionary<string, object> ContactsData;
 
         [JsonIgnore]
         public List<T> Contacts { get; set; }

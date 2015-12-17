@@ -164,8 +164,7 @@ namespace CallfireApiClient.Tests.Api.Contacts
             dncs.Add(dnc);
             var request = new AddDncListItemsRequest<DoNotContact>();
             request.ContactListId = TEST_LONG;
-            request.Contacts = new List<DoNotContact>();
-            request.Contacts.Add(dnc);
+            request.Contacts = dncs;
 
             Client.DncListsApi.AddListItems(request);
 
