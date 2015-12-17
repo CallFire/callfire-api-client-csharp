@@ -38,7 +38,7 @@ namespace CallfireApiClient.Tests.Api.Contacts
         [Test]
         public void TestDynamicPropertiesSerializationContactIds()
         {
-            CreateContactListRequest<long> requestLong = new CreateContactListRequest<long>
+            var requestLong = new CreateContactListRequest<long>
             {
                 Name = "listFromIds",
                 Contacts = new List<long> { 1, 2 }

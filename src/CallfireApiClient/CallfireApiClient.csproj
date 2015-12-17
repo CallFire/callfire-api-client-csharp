@@ -148,6 +148,9 @@
     <Compile Include="Api\Campaigns\BatchesApi.cs" />
     <Compile Include="Api\Campaigns\Model\Batch.cs" />
     <Compile Include="Api\CallsTexts\Model\StateType.cs" />
+    <Compile Include="Api\Campaigns\TextAutoRepliesApi.cs" />
+    <Compile Include="Api\Campaigns\Model\TextAutoReply.cs" />
+    <Compile Include="Api\Campaigns\Model\Request\FindTextAutoRepliesRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />
