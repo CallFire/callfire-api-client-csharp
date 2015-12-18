@@ -28,6 +28,7 @@ namespace CallfireApiClient
         readonly Lazy<DncListsApi> _DncListsApi;
         readonly Lazy<CallsApi> _CallsApi;
         readonly Lazy<TextsApi> _TextsApi;
+        readonly Lazy<TextAutoRepliesApi> _TextAutoRepliesApi;
 
         readonly Lazy<WebhooksApi> _WebhooksApi;
 
@@ -61,6 +62,8 @@ namespace CallfireApiClient
 
         public TextsApi TextsApi { get { return _TextsApi.Value; } }
 
+        public TextAutoRepliesApi TextAutoRepliesApi { get { return _TextAutoRepliesApi.Value; } }
+
 
         public CallfireClient(string username, string password)
         {
@@ -81,6 +84,7 @@ namespace CallfireApiClient
             _DncListsApi = new Lazy<DncListsApi>(() => new DncListsApi(RestApiClient));
             _CallsApi = new Lazy<CallsApi>(() => new CallsApi(RestApiClient));
             _TextsApi = new Lazy<TextsApi>(() => new TextsApi(RestApiClient));
+            _TextAutoRepliesApi = new Lazy<TextAutoRepliesApi>(() => new TextAutoRepliesApi(RestApiClient));
         }
     }
 }

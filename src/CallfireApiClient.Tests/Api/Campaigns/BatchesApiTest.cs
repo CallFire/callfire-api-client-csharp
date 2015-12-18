@@ -47,7 +47,8 @@ namespace CallfireApiClient.Tests.Api.Campaigns
         public void UpdateNullId()
         {
             var ex = Assert.Throws<ArgumentNullException>(() => Client.BatchesApi.Update(new Batch()));
-            Assert.AreEqual(ex.Message, "Value cannot be null.\r\nParameter name: batch.id");
+            Assert.That(ex.Message, Is.StringContaining("Value cannot be null"));
+            Assert.That(ex.Message, Is.StringContaining("Parameter name: batch.id"));
         }
     }
 }
