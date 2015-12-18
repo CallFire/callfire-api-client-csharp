@@ -36,17 +36,11 @@ namespace CallfireApiClient.Tests.Api.Contacts
         [Test]
         public void TestDynamicPropertiesSerializationContactIds()
         {
-<<<<<<< HEAD
-            CreateContactListRequest<long> requestLong = new CreateContactListRequest<long>();
-            requestLong.Name = "listFromIds";
-            requestLong.Contacts = new List<long> { 1, 2 };
-=======
             var requestLong = new CreateContactListRequest<long>
             {
                 Name = "listFromIds",
                 Contacts = new List<long> { 1, 2 }
             };
->>>>>>> a38ac4e... added TextAutoRepliesApi and fixed segfault in AddContactsRequest class
 
             String serialized = Serializer.Serialize(requestLong);
             Assert.That(serialized, Is.StringContaining("\"contactIds\":"));
