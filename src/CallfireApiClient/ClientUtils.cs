@@ -14,7 +14,7 @@ namespace CallfireApiClient
     /// </summary>
     internal static class ClientUtils
     {
-        public static readonly IDictionary<string, object> EMPTY_MAP = new Dictionary<string, object>(0);
+        public static readonly IList<KeyValuePair<string, object>> EMPTY_MAP = new List<KeyValuePair<string, object>>(0);
 
         /// <summary>
         /// Convert ICollection<T> to pretty string
@@ -80,11 +80,11 @@ namespace CallfireApiClient
         /// <param name="name">param name</param>
         /// <param name="value">param value</param>
         /// <returns>NameValueCollection with one item</returns>
-        public static IDictionary<string, object> BuildQueryParams(string name, string value)
+        public static IList<KeyValuePair<string, object>> BuildQueryParams(string name, string value)
         {
             if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(value))
             {
-                return new Dictionary<string, object>(1) { { name, value } };
+                return new List<KeyValuePair<string, object>>(1) { new KeyValuePair<string, object>(name, value) };
             }
             else
             {
@@ -101,39 +101,27 @@ namespace CallfireApiClient
         /// Method traverses request object using reflection and build NameValueCollection from it
         /// <summary>/
         /// <param name="request">request object
-        /// <typeparam name="T">type of request<typeparam>/
+        /// <typeparam name="T">type of request</typeparam>
         /// <returns>collection of query parameters, empty collection if request is null</returns>
-        public static IDictionary<string, object> BuildQueryParams<T>(T request)
+        public static IList<KeyValuePair<string, object>> BuildQueryParams<T>(T request)
             where T : CallfireModel
         {
             if (request == null)
             {
                 return EMPTY_MAP;
             }
-            var parameters = new Dictionary<string, object>();
+            var parameters = new List<KeyValuePair<string, object>>();
             foreach (PropertyInfo pi in request.GetType().GetProperties())
             {
                 // TODO vmalinovskiy change JsonIgnoreAttribute to some custom IgnoreAsParameter attribure
                 var attr = GetPropertyAttributes(pi);
                 if (attr.ContainsKey(typeof(JsonIgnoreAttribute).Name))
+                {
                     continue;
+                }
 
                 object value = pi.GetValue(request, null);
-                if (value != null)
-                {
-                    if (value is ICollection)
-                    {
-                        parameters.Add(ToCamelCase(pi.Name), value);
-                    }
-                    else if (value is DateTime)
-                    {
-                        parameters.Add(ToCamelCase(pi.Name), GetMillisecondsFromEpoch((DateTime) value));
-                    }
-                    else
-                    {
-                        parameters.Add(ToCamelCase(pi.Name), value.ToString());
-                    }
-                }
+                AddQueryParamIfSet(pi.Name, value, parameters);
             }
             return parameters;
         }
@@ -158,13 +146,24 @@ namespace CallfireApiClient
             return new string(chars);
         }
 
-        public static void AddQueryParamIfSet<T>(string name, IEnumerable<T> value, IList<KeyValuePair<string, object>> queryParams)
+        public static void AddQueryParamIfSet(string name, object value, IList<KeyValuePair<string, object>> queryParams)
         {
             if (name != null && value != null && queryParams != null)
             {
-                foreach (T o in value)
+                if (value is ICollection)
                 {
-                    queryParams.Add(new KeyValuePair<string, object>(name, o.ToString()));
+                    foreach (object o in (ICollection)value)
+                    {
+                        queryParams.Add(new KeyValuePair<string, object>(ToCamelCase(name), o.ToString()));
+                    } 
+                }
+                else if (value is DateTime)
+                {
+                    queryParams.Add(new KeyValuePair<string, object>(ToCamelCase(name), ToUnixTime((DateTime)value)));
+                }
+                else
+                {
+                    queryParams.Add(new KeyValuePair<string, object>(ToCamelCase(name), value.ToString()));
                 }
             }
         }
@@ -184,6 +183,11 @@ namespace CallfireApiClient
             return null;
         }
 
+        public static long ToUnixTime(DateTime dateTime)
+        {
+            return (long)(dateTime.ToUniversalTime() - ClientConstants.EPOCH).TotalMilliseconds;
+        }
+
         private static Dictionary<string, CustomAttributeData> GetPropertyAttributes(PropertyInfo property)
         {
             Dictionary<string, CustomAttributeData> attribs = new Dictionary<string, CustomAttributeData>();
@@ -195,11 +199,5 @@ namespace CallfireApiClient
             }
             return attribs;
         }
-
-        private static long GetMillisecondsFromEpoch(DateTime utcDt)
-        {
-            DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            return (long)((utcDt - epoch).TotalMilliseconds);
-        } 
     }
 }

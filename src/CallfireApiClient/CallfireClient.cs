@@ -29,6 +29,8 @@ namespace CallfireApiClient
         readonly Lazy<CallsApi> _CallsApi;
         readonly Lazy<TextsApi> _TextsApi;
         readonly Lazy<TextAutoRepliesApi> _TextAutoRepliesApi;
+        readonly Lazy<TextBroadcastsApi> _TextBroadcastsApi;
+        readonly Lazy<CallBroadcastsApi> _CallBroadcastsApi;
 
         readonly Lazy<WebhooksApi> _WebhooksApi;
 
@@ -64,6 +66,10 @@ namespace CallfireApiClient
 
         public TextAutoRepliesApi TextAutoRepliesApi { get { return _TextAutoRepliesApi.Value; } }
 
+        public TextBroadcastsApi TextBroadcastsApi { get { return _TextBroadcastsApi.Value; } }
+
+        public CallBroadcastsApi CallBroadcastsApi { get { return _CallBroadcastsApi.Value; } }
+
 
         public CallfireClient(string username, string password)
         {
@@ -85,6 +91,8 @@ namespace CallfireApiClient
             _CallsApi = new Lazy<CallsApi>(() => new CallsApi(RestApiClient));
             _TextsApi = new Lazy<TextsApi>(() => new TextsApi(RestApiClient));
             _TextAutoRepliesApi = new Lazy<TextAutoRepliesApi>(() => new TextAutoRepliesApi(RestApiClient));
+            _TextBroadcastsApi = new Lazy<TextBroadcastsApi>(() => new TextBroadcastsApi(RestApiClient));
+            _CallBroadcastsApi = new Lazy<CallBroadcastsApi>(() => new CallBroadcastsApi(RestApiClient));
         }
     }
 }

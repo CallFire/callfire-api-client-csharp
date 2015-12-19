@@ -9,13 +9,6 @@
       "localTimeRestriction": {
         "enabled": false
       },
-      "retryConfig": {
-        "maxAttempts": 1,
-        "minutesBetweenAttempts": 60,
-        "retryPhoneTypes": [
-          "FIRST_NUMBER"
-        ]
-      },
       "message": "This is a text broadcast",
       "bigMessageStrategy": "DO_NOT_SEND"
     },
@@ -27,13 +20,6 @@
       "fromNumber": "12135551100",
       "localTimeRestriction": {
         "enabled": false
-      },
-      "retryConfig": {
-        "maxAttempts": 1,
-        "minutesBetweenAttempts": 60,
-        "retryPhoneTypes": [
-          "FIRST_NUMBER"
-        ]
       },
       "message": "Hello World!"
     }

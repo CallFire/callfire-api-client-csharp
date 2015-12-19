@@ -1,3 +1,5 @@
+using System;
+
 
 namespace CallfireApiClient
 {
@@ -15,5 +17,7 @@ namespace CallfireApiClient
 
         public const string PLACEHOLDER = "{}";
         public const string GENERIC_HELP_LINK = "https://answers.callfire.com/hc/en-us";
+
+        public static readonly DateTime EPOCH = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
     }
 }

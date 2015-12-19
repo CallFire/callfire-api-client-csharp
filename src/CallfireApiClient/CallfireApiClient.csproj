@@ -151,6 +151,29 @@
     <Compile Include="Api\Campaigns\TextAutoRepliesApi.cs" />
     <Compile Include="Api\Campaigns\Model\TextAutoReply.cs" />
     <Compile Include="Api\Campaigns\Model\Request\FindTextAutoRepliesRequest.cs" />
+    <Compile Include="Api\Campaigns\TextBroadcastsApi.cs" />
+    <Compile Include="Api\Campaigns\Model\Broadcast.cs" />
+    <Compile Include="Api\Campaigns\Model\TextBroadcast.cs" />
+    <Compile Include="Api\Campaigns\Model\Request\FindBroadcastsRequest.cs" />
+    <Compile Include="Api\Campaigns\Model\Request\AddBatchRequest.cs" />
+    <Compile Include="Api\Campaigns\Model\BroadcastStats.cs" />
+    <Compile Include="Api\Campaigns\Model\TextBroadcastStats.cs" />
+    <Compile Include="Api\Campaigns\Model\BroadcastStatus.cs" />
+    <Compile Include="Api\Campaigns\Model\DayOfWeek.cs" />
+    <Compile Include="Api\Campaigns\Model\Schedule.cs" />
+    <Compile Include="Api\Campaigns\Model\LocalDate.cs" />
+    <Compile Include="Api\Campaigns\Model\LocalTime.cs" />
+    <Compile Include="Api\Campaigns\Model\LocalTimeRestriction.cs" />
+    <Compile Include="Api\Campaigns\Model\BigMessageStrategy.cs" />
+    <Compile Include="Api\CallsTexts\Model\Media.cs" />
+    <Compile Include="Api\Campaigns\CallBroadcastsApi.cs" />
+    <Compile Include="Api\Campaigns\Model\CallBroadcast.cs" />
+    <Compile Include="Api\Campaigns\Model\RetryConfig.cs" />
+    <Compile Include="Api\Campaigns\Model\RetryResults.cs" />
+    <Compile Include="Api\Campaigns\Model\RetryPhoneTypes.cs" />
+    <Compile Include="Api\Campaigns\Model\AnsweringMachineConfig.cs" />
+    <Compile Include="Api\Campaigns\Model\CallBroadcastSounds.cs" />
+    <Compile Include="Api\Campaigns\Model\CallBroadcastStats.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

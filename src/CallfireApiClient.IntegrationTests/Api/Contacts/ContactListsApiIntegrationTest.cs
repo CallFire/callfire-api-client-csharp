@@ -54,12 +54,12 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
             Assert.AreEqual(2, items.Count);
 
             // create from ids
-            CreateContactListRequest<long> request2 = new CreateContactListRequest<long>
+            var request2 = new CreateContactListRequest<long>
             {
                 Contacts = new List<long> { (long)items[0].Id, (long)items[1].Id },
                 Name = "listFromExistingContacts"
             };
-            ResourceId idsListId = Client.ContactListsApi.Create(request);
+            ResourceId idsListId = Client.ContactListsApi.Create(request2);
 
             contactList = Client.ContactListsApi.Get(idsListId.Id);
             Assert.AreEqual(2, contactList.Size);
@@ -71,7 +71,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
             Assert.Greater(contactLists.TotalCount, 1);
 
             // update
-            UpdateContactListRequest updateListRequest = new UpdateContactListRequest 
+            UpdateContactListRequest updateListRequest = new UpdateContactListRequest
             { 
                 Id = idsListId.Id,  
                 Name = "new_name"
@@ -121,6 +121,6 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
 
             Client.ContactListsApi.Delete(id.Id);
         }
-    }    
+    }
 }
 

@@ -55,20 +55,21 @@ namespace CallfireApiClient.Tests.Api.Account
         [Test]
         public void VerifyCallerId()
         {
-            string expectedJson = GetJsonPayload("/account/meApi/response/verifyCallerId.json");
-            var restRequest = MockRestResponse(expectedJson);
+            string requestJson = GetJsonPayload("/account/meApi/request/verifyCallerId.json");
+            string responseJson = GetJsonPayload("/account/meApi/response/verifyCallerId.json");
+            var restRequest = MockRestResponse(responseJson);
         
             var request = new CallerIdVerificationRequest
             {
                 CallerId = "1234567890",
-                VerificationCode = "0987654321"      
+                VerificationCode = "1234"      
             };
             bool? verified = Client.MeApi.VerifyCallerId(request);
-            Assert.That(Serializer.Serialize(verified), Is.EqualTo(expectedJson));
+            Assert.That(Serializer.Serialize(verified), Is.EqualTo(responseJson));
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
 
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.That(Serializer.Serialize(request), Is.EqualTo(requestBodyParam.Value));
+            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
             Assert.That(restRequest.Value.Resource, Is.StringContaining(request.CallerId));
         }
 

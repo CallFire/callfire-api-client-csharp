@@ -1,0 +1,19 @@
+{
+  "name": "Example API VB",
+  "fromNumber": "12135551189",
+  "recipients": [
+    {
+      "phoneNumber": "13233832214"
+    },
+    {
+      "phoneNumber": "13233832215"
+    }
+  ],
+  "sounds": {
+    "liveSoundText": "Hello! This is a live answer text to speech recording",
+    "liveSoundTextVoice": "MALE1",
+    "machineSoundText": "This is an answering machine text to speech recording",
+    "machineSoundTextVoice": "MALE1"
+  },
+  "answeringMachineConfig": "AM_AND_LIVE"
+}

@@ -1,0 +1,23 @@
+{
+  "totalOutboundCount": 3,
+  "remainingOutboundCount": 0,
+  "billedAmount": 0.0000,
+  "callsAttempted": 3,
+  "callsPlaced": 3,
+  "callsDuration": 0,
+  "billedDuration": 0,
+  "responseRatePercent": 100,
+  "callsRemaining": 0,
+  "callsAwaitingRedial": 0,
+  "callsLiveAnswer": 3,
+  "totalCount": 3,
+  "answeringMachineCount": 0,
+  "busyCount": 0,
+  "dialedCount": 3,
+  "doNotCallCount": 0,
+  "errorCount": 3,
+  "liveCount": 0,
+  "miscCount": 0,
+  "noAnswerCount": 0,
+  "transferCount": 0
+}

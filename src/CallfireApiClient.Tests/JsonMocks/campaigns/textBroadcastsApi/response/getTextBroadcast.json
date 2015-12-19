@@ -7,12 +7,5 @@
   "localTimeRestriction": {
     "enabled": false
   },
-  "retryConfig": {
-    "maxAttempts": 1,
-    "minutesBetweenAttempts": 60,
-    "retryPhoneTypes": [
-      "FIRST_NUMBER"
-    ]
-  },
   "message": "Hello World!"
 }
