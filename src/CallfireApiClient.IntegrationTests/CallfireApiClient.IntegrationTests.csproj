@@ -57,6 +57,8 @@
     <Compile Include="Api\Numbers\NumbersApiIntegrationTest.cs" />
     <Compile Include="Api\Campaigns\BatchesApiIntegrationTest.cs" />
     <Compile Include="Api\Campaigns\TextAutoRepliesApiIntegrationTest.cs" />
+    <Compile Include="Api\Campaigns\TextBroadcastsApiIntegrationTest.cs" />
+    <Compile Include="Api\Campaigns\CallBroadcastsApiIntegrationTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

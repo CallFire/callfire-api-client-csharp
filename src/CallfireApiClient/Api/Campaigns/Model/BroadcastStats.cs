@@ -7,14 +7,14 @@ namespace CallfireApiClient.Api.Campaigns.Model
     {
         public int? TotalOutboundCount { get; private set; }
 
-        public int? remainingOutboundCount{ get; private set; }
+        public int? RemainingOutboundCount { get; private set; }
 
-        public Decimal billedAmount{ get; private set; }
+        public Decimal? BilledAmount { get; private set; }
 
         public override string ToString()
         {
-            return string.Format("[BroadcastStats: TotalOutboundCount={0}, remainingOutboundCount={1}, billedAmount={2}]",
-                TotalOutboundCount, remainingOutboundCount, billedAmount);
+            return string.Format("[BroadcastStats: TotalOutboundCount={0}, RemainingOutboundCount={1}, BilledAmount={2}]",
+                TotalOutboundCount, RemainingOutboundCount, BilledAmount);
         }
     }
 }

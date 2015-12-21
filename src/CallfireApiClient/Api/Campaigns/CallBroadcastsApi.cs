@@ -11,7 +11,7 @@ namespace CallfireApiClient.Api.Campaigns
     public class CallBroadcastsApi
     {
         private const string CB_PATH = "/calls/broadcasts";
-        private const string CB_ITEM_PATH = "/callls/broadcasts/{}";
+        private const string CB_ITEM_PATH = "/calls/broadcasts/{}";
         private const string CB_ITEM_BATCHES_PATH = "/calls/broadcasts/{}/batches";
         private const string CB_ITEM_CALLS_PATH = "/calls/broadcasts/{}/calls";
         private const string CB_ITEM_START_PATH = "/calls/broadcasts/{}/start";

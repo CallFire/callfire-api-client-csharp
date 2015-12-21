@@ -22,8 +22,8 @@ namespace CallfireApiClient.Api.Campaigns.Model
 
         public override string ToString()
         {
-            return string.Format("[CallBroadcast: RetryConfig={0}, Recipients={1}, DialplanXml={2}, Sounds={3}, AnsweringMachineConfig={4}, MaxActiveTransfers={5}]",
-                RetryConfig, Recipients, DialplanXml, Sounds, AnsweringMachineConfig, MaxActiveTransfers);
+            return string.Format("[{0} CallBroadcast: RetryConfig={1}, Recipients={2}, DialplanXml={3}, Sounds={4}, AnsweringMachineConfig={5}, MaxActiveTransfers={6}]",
+                base.ToString(), RetryConfig, Recipients, DialplanXml, Sounds, AnsweringMachineConfig, MaxActiveTransfers);
         }
     }
 }
