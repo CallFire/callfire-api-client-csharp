@@ -131,7 +131,7 @@ namespace CallfireApiClient
             };
 
             restRequest.AddHeader("Accept", "*/*");
-            return DoRequestForGettingFileData(restRequest);
+            return DoRequest(restRequest);
         }
 
         /// <summary>
@@ -188,7 +188,8 @@ namespace CallfireApiClient
         /// <summary>
         /// <typeparam name="T">The type of object to create and populate with the returned data.</typeparam>
         /// <param name="path">relative API request path</param>
-        /// <param name="queryParams">query parameters</param>
+        /// <param name="fileName">name of file</param>
+        /// <param name="filePath">path to file</param>
         /// <returns>mapped object</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
@@ -197,7 +198,7 @@ namespace CallfireApiClient
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public T PostFile<T>(String path, string fileName, string filePath, string contentType = null) where T : new()
+        public T PostFile<T>(String path, string fileName, string filePath) where T : new()
         {
             var queryParams = ClientUtils.BuildQueryParams("name", fileName);
             var restRequest = CreateRestRequest(path, Method.POST, queryParams);
@@ -305,8 +306,8 @@ namespace CallfireApiClient
 
             return response.Data;
         }
-        
-        private byte[] DoRequestForGettingFileData(IRestRequest request)
+
+        private byte[] DoRequest(IRestRequest request)
         {
             FilterRequest(request);
             var response = RestClient.Execute(request);
@@ -320,7 +321,7 @@ namespace CallfireApiClient
 
             return response.RawBytes;
         }
-        
+
         private void VerifyResponse(IRestResponse response)
         {
             int statusCode = (int)response.StatusCode;

@@ -10,6 +10,10 @@ using CallfireApiClient.Api.Campaigns;
 
 namespace CallfireApiClient
 {
+    /// <summary>
+    /// Callfire API v2 .NET client
+    /// use your API login and password to create client instance object
+    /// </summary>
     public class CallfireClient
     {
         public RestApiClient RestApiClient { get; set; }
