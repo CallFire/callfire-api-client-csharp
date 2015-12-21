@@ -7,8 +7,11 @@
 * link:callstexts/TextsApi.adoc[Send individual texts]
 * Campaigns
 ** link:campaigns/CampaignSoundsApi.adoc[Campaign Sounds]
+** link:campaigns/TextAutoRepliesApi.adoc[Text auto replies]
 ** Broadcasts
 *** link:campaigns/BatchesApi.adoc[Contact batches]
+*** link:campaigns/CallBroadcastsApi.adoc[Call broadcasts]
+*** link:campaigns/TextBroadcastsApi.adoc[Text broadcasts]
 * Contacts & Do Not Contact (DNC) lists
 ** link:contacts/ContactsApi.adoc[User contacts]
 ** link:contacts/ContactListsApi.adoc[Contact lists]
