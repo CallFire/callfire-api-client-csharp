@@ -60,6 +60,8 @@
     <Compile Include="Api\Numbers\NumberLeasesApiTest.cs" />
     <Compile Include="Api\Campaigns\BatchesApiTest.cs" />
     <Compile Include="Api\Campaigns\TextAutoRepliesApiTest.cs" />
+    <Compile Include="Api\Campaigns\TextBroadcastsApiTest.cs" />
+    <Compile Include="Api\Campaigns\CallBroadcastsApiTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -118,45 +120,10 @@
     <None Include="JsonMocks\campaigns\campaignSoundsApi\response\findCampaignSounds.json" />
     <None Include="JsonMocks\campaigns\campaignSoundsApi\response\getCampaignSound.json" />
     <None Include="JsonMocks\campaigns\campaignSoundsApi\response\uploadSound.json" />
-    <None Include="JsonMocks\campaigns\ivrBroadcastsApi\request\addBatch.json" />
-    <None Include="JsonMocks\campaigns\ivrBroadcastsApi\request\addRecipients.json" />
-    <None Include="JsonMocks\campaigns\ivrBroadcastsApi\request\createIvrBroadcast.json" />
-    <None Include="JsonMocks\campaigns\ivrBroadcastsApi\request\updateIvrBroadcast.json" />
-    <None Include="JsonMocks\campaigns\ivrBroadcastsApi\response\addBatch.json" />
-    <None Include="JsonMocks\campaigns\ivrBroadcastsApi\response\addRecipients.json" />
-    <None Include="JsonMocks\campaigns\ivrBroadcastsApi\response\createIvrBroadcast.json" />
-    <None Include="JsonMocks\campaigns\ivrBroadcastsApi\response\findIvrBroadcasts.json" />
-    <None Include="JsonMocks\campaigns\ivrBroadcastsApi\response\getBatches.json" />
-    <None Include="JsonMocks\campaigns\ivrBroadcastsApi\response\getCalls.json" />
-    <None Include="JsonMocks\campaigns\ivrBroadcastsApi\response\getIvrBroadcast.json" />
     <None Include="JsonMocks\campaigns\textAutoRepliesApi\request\createTextAutoReply.json" />
     <None Include="JsonMocks\campaigns\textAutoRepliesApi\response\createTextAutoReply.json" />
     <None Include="JsonMocks\campaigns\textAutoRepliesApi\response\findTextAutoReplies.json" />
     <None Include="JsonMocks\campaigns\textAutoRepliesApi\response\getTextAutoReply.json" />
-    <None Include="JsonMocks\campaigns\textBroadcastsApi\request\addBatch.json" />
-    <None Include="JsonMocks\campaigns\textBroadcastsApi\request\addRecipients.json" />
-    <None Include="JsonMocks\campaigns\textBroadcastsApi\request\createTextBroadcast.json" />
-    <None Include="JsonMocks\campaigns\textBroadcastsApi\request\updateBatch.json" />
-    <None Include="JsonMocks\campaigns\textBroadcastsApi\request\updateTextBroadcast.json" />
-    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\addBatch.json" />
-    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\addRecipients.json" />
-    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\createTextBroadcast.json" />
-    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\findTextBroadcasts.json" />
-    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\getBatch.json" />
-    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\getBatches.json" />
-    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\getTextBroadcast.json" />
-    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\getTexts.json" />
-    <None Include="JsonMocks\campaigns\voiceBroadcastsApi\request\addBatch.json" />
-    <None Include="JsonMocks\campaigns\voiceBroadcastsApi\request\addRecipients.json" />
-    <None Include="JsonMocks\campaigns\voiceBroadcastsApi\request\createVoiceBroadcast.json" />
-    <None Include="JsonMocks\campaigns\voiceBroadcastsApi\request\updateVoiceBroadcast.json" />
-    <None Include="JsonMocks\campaigns\voiceBroadcastsApi\response\addBatch.json" />
-    <None Include="JsonMocks\campaigns\voiceBroadcastsApi\response\addRecipients.json" />
-    <None Include="JsonMocks\campaigns\voiceBroadcastsApi\response\createVoiceBroadcast.json" />
-    <None Include="JsonMocks\campaigns\voiceBroadcastsApi\response\findVoiceBroadcasts.json" />
-    <None Include="JsonMocks\campaigns\voiceBroadcastsApi\response\getBatches.json" />
-    <None Include="JsonMocks\campaigns\voiceBroadcastsApi\response\getCalls.json" />
-    <None Include="JsonMocks\campaigns\voiceBroadcastsApi\response\getVoiceBroadcast.json" />
     <None Include="JsonMocks\callstexts\callsApi\request\sendCalls.json" />
     <None Include="JsonMocks\callstexts\callsApi\response\findCalls.json" />
     <None Include="JsonMocks\callstexts\callsApi\response\getCall.json" />
@@ -183,6 +150,33 @@
     <EmbeddedResource Include="Resources\File-examples\contacts1.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <None Include="JsonMocks\campaigns\callBroadcastsApi\request\addBatch.json" />
+    <None Include="JsonMocks\campaigns\callBroadcastsApi\request\addRecipients.json" />
+    <None Include="JsonMocks\campaigns\callBroadcastsApi\request\createCallBroadcast.json" />
+    <None Include="JsonMocks\campaigns\callBroadcastsApi\request\updateCallBroadcast.json" />
+    <None Include="JsonMocks\campaigns\callBroadcastsApi\response\addBatch.json" />
+    <None Include="JsonMocks\campaigns\callBroadcastsApi\response\addRecipients.json" />
+    <None Include="JsonMocks\campaigns\callBroadcastsApi\response\createCallBroadcast.json" />
+    <None Include="JsonMocks\campaigns\callBroadcastsApi\response\findCallBroadcasts.json" />
+    <None Include="JsonMocks\campaigns\callBroadcastsApi\response\getBatches.json" />
+    <None Include="JsonMocks\campaigns\callBroadcastsApi\response\getCallBroadcast.json" />
+    <None Include="JsonMocks\campaigns\callBroadcastsApi\response\getCalls.json" />
+    <None Include="JsonMocks\campaigns\callBroadcastsApi\response\getStats.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\request\addBatch.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\request\addRecipients.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\request\createTextBroadcast.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\request\updateBatch.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\request\updateTextBroadcast.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\addBatch.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\addRecipients.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\createTextBroadcast.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\findTextBroadcasts.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\getBatch.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\getBatches.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\getStats.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\getTextBroadcast.json" />
+    <None Include="JsonMocks\campaigns\textBroadcastsApi\response\getTexts.json" />
+    <None Include="JsonMocks\account\meApi\request\verifyCallerId.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CallfireApiClient\CallfireApiClient.csproj">

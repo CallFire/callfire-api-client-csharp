@@ -1,0 +1,75 @@
+= Contact lists API
+
+
+=== Find contact lists
+'''
+Example how to find contact lists (request includes such parameters to filter as Name, Limit, Offset and Fields).
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    var request = new FindContactListsRequest { Limit = 1, Offset = 0 };
+    Page<ContactList> contactLists = Client.ContactListsApi.Find(request);
+    Console.WriteLine("Page of contact lists: " + contactLists);
+   
+=== Get contact list
+'''
+Example how to get contact list by id.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    ContactList contactList = Client.ContactListsApi.Get(1026694003);
+    Console.WriteLine("Contact list: " + contactList);
+
+=== Create contact list
+'''
+Contact lists can be created from existing single contacts (use their ids), contact objects and phone numbers.
+ Example how to create contact list from plain numbers:
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    CreateContactListRequest<string> request = new CreateContactListRequest<string>
+    {
+        Contacts = new List<string> { "12135678881", "12135678882" },
+        Name = "listFromNumbers"
+    };
+    ResourceId resourceId = Client.ContactListsApi.Create(request);
+
+Second example shows how to create contact list from existing contacts, what we need is just their ids:
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    CreateContactListRequest<long> request = new CreateContactListRequest<long>
+    {
+        Contacts = new List<long> { 123, 456, 789 },
+        Name = "listFromIds"
+    };
+    ResourceId resourceId = Client.ContactListsApi.Create(request);
+
+Next code sample uses *Contact* object in CreateContactListRequest request:
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    CreateContactListRequest<Contact> request = new CreateContactListRequest<Contact>
+    {
+        Contacts = new List<Contact> { new Contact { FirstName = "John", HomePhone = "16505044730" } },
+        Name = "listFromContacts"
+    };
+    ResourceId resourceId = Client.ContactListsApi.Create(request);
+
+=== Create contact list from csv
+'''
+Example how to upload contact lists from CSV file. Max file size is limited to 10 Mb.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    string path = "Resources/File-examples/contacts1.csv";
+    ResourceId listId = Client.ContactListsApi.CreateFromCsv("fileList", Path.GetFullPath(path));
+
+=== Update contact list
+'''
+Example how to update contact list.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    UpdateContactListRequest updateListRequest = new UpdateContactListRequest { Id = 1026694003, Name = "sampleListName" };
+    Client.ContactListsApi.Update(updateListRequest);
+
+=== Delete contact list
+'''
+Example how to delete contact list.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    Client.ContactListsApi.Delete(463633187003);

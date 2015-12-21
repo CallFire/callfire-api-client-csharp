@@ -1,0 +1,142 @@
+= Call broadcasts API
+
+== Find broadcasts
+Find all call campaigns created by the user. Can query on label, name, and the current running status of the campaign.
+ Returns a paged list of call broadcasts. Example how to find 2 call broadcasts which have 'campaign'
+ suffix in their names:
+[source,csharp]
+    var client = new CallfireClient("api_login", "api_password");
+    var findRequest = new FindBroadcastsRequest
+    {
+        Name = "campaign name",
+        Limit = 2
+    };
+    var broadcasts = client.CallBroadcastsApi.Find(findRequest);
+    Console.WriteLine(broadcasts);
+
+== Create broadcast
+Create a call broadcast campaign using the Call Broadcast API. Send a CallBroadcast in the message body to detail
+ a call broadcast campaign. A campaign can be created with no contacts and bare minimum configuration, but contacts
+ will have to be added further on to use the campaign. Example how to create call broadcast and then start it:
+[source,csharp]
+    var client = new CallfireClient("api_login", "api_password");
+    var broadcast = new CallBroadcast
+    {
+        Name = "call_broadcast",
+        AnsweringMachineConfig = AnsweringMachineConfig.AM_AND_LIVE,
+        Sounds = new CallBroadcastSounds
+        {
+            LiveSoundText = "Hello! This is a live answer text to speech recording",
+            LiveSoundTextVoice = Voice.MALE1,
+            MachineSoundText = "This is an answering machine text to speech recording",
+            MachineSoundTextVoice = Voice.MALE1
+        },
+        Recipients = new List<Recipient>
+        {
+            new Recipient { PhoneNumber = "12132212384" },
+            new Recipient { PhoneNumber = "12132212385" }
+        }
+    };
+    // create broadcast with 'start' argument = true to start campaign immediately
+    var id = client.CallBroadcastsApi.Create(broadcast, true);
+
+== Get broadcast
+Get call broadcast by ID
+[source,csharp]
+    var client = new CallfireClient("api_login", "api_password");
+    var broadcast = client.CallBroadcastsApi.Get(123L);
+    Console.WriteLine(broadcast);
+
+== Update broadcast
+After having created an call broadcast campaign, this method lets the user modify the configuration of
+ a call broadcast campaign. See example how to add local time restrictions:
+[source,csharp]
+    var client = new CallfireClient("api_login", "api_password");
+    var broadcast = client.CallBroadcastsApi.Get(123L);
+    // time restrictions
+    broadcast.LocalTimeRestriction = new LocalTimeRestriction
+    {
+        BeginHour = 10,
+        BeginMinute = 10,
+        EndHour = 22,
+        EndMinute = 0,
+        Enabled = true
+    };
+    // update campaign
+    client.CallBroadcastsApi.Update(broadcast);
+
+== Start broadcast
+Start call broadcast by ID
+[source,csharp]
+    var client = new CallfireClient("api_login", "api_password");
+    client.CallBroadcastsApi.Start(123L);
+
+== Stop broadcast
+Stop call broadcast by ID
+[source,csharp]
+    var client = new CallfireClient("api_login", "api_password");
+    client.CallBroadcastsApi.Stop(123L);
+
+== Archive broadcast
+Archive call broadcast by ID
+[source,csharp]
+    var client = new CallfireClient("api_login", "api_password");
+    client.CallBroadcastsApi.Archive(123L);
+
+== Get broadcast calls
+Get calls associated with call broadcast ordered by date
+[source,csharp]
+    var client = new CallfireClient("api_login", "api_password");
+    var request = new GetByIdRequest { Id = 1234 };
+    var calls = client.CallBroadcastsApi.GetCalls(request);
+    Console.WriteLine(calls);
+
+== Get broadcast stats
+Get broadcast statistics
+[source,csharp]
+    var client = new CallfireClient("api_login", "api_password");
+    String fields = "callsAttempted,callsPlaced,callsDuration";
+    var begin = DateTime.Now.AddDays(-5d);
+    var end = DateTime.Now;
+    var stats = client.CallBroadcastsApi.GetStats(8624192003L, fields, begin, end);
+    Console.WriteLine(stats);
+
+== Add recipients to a call broadcast
+Use this method to add recipients to an already created call broadcast. Post a list of Recipient objects for
+ them to be immediately added to the call broadcast campaign. These contacts do not go through validation process,
+ and will be acted upon as they are added. Recipients may be added as a list of contact ids, or list of numbers.
+[source,csharp]
+    var client = new CallfireClient("api_login", "api_password");
+    var calls = client.CallBroadcastsApi.AddRecipients(1234, new List<Recipient>
+        {
+            new Recipient { PhoneNumber = "12131234567" },
+            new Recipient { PhoneNumber = "12131234568" }
+        });
+    Console.WriteLine(calls);
+
+== Get all broadcast batches
+This method will enable the user to page through all of the batches for a particular call broadcast campaign.
+[source,csharp]
+    var client = new CallfireClient("api_login", "api_password");
+    var request = new GetByIdRequest { Id = 1234 };
+    var batches = client.CallBroadcastsApi.GetBatches(request);
+    Console.WriteLine(batches);
+
+== Add batch to broadcast
+The add batch method allows the user to add additional batches to an already created call broadcast campaign.
+The added batch will go through the CallFire validation process, unlike in the recipients version of this API.
+Because of this, use the scrubDuplicates flag to remove duplicates from your batch. Batches may be added as a
+contact list id, a list of contact ids, or a list of numbers.
+[source,csharp]
+    var client = new CallfireClient("api_login", "api_password");
+    var request = new AddBatchRequest
+    {
+        CampaignId = 1234,
+        Name = "new_batch",
+        Recipients = new List<Recipient>
+        {
+            new Recipient { PhoneNumber = "12131234567" },
+            new Recipient { PhoneNumber = "12131234568" }
+        }
+    };
+    var id = client.CallBroadcastsApi.AddBatch(request);

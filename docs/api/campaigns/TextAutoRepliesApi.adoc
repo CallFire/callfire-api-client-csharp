@@ -1,0 +1,46 @@
+= Text auto replies API
+
+Auto-replies are text message replies sent to a customer when a customer replies to a text message from a campaign. A
+keyword will need to have been purchased before an Auto-Reply can be created. This endpoint contains CRUD operations
+to *find, get, create, delete* text auto reply.
+
+== Find operation
+Example how to find all configured auto replies for particular number
+[source,csharp]
+    var client = new CallfireClient("api_login", "api_password");
+    var request = new FindTextAutoRepliesRequest { Number = "19206596476" };
+    var textAutoReplies = client.TextAutoRepliesApi.Find(request);
+    Console.WriteLine(textAutoReplies);
+
+find all configured auto replies in account
+[source,csharp]
+    var client = new CallfireClient("api_login", "api_password");
+    var request = new FindTextAutoRepliesRequest();
+    var textAutoReplies = client.TextAutoRepliesApi.Find(request);
+    Console.WriteLine(textAutoReplies);
+
+== Create operation
+Example how to configure auto reply for particular number and text with "vacation" word.
+[source,csharp]
+    CallfireClient client = new CallfireClient("api_login", "api_password");
+    var textAutoReply = new TextAutoReply()
+    {
+        Number = "19206596476",
+        Message = "test message",
+        Match = "test match"
+    };
+    var resourceId = client.TextAutoRepliesApi.Create(textAutoReply);
+    Console.WriteLine(resourceId);
+
+== Get operation
+Get particular auto reply by ID
+[source,csharp]
+    var client = new CallfireClient("api_login", "api_password");
+    var textAutoReply = client.TextAutoRepliesApi.Get(12345L);
+    Console.WriteLine(textAutoReply);
+
+== Delete operation
+Delete particular auto reply by ID
+[source,csharp]
+    var client = new CallfireClient("api_login", "api_password");
+    client.TextAutoRepliesApi.Delete(12345);

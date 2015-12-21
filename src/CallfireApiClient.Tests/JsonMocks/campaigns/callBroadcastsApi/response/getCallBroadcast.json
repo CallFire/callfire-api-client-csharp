@@ -1,0 +1,28 @@
+{
+  "id": 6725362003,
+  "name": "TEST NAME",
+  "status": "FINISHED",
+  "lastModified": 1439801728000,
+  "fromNumber": "12132212384",
+  "localTimeRestriction": {
+    "enabled": false,
+    "beginHour": 8,
+    "beginMinute": 0,
+    "endHour": 21,
+    "endMinute": 0
+  },
+  "maxActive": 100,
+  "retryConfig": {
+    "maxAttempts": 1,
+    "minutesBetweenAttempts": 60,
+    "retryPhoneTypes": [
+      "FIRST_NUMBER"
+    ]
+  },
+  "sounds": {
+    "liveSoundText": "test answer, test 1 2 3 4 5",
+    "liveSoundId": 1385807003,
+    "machineSoundId": 1258704003
+  },
+  "answeringMachineConfig": "LIVE_WITH_AMD"
+}

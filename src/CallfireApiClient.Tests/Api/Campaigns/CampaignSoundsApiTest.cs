@@ -17,10 +17,12 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             string expectedJson = GetJsonPayload("/campaigns/campaignSoundsApi/response/findCampaignSounds.json");
             var restRequest = MockRestResponse(expectedJson);
 
-            FindSoundsRequest request = new FindSoundsRequest();
-            request.Limit = 5;
-            request.Offset = 0;
-            request.Filter = "1234";
+            FindSoundsRequest request = new FindSoundsRequest
+            {
+                Limit = 5,
+                Offset = 0,
+                Filter = "1234"
+            };
 
             Page<CampaignSound> sounds = Client.CampaignSoundsApi.Find(request);
  
@@ -68,9 +70,12 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             string requestJson = GetJsonPayload("/campaigns/campaignSoundsApi/request/recordViaPhone.json");
             var restRequest = MockRestResponse(responseJson);
 
-            CallCreateSound callCreateSound = new CallCreateSound();
-            callCreateSound.Name = "My sound file";
-            callCreateSound.ToNumber = "12135551122";
+            CallCreateSound callCreateSound = new CallCreateSound
+            {
+                Name = "My sound file",
+                ToNumber = "12135551122"
+            };
+
             ResourceId id = Client.CampaignSoundsApi.RecordViaPhone(callCreateSound);
 
             Assert.That(Serializer.Serialize(id), Is.EqualTo(responseJson));
@@ -86,9 +91,12 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             string requestJson = GetJsonPayload("/campaigns/campaignSoundsApi/request/createFromTts.json");
             var restRequest = MockRestResponse(responseJson);
 
-            TextToSpeech textToSpeech = new TextToSpeech();
-            textToSpeech.Voice = Voice.MALE1;
-            textToSpeech.Message = "This is a TTS sound";
+            TextToSpeech textToSpeech = new TextToSpeech
+            {
+                Voice = Voice.MALE1,
+                Message = "This is a TTS sound"
+            };
+
             ResourceId id = Client.CampaignSoundsApi.CreateFromTts(textToSpeech);
 
             Assert.That(Serializer.Serialize(id), Is.EqualTo(responseJson));

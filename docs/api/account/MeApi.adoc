@@ -1,0 +1,89 @@
+= User account API
+
+== Account specific APIs
+
+=== Get account info
+'''
+Example how to get account information like name, surname, email, account permissions.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    UserAccount account = Client.MeApi.GetAccount();
+    Console.WriteLine("Account: " + account);
+
+=== Get billing plan usage info
+'''
+Example how to find billing plan usage for the user. Returns billing plan usage for the current month.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    BillingPlanUsage plan = Client.MeApi.GetBillingPlanUsage();
+    Console.WriteLine("Plan: " + plan.ToString());
+
+=== Get account caller IDs
+'''
+Example how to get a list of verified caller ids. If the number is not shown in the list, then it is not verified,
+ and will have to send for a verification code.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    IList<CallerId> callerIds = Client.MeApi.GetCallerIds();
+    Console.WriteLine("CallerIds: " + String.Join(",", callerIds));
+
+=== Send verification code to caller ID
+'''
+Example how to send a verification code to the phone number. The verification code is delivered
+ via a phone call. This code needs to be submitted to the verify caller id API endpoint.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    String phoneNumber = "12132224444";
+    Client.MeApi.SendVerificationCode(phoneNumber);
+
+=== Verify caller ID
+'''
+You can verify your caller ID with the verification code received from the previous operation, a call to this
+ endpoint is required to finish verification.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    var request = new CallerIdVerificationRequest
+    {
+        CallerId = "12132212384",
+        VerificationCode = "123"
+    };
+    bool? verified = Client.MeApi.VerifyCallerId(request);
+    Console.WriteLine("Verified: " + verified);
+
+== API credentials CRUD operations
+*/me* endpoint has operations to *find, create, get and delete* API user credentials. To execute one of these
+ operations you should create *CallfireClient* with your regular account credentials not API one, because only
+ account holder can manipulate API users.
+
+=== Create API credentials
+'''
+Example how to create API user.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    ApiCredentials credentials = new ApiCredentials { Name = "test1" };
+    ApiCredentials created = Client.MeApi.CreateApiCredentials(credentials);
+    Console.WriteLine(created);
+
+=== Find API credentials
+'''
+Example how to get first 2 API users.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    var request = new CommonFindRequest { Limit = 2 };
+    Page<ApiCredentials> apiCredentials = Client.MeApi.FindApiCredentials(request);
+    Console.WriteLine("Page of credentials:" + apiCredentials);
+
+=== Get API credentials
+'''
+Example how to get particular API user and limit returned fields to name and enabled flag.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    ApiCredentials credentials = Client.MeApi.GetApiCredentials(123456, "name,enabled");
+    Console.WriteLine("Credentials:" + credentials);
+
+=== Delete API credentials
+'''
+Example how to delete particular API user by ID.
+[source]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    Client.MeApi.DeleteApiCredentials(123456);

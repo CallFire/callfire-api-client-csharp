@@ -1,11 +1,9 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using RestSharp;
 using System.Linq;
-using CallfireApiClient.Api.Webhooks.Model;
-using CallfireApiClient.Api.Webhooks.Model.Request;
-using CallfireApiClient.Api.Common.Model;
 using System.Collections.Generic;
+using CallfireApiClient.Api.Webhooks.Model.Request;
+using CallfireApiClient.Api.Webhooks.Model;
 
 namespace CallfireApiClient.Tests.Api.Webhooks
 {

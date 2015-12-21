@@ -41,6 +41,11 @@ namespace CallfireApiClient.Tests.Api
             return result.ToString();
         }
 
+        protected long ToUnixTime(DateTime dateTime)
+        {
+            return (long)(dateTime.ToUniversalTime() - ClientConstants.EPOCH).TotalMilliseconds;
+        }
+
         protected Ref<IRestRequest> MockRestResponse(string responseData = "", HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             byte[] payload = Encoding.ASCII.GetBytes(responseData);

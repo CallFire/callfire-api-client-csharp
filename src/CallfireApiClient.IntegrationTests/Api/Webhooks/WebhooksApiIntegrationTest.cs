@@ -1,8 +1,6 @@
-﻿using System;
-using NUnit.Framework;
-using CallfireApiClient.Api.Webhooks.Model;
+﻿using NUnit.Framework;
 using CallfireApiClient.Api.Webhooks.Model.Request;
-using CallfireApiClient;
+using CallfireApiClient.Api.Webhooks.Model;
 
 namespace CallfireApiClient.IntegrationTests.Api.Webhooks
 {

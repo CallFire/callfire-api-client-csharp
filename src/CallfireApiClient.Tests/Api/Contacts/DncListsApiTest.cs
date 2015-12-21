@@ -23,12 +23,14 @@ namespace CallfireApiClient.Tests.Api.Contacts
             string expectedJson = GetJsonPayload("/contacts/dncApi/response/findDncLists.json");
             var restRequest = MockRestResponse(expectedJson);
 
-            FindDncListsRequest request = new FindDncListsRequest();
-            request.Limit = 1;
-            request.Offset = 5;
-            request.Fields = FIELDS; 
-            request.CampaignId = TEST_LONG;
-            request.Name = TEST_STRING;
+            FindDncListsRequest request = new FindDncListsRequest
+            {
+                Limit = 1,
+                Offset = 5,
+                Fields = FIELDS,
+                CampaignId = TEST_LONG,
+                Name = TEST_STRING
+            };
 
             Page<DncList> dncList = Client.DncListsApi.Find(request);
 
@@ -49,11 +51,14 @@ namespace CallfireApiClient.Tests.Api.Contacts
             string responseJson = GetJsonPayload("/contacts/dncApi/response/createDncList.json");
             var restRequest = MockRestResponse(responseJson);
 
-            DncList dncList = new DncList();
-            dncList.Id = TEST_LONG;
-            dncList.CampaignId = TEST_LONG;
-            dncList.Size = unchecked((int)TEST_LONG);
-            dncList.Name = TEST_STRING;
+            DncList dncList = new DncList
+            {
+                Id = TEST_LONG,
+                CampaignId = TEST_LONG,
+                Size = unchecked((int)TEST_LONG),
+                Name = TEST_STRING
+            };
+
             ResourceId res = Client.DncListsApi.Create(dncList);
 
             Assert.That(Serializer.Serialize(res), Is.EqualTo(responseJson));
@@ -125,11 +130,13 @@ namespace CallfireApiClient.Tests.Api.Contacts
             string expectedJson = GetJsonPayload("/contacts/dncApi/response/findDncList.json");
             var restRequest = MockRestResponse(expectedJson);
 
-            GetByIdRequest request = new GetByIdRequest();
-            request.Limit = 1;
-            request.Offset = 5;
-            request.Fields = FIELDS;
-            request.Id = TEST_LONG;
+            GetByIdRequest request = new GetByIdRequest
+            {
+                Limit = 1,
+                Offset = 5,
+                Fields = FIELDS,
+                Id = TEST_LONG
+            };
 
             Page<DoNotContact> dncs = Client.DncListsApi.GetListItems(request);
 

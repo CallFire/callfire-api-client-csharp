@@ -9,17 +9,15 @@ namespace CallfireApiClient
     /// </summary>
     public class UnixTimeJsonConverter: DateTimeConverterBase
     {
-        private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            return reader.Value == null ? (DateTime?)null : Epoch.AddMilliseconds(Convert.ToInt64(reader.Value)).ToLocalTime();
+            DateTime local = ClientConstants.EPOCH.AddMilliseconds(Convert.ToInt64(reader.Value)).ToLocalTime();
+            return reader.Value == null ? (DateTime?)null : local;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            long unixTime = (long)(Convert.ToDateTime(value).ToUniversalTime() - Epoch).TotalMilliseconds;
-            writer.WriteValue(unixTime);
+            writer.WriteValue(ClientUtils.ToUnixTime(Convert.ToDateTime(value)));
         }
     }
 }

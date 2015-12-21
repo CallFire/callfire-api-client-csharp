@@ -18,12 +18,9 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             string responseJson = GetJsonPayload("/callstexts/textsApi/response/sendTexts.json");
             var restRequest = MockRestResponse(responseJson);
 
-            TextRecipient r1 = new TextRecipient();
-            r1.PhoneNumber = "12135551100";
-            r1.Message = "Hello World!";
-            TextRecipient r2 = new TextRecipient();
-            r2.PhoneNumber = "12135551101";
-            r2.Message = "Testing 1 2 3";
+            TextRecipient r1 = new TextRecipient { PhoneNumber = "12135551100" , Message = "Hello World!" };
+            TextRecipient r2 = new TextRecipient { PhoneNumber = "12135551101", Message = "Testing 1 2 3" };
+
             IList<CallfireApiClient.Api.CallsTexts.Model.Text> texts = Client.TextsApi.Send(new List<TextRecipient> { r1, r2 });
 
             Assert.That(Serializer.Serialize(new ListHolder<CallfireApiClient.Api.CallsTexts.Model.Text>(texts)), Is.EqualTo(responseJson));
@@ -41,11 +38,13 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
         {
             string expectedJson = GetJsonPayload("/callstexts/textsApi/response/findTexts.json");
             var restRequest = MockRestResponse(expectedJson);
-            var request = new FindTextsRequest();
-            request.Limit = 5;
-            request.Offset = 0;
-            request.States = new List<StateType> { StateType.CALLBACK, StateType.DISABLED };
-            request.Id = new List<long> { 1, 2, 3 };
+            var request = new FindTextsRequest
+            {
+                Limit = 5,
+                Offset = 0,
+                States = new List<StateType> { StateType.CALLBACK, StateType.DISABLED },
+                Id = new List<long> { 1, 2, 3 }
+            };
 
             Page<CallfireApiClient.Api.CallsTexts.Model.Text> texts = Client.TextsApi.Find(request);
 
