@@ -51,7 +51,7 @@ namespace CallfireApiClient.Api.Webhooks
         public Webhook Get(long id, string fields = null)
         {
             var queryParams = ClientUtils.BuildQueryParams("fields", fields);
-            String path = WEBHOOKS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString());
+            var path = WEBHOOKS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString());
             return Client.Get<Webhook>(path, queryParams);
         }
 

@@ -4,7 +4,6 @@ using CallfireApiClient.Api.Common.Model.Request;
 
 namespace CallfireApiClient.Api.Keywords
 {
-
     public class KeywordLeasesApi
     {
         private const string KEYWORD_LEASES_PATH = "/keywords/leases";
@@ -69,8 +68,7 @@ namespace CallfireApiClient.Api.Keywords
         public void Update(KeywordLease keywordLease)
         {
             Validate.NotBlank(keywordLease.KeywordName, "keyword in keywordLease cannot be null");
-            string path = KEYWORD_LEASES_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER,
-                              keywordLease.KeywordName);
+            string path = KEYWORD_LEASES_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, keywordLease.KeywordName);
             Client.Put<object>(path, keywordLease);
         }
 

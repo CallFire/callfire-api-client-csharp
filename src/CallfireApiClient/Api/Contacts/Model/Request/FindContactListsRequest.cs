@@ -8,8 +8,7 @@ namespace CallfireApiClient.Api.Contacts.Model.Request
 
         public override string ToString()
         {
-            return string.Format("{0} [FindContactListsRequest: Name={1}]",
-                base.ToString(), Name);
+            return string.Format("{0} [FindContactListsRequest: Name={1}]", base.ToString(), Name);
         }
     }
 }

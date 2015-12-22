@@ -2,9 +2,8 @@ using CallfireApiClient.Api.Contacts.Model;
 using CallfireApiClient.Api.Contacts.Model.Request;
 using CallfireApiClient.Api.Common.Model;
 
-namespace CallfireApiClient.Api.Contacts 
+namespace CallfireApiClient.Api.Contacts
 {
-
     public class DncApi
     {
         private const string DNC_PATH = "/contacts/dncs";
