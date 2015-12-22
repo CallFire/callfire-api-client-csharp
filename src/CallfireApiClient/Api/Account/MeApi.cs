@@ -164,8 +164,7 @@ namespace CallfireApiClient.Api.Account
         public ApiCredentials GetApiCredentials(long id, string fields = null)
         {
             var queryParams = ClientUtils.BuildQueryParams("fields", fields);
-            return Client.Get<ApiCredentials>(ME_API_CREDS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER,
-                    id.ToString()), queryParams);
+            return Client.Get<ApiCredentials>(ME_API_CREDS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString()), queryParams);
         }
 
         /// <summary>

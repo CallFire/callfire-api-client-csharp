@@ -211,8 +211,7 @@ namespace CallfireApiClient.Api.Contacts
         {
             Validate.NotBlank(listId.ToString(), "listId cannot be blank");
             Validate.NotBlank(contactId.ToString(), "contactId cannot be blank");
-            string path = LISTS_ITEMS_CONTACT_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER,
-                              listId.ToString()).ReplaceFirst(ClientConstants.PLACEHOLDER, contactId.ToString());
+            string path = LISTS_ITEMS_CONTACT_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, listId.ToString()).ReplaceFirst(ClientConstants.PLACEHOLDER, contactId.ToString());
             Client.Delete(path);
         }
 

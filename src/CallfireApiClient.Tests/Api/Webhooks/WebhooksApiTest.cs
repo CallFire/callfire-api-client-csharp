@@ -20,8 +20,8 @@ namespace CallfireApiClient.Tests.Api.Webhooks
             var webhook = new Webhook
             {
                 Name = "API hook",
-                Resource = "textCampaign",
-                Events = new HashSet<string>{ "start", "stop" },
+                Resource = ResourceType.TEXT_BROADCAST,
+                Events = new HashSet<ResourceEvent> { ResourceEvent.STARTED, ResourceEvent.STOPPED },
                 Callback = "http://yoursite.com/webhook"
             };
             var id = Client.WebhooksApi.Create(webhook);
@@ -82,8 +82,8 @@ namespace CallfireApiClient.Tests.Api.Webhooks
             {
                 Id = 11,
                 Name = "API hook",
-                Resource = "textCampaign",
-                Events = new HashSet<string> { "stop" },
+                Resource = ResourceType.TEXT_BROADCAST,
+                Events = new HashSet<ResourceEvent> { ResourceEvent.STOPPED },
                 Callback = "http://yoursite.com/webhook"
             };
             Client.WebhooksApi.Update(webhook);

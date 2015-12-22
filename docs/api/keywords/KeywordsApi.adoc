@@ -5,7 +5,7 @@
 '''
 Example how to find keywords for purchase on the CallFire platform. If a keyword appears in the response,
  it is available for purchase.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     List<string> keywordsNames = new List<string> { "ALPHA", "BETA" };
     IList<Keyword> keywords = Client.KeywordsApi.Find(keywordsNames);
@@ -17,7 +17,7 @@ Example how to find keywords for purchase on the CallFire platform. If a keyword
 === IsAvailable keyword
 '''
 Example how to find an individual keyword for purchase on the CallFire platform. Returns boolean for availability.
-[source]
+[source,csharp]
     //"keyword" param is required
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     Boolean isAvaialble = Client.KeywordsApi.IsAvailable("TEST");

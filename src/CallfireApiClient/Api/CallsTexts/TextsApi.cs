@@ -1,6 +1,5 @@
 using CallfireApiClient.Api.Common.Model;
 using CallfireApiClient.Api.CallsTexts.Model;
-using CallfireApiClient.Api.Keywords.Model.Request;
 using System.Collections.Generic;
 using CallfireApiClient.Api.CallsTexts.Model.Request;
 

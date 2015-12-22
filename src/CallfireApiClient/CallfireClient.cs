@@ -35,7 +35,7 @@ namespace CallfireApiClient
         readonly Lazy<TextAutoRepliesApi> _TextAutoRepliesApi;
         readonly Lazy<TextBroadcastsApi> _TextBroadcastsApi;
         readonly Lazy<CallBroadcastsApi> _CallBroadcastsApi;
-
+        readonly Lazy<MediaApi> _MediaApi;
         readonly Lazy<WebhooksApi> _WebhooksApi;
 
         public MeApi MeApi { get { return _MeApi.Value; } }
@@ -74,6 +74,7 @@ namespace CallfireApiClient
 
         public CallBroadcastsApi CallBroadcastsApi { get { return _CallBroadcastsApi.Value; } }
 
+        public MediaApi MediaApi { get { return _MediaApi.Value; } }
 
         public CallfireClient(string username, string password)
         {
@@ -97,6 +98,7 @@ namespace CallfireApiClient
             _TextAutoRepliesApi = new Lazy<TextAutoRepliesApi>(() => new TextAutoRepliesApi(RestApiClient));
             _TextBroadcastsApi = new Lazy<TextBroadcastsApi>(() => new TextBroadcastsApi(RestApiClient));
             _CallBroadcastsApi = new Lazy<CallBroadcastsApi>(() => new CallBroadcastsApi(RestApiClient));
+            _MediaApi = new Lazy<MediaApi>(() => new MediaApi(RestApiClient));
         }
     }
 }

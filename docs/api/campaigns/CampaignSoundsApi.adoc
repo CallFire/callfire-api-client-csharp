@@ -4,7 +4,7 @@
 '''
 Find all campaign sounds that were created by the user. These are all of the available sounds to be used in campaigns.
 Example how to find 3 campaign sounds and filter by name "sample".
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     FindSoundsRequest request = new FindSoundsRequest { Limit = 3, Filter = "sample" };
     Page<CampaignSound> campaignSounds = Client.CampaignSoundsApi.Find(request);
@@ -15,32 +15,32 @@ Returns a single CampaignSound instance for a given campaign sound id. This is t
 No audio data is returned from this API.
 Example how to get sound metadata by ID only with name, status and lengthInSeconds fields, to get whole object, just
 call *campaignSoundsApi.get(id)* method without fields argument.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     CampaignSound campaignSound = Client.CampaignSoundsApi.Get(12345, "name,status,lengthInSeconds");
 
 === Download MP3 sound
 '''
 Download the MP3 version of the hosted file.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
-    byte[] ms = Client.CampaignSoundsApi.GetMp3(12345);
-    File.WriteAllBytes("Resources/File-examples /train.mp3", ms);
+    MemoryStream ms = (MemoryStream)Client.CampaignSoundsApi.GetMp3(12345);
+    File.WriteAllBytes("Resources/File-examples/train.mp3", ms.ToArray());
 
 === Download WAV sound
 '''
 Download the WAV version of the hosted file.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
-    byte[] ms = Client.CampaignSoundsApi.GetWav(12345);
-    File.WriteAllBytes("Resources/File-examples/train.waw", ms);
+    MemoryStream ms = (MemoryStream)Client.CampaignSoundsApi.GetWav(12345);
+    File.WriteAllBytes("Resources/File-examples/train.waw", ms.ToArray());
 
 === Add sound via call
 '''
 Use this API to create a sound via phone call. Supply the required phone number in the CallCreateSound object
  inside of the request, and the user will receive a call shortly after with instructions on how to record a
  sound over the phone.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     CallCreateSound callCreateSound = new CallCreateSound
     {
@@ -55,7 +55,7 @@ Use this API to create a sound via phone call. Supply the required phone number 
 Use this API to create a sound file via a supplied string of text. Send the required text in the
  TextToSpeech.Message field, and pick a voice in the TextToSpeech.Voice field. Available voices are:
  MALE1, FEMALE1 , FEMALE2, SPANISH1, FRENCHCANADIAN1, see Voice enum.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     TextToSpeech tts = new TextToSpeech { Message = "this is TTS message from csharp client" };
     ResourceId resourceId = Client.CampaignSoundsApi.CreateFromTts(tts);

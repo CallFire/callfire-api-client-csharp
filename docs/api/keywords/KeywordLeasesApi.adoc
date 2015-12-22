@@ -4,7 +4,7 @@
 === Find keyword leases
 '''
 Find all owned keyword leases for a user. A keyword lease is the ownership information involving a keyword.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     var request = new CommonFindRequest();
     Page<KeywordLease> keywordLeases = Client.KeywordLeasesApi.Find(request);
@@ -13,7 +13,7 @@ Find all owned keyword leases for a user. A keyword lease is the ownership infor
 === Get keyword lease
 '''
 Example how to return a KeywordLease for a given keyword.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     KeywordLease keywordLease = Client.KeywordLeasesApi.Get("CALLFIRE");
     Console.WriteLine("KeywordLease: " + keywordLease);
@@ -21,7 +21,7 @@ Example how to return a KeywordLease for a given keyword.
 === Update keyword lease
 '''
 Example how update a keyword lease. Can only set autoRenew to false at this time.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     KeywordLease keywordLease = new KeywordLease { KeywordName = "CALLFIRE", AutoRenew = false };
     Client.KeywordLeasesApi.Update(keywordLease);

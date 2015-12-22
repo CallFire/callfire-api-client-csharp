@@ -1,6 +1,7 @@
 ﻿using CallfireApiClient.Api.Campaigns.Model;
 using CallfireApiClient.Api.Common.Model;
 using CallfireApiClient.Api.CallsTexts.Model.Request;
+using System.IO;
 
 namespace CallfireApiClient.Api.Campaigns
 {
@@ -37,6 +38,7 @@ namespace CallfireApiClient.Api.Campaigns
             return Client.Get<Page<CampaignSound>>(SOUNDS_PATH, request);
         }
 
+
         /// <summary>
         /// Returns a single CampaignSound instance for a given campaign sound id. This is the meta
         /// data to the sounds only.No audio data is returned from this API.
@@ -71,7 +73,7 @@ namespace CallfireApiClient.Api.Campaigns
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public byte[] GetMp3(long id)
+        public Stream GetMp3(long id)
         {
             Validate.NotBlank(id.ToString(), "id cannot be blank");
             string path = SOUNDS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString()) + ".mp3";
@@ -90,10 +92,11 @@ namespace CallfireApiClient.Api.Campaigns
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public byte[] GetWav(long id)
+        public Stream GetWav(long id)
         {
             Validate.NotBlank(id.ToString(), "id cannot be blank");
             string path = SOUNDS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString()) + ".wav";
+
             return Client.GetFileData(path);
         }
 
@@ -152,4 +155,3 @@ namespace CallfireApiClient.Api.Campaigns
         }
     }
 }
-

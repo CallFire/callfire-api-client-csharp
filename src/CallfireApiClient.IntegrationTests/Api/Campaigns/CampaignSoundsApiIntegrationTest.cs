@@ -60,17 +60,16 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
             Assert.AreEqual(6, campaignSound.LengthInSeconds);
 
             // get mp3
-            byte[] ms = Client.CampaignSoundsApi.GetMp3(mp3ResourceId.Id);
+            MemoryStream ms = (MemoryStream)Client.CampaignSoundsApi.GetMp3(mp3ResourceId.Id);
             string existingFilePath = Path.GetFullPath("Resources/File-examples/train.mp3");
             string pathToSaveNewFile = existingFilePath.Replace("train.mp3", "mp3_sound.mp3");
-            File.WriteAllBytes(pathToSaveNewFile, ms);
+            File.WriteAllBytes(pathToSaveNewFile, ms.ToArray());
 
             // get wav
-            ms = Client.CampaignSoundsApi.GetWav(wavResourceId.Id);
+            ms = (MemoryStream)Client.CampaignSoundsApi.GetWav(wavResourceId.Id);
             existingFilePath = Path.GetFullPath("Resources/File-examples/train.wav");
             pathToSaveNewFile = existingFilePath.Replace("train.wav", "wav_sound.wav");
-            File.WriteAllBytes(pathToSaveNewFile, ms);
-            
+            File.WriteAllBytes(pathToSaveNewFile, ms.ToArray());
         }
 
         [Test, Ignore("need TTS setup")]
@@ -84,4 +83,3 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
         }
     }
 }
-

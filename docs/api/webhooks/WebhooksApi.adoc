@@ -5,7 +5,7 @@
 '''
 Search for webhooks on name, resource, event, callback URL, or whether they are enabled.
  Example how to get first 5 webhooks which are *enabled* and assigned to resource *"textBroadcast"*.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     var findRequest = new FindWebhooksRequest
     {
@@ -19,7 +19,7 @@ Search for webhooks on name, resource, event, callback URL, or whether they are 
 === Get webhook
 '''
 Example how to get a single Webhook instance for a given webhook id.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     Webhook webhook = Client.WebhooksApi.Get(12345678, "id,name,created");
     Console.WriteLine("Webhook: " + webhook);
@@ -28,13 +28,13 @@ Example how to get a single Webhook instance for a given webhook id.
 '''
 Example how to create a webhook for voice campaign. Callfire will query your callback URL with http POST request when
  any campaign has STARTED or FINISHED.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     var webhook = new Webhook
     {
         Name = "new webhook",
-        Resource = "ResourceType.VOICE_BROADCAST",
-        Events = new HashSet<string> { Webhook.ResourceEvent.STARTED, Webhook.ResourceEvent.FINISHED },
+        Resource = ResourceType.VOICE_BROADCAST,
+        Events = new HashSet<ResourceEvent> { ResourceEvent.STARTED, ResourceEvent.FINISHED },
         Callback = "https://yoursite.com/callback"
     };
     ResourceId resource = Client.WebhooksApi.Create(webhook);
@@ -43,14 +43,14 @@ Example how to create a webhook for voice campaign. Callfire will query your cal
 === Update webhook
 '''
 Example how to update the information in a currently existing webhook. Most fields are updatable.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     var webhook = new Webhook
     {
         Id = 12345678,
         Name = "new webhook",
-        Resource = "ResourceType.VOICE_BROADCAST",
-        Events = new HashSet<string> { Webhook.ResourceEvent.STARTED, Webhook.ResourceEvent.FINISHED },
+        Resource = ResourceType.VOICE_BROADCAST,
+        Events = new HashSet<ResourceEvent> { ResourceEvent.STARTED, ResourceEvent.FINISHED },
         Callback = "https://yoursite.com/callback"
     };
     Client.WebhooksApi.Update(webhook);
@@ -58,6 +58,6 @@ Example how to update the information in a currently existing webhook. Most fiel
 === Delete webhook
 '''
 Example how to delete a webhook. Will be removed permenantly.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     Client.WebhooksApi.Delete(12345678);

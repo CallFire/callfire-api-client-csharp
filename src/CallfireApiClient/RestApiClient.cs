@@ -18,6 +18,8 @@ namespace CallfireApiClient
     /// </summary>
     public class RestApiClient
     {
+        private const string DEFAULT_FILE_CONTENT_TYPE = "application/octet-stream";
+
         private readonly Logger Logger = new Logger();
         private readonly ISerializer JsonSerializer;
         private readonly IDeserializer JsonDeserializer;
@@ -118,7 +120,7 @@ namespace CallfireApiClient
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public byte[] GetFileData(string path, IEnumerable<KeyValuePair<string, object>> queryParams = null)
+        public Stream GetFileData(string path, IEnumerable<KeyValuePair<string, object>> queryParams = null)
         { 
             Logger.Debug("GET request to {0} with params: {1}", path, queryParams);
             var restRequest = CreateRestRequest(path, Method.GET, queryParams);
@@ -198,12 +200,12 @@ namespace CallfireApiClient
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public T PostFile<T>(String path, string fileName, string filePath) where T : new()
+        public T PostFile<T>(String path, string fileName, string filePath, string contentType = null) where T : new()
         {
             var queryParams = ClientUtils.BuildQueryParams("name", fileName);
             var restRequest = CreateRestRequest(path, Method.POST, queryParams);
             restRequest.AddHeader("Content-Type", "multipart/form-data");
-            restRequest.AddFileBytes("file", File.ReadAllBytes(filePath), Path.GetFileName(filePath), "application/octet-stream");
+            restRequest.AddFileBytes("file", File.ReadAllBytes(filePath), Path.GetFileName(filePath), contentType != null ? contentType : DEFAULT_FILE_CONTENT_TYPE);
             restRequest.AddParameter("name", fileName);
             return DoRequest<T>(restRequest);
         }
@@ -307,9 +309,11 @@ namespace CallfireApiClient
             return response.Data;
         }
 
-        private byte[] DoRequest(IRestRequest request)
+        private Stream DoRequest(IRestRequest request)
         {
             FilterRequest(request);
+            Stream downloadedStream = new MemoryStream();
+            request.ResponseWriter = (ms) => ms.CopyTo(downloadedStream);
             var response = RestClient.Execute(request);
             if (response.Content == null)
             {
@@ -319,7 +323,7 @@ namespace CallfireApiClient
             Logger.Debug("received file data: {0}", response.Content);
             VerifyResponse(response);
 
-            return response.RawBytes;
+            return downloadedStream;
         }
 
         private void VerifyResponse(IRestResponse response)

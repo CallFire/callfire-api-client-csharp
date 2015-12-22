@@ -150,8 +150,7 @@ namespace CallfireApiClient.Api.Contacts
         public void AddListItems(AddDncListItemsRequest<DoNotContact> request)
         {
             Validate.NotBlank(request.ContactListId.ToString(), "request.contactListId cannot be null");
-            string path = DNC_LISTS_LIST_ITEMS_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER,
-                              request.ContactListId.ToString());
+            string path = DNC_LISTS_LIST_ITEMS_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, request.ContactListId.ToString());
             Client.Post<object>(path, request.Contacts);
         }
 
@@ -170,8 +169,7 @@ namespace CallfireApiClient.Api.Contacts
         public void RemoveListItem(long id, string number)
         {
             Validate.NotBlank(number, "number cannot be blank");
-            string path = DNC_LISTS_LIST_ITEMS_NUMBER_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER,
-                              id.ToString()).ReplaceFirst(ClientConstants.PLACEHOLDER, number);
+            string path = DNC_LISTS_LIST_ITEMS_NUMBER_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString()).ReplaceFirst(ClientConstants.PLACEHOLDER, number);
             Client.Delete(path);
         }
 

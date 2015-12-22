@@ -3,7 +3,6 @@ using NUnit.Framework;
 using CallfireApiClient.Api.Common.Model.Request;
 using CallfireApiClient.Api.Account.Model;
 using CallfireApiClient.Api.Common.Model;
-using CallfireApiClient;
 using CallfireApiClient.Api.Account.Model.Request;
 
 namespace CallfireApiClient.IntegrationTests.Api.Account

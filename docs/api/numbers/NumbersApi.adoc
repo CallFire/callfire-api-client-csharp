@@ -4,7 +4,7 @@
 === Find local numbers
 '''
 Example how to find numbers in the CallFire local numbers catalog that are available for purchase.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     //At least one parameter is required
     var request = new FindNumbersLocalRequest { Limit = 2, State = "LA" };
@@ -15,7 +15,7 @@ Example how to find numbers in the CallFire local numbers catalog that are avail
 '''
 Use this API to obtain detailed region information that can then be used to query for more specific phone numbers
  than a general query. Example below shows how to find number region information for specified state and zip code.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     //At least one parameter is required
     var request = new FindNumberRegionsRequest
@@ -30,7 +30,7 @@ Use this API to obtain detailed region information that can then be used to quer
 === Find numbers tollfree
 '''
 Example how to find numbers in the CallFire tollfree numbers catalog that are available for purchase.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     var request = new CommonFindRequest { Limit = 2, Offset = 1 };
     IList<Number> numbers = Client.NumbersApi.FindNumbersTollfree(request);

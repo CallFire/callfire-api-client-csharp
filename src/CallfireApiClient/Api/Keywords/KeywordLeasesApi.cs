@@ -4,6 +4,7 @@ using CallfireApiClient.Api.Common.Model.Request;
 
 namespace CallfireApiClient.Api.Keywords
 {
+
     public class KeywordLeasesApi
     {
         private const string KEYWORD_LEASES_PATH = "/keywords/leases";
@@ -50,8 +51,7 @@ namespace CallfireApiClient.Api.Keywords
         {
             Validate.NotBlank(keyword, "keyword cannot be blank");
             var queryParams = ClientUtils.BuildQueryParams("fields", fields);
-            return Client.Get<KeywordLease>(KEYWORD_LEASES_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER,
-                    keyword.ToString()), queryParams);
+            return Client.Get<KeywordLease>(KEYWORD_LEASES_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, keyword.ToString()), queryParams);
         }
 
         /// <summary>

@@ -1,8 +1,5 @@
 ﻿using System;
 using NUnit.Framework;
-using CallfireApiClient.Api.Campaigns.Model;
-using System.Linq;
-using CallfireApiClient.IntegrationTests.Api;
 
 namespace CallfireApiClient.IntegrationTests.Api.Campaigns
 {
