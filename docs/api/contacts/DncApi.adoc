@@ -4,7 +4,7 @@
 '''
 Example how to find all Do Not Contact (DNC) objects created by the user.
  These DoNotContact entries only affect calls/texts/campaigns on this account.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     var request = new FindDncContactsRequest();
     Page<DoNotContact> dncs = Client.DncApi.Find(request);
@@ -14,7 +14,7 @@ Example how to find all Do Not Contact (DNC) objects created by the user.
 '''
 Example how to update a Do Not Contact (DNC) contact value for calls and texts. Can toggle whether the DNC is enabled
  for calls/texts. They will be validated upon being added to a campaign.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     DoNotContact dncToUpdate = new DoNotContact
     {

@@ -1,6 +1,4 @@
-﻿
-
-namespace CallfireApiClient.Api.Keywords.Model
+﻿namespace CallfireApiClient.Api.Keywords.Model
 {
     public enum LeaseStatus
     {

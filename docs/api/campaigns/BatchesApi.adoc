@@ -4,7 +4,7 @@
 '''
 Returns a single Batch instance for a given batch id. This API is useful for determining the state of
  a validating batch.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     Batch batch = Client.BatchesApi.Get(1234);
     Console.WriteLine("Batch: " + batch);
@@ -12,7 +12,7 @@ Returns a single Batch instance for a given batch id. This API is useful for det
 === Update operation
 '''
 Update a single Batch instance. May only change enabled at this time.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     Batch batch = Client.BatchesApi.Get(1234);
     batch.Enabled = false;

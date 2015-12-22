@@ -4,7 +4,7 @@
 === Find contacts
 '''
 Example how to find contacts by ids, contact list, Limit and Offset value.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     var request = new FindContactsRequest
     {
@@ -20,7 +20,7 @@ Example how to find contacts by ids, contact list, Limit and Offset value.
 '''
 Example how to get contact by id. Deleted contacts can still be retrieved but will be marked deleted
  and will not show up when quering contacts via UI.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     Contact contact = Client.ContactsApi.Get(463633187003);
 
@@ -28,7 +28,7 @@ Example how to get contact by id. Deleted contacts can still be retrieved but wi
 '''
 Example how to create contacts in the CallFire system. These contacts are not validated on creation.
  They will be validated upon being added to a campaign. Example how to create contact with custom fields.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     var contact = new Contact
     {
@@ -43,7 +43,7 @@ Example how to create contacts in the CallFire system. These contacts are not va
 === Update contact
 '''
 Example how to update contact.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     var contact = new Contact
     {
@@ -56,6 +56,6 @@ Example how to update contact.
 '''
 Example how to delete contact by id. This does not actually delete the contact, it just removes the contact from
  any contact lists and marks the contact as deleted so won't show up in queries anymore.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     Client.ContactsApi.Delete(463633187003);

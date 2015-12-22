@@ -5,7 +5,7 @@
 === Get account info
 '''
 Example how to get account information like name, surname, email, account permissions.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     UserAccount account = Client.MeApi.GetAccount();
     Console.WriteLine("Account: " + account);
@@ -13,7 +13,7 @@ Example how to get account information like name, surname, email, account permis
 === Get billing plan usage info
 '''
 Example how to find billing plan usage for the user. Returns billing plan usage for the current month.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     BillingPlanUsage plan = Client.MeApi.GetBillingPlanUsage();
     Console.WriteLine("Plan: " + plan.ToString());
@@ -22,7 +22,7 @@ Example how to find billing plan usage for the user. Returns billing plan usage 
 '''
 Example how to get a list of verified caller ids. If the number is not shown in the list, then it is not verified,
  and will have to send for a verification code.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     IList<CallerId> callerIds = Client.MeApi.GetCallerIds();
     Console.WriteLine("CallerIds: " + String.Join(",", callerIds));
@@ -31,7 +31,7 @@ Example how to get a list of verified caller ids. If the number is not shown in 
 '''
 Example how to send a verification code to the phone number. The verification code is delivered
  via a phone call. This code needs to be submitted to the verify caller id API endpoint.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     String phoneNumber = "12132224444";
     Client.MeApi.SendVerificationCode(phoneNumber);
@@ -40,7 +40,7 @@ Example how to send a verification code to the phone number. The verification co
 '''
 You can verify your caller ID with the verification code received from the previous operation, a call to this
  endpoint is required to finish verification.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     var request = new CallerIdVerificationRequest
     {
@@ -58,7 +58,7 @@ You can verify your caller ID with the verification code received from the previ
 === Create API credentials
 '''
 Example how to create API user.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     ApiCredentials credentials = new ApiCredentials { Name = "test1" };
     ApiCredentials created = Client.MeApi.CreateApiCredentials(credentials);
@@ -76,7 +76,7 @@ Example how to get first 2 API users.
 === Get API credentials
 '''
 Example how to get particular API user and limit returned fields to name and enabled flag.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     ApiCredentials credentials = Client.MeApi.GetApiCredentials(123456, "name,enabled");
     Console.WriteLine("Credentials:" + credentials);
@@ -84,6 +84,6 @@ Example how to get particular API user and limit returned fields to name and ena
 === Delete API credentials
 '''
 Example how to delete particular API user by ID.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     Client.MeApi.DeleteApiCredentials(123456);

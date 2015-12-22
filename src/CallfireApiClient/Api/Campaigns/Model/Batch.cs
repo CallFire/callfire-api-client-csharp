@@ -3,6 +3,9 @@ using CallfireApiClient.Api.Common.Model;
 
 namespace CallfireApiClient.Api.Campaigns.Model
 {
+    /// <summary>
+    /// Class represents contact batch which can be added to existing campaign
+    /// </summary>
     public class Batch : CallfireModel
     {
         public long? Id { get; set; }

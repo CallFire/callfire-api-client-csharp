@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 namespace CallfireApiClient.Api.Keywords
 {
-
     public class KeywordsApi
     {
         private const string KEYWORDS_PATH = "/keywords";
@@ -32,7 +31,7 @@ namespace CallfireApiClient.Api.Keywords
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public IList<Keyword> Find(IList<string> keywords)
         {
-            List<KeyValuePair<string, object>> queryParams = new List<KeyValuePair<string, object>>();
+            var queryParams = new List<KeyValuePair<string, object>>();
             ClientUtils.AddQueryParamIfSet("keywords", keywords, queryParams);
             return Client.Get<ListHolder<Keyword>>(KEYWORDS_PATH, queryParams).Items;
         }

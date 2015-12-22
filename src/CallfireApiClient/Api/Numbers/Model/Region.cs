@@ -1,8 +1,9 @@
 ﻿using System;
+using CallfireApiClient.Api.Common.Model;
 
 namespace CallfireApiClient.Api.Numbers.Model
 {
-    public class Region
+    public class Region : CallfireModel
     {
         public string Prefix { get; set; }
 

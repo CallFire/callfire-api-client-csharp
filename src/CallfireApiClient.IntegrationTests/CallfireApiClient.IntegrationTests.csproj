@@ -39,6 +39,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\CallsTexts\MediaApiIntegrationTest.cs" />
     <Compile Include="Api\CallsTexts\TextsApiIntegrationTest.cs" />
     <Compile Include="Api\CallsTexts\CallsApiIntegrationTest.cs" />
     <Compile Include="Api\Campaigns\CampaignSoundsApiIntegrationTest.cs" />

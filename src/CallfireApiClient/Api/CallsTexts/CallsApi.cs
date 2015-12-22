@@ -5,7 +5,6 @@ using CallfireApiClient.Api.CallsTexts.Model.Request;
 
 namespace CallfireApiClient.Api.CallsTexts
 {
-
     public class CallsApi
     {
         private const string CALLS_PATH = "/calls";
@@ -53,11 +52,8 @@ namespace CallfireApiClient.Api.CallsTexts
         public Call Get(long id, string fields = null)
         {
             Validate.NotBlank(id.ToString(), "id cannot be blank");
-            string path = CALLS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER,
-                    id.ToString());
-
+            string path = CALLS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString());
             var queryParams = ClientUtils.BuildQueryParams("fields", fields);
-
             return Client.Get<Call>(path, queryParams);
         }
 
@@ -80,11 +76,9 @@ namespace CallfireApiClient.Api.CallsTexts
         public IList<Call> Send(IList<CallRecipient> recipients, long? campaignId = null, string fields = null)
         {
             Validate.NotBlank(recipients.ToString(), "recipients cannot be blank");
-            
-            Dictionary<string, object> queryParams = new Dictionary<string, object>();
-            queryParams.Add("campaignId", campaignId);
-            queryParams.Add("fields", fields);
-
+            var queryParams = new List<KeyValuePair<string, object>>(2);
+            ClientUtils.AddQueryParamIfSet("campaignId", campaignId, queryParams);
+            ClientUtils.AddQueryParamIfSet("fields", fields, queryParams);      
             return Client.Post<ListHolder<Call>>(CALLS_PATH, recipients, queryParams).Items;
         }
     }

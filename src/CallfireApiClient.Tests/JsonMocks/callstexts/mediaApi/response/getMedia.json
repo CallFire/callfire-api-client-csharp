@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "name": "My sound file",
+  "created": 1443378307000,
+  "lengthInBytes": 3,
+  "mediaType": "audio/mpeg",
+  "publicUrl": "www.test.com"
+}

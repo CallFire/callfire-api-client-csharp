@@ -1,28 +1,31 @@
-﻿using System;
 using CallfireApiClient.Api.Common.Model;
-using CallfireApiClient.Api.Webhooks.Model;
-using CallfireApiClient.Api.Webhooks.Model.Request;
+using CallfireApiClient.Api.CallsTexts.Model;
+using System.IO;
+using CallfireApiClient.Api.Common.Settings;
 
-namespace CallfireApiClient.Api.Webhooks
+namespace CallfireApiClient.Api.CallsTexts
 {
-    public class WebhooksApi
+    public class MediaApi
     {
-        private const string WEBHOOKS_PATH = "/webhooks";
-        private const string WEBHOOKS_ITEM_PATH = "/webhooks/{}";
+        private const string MEDIA_PATH = "/media";
+        private const string MEDIA_FILE_PATH = "/media/{}/file";
+        private const string MEDIA_ITEM_PATH = "/media/{}";
+        private const string MEDIA_ITEM_ID_PATH = "/media/{}.{}";
+        private const string MEDIA_ITEM_KEY_PATH = "/media/public/{}.{}";
 
         private readonly RestApiClient Client;
 
-        internal WebhooksApi(RestApiClient client)
+        internal MediaApi(RestApiClient client)
         {
             Client = client;
         }
 
         /// <summary>
-        /// Find all webhooks for the user.
-        /// Search for webhooks on name, resource, event, callback URL, or whether they are enabled.
+        /// Upload media file to account
         /// </summary>
-        /// <param name="request">request object with different fields to filter</param>
-        /// <returns>paged list with webhooks</returns>
+        /// <param name="file">file to upload</param>
+        /// <param name="name">name for file uploaded</param>
+        /// <returns>ResourceId object with sound id</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
         /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
@@ -30,17 +33,19 @@ namespace CallfireApiClient.Api.Webhooks
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public Page<Webhook> Find(FindWebhooksRequest request)
+        public ResourceId Upload(string pathToFile, string name = null)
         {
-            return Client.Get<Page<Webhook>>(WEBHOOKS_PATH, request);
+            MediaType type = EnumHelper.EnumFromDescription<MediaType>((Path.GetExtension(pathToFile).Replace(".", "")));
+            return Client.PostFile<ResourceId>(MEDIA_PATH, name, pathToFile, EnumHelper.EnumMemberAttr<MediaType>(type));
         }
 
         /// <summary>
-        /// Get webhook by id.
+        /// Returns a single Media instance for a given media file id. This is the metadata
+        /// for the media only.No content data is returned from this API.
         /// </summary>
-        /// <param name="id">id of webhook</param>
-        /// <param name="fields">limit fields returned. Example fields=id,name</param>
-        /// <returns>webhook object</returns>
+        /// <param name="id">id of media file</param>
+        /// <param name="fields">Limit text fields returned. Example fields=limit,offset,items(id,message)</param>
+        /// <returns>Media meta object</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
         /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
@@ -48,21 +53,21 @@ namespace CallfireApiClient.Api.Webhooks
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public Webhook Get(long id, string fields = null)
+        public Media Get(long id, string fields = null)
         {
+            Validate.NotBlank(id.ToString(), "id cannot be blank");
+            string path = MEDIA_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString());
             var queryParams = ClientUtils.BuildQueryParams("fields", fields);
-            var path = WEBHOOKS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString());
-            return Client.Get<Webhook>(path, queryParams);
+
+            return Client.Get<Media>(path, queryParams);
         }
 
         /// <summary>
-        /// Create a Webhook for notification in the CallFire system. Use the webhooks API to receive
-        /// notifications of important CallFire events. Select the resource to listen to, and then choose
-        /// the events for that resource to receive notifications on. When an event triggers,
-        /// a POST will be made to the callback URL with a payload of notification information.
+        /// Returns media file's data as stream, in case there is no appropriate MediaType for your media file pass MediaType.UNKNOWN
         /// </summary>
-        /// <param name="webhook">webhook to create</param>
-        /// <returns>ResourceId object with id of created webhook</returns>
+        /// <param name="id">id of media file</param>
+        /// <param name="type">media type: jpeg, png, gif, mp3, mp4, wav</param>
+        /// <returns>Media meta object</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
         /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
@@ -70,15 +75,20 @@ namespace CallfireApiClient.Api.Webhooks
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public ResourceId Create(Webhook webhook)
+        public Stream GetData(long id, MediaType type)
         {
-            return Client.Post<ResourceId>(WEBHOOKS_PATH, webhook);
+            string path = type == MediaType.UNKNOWN ? MEDIA_FILE_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString()) : 
+                MEDIA_ITEM_ID_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString()).ReplaceFirst(ClientConstants.PLACEHOLDER, EnumHelper.DescriptionAttr(type));
+
+            return Client.GetFileData(path);
         }
 
         /// <summary>
-        /// Update webhook
+        /// Returns media file's data as stream
         /// </summary>
-        /// <param name="webhook">webhook to update</param>
+        /// <param name="key">key of media file</param>
+        /// <param name="type">media type: jpeg, png, gif, mp3, mp4, wav</param>
+        /// <returns>Media meta object</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
         /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
@@ -86,27 +96,12 @@ namespace CallfireApiClient.Api.Webhooks
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public void Update(Webhook webhook)
+        public Stream GetData(string key, MediaType type)
         {
-            string path = WEBHOOKS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, webhook.Id.ToString());
-            Client.Put<object>(path, webhook);
-        }
+            Validate.NotBlank(key, "key cannot be blank");
+            string path = MEDIA_ITEM_KEY_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, key).ReplaceFirst(ClientConstants.PLACEHOLDER, type.ToString());
 
-        /// <summary>
-        /// Delete webhook by id
-        /// </summary>
-        /// <param name="id">id of webhook</param>
-        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
-        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
-        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
-        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
-        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
-        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
-        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public void Delete(long id)
-        {
-            Client.Delete(WEBHOOKS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString()));
+            return Client.GetFileData(path);
         }
     }
 }
-

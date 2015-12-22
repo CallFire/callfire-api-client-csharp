@@ -65,8 +65,6 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
             IList<UniversalDnc> universalDncNumber = Client.DncListsApi.GetUniversalDncNumber("12135543212");
             Console.WriteLine("universal:" + universalDncNumber);
         }
-
     }
-
 }
 

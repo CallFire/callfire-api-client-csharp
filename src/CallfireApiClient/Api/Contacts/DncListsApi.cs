@@ -38,7 +38,6 @@ namespace CallfireApiClient.Api.Contacts
             return Client.Get<Page<DncList>>(DNC_LISTS_PATH, request);
         }
 
-
         /// <summary>
         /// Create do not contact (DNC) list.
         /// </summary>
@@ -55,7 +54,6 @@ namespace CallfireApiClient.Api.Contacts
         {
             return Client.Post<ResourceId>(DNC_LISTS_PATH, dncList);
         }
-
 
         /// <summary>
         /// Search Universal Do Not Contact by number
@@ -75,12 +73,11 @@ namespace CallfireApiClient.Api.Contacts
         {
             Validate.NotBlank(toNumber, "toNumber cannot be blank");
             string path = DNC_LISTS_UNIVERSAL_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, toNumber);
-            var queryParams = new Dictionary<string, object>();
-            queryParams.Add("fromNumber", fromNumber);
-            queryParams.Add("fields", fields);
+            var queryParams = new List<KeyValuePair<string, object>>(2);
+            ClientUtils.AddQueryParamIfSet("fields", fields, queryParams);
+            ClientUtils.AddQueryParamIfSet("fromNumber", fromNumber, queryParams);
             return Client.Get<ListHolder<UniversalDnc>>(path, queryParams).Items;
         }
-
 
         /// <summary>
         /// Find do not contact (DNC) lists
@@ -103,7 +100,6 @@ namespace CallfireApiClient.Api.Contacts
             return Client.Get<DncList>(path, queryParams);
         }
 
-
         /// <summary>
         /// Delete DNC list
         /// </summary>
@@ -119,7 +115,6 @@ namespace CallfireApiClient.Api.Contacts
         {
             Client.Delete(DNC_LISTS_LIST_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString()));
         }
-
 
         /// <summary>
         /// Get DNC list items
@@ -155,8 +150,7 @@ namespace CallfireApiClient.Api.Contacts
         public void AddListItems(AddDncListItemsRequest<DoNotContact> request)
         {
             Validate.NotBlank(request.ContactListId.ToString(), "request.contactListId cannot be null");
-            string path = DNC_LISTS_LIST_ITEMS_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER,
-                              request.ContactListId.ToString());
+            string path = DNC_LISTS_LIST_ITEMS_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, request.ContactListId.ToString());
             Client.Post<object>(path, request.Contacts);
         }
 
@@ -175,11 +169,9 @@ namespace CallfireApiClient.Api.Contacts
         public void RemoveListItem(long id, string number)
         {
             Validate.NotBlank(number, "number cannot be blank");
-            string path = DNC_LISTS_LIST_ITEMS_NUMBER_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER,
-                              id.ToString()).ReplaceFirst(ClientConstants.PLACEHOLDER, number);
+            string path = DNC_LISTS_LIST_ITEMS_NUMBER_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString()).ReplaceFirst(ClientConstants.PLACEHOLDER, number);
             Client.Delete(path);
         }
-
 
         /// <summary>
         /// Delete DNC list items
@@ -201,6 +193,5 @@ namespace CallfireApiClient.Api.Contacts
             ClientUtils.AddQueryParamIfSet("number", numbers, queryParams);
             Client.Delete(path, queryParams);
         }
-    
     }
 }

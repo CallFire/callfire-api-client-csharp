@@ -4,7 +4,7 @@
 === Find dnc lists
 '''
 Example how to find all do not contact (DNC) lists.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     var findRequest = new FindDncListsRequest();
     Page<DncList> doNotCallLists = Client.DncListsApi.Find(findRequest);
@@ -13,7 +13,7 @@ Example how to find all do not contact (DNC) lists.
 === Create dnc list
 '''
 Example how to create do not contact (DNC) list.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     DncList dncList = new DncList { Name = "dncList1" };
     ResourceId dncListId = Client.DncListsApi.Create(dncList);
@@ -21,28 +21,28 @@ Example how to create do not contact (DNC) list.
 === Get universal dnc numbers
 '''
 Example how to search Universal Do Not Contact by number.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     IList<UniversalDnc> universalDncNumbers = Client.DncListsApi.GetUniversalDncNumber("16502572135", "16502572136");
 
 === Get dnc list
 '''
 Example how to get DNC list by id.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     DncList dncList = Client.DncListsApi.Get(1975140003);
 
 === Delete dnc list
 '''
 Example how to delete DNC list.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     Client.DncListsApi.Delete(1975140003);
 
 === Get dnc list items
 '''
 Example how to get fifth 2 DNC items from list.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     GetByIdRequest getItemsRequest = new GetByIdRequest
     {
@@ -55,7 +55,7 @@ Example how to get fifth 2 DNC items from list.
 === Add dnc list item
 '''
 Example how to add 3 DNC items to list.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     DoNotContact dnc1 = new DoNotContact { Number = "12135543211", Text = true, Call = false };
     DoNotContact dnc2 = new DoNotContact { Number = "12135543212", Text = true, Call = false };
@@ -70,7 +70,7 @@ Example how to add 3 DNC items to list.
 === Remove dnc list item
 '''
 Example how to delete DNC list item (you should specify list id and phone number to delete).
-[source]
+[source,csharp]
     //number param is required
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     Client.DncListsApi.RemoveListItem(1975140003, "16505044730");
@@ -78,7 +78,7 @@ Example how to delete DNC list item (you should specify list id and phone number
 === Remove dnc list items
 '''
 Example how to delete DNC list items (you should specify list id and phone numbers to delete).
-[source]
+[source,csharp]
     //numbers param is required
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     Client.DncListsApi.RemoveListItems(1975140003, new List<string> { "16505044730", "16505044731" });

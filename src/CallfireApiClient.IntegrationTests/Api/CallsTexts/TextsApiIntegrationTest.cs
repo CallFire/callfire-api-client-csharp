@@ -10,7 +10,6 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
     [TestFixture, Ignore("temporary disabled")]
     public class TextsApiIntegrationTest : AbstractIntegrationTest
     {
-
         [Test]
         public void FindAndGetParticularTexts()
         {

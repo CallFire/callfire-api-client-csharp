@@ -5,7 +5,7 @@
 '''
 Example how to find number leases of particular local numbers for the user. This API is useful for finding all numbers
  currently owned by an account. In that case send empty find request: *new FindNumberLeasesRequest()*.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     var request = new FindNumberLeasesRequest { City = "REDWOOD CITY" };
     Page<NumberLease> leases = Client.NumberLeasesApi.Find(request);
@@ -14,7 +14,7 @@ Example how to find number leases of particular local numbers for the user. This
 === Get number lease
 '''
 Example how to return a single NumberLease instance for a given number.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     NumberLease lease = Client.NumberLeasesApi.Get("16502572135");
     Console.WriteLine(lease);
@@ -23,7 +23,7 @@ Example how to return a single NumberLease instance for a given number.
 '''
 Example how to update a number lease instance. Ability to turn off autoRenew and toggle call/text features for a
  particular number.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     NumberLease lease = new NumberLease { PhoneNumber = "16502572135", AutoRenew = true };
     Client.NumberLeasesApi.Update(lease);
@@ -31,7 +31,7 @@ Example how to update a number lease instance. Ability to turn off autoRenew and
 === Find number leases configs
 '''
 Example how to find all number lease configs for the user.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     var request = new FindNumberLeaseConfigsRequest();
     Page<NumberConfig> configs = Client.NumberLeasesApi.FindConfigs(request);
@@ -40,7 +40,7 @@ Example how to find all number lease configs for the user.
 === Get number leases config
 '''
 Example how to return a single NumberConfig instance for a given number.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     NumberConfig config = Client.NumberLeasesApi.GetConfig("16502572135");
     Console.WriteLine(config);
@@ -49,7 +49,7 @@ Example how to return a single NumberConfig instance for a given number.
 '''
 Example how to update a number lease config. Use this API endpoint to add an Inbound IVR or Call Tracking
  feature to a CallFire phone number.
-[source]
+[source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     // create call tracking config
     CallTrackingConfig callTrackingConfig = new CallTrackingConfig

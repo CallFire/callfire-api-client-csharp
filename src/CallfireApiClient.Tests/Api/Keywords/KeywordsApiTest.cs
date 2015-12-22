@@ -26,7 +26,6 @@ namespace CallfireApiClient.Tests.Api.Keywords
             Boolean isAvailable = Client.KeywordsApi.IsAvailable(TEST_STRING);
             Assert.AreEqual(isAvailable, true);
         }
-
     }
 }
 

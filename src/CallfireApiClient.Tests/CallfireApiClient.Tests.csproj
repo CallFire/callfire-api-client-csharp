@@ -45,6 +45,7 @@
     <Compile Include="Api\Account\OrdersApiTest.cs" />
     <Compile Include="Api\Account\MeApiTest.cs" />
     <Compile Include="Api\AbstractApiTest.cs" />
+    <Compile Include="Api\CallsTexts\MediaApiTest.cs" />
     <Compile Include="Api\CallsTexts\TextsApiTest.cs" />
     <Compile Include="Api\CallsTexts\CallsApiTest.cs" />
     <Compile Include="Api\Campaigns\CampaignSoundsApiTest.cs" />
@@ -66,6 +67,8 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="CallfireApiClient.Tests.csproj" />
+    <None Include="JsonMocks\callstexts\mediaApi\response\getMedia.json" />
+    <None Include="JsonMocks\callstexts\mediaApi\response\uploadSound.json" />
     <None Include="packages.config" />
     <None Include="app.config" />
     <None Include="JsonMocks\common\sampleErrorMessage.json" />

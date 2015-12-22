@@ -13,7 +13,7 @@ namespace CallfireApiClient.Api.Campaigns.Model
 
         public override string ToString()
         {
-            return string.Format("[Recipient: phoneNumber={0}, contactId={1}, attributes={2}]", base.ToString(),
+            return string.Format("[Recipient: phoneNumber={0}, contactId={1}, attributes={2}]",
                 PhoneNumber, ContactId, Attributes.ToPrettyString());
         }
     }

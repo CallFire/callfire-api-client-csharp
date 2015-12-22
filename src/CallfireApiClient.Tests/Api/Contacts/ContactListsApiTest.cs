@@ -20,8 +20,6 @@ namespace CallfireApiClient.Tests.Api.Contacts
         private const string EMPTY_REQ_CONTACT_LIST_ID_MSG = "request.contactListId cannot be null";
         private const string EMPTY_CONTACT_LIST_ID_MSG = "contactListId cannot be null";
 
-
-
         [Test]
         public void TestDynamicPropertiesSerializationStringNumbers()
         {

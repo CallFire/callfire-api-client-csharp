@@ -22,7 +22,6 @@ namespace CallfireApiClient.Tests.Api.Campaigns
 
             Client.BatchesApi.Get(11L);
             Assert.That(restRequest.Value.Parameters, Has.No.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));   
-
         }
 
         [Test]

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using CallfireApiClient.Api.Common.Model;
 
 namespace CallfireApiClient.Api.Campaigns.Model
 {
-    public class Schedule
+    public class Schedule : CallfireModel
     {
         public long? Id { get; set; }
 

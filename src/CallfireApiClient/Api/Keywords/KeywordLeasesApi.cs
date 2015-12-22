@@ -51,8 +51,7 @@ namespace CallfireApiClient.Api.Keywords
         {
             Validate.NotBlank(keyword, "keyword cannot be blank");
             var queryParams = ClientUtils.BuildQueryParams("fields", fields);
-            return Client.Get<KeywordLease>(KEYWORD_LEASES_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER,
-                    keyword.ToString()), queryParams);
+            return Client.Get<KeywordLease>(KEYWORD_LEASES_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, keyword.ToString()), queryParams);
         }
 
         /// <summary>
@@ -69,8 +68,7 @@ namespace CallfireApiClient.Api.Keywords
         public void Update(KeywordLease keywordLease)
         {
             Validate.NotBlank(keywordLease.KeywordName, "keyword in keywordLease cannot be null");
-            string path = KEYWORD_LEASES_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER,
-                              keywordLease.KeywordName);
+            string path = KEYWORD_LEASES_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, keywordLease.KeywordName);
             Client.Put<object>(path, keywordLease);
         }
 
