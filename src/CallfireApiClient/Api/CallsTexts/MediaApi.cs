@@ -1,7 +1,6 @@
 using CallfireApiClient.Api.Common.Model;
 using CallfireApiClient.Api.CallsTexts.Model;
 using System.IO;
-using CallfireApiClient.Api.Common.Settings;
 
 namespace CallfireApiClient.Api.CallsTexts
 {
@@ -35,8 +34,8 @@ namespace CallfireApiClient.Api.CallsTexts
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public ResourceId Upload(string pathToFile, string name = null)
         {
-            MediaType type = EnumHelper.EnumFromDescription<MediaType>((Path.GetExtension(pathToFile).Replace(".", "")));
-            return Client.PostFile<ResourceId>(MEDIA_PATH, name, pathToFile, EnumHelper.EnumMemberAttr<MediaType>(type));
+            MediaType type = ClientUtils.EnumFromDescription<MediaType>((Path.GetExtension(pathToFile).Replace(".", "")));
+            return Client.PostFile<ResourceId>(MEDIA_PATH, name, pathToFile, ClientUtils.EnumMemberAttr<MediaType>(type));
         }
 
         /// <summary>
@@ -78,7 +77,7 @@ namespace CallfireApiClient.Api.CallsTexts
         public Stream GetData(long id, MediaType type)
         {
             string path = type == MediaType.UNKNOWN ? MEDIA_FILE_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString()) : 
-                MEDIA_ITEM_ID_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString()).ReplaceFirst(ClientConstants.PLACEHOLDER, EnumHelper.DescriptionAttr(type));
+                MEDIA_ITEM_ID_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString()).ReplaceFirst(ClientConstants.PLACEHOLDER, ClientUtils.DescriptionAttr(type));
 
             return Client.GetFileData(path);
         }
@@ -99,7 +98,7 @@ namespace CallfireApiClient.Api.CallsTexts
         public Stream GetData(string key, MediaType type)
         {
             Validate.NotBlank(key, "key cannot be blank");
-            string path = MEDIA_ITEM_KEY_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, key).ReplaceFirst(ClientConstants.PLACEHOLDER, type.ToString());
+            string path = MEDIA_ITEM_KEY_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, key).ReplaceFirst(ClientConstants.PLACEHOLDER, ClientUtils.DescriptionAttr(type));
 
             return Client.GetFileData(path);
         }

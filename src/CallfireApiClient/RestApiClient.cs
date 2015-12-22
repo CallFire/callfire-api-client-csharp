@@ -175,6 +175,7 @@ namespace CallfireApiClient
             var restRequest = CreateRestRequest(path, Method.POST, queryParams);
             if (payload != null)
             {
+                validatePayload(payload);
                 restRequest.AddJsonBody(payload);
                 Logger.Debug("POST request to {0} params: {1} entity: \n{2}", path, queryParams, payload);
             }
@@ -249,6 +250,7 @@ namespace CallfireApiClient
             var restRequest = CreateRestRequest(path, Method.PUT, queryParams);
             if (payload != null)
             {
+                validatePayload(payload);
                 restRequest.AddJsonBody(payload);
                 Logger.Debug("PUT request to {0} params: {1} entity: \n{2}", path, queryParams, payload);
             }
@@ -395,6 +397,13 @@ namespace CallfireApiClient
             foreach (RequestFilter filter in Filters)
             {
                 filter.Filter(request);
+            }
+        }
+
+        private void validatePayload(Object payload)
+        {
+            if (payload != null && payload is CallfireModel) {
+                ((CallfireModel)payload).validate();
             }
         }
     }
