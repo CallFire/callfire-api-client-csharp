@@ -38,6 +38,7 @@
       <HintPath>..\..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System.Configuration" />
+	<Reference Include="System.Runtime.Serialization" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -53,6 +54,8 @@
     <Compile Include="Api\Account\Model\UserAccount.cs" />
     <Compile Include="Api\Account\MeApi.cs" />
     <Compile Include="Api\Account\OrdersApi.cs" />
+    <Compile Include="Api\CallsTexts\MediaApi.cs" />
+    <Compile Include="Api\CallsTexts\Model\MediaType.cs" />
     <Compile Include="Api\CallsTexts\Model\Request\FindCallsRequest.cs" />
     <Compile Include="Api\CallsTexts\Model\Request\FindCallsTextsRequest.cs" />
     <Compile Include="Api\CallsTexts\Model\Request\FindTextsRequest.cs" />
@@ -112,6 +115,7 @@
     <Compile Include="Api\Common\Model\ListHolder.cs" />
     <Compile Include="Api\Common\Model\Page.cs" />
     <Compile Include="Api\Common\Model\ResourceId.cs" />
+    <Compile Include="Api\Common\Settings\EnumHelper.cs" />
     <Compile Include="Api\Contacts\Model\Request\AddContactListContactsRequest.cs" />
     <Compile Include="Api\Contacts\Model\Request\AddContactsRequest.cs" />
     <Compile Include="Api\Contacts\Model\Request\AddDncListItemsRequest.cs" />
