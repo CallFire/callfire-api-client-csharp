@@ -37,7 +37,6 @@ namespace CallfireApiClient.Api.Campaigns
             return Client.Get<Page<CampaignSound>>(SOUNDS_PATH, request);
         }
 
-
         /// <summary>
         /// Returns a single CampaignSound instance for a given campaign sound id. This is the meta
         /// data to the sounds only.No audio data is returned from this API.
@@ -55,9 +54,7 @@ namespace CallfireApiClient.Api.Campaigns
         public CampaignSound Get(long id, string fields = null)
         {
             Validate.NotBlank(id.ToString(), "id cannot be blank");
-            string path = SOUNDS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER,
-                    id.ToString());
-
+            string path = SOUNDS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString());
             var queryParams = ClientUtils.BuildQueryParams("fields", fields);
             return Client.Get<CampaignSound>(path, queryParams);
         }
@@ -77,9 +74,7 @@ namespace CallfireApiClient.Api.Campaigns
         public byte[] GetMp3(long id)
         {
             Validate.NotBlank(id.ToString(), "id cannot be blank");
-            string path = SOUNDS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER,
-                    id.ToString()) + ".mp3";
-
+            string path = SOUNDS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString()) + ".mp3";
             return Client.GetFileData(path);
         }
 
@@ -98,9 +93,7 @@ namespace CallfireApiClient.Api.Campaigns
         public byte[] GetWav(long id)
         {
             Validate.NotBlank(id.ToString(), "id cannot be blank");
-            string path = SOUNDS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER,
-                    id.ToString()) + ".wav";
-
+            string path = SOUNDS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString()) + ".wav";
             return Client.GetFileData(path);
         }
 

@@ -4,7 +4,10 @@ using System.Collections.Generic;
 
 namespace CallfireApiClient.Api.Campaigns.Model
 {
-    public class Broadcast : CallfireModel
+    /// <summary>
+    /// Represents base broadcast properties for Text and Call broadcasts
+    /// </summary>
+    public abstract class Broadcast : CallfireModel
     {
         public long? Id { get; set; }
 

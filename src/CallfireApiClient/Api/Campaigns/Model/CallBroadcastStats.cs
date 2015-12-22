@@ -2,6 +2,9 @@
 
 namespace CallfireApiClient.Api.Campaigns.Model
 {
+    /// <summary>
+    /// Statistics information about CallBroadcast
+    /// </summary>
     public class CallBroadcastStats : BroadcastStats
     {
         // Usage Stats

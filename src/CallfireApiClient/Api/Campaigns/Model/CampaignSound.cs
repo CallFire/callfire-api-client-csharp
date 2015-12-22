@@ -18,13 +18,17 @@ namespace CallfireApiClient.Api.Campaigns.Model
 
         public enum SoundStatus
         {
-            UPLOAD, RECORDING, ACTIVE, FAILED, ARCHIVED
+            UPLOAD,
+            RECORDING,
+            ACTIVE,
+            FAILED,
+            ARCHIVED
         }
 
         public override string ToString()
         {
             return string.Format("[CampaignSound: Id={0}, Name={1}, StatusString={2}, Created={3}, lengthInSeconds={4}]",
-                Id, Name, Status, Created, Created, LengthInSeconds);
+                Id, Name, Status, Created, LengthInSeconds);
         }
     }
 }

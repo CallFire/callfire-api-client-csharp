@@ -3,7 +3,10 @@ using CallfireApiClient.Api.Common.Model;
 
 namespace CallfireApiClient.Api.Campaigns.Model
 {
-    public class BroadcastStats : CallfireModel
+    /// <summary>
+    /// Holds general statistic fields for Text and Call broadcasts
+    /// </summary>
+    public abstract class BroadcastStats : CallfireModel
     {
         public int? TotalOutboundCount { get; private set; }
 
