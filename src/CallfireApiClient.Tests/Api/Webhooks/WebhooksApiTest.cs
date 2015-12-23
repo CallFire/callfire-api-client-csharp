@@ -104,5 +104,17 @@ namespace CallfireApiClient.Tests.Api.Webhooks
             Assert.AreEqual(Method.DELETE, restRequest.Value.Method);
             Assert.That(restRequest.Value.Resource, Is.StringEnding("/11"));
         }
+
+        [Test]
+        public void ValidateWebhook()
+        {
+            var webhook = new Webhook
+            {
+                Resource = ResourceType.VOICE_BROADCAST,
+                Events = new HashSet<ResourceEvent> { ResourceEvent.FINISHED, ResourceEvent.STARTED, ResourceEvent.UNKNOWN }
+            };
+            var ex = Assert.Throws<ModelValidationException>(() => Client.WebhooksApi.Update(webhook));
+            Assert.That(ex.Message, Is.StringContaining("Event [unknown] is unsupported for voiceCampaign resource"));
+        }
     }
 }

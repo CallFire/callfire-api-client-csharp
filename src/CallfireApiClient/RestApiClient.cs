@@ -10,6 +10,7 @@ using RestSharp.Serializers;
 using System.Collections;
 using System.Text;
 using System.IO;
+using System.Reflection;
 
 namespace CallfireApiClient
 {
@@ -34,13 +35,7 @@ namespace CallfireApiClient
         /// Returns base URL path for all Callfire's API 2.0 endpoints
         /// <summary>/
         /// <returns>string representation of base URL path</returns>
-        public string ApiBasePath
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings[ClientConstants.CONFIG_API_BASE_PATH];
-            }
-        }
+        public string ApiBasePath { get; private set; }
 
         /// <summary>
         /// Returns HTTP request filters associated with API client
@@ -56,14 +51,31 @@ namespace CallfireApiClient
         /// </param>
         public RestApiClient(IAuthenticator authenticator)
         {
+            ApiBasePath = GetClientAppSettings().Settings[ClientConstants.CONFIG_API_BASE_PATH].Value;
             JsonSerializer = new CallfireJsonConverter();
             JsonDeserializer = JsonSerializer as IDeserializer;
 
             RestClient = new RestClient(ApiBasePath);
             RestClient.Authenticator = authenticator;
-            RestClient.UserAgent = ConfigurationManager.AppSettings[ClientConstants.CONFIG_CLIENT_NAME];
+            RestClient.UserAgent = GetClientAppSettings().Settings[ClientConstants.CONFIG_CLIENT_NAME].Value;
             RestClient.AddHandler("application/json", JsonDeserializer);
             Filters = new SortedSet<RequestFilter>();
+        }
+
+        /// <summary>
+        /// Returns client's app settings config section
+        /// </summary>
+        /// <returns>The client app settings.</returns>
+        public AppSettingsSection GetClientAppSettings()
+        {
+            var path = this.GetType().Assembly.Location;
+            var config = ConfigurationManager.OpenExeConfiguration(path);
+            var appSettings = (AppSettingsSection)config.GetSection("appSettings");
+            if (appSettings.Settings.AllKeys.Length < 2)
+            {
+                throw new CallfireClientException("Cannot read configuration file at: " + path + ".config");
+            }
+            return appSettings;
         }
 
         /// <summary>
@@ -175,6 +187,7 @@ namespace CallfireApiClient
             var restRequest = CreateRestRequest(path, Method.POST, queryParams);
             if (payload != null)
             {
+                validatePayload(payload);
                 restRequest.AddJsonBody(payload);
                 Logger.Debug("POST request to {0} params: {1} entity: \n{2}", path, queryParams, payload);
             }
@@ -249,6 +262,7 @@ namespace CallfireApiClient
             var restRequest = CreateRestRequest(path, Method.PUT, queryParams);
             if (payload != null)
             {
+                validatePayload(payload);
                 restRequest.AddJsonBody(payload);
                 Logger.Debug("PUT request to {0} params: {1} entity: \n{2}", path, queryParams, payload);
             }
@@ -395,6 +409,13 @@ namespace CallfireApiClient
             foreach (RequestFilter filter in Filters)
             {
                 filter.Filter(request);
+            }
+        }
+
+        private void validatePayload(Object payload)
+        {
+            if (payload != null && payload is CallfireModel) {
+                ((CallfireModel)payload).validate();
             }
         }
     }

@@ -6,7 +6,7 @@
     <ProjectGuid>{7C6961C8-3576-4499-92B6-3B5D798BDBFC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>CallfireApiClient</RootNamespace>
-    <AssemblyName>callfire-api-client-csharp</AssemblyName>
+    <AssemblyName>callfire-api-client</AssemblyName>
     <ReleaseVersion>1.0.0</ReleaseVersion>
     <CodePage>65001</CodePage>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
@@ -24,7 +24,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
@@ -38,7 +37,7 @@
       <HintPath>..\..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System.Configuration" />
-	<Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -115,7 +114,6 @@
     <Compile Include="Api\Common\Model\ListHolder.cs" />
     <Compile Include="Api\Common\Model\Page.cs" />
     <Compile Include="Api\Common\Model\ResourceId.cs" />
-    <Compile Include="Api\Common\Settings\EnumHelper.cs" />
     <Compile Include="Api\Contacts\Model\Request\AddContactListContactsRequest.cs" />
     <Compile Include="Api\Contacts\Model\Request\AddContactsRequest.cs" />
     <Compile Include="Api\Contacts\Model\Request\AddDncListItemsRequest.cs" />
@@ -174,6 +172,7 @@
     <Compile Include="RequestFilter.cs" />
     <Compile Include="ResourceNotFoundException.cs" />
     <Compile Include="RestApiClient.cs" />
+    <Compile Include="ModelValidationException.cs" />
     <Compile Include="UnauthorizedException.cs" />
     <Compile Include="UnixTimeJsonConverter.cs" />
     <Compile Include="Validate.cs" />
@@ -192,6 +191,10 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="CallfireApiClient.csproj" />
-    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="callfire-api-client.dll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

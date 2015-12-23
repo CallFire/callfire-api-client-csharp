@@ -37,6 +37,7 @@
     <Reference Include="nunit.framework">
       <HintPath>..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\CallsTexts\MediaApiIntegrationTest.cs" />
@@ -70,7 +71,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="app.config" />
     <EmbeddedResource Include="Resources\File-examples\contacts1.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -87,4 +87,9 @@
     <Folder Include="Api\Campaigns\" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Content Include="callfire-api-client.dll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>
