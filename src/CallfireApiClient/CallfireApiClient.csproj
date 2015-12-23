@@ -114,7 +114,6 @@
     <Compile Include="Api\Common\Model\ListHolder.cs" />
     <Compile Include="Api\Common\Model\Page.cs" />
     <Compile Include="Api\Common\Model\ResourceId.cs" />
-    <Compile Include="Api\Common\Settings\EnumHelper.cs" />
     <Compile Include="Api\Contacts\Model\Request\AddContactListContactsRequest.cs" />
     <Compile Include="Api\Contacts\Model\Request\AddContactsRequest.cs" />
     <Compile Include="Api\Contacts\Model\Request\AddDncListItemsRequest.cs" />
@@ -173,6 +172,7 @@
     <Compile Include="RequestFilter.cs" />
     <Compile Include="ResourceNotFoundException.cs" />
     <Compile Include="RestApiClient.cs" />
+    <Compile Include="ModelValidationException.cs" />
     <Compile Include="UnauthorizedException.cs" />
     <Compile Include="UnixTimeJsonConverter.cs" />
     <Compile Include="Validate.cs" />

@@ -3,6 +3,7 @@ using CallfireApiClient.Api.CallsTexts.Model;
 using CallfireApiClient.Api.Common.Model;
 using NUnit.Framework;
 using System.IO;
+using CallfireApiClient;
 
 namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
 {
@@ -89,10 +90,9 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
             }
             Media media = Client.MediaApi.Get(mp3ResourceId.Id);
 
-            //Update to send key, need clarification where to get parameter
-            //MemoryStream ms = (MemoryStream)Client.MediaApi.GetData(media.key, MediaType.MP3);
-            //string pathToSaveNewFile = mp3FilePath.Replace("train.mp3", "mp3_sound.mp3");
-            //File.WriteAllBytes(pathToSaveNewFile, ms.ToArray());
+            MemoryStream ms = (MemoryStream)Client.MediaApi.GetData(SelectHashPartFromUrlString(media.PublicUrl), MediaType.MP3);
+            string pathToSaveNewFile = mp3FilePath.Replace("train.mp3", "mp3_sound.mp3");
+            File.WriteAllBytes(pathToSaveNewFile, ms.ToArray());
         }
 
         private static long SelectIdFromBadRequestErrorString(string message)
@@ -101,6 +101,15 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
             var from = mediaIdTextStartedAt + 9;
             var length = message.Length - from;
             return Int64.Parse(message.Substring(from, length));
+        }
+
+        private static string SelectHashPartFromUrlString(string message)
+        {
+            var hashStartedAt = message.IndexOf("public/") + 7;
+            var hashFinishedAt = message.LastIndexOf(".");
+            var length = message.Length - hashStartedAt - message.Substring(hashFinishedAt, message.Length - hashFinishedAt).Length;
+            var res = message.Substring(hashStartedAt, length);
+            return res;
         }
     }
 }
