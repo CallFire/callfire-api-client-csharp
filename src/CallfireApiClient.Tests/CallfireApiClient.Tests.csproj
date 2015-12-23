@@ -70,7 +70,6 @@
     <None Include="JsonMocks\callstexts\mediaApi\response\getMedia.json" />
     <None Include="JsonMocks\callstexts\mediaApi\response\uploadSound.json" />
     <None Include="packages.config" />
-    <None Include="app.config" />
     <None Include="JsonMocks\common\sampleErrorMessage.json" />
     <None Include="JsonMocks\contacts\contactsApi\request\createContactsList.csv" />
     <None Include="JsonMocks\contacts\contactsApi\request\updateContactList.json" />
@@ -180,6 +179,7 @@
     <None Include="JsonMocks\campaigns\textBroadcastsApi\response\getTextBroadcast.json" />
     <None Include="JsonMocks\campaigns\textBroadcastsApi\response\getTexts.json" />
     <None Include="JsonMocks\account\meApi\request\verifyCallerId.json" />
+    <None Include="callfire-api-client.dll.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CallfireApiClient\CallfireApiClient.csproj">
