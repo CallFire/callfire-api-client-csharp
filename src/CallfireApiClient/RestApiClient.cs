@@ -11,6 +11,7 @@ using System.Collections;
 using System.Text;
 using System.IO;
 using System.Reflection;
+using System.Diagnostics;
 
 namespace CallfireApiClient
 {
@@ -57,7 +58,7 @@ namespace CallfireApiClient
 
             RestClient = new RestClient(ApiBasePath);
             RestClient.Authenticator = authenticator;
-            RestClient.UserAgent = GetClientAppSettings().Settings[ClientConstants.CONFIG_CLIENT_NAME].Value;
+            RestClient.UserAgent = this.GetType().Assembly.GetName().Name + "-csharp-" + this.GetType().Assembly.GetName().Version;
             RestClient.AddHandler("application/json", JsonDeserializer);
             Filters = new SortedSet<RequestFilter>();
         }
@@ -71,7 +72,7 @@ namespace CallfireApiClient
             var path = this.GetType().Assembly.Location;
             var config = ConfigurationManager.OpenExeConfiguration(path);
             var appSettings = (AppSettingsSection)config.GetSection("appSettings");
-            if (appSettings.Settings.AllKeys.Length < 2)
+            if (appSettings.Settings.AllKeys.Length < 1)
             {
                 throw new CallfireClientException("Cannot read configuration file at: " + path + ".config");
             }
@@ -414,7 +415,8 @@ namespace CallfireApiClient
 
         private void validatePayload(Object payload)
         {
-            if (payload != null && payload is CallfireModel) {
+            if (payload != null && payload is CallfireModel)
+            {
                 ((CallfireModel)payload).validate();
             }
         }
