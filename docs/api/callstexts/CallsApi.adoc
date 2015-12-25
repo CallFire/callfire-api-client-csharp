@@ -1,5 +1,6 @@
 = Calls API
 
+
 === Find calls
 '''
 Example how to find all calls sent or received by the user. Use "CampaignId=0" for the campaignId parameter to query for all

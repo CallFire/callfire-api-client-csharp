@@ -1,5 +1,6 @@
 = Media API
 
+
 === Upload media file
 '''
 Example how to upload media file to account.

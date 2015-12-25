@@ -1,9 +1,10 @@
 = Campaign Sounds API
 
+
 === Find campaign sounds
 '''
 Find all campaign sounds that were created by the user. These are all of the available sounds to be used in campaigns.
-Example how to find 3 campaign sounds and filter by name "sample".
+ Example how to find 3 campaign sounds and filter by name "sample".
 [source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     FindSoundsRequest request = new FindSoundsRequest { Limit = 3, Filter = "sample" };
@@ -12,9 +13,9 @@ Example how to find 3 campaign sounds and filter by name "sample".
 === Get sound metadata
 '''
 Returns a single CampaignSound instance for a given campaign sound id. This is the meta data to the sounds only.
-No audio data is returned from this API.
-Example how to get sound metadata by ID only with name, status and lengthInSeconds fields, to get whole object, just
-call *campaignSoundsApi.get(id)* method without fields argument.
+ No audio data is returned from this API.
+ Example how to get sound metadata by ID only with name, status and lengthInSeconds fields, to get whole object, just
+ call *campaignSoundsApi.get(id)* method without fields argument:
 [source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     CampaignSound campaignSound = Client.CampaignSoundsApi.Get(12345, "name,status,lengthInSeconds");

@@ -1,20 +1,21 @@
 = Text broadcasts API
 
-== Find broadcasts
+
+=== Find broadcasts
 Find all text broadcasts created by the user. Can query on label, name, and the current running status of
- the campaign. Returns a paged list of text broadcasts. Example how to find 2 text broadcasts which have 'campaign'
- suffix in their names:
+ the campaign. Returns a paged list of text broadcasts.
+ Example how to find 2 text broadcasts which have 'campaign' suffix in their names:
 [source,csharp]
     var client = new CallfireClient("api_login", "api_password");
     var request = new FindBroadcastsRequest
     {
-            Name = "campaign name",
-            Limit = 1
+        Name = "campaign name",
+        Limit = 1
     };
     var broadcasts = client.TextBroadcastsApi.Find(request);
     Console.WriteLine(broadcasts);
 
-== Create broadcast
+=== Create broadcast
 Example how to create text broadcast and then start it. Broadcast will send messages within allowed
  hours (10:10 - 22:00) to 2 recipients.
 [source,csharp]
@@ -42,16 +43,17 @@ Example how to create text broadcast and then start it. Broadcast will send mess
     // create broadcast
     var id = client.TextBroadcastsApi.Create(broadcast, true);
 
-== Get broadcast
-Get text broadcast by ID
+=== Get broadcast
+Get text broadcast by ID.
 [source,csharp]
     var client = new CallfireClient("api_login", "api_password");
     var broadcast = client.TextBroadcastsApi.Get(123L);
     Console.WriteLine(broadcast);
 
-== Update broadcast
+=== Update broadcast
 After having created a text broadcast campaign, this method lets the user modify the configuration of
- a text broadcast campaign. See example how to update name of campaign:
+ a text broadcast campaign.
+ See example how to update name of campaign:
 [source,csharp]
     var client = new CallfireClient("api_login", "api_password");
     var broadcast = client.TextBroadcastsApi.Get(123L);
@@ -59,25 +61,25 @@ After having created a text broadcast campaign, this method lets the user modify
     // update campaign
     client.TextBroadcastsApi.Update(broadcast);
 
-== Start broadcast
-Start text broadcast by ID
+=== Start broadcast
+Start text broadcast by ID.
 [source,csharp]
     var client = new CallfireClient("api_login", "api_password");
     client.TextBroadcastsApi.Start(123L);
 
-== Stop broadcast
-Stop text broadcast by ID
+=== Stop broadcast
+Stop text broadcast by ID.
 [source,csharp]
     var client = new CallfireClient("api_login", "api_password");
     client.TextBroadcastsApi.Stop(123L);
 
-== Archive broadcast
-Archive text broadcast by ID
+=== Archive broadcast
+Archive text broadcast by ID.
 [source,csharp]
     var client = new CallfireClient("api_login", "api_password");
     client.TextBroadcastsApi.Archive(123L);
 
-== Get broadcast texts
+=== Get broadcast texts
 This operation will enable the user to page through all of the texts for a particular text broadcast campaign.
 [source,csharp]
     var client = new CallfireClient("api_login", "api_password");
@@ -85,8 +87,8 @@ This operation will enable the user to page through all of the texts for a parti
     var texts = client.TextBroadcastsApi.GetTexts(request);
     Console.WriteLine(texts);
 
-== Get broadcast stats
-Get broadcast statistics
+=== Get broadcast stats
+Get broadcast statistics.
 [source,csharp]
     var client = new CallfireClient("api_login", "api_password");
     var begin = DateTime.Now.AddDays(-5d);
@@ -94,7 +96,7 @@ Get broadcast statistics
     var stats = client.TextBroadcastsApi.GetStats(8624192003L, null, begin, end);
     Console.WriteLine(stats);
 
-== Add recipients to a text broadcast
+=== Add recipients to a text broadcast
 Use this method to add recipients to an already created text broadcast. Post a list of Recipient objects for
  them to be immediately added to the text broadcast campaign. These contacts do not go through validation process,
  and will be acted upon as they are added. Recipients may be added as a list of contact ids, or list of numbers.
@@ -108,7 +110,7 @@ Use this method to add recipients to an already created text broadcast. Post a l
     var texts = client.TextBroadcastsApi.AddRecipients(1234, recipients);
     Console.WriteLine(texts);
 
-== Get a specific broadcast batch
+=== Get a specific broadcast batch
 Returns a single Batch instance for a given text broadcast batch id.
 [source,csharp]
     CallfireClient client = new CallfireClient("api_login", "api_password");
@@ -116,7 +118,7 @@ Returns a single Batch instance for a given text broadcast batch id.
     Batch batch = client.TextBroadcastsApi.GetBatch(batchRequest);
     Console.WriteLine(batch);
 
-== Get all broadcast batches
+=== Get all broadcast batches
 This method will enable the user to page through all of the batches for a particular text broadcast campaign.
 [source,csharp]
     CallfireClient client = new CallfireClient("api_login", "api_password");
@@ -124,7 +126,7 @@ This method will enable the user to page through all of the batches for a partic
     var batches = client.TextBroadcastsApi.GetBatches(getBatchesRequest);
     Console.WriteLine(batches);
 
-== Update a specific broadcast batch
+=== Update a specific broadcast batch
 Update a text broadcast batch. Can only change enabled at this time.
 [source,csharp]
     CallfireClient client = new CallfireClient("api_login", "api_password");
@@ -133,11 +135,11 @@ Update a text broadcast batch. Can only change enabled at this time.
     batch.Enabled = false;
     client.TextBroadcastsApi.UpdateBatch(batch);
 
-== Add batch to broadcast
+=== Add batch to broadcast
 The add batch method allows the user to add additional batches to an already created text broadcast campaign.
-The added batch will go through the CallFire validation process, unlike in the recipients version of this API.
-Because of this, use the scrubDuplicates flag to remove duplicates from your batch. Batches may be added as a
-contact list id, a list of contact ids, or a list of numbers.
+ The added batch will go through the CallFire validation process, unlike in the recipients version of this API.
+ Because of this, use the scrubDuplicates flag to remove duplicates from your batch. Batches may be added as a
+ contact list id, a list of contact ids, or a list of numbers.
 [source,csharp]
     var client = new CallfireClient("api_login", "api_password");
     // add batch
