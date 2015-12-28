@@ -17,19 +17,27 @@ namespace CallfireApiClient.Tests.Utilities
 
         public override bool Execute()
         {
-            var fileNames = Files.Select(f => f.ItemSpec);
-            Log.LogMessage(MessageImportance.Normal, "Package files into {0}", ZipFileName);
-            if (File.Exists(ZipFileName))
+            try
             {
-                File.Delete(ZipFileName);
+                var fileNames = Files.Select(f => f.ItemSpec);
+                Log.LogMessage(MessageImportance.Normal, "Package files into {0}", ZipFileName);
+                if (File.Exists(ZipFileName))
+                {
+                    File.Delete(ZipFileName);
+                }
+                var zip = new ZipFile(ZipFileName);
+                foreach (var fileName in fileNames)
+                {
+                    zip.AddFile(fileName, "/");
+                }
+                zip.Save();
+                return true;
             }
-            var zip = new ZipFile(ZipFileName);
-            foreach (var fileName in fileNames)
+            catch (Exception ex)
             {
-                zip.AddFile(fileName, "/");
+                Log.LogError(ex.Message);
             }
-            zip.Save();
-            return true;
+            return false;
         }
     }
 }

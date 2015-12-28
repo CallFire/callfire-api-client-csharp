@@ -45,6 +45,7 @@
     </Reference>
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\Account\OrdersApiTest.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Api\Campaigns\CallBroadcastsApiTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\ZipTask.cs" />
+    <Compile Include="Utilities\XmlTask.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

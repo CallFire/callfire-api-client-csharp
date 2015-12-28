@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0" DefaultTargets="Run">
 	<UsingTask TaskName="ZipTask" AssemblyFile="$(TestAssemblies)" />
+	<UsingTask TaskName="XmlTask" AssemblyFile="$(TestAssemblies)" />
 	<PropertyGroup>
 		<SourceFolder>src</SourceFolder>
 		<ToolsFolder>tools</ToolsFolder>
@@ -9,7 +10,7 @@
 		<TestAssemblies>src/CallfireApiClient.Tests/bin/Release/callfire-api-client-tests.dll</TestAssemblies>
 		<TestResultsFolder>src/CallfireApiClient.Tests/TestResults</TestResultsFolder>
 		<PackagesFolder>packages</PackagesFolder>
-		<NuSpecFile>src/CallfireApiClient/CallfireApiClient.nuspec</NuSpecFile>
+		<NuSpecFile>CallfireApiClient.nuspec</NuSpecFile>
 		<NuGetExec>tools/nuget/nuget.exe</NuGetExec>
 		<NUnitExec>packages/NUnit.Runners.Net4.2.6.4/tools/nunit-console.exe -work=$(TestResultsFolder) $(TestAssemblies)</NUnitExec>
 	</PropertyGroup>
@@ -18,13 +19,13 @@
 		<CallTarget Targets="Restore" />
 		<CallTarget Targets="Build" />
 		<CallTarget Targets="Test" />
-		<!--		<CallTarget Targets="NDoc" />-->
+		<CallTarget Targets="NDoc" />
+		<CallTarget Targets="UpdateNuspecVersion" />
 		<CallTarget Targets="PackageZip" />
-		<!--		<CallTarget Targets="PackageNuGet" />-->
+		<CallTarget Targets="PackageNuGet" />
 	</Target>
 	<Target Name="Clean">
 		<Message Text="executing clean ..." />
-		<RemoveDir Directories="bin" ContinueOnError="False" />
 		<RemoveDir Directories="src/CallfireApiClient/bin; src/CallfireApiClient/obj" ContinueOnError="False" />
 		<RemoveDir Directories="src/CallfireApiClient.Tests/bin; src/CallfireApiClient.Tests/obj" ContinueOnError="False" />
 		<RemoveDir Directories="src/CallfireApiClient.IntegrationTests/bin; src/CallfireApiClient.IntegrationTests/obj" ContinueOnError="False" />
@@ -50,11 +51,17 @@
 		<Exec Command="$(NUnitExec)" Condition="'$(OS)' != 'Unix'" />
 		<Exec Command="mono $(NUnitExec)" Condition="'$(OS)' == 'Unix'" />
 	</Target>
-	<Target Name="NDoc" DependsOnTargets="Build">
-		<NDoc Documenter="MSDN" ProjectFilePath="Documentation\MSBuild.Community.Tasks.ndoc" />
-		<Copy SourceFiles="docs\1.chm" DestinationFiles="docs\1.chm" />
+	<Target Name="UpdateNuspecVersion" DependsOnTargets="Test">
+		<GetAssemblyIdentity AssemblyFiles="src/CallfireApiClient/bin/Release/callfire-api-client.dll">
+			<Output TaskParameter="Assemblies" ItemName="clientVersion" />
+		</GetAssemblyIdentity>
+		<XmlTask XmlFileName="$(NuSpecFile)" XPath="//metadata/version" Value="%(clientVersion.Version)" />
 	</Target>
-	<Target Name="PackageZip" DependsOnTargets="Build">
+	<Target Name="NDoc" DependsOnTargets="Build">
+		<!--		<NDoc Documenter="MSDN" ProjectFilePath="Documentation\MSBuild.Community.Tasks.ndoc" />-->
+		<!--		<Copy SourceFiles="docs\1.chm" DestinationFiles="docs\1.chm" />-->
+	</Target>
+	<Target Name="PackageZip" DependsOnTargets="Test">
 		<Message Text="creating zip package ..." />
 		<ItemGroup>
 			<ZipFiles Include="src/CallfireApiClient/bin/Release/callfire-api-client.dll" />
@@ -64,8 +71,14 @@
 		</ItemGroup>
 		<ZipTask Files="@(ZipFiles)" ZipFileName="$(ReleasePkgFolder)/CallfireApiClient-release.zip" />
 	</Target>
-	<Target Name="PackageNuGet" DependsOnTargets="test">
+	<Target Name="PackageNuGet" DependsOnTargets="UpdateNuspecVersion">
 		<Message Text="creating NuGet package(s) ..." Importance="high" />
-		<Exec Command="$(NuGetExec) pack $(NuSpecFile) -o $(ReleasePkgFolder)" />
+		<Exec Command="$(NuGetExec) pack $(NuSpecFile) -o $(ReleasePkgFolder)" Condition="'$(OS)' != 'Unix'" />
+		<Exec Command="mono $(NuGetExec) pack $(NuSpecFile) -o $(ReleasePkgFolder)" Condition="'$(OS)' == 'Unix'" />
+	</Target>
+	<Target Name="PublishNuGet" DependsOnTargets="PackageNuGet">
+		<Message Text="publishing NuGet package(s) ..." Importance="high" />
+		<Exec Command="$(NuGetExec) push -o $(ReleasePkgFolder)/" Condition="'$(OS)' != 'Unix'" />
+		<Exec Command="mono $(NuGetExec) pack $(NuSpecFile) -o $(ReleasePkgFolder)" Condition="'$(OS)' == 'Unix'" />
 	</Target>
 </Project>
