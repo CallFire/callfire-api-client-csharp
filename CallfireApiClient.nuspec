@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>CallFire</id>
-    <version>1.0.0.37835</version>
+    <version>1.0.0.39042</version>
     <title>CallFire API v2 client</title>
     <authors>
 			Vladimir Mikhailov
@@ -25,6 +25,7 @@
   <files>
     <file src="src/CallfireApiClient/bin/Release/callfire-api-client.dll" target="lib" />
     <file src="src/CallfireApiClient/bin/Release/callfire-api-client.dll.config" target="lib" />
+    <file src="src/CallfireApiClient/bin/Release/callfire-api-client.xml" target="lib" />
     <file src="LICENSE" />
     <file src="Changelog" />
   </files>

@@ -11,6 +11,7 @@
 		<TestResultsFolder>src/CallfireApiClient.Tests/TestResults</TestResultsFolder>
 		<PackagesFolder>packages</PackagesFolder>
 		<NuSpecFile>CallfireApiClient.nuspec</NuSpecFile>
+		<NuGetApiKey>?</NuGetApiKey>
 		<NuGetExec>tools/nuget/nuget.exe</NuGetExec>
 		<NUnitExec>packages/NUnit.Runners.Net4.2.6.4/tools/nunit-console.exe -work=$(TestResultsFolder) $(TestAssemblies)</NUnitExec>
 	</PropertyGroup>
@@ -19,7 +20,6 @@
 		<CallTarget Targets="Restore" />
 		<CallTarget Targets="Build" />
 		<CallTarget Targets="Test" />
-		<CallTarget Targets="NDoc" />
 		<CallTarget Targets="UpdateNuspecVersion" />
 		<CallTarget Targets="PackageZip" />
 		<CallTarget Targets="PackageNuGet" />
@@ -57,19 +57,19 @@
 		</GetAssemblyIdentity>
 		<XmlTask XmlFileName="$(NuSpecFile)" XPath="//metadata/version" Value="%(clientVersion.Version)" />
 	</Target>
-	<Target Name="NDoc" DependsOnTargets="Build">
-		<!--		<NDoc Documenter="MSDN" ProjectFilePath="Documentation\MSBuild.Community.Tasks.ndoc" />-->
-		<!--		<Copy SourceFiles="docs\1.chm" DestinationFiles="docs\1.chm" />-->
-	</Target>
 	<Target Name="PackageZip" DependsOnTargets="Test">
 		<Message Text="creating zip package ..." />
 		<ItemGroup>
 			<ZipFiles Include="src/CallfireApiClient/bin/Release/callfire-api-client.dll" />
 			<ZipFiles Include="src/CallfireApiClient/bin/Release/callfire-api-client.dll.config" />
+			<ZipFiles Include="src/CallfireApiClient/bin/Release/callfire-api-client.xml" />
 			<ZipFiles Include="LICENSE" />
 			<ZipFiles Include="Changelog" />
 		</ItemGroup>
-		<ZipTask Files="@(ZipFiles)" ZipFileName="$(ReleasePkgFolder)/CallfireApiClient-release.zip" />
+		<GetAssemblyIdentity AssemblyFiles="src/CallfireApiClient/bin/Release/callfire-api-client.dll">
+			<Output TaskParameter="Assemblies" ItemName="clientVersion" />
+		</GetAssemblyIdentity>
+		<ZipTask Files="@(ZipFiles)" ZipFileName="$(ReleasePkgFolder)/CallfireApiClient-%(clientVersion.Version).zip" />
 	</Target>
 	<Target Name="PackageNuGet" DependsOnTargets="UpdateNuspecVersion">
 		<Message Text="creating NuGet package(s) ..." Importance="high" />
@@ -78,6 +78,8 @@
 	</Target>
 	<Target Name="PublishNuGet" DependsOnTargets="PackageNuGet">
 		<Message Text="publishing NuGet package(s) ..." Importance="high" />
+		<Exec Command="$(NuGetExec) setApiKey $(NugetApiKey)" Condition="'$(OS)' != 'Unix'" />
+		<Exec Command="mono $(NuGetExec) setApiKey $(NugetApiKey)" Condition="'$(OS)' == 'Unix'" />
 		<Exec Command="$(NuGetExec) push -o $(ReleasePkgFolder)/" Condition="'$(OS)' != 'Unix'" />
 		<Exec Command="mono $(NuGetExec) pack $(NuSpecFile) -o $(ReleasePkgFolder)" Condition="'$(OS)' == 'Unix'" />
 	</Target>
