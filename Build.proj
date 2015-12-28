@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0" DefaultTargets="Run">
+	<UsingTask TaskName="ZipTask" AssemblyFile="$(TestAssemblies)" />
+	<PropertyGroup>
+		<SourceFolder>src</SourceFolder>
+		<ToolsFolder>tools</ToolsFolder>
+		<BuildFolder>build</BuildFolder>
+		<ReleasePkgFolder>$(BuildFolder)/pkg</ReleasePkgFolder>
+		<TestAssemblies>src/CallfireApiClient.Tests/bin/Release/callfire-api-client-tests.dll</TestAssemblies>
+		<TestResultsFolder>src/CallfireApiClient.Tests/TestResults</TestResultsFolder>
+		<PackagesFolder>packages</PackagesFolder>
+		<NuSpecFile>src/CallfireApiClient/CallfireApiClient.nuspec</NuSpecFile>
+		<NuGetExec>tools/nuget/nuget.exe</NuGetExec>
+		<NUnitExec>packages/NUnit.Runners.Net4.2.6.4/tools/nunit-console.exe -work=$(TestResultsFolder) $(TestAssemblies)</NUnitExec>
+	</PropertyGroup>
+	<Target Name="Run">
+		<CallTarget Targets="Clean" />
+		<CallTarget Targets="Restore" />
+		<CallTarget Targets="Build" />
+		<CallTarget Targets="Test" />
+		<!--		<CallTarget Targets="NDoc" />-->
+		<CallTarget Targets="PackageZip" />
+		<!--		<CallTarget Targets="PackageNuGet" />-->
+	</Target>
+	<Target Name="Clean">
+		<Message Text="executing clean ..." />
+		<RemoveDir Directories="bin" ContinueOnError="False" />
+		<RemoveDir Directories="src/CallfireApiClient/bin; src/CallfireApiClient/obj" ContinueOnError="False" />
+		<RemoveDir Directories="src/CallfireApiClient.Tests/bin; src/CallfireApiClient.Tests/obj" ContinueOnError="False" />
+		<RemoveDir Directories="src/CallfireApiClient.IntegrationTests/bin; src/CallfireApiClient.IntegrationTests/obj" ContinueOnError="False" />
+		<MakeDir Directories="$(ReleasePkgFolder)" />
+		<MakeDir Directories="$(TestResultsFolder)" />
+	</Target>
+	<Target Name="Restore">
+		<Message Text="restoring NuGet packages ..." />
+		<Exec Command="$(NuGetExec) restore" ContinueOnError="False" Condition="'$(OS)' != 'Unix'" />
+		<Exec Command="mono $(NuGetExec) restore" ContinueOnError="False" Condition="'$(OS)' == 'Unix'" />
+	</Target>
+	<Target Name="Build" DependsOnTargets="Restore">
+		<ItemGroup>
+			<ProjectToBuild Include="src/CallfireApiClient/CallfireApiClient.csproj" />
+			<ProjectToBuild Include="src/CallfireApiClient.Tests/CallfireApiClient.Tests.csproj" />
+			<ProjectToBuild Include="src/CallfireApiClient.IntegrationTests/CallfireApiClient.IntegrationTests.csproj" />
+		</ItemGroup>
+		<Message Text="building project" />
+		<MSBuild Projects="@(ProjectToBuild)" Properties="Configuration=Release" ContinueOnError="False" />
+	</Target>
+	<Target Name="Test" DependsOnTargets="Build">
+		<MakeDir Directories="$(TestResultsFolder)" />
+		<Exec Command="$(NUnitExec)" Condition="'$(OS)' != 'Unix'" />
+		<Exec Command="mono $(NUnitExec)" Condition="'$(OS)' == 'Unix'" />
+	</Target>
+	<Target Name="NDoc" DependsOnTargets="Build">
+		<NDoc Documenter="MSDN" ProjectFilePath="Documentation\MSBuild.Community.Tasks.ndoc" />
+		<Copy SourceFiles="docs\1.chm" DestinationFiles="docs\1.chm" />
+	</Target>
+	<Target Name="PackageZip" DependsOnTargets="Build">
+		<Message Text="creating zip package ..." />
+		<ItemGroup>
+			<ZipFiles Include="src/CallfireApiClient/bin/Release/callfire-api-client.dll" />
+			<ZipFiles Include="src/CallfireApiClient/bin/Release/callfire-api-client.dll.config" />
+			<ZipFiles Include="LICENSE" />
+			<ZipFiles Include="Changelog" />
+		</ItemGroup>
+		<ZipTask Files="@(ZipFiles)" ZipFileName="$(ReleasePkgFolder)/CallfireApiClient-release.zip" />
+	</Target>
+	<Target Name="PackageNuGet" DependsOnTargets="test">
+		<Message Text="creating NuGet package(s) ..." Importance="high" />
+		<Exec Command="$(NuGetExec) pack $(NuSpecFile) -o $(ReleasePkgFolder)" />
+	</Target>
+</Project>

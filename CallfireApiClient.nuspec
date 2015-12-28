@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package>
+	<metadata>
+		<id>$id$</id>
+		<version>$version$</version>
+		<title>$title$</title>
+		<authors>$author$</authors>
+		<owners>$author$</owners>
+		<projectUrl>https://github.com/CallFire/callfire-api-client-csharp</projectUrl>
+		<licenseUrl>https://github.com/CallFire/callfire-api-client-csharp/blob/master/LICENSE</licenseUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>$description$</description>
+		<releaseNotes>initial release</releaseNotes>
+		<copyright>Copyright (c) 2015 CallFire Inc.</copyright>
+		<tags>Callfire rest api client</tags>
+		<dependencies>
+			<dependency id="Newtonsoft.Json" version="7.0.1" />
+			<dependency id="RestSharp" version="105.2.3" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="src/CallfireApiClient/bin/Release/callfire-api-client.dll" />
+		<file src="src/CallfireApiClient/bin/Release/callfire-api-client.dll.config" />
+		<file src="LICENSE" />
+		<file src="Changelog" />
+	</files>
+</package>

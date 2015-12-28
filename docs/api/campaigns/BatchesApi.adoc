@@ -1,5 +1,6 @@
 = Campaign batches API
 
+
 === Get operation
 '''
 Returns a single Batch instance for a given batch id. This API is useful for determining the state of
