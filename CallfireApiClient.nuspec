@@ -1,27 +1,32 @@
 <?xml version="1.0"?>
 <package>
-	<metadata>
-		<id>$id$</id>
-		<version>$version$</version>
-		<title>$title$</title>
-		<authors>$author$</authors>
-		<owners>$author$</owners>
-		<projectUrl>https://github.com/CallFire/callfire-api-client-csharp</projectUrl>
-		<licenseUrl>https://github.com/CallFire/callfire-api-client-csharp/blob/master/LICENSE</licenseUrl>
-		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<description>$description$</description>
-		<releaseNotes>initial release</releaseNotes>
-		<copyright>Copyright (c) 2015 CallFire Inc.</copyright>
-		<tags>Callfire rest api client</tags>
-		<dependencies>
-			<dependency id="Newtonsoft.Json" version="7.0.1" />
-			<dependency id="RestSharp" version="105.2.3" />
-		</dependencies>
-	</metadata>
-	<files>
-		<file src="src/CallfireApiClient/bin/Release/callfire-api-client.dll" />
-		<file src="src/CallfireApiClient/bin/Release/callfire-api-client.dll.config" />
-		<file src="LICENSE" />
-		<file src="Changelog" />
-	</files>
+  <metadata>
+    <id>CallFire</id>
+    <version>1.0.0.39042</version>
+    <title>CallFire API v2 client</title>
+    <authors>
+			Vladimir Mikhailov
+			Vladimir Malinovskiy
+		</authors>
+    <owners>CallFire Inc.</owners>
+    <projectUrl>https://github.com/CallFire/callfire-api-client-csharp</projectUrl>
+    <licenseUrl>https://github.com/CallFire/callfire-api-client-csharp/blob/master/LICENSE</licenseUrl>
+    <iconUrl>https://www.callfire.com/favicon.ico</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>C# client library for integration with Callfire REST API v2 services</description>
+    <releaseNotes>initial release</releaseNotes>
+    <copyright>Copyright (c) 2015 CallFire Inc.</copyright>
+    <tags>Callfire rest api client</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="7.0.1" />
+      <dependency id="RestSharp" version="105.2.3" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="src/CallfireApiClient/bin/Release/callfire-api-client.dll" target="lib" />
+    <file src="src/CallfireApiClient/bin/Release/callfire-api-client.dll.config" target="lib" />
+    <file src="src/CallfireApiClient/bin/Release/callfire-api-client.xml" target="lib" />
+    <file src="LICENSE" />
+    <file src="Changelog" />
+  </files>
 </package>
