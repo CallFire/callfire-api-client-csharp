@@ -2,6 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0" DefaultTargets="Run">
 	<UsingTask TaskName="ZipTask" AssemblyFile="$(TestAssemblies)" />
 	<UsingTask TaskName="XmlTask" AssemblyFile="$(TestAssemblies)" />
+	<UsingTask TaskName="VersionTask" AssemblyFile="$(TestAssemblies)" />
 	<PropertyGroup>
 		<SourceFolder>src</SourceFolder>
 		<ToolsFolder>tools</ToolsFolder>
@@ -29,6 +30,8 @@
 		<RemoveDir Directories="src/CallfireApiClient/bin; src/CallfireApiClient/obj" ContinueOnError="False" />
 		<RemoveDir Directories="src/CallfireApiClient.Tests/bin; src/CallfireApiClient.Tests/obj" ContinueOnError="False" />
 		<RemoveDir Directories="src/CallfireApiClient.IntegrationTests/bin; src/CallfireApiClient.IntegrationTests/obj" ContinueOnError="False" />
+		<RemoveDir Directories="$(TestResultsFolder)" ContinueOnError="False" />
+		<RemoveDir Directories="$(BuildFolder)" ContinueOnError="False" />
 		<MakeDir Directories="$(ReleasePkgFolder)" />
 		<MakeDir Directories="$(TestResultsFolder)" />
 	</Target>
@@ -52,10 +55,11 @@
 		<Exec Command="mono $(NUnitExec)" Condition="'$(OS)' == 'Unix'" />
 	</Target>
 	<Target Name="UpdateNuspecVersion" DependsOnTargets="Test">
-		<GetAssemblyIdentity AssemblyFiles="src/CallfireApiClient/bin/Release/callfire-api-client.dll">
-			<Output TaskParameter="Assemblies" ItemName="clientVersion" />
-		</GetAssemblyIdentity>
-		<XmlTask XmlFileName="$(NuSpecFile)" XPath="//metadata/version" Value="%(clientVersion.Version)" />
+		<VersionTask AssemblyPath="src/CallfireApiClient/bin/Release/callfire-api-client.dll">
+			<Output TaskParameter="Version" PropertyName="Version" />
+		</VersionTask>
+		<Message Text="updating version: to $(Version)" />
+		<XmlTask XmlFileName="$(NuSpecFile)" XPath="//metadata/version" Value="$(Version)" />
 	</Target>
 	<Target Name="PackageZip" DependsOnTargets="Test">
 		<Message Text="creating zip package ..." />
@@ -66,10 +70,10 @@
 			<ZipFiles Include="LICENSE" />
 			<ZipFiles Include="Changelog" />
 		</ItemGroup>
-		<GetAssemblyIdentity AssemblyFiles="src/CallfireApiClient/bin/Release/callfire-api-client.dll">
-			<Output TaskParameter="Assemblies" ItemName="clientVersion" />
-		</GetAssemblyIdentity>
-		<ZipTask Files="@(ZipFiles)" ZipFileName="$(ReleasePkgFolder)/CallfireApiClient-%(clientVersion.Version).zip" />
+		<VersionTask AssemblyPath="src/CallfireApiClient/bin/Release/callfire-api-client.dll">
+			<Output TaskParameter="Version" PropertyName="Version" />
+		</VersionTask>
+		<ZipTask Files="@(ZipFiles)" ZipFileName="$(ReleasePkgFolder)/CallfireApiClient-$(Version).zip" />
 	</Target>
 	<Target Name="PackageNuGet" DependsOnTargets="UpdateNuspecVersion">
 		<Message Text="creating NuGet package(s) ..." Importance="high" />

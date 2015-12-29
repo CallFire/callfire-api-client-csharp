@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>CallFire</id>
-    <version>1.0.0.39042</version>
+    <version>1.0.0</version>
     <title>CallFire API v2 client</title>
     <authors>
 			Vladimir Mikhailov
