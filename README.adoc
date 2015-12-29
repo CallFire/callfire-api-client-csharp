@@ -6,6 +6,10 @@ C# client for Callfire platform API version 2. See link:docs/GettingStarted.adoc
 .*Requirements:*
 * .NET 4.0+
 
+.*Dependencies:*
+* Newtonsoft.Json >= 7.0.1
+* RestSharp >= 105.2.3
+
 .*Table of contents*
 * link:docs/GettingStarted.adoc[Getting Started]
 * link:docs/api/ApiExamples.adoc[API code examples]

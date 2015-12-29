@@ -1,1 +1,123 @@
-stub
+= Getting started
+
+== Installation
+
+To install CallFire API v2 client, run the following command in the Package Manager Console
+[source]
+PM> Install-Package CallfireApiClient
+
+or using nuget console tool:
+[source]
+$ nuget install CallfireApiClient
+
+it will install the latest public version, other releases you can find at link:https://github.com/CallFire/callfire-api-client-csharp/releases[releases page]
+After these steps *CallfireApiClient* should appear in your project dependencies along with other transitive ones.
+
+In case you want to build it yourself:
+[source]
+    $ git clone https://github.com/CallFire/callfire-api-client-csharp.git
+    $ cd callfire-api-client-csharp
+    // build on windows platform
+    $ msbuild Build.proj
+    // build on unix (mono) platforms
+    $ xbuild Build.proj
+
+it will produce zip & Nuget packages in *build/pkg* directory:
+[source]
+    callfire-api-client.dll - client assembly
+    callfire-api-client.dll.config - configuration file
+    callfire-api-client.xml - XML documentation
+
+then you can install Nuget package locally or unpack zip package into your project's lib directory.
+
+== Overview
+To create client instance just provide API login and password. API credentials should be configured on
+link:https://www.callfire.com/ui/manage/access[Account -> Settings -> API Access] page. Client uses HTTPS connection
+and Basic Authentication.
+
+Example how to get account information using client:
+[source,csharp]
+    class MainClass
+    {
+        public static void Main(string[] args)
+        {
+            var client = new CallfireClient("api_login", "api_password");
+            Console.WriteLine(client.MeApi.GetAccount());
+        }
+    }
+
+.*List of API groups:*
+[source,csharp]
+    var client = new CallfireClient("api_login", "api_password");
+    client.MeApi;
+    client.OrdersApi;
+    client.BatchesApi;
+    client.CampaignSoundsApi;
+    client.MediaApi;
+    client.ContactsApi;
+    client.ContactListsApi;
+    client.NumbersApi;
+    client.NumberLeasesApi;
+    client.KeywordsApi;
+    client.KeywordLeasesApi;
+    client.DncApi;
+    client.DncListsApi;
+    client.CallsApi;
+    client.TextsApi;
+    client.TextAutoRepliesApi;
+    client.TextBroadcastsApi;
+    client.CallBroadcastsApi;
+    client.WebhooksApi;
+
+== Error handling
+The CallFire Developers API uses standard HTTP response codes for responses. These HTTP codes indicate whether
+ or not an API operation is successful.
+
+Status Code 200 is the desired response code. A standard JSON response will follow.
+
+Codes in the 400s range detail all of the errors a CallFire Developer could encounter while using the API. Bad
+ Request, Rate Limit Reached, and Unauthorized are some of the sorts of responses in the 400s block.
+
+Codes in the 500s range are error responses from the CallFire system. If an error has occured anywhere in the
+ execution of a resource that was not due to user input, a 500 response will be returned with a corresponding
+ JSON error body. In that body will contain a message detailing what went wrong.
+
+.All API methods throw following exceptions:
+ * *CallfireClientException* - in case error has occurred in client
+ * *CallfireApiException* - in case API cannot be queried for some reason and server returned error (this is the base
+ exception for API errors, some specific HTTP codes have their own exception):
+ ** *400 - BadRequestException* - The request was formatted improperly
+ ** *401 - UnauthorizedException* - API Key missing or invalid
+ ** *403 - AccessForbiddenException* - Insufficient permissions
+ ** *404 - ResourceNotFoundException* - The resource requested does not exist
+ ** *500 - InternalServerErrorException* - We had an error! Sorry about that.
+ ** other error codes will throw CallfireApiException
+
+*CallfireApiException* has *ApiErrorMessage* property with details of occurred error, here is fields listing:
+[source,csharp]
+    int? HttpStatusCode;
+    int? InternalCode;
+    string Message;
+    string DeveloperMessage;
+    string HelpLink;
+
+
+== Debug & logging
+In case you want to see requests/responses which client sends/receives from Callfire platform you should copy
+*system.diagnostics* section from callfire-api-client.dll.config into your application's app.config file, then
+it will create callfire-api-client.log file in your work directory with debug output:
+[source]
+2015/10/21 19:02:47:355 EEST [DEBUG] RestApiClient - GET request to https://api.callfire.com/v2/me/account with params: []
+2015/10/21 19:02:48:722 EEST [DEBUG] RestApiClient - received entity
+{
+  "id" : 1234567890,
+  "email" : "john@callfire.com",
+  "name" : "test",
+  "firstName" : "John",
+  "lastName" : "Doe",
+  "permissions" : [ "ACCOUNT_HOLDER" ]
+}
+
+== Platform compatibility
+
+Library was built and tested with mono 4.2.1 .NET 4 and Windows .NET 4 platform

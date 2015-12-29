@@ -25,8 +25,7 @@ namespace CallfireApiClient.Tests.Utilities
                 XmlNode node = doc.SelectSingleNode(XPath);
                 if (node != null)
                 {
-                    Log.LogMessage(MessageImportance.High, "node {0}", node);
-                    Log.LogMessage(MessageImportance.High, "value {0}", Value);
+                    Log.LogMessage(MessageImportance.Normal, "updating {0} node's value to {1}", node.Name, Value);
                     node.InnerText = Value;
                     doc.Save(XmlFileName);
                     return true;
