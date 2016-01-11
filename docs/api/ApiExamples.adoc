@@ -19,4 +19,5 @@
 ** link:contacts/DncListsApi.adoc[Do Not Contact lists API]
 * link:keywords/KeywordsMain.adoc[Keywords & keyword leases API]
 * link:numbers/NumbersMain.adoc[Numbers & number leases API]
+* link:webhooks/SubscriptionsApi.adoc[Subscriptions API]
 * link:webhooks/WebhooksApi.adoc[Webhooks]
