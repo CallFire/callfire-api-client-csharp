@@ -36,6 +36,7 @@ namespace CallfireApiClient
         readonly Lazy<TextBroadcastsApi> _TextBroadcastsApi;
         readonly Lazy<CallBroadcastsApi> _CallBroadcastsApi;
         readonly Lazy<MediaApi> _MediaApi;
+        readonly Lazy<SubscriptionsApi> _SubscriptionsApi;
         readonly Lazy<WebhooksApi> _WebhooksApi;
 
         public MeApi MeApi { get { return _MeApi.Value; } }
@@ -53,6 +54,8 @@ namespace CallfireApiClient
         public NumbersApi NumbersApi { get { return _NumbersApi.Value; } }
 
         public NumberLeasesApi NumberLeasesApi { get { return _NumberLeasesApi.Value; } }
+
+        public SubscriptionsApi SubscriptionsApi { get { return _SubscriptionsApi.Value; } }
 
         public WebhooksApi WebhooksApi { get { return _WebhooksApi.Value; } }
 
@@ -88,6 +91,7 @@ namespace CallfireApiClient
             _ContactListsApi = new Lazy<ContactListsApi>(() => new ContactListsApi(RestApiClient));
             _NumbersApi = new Lazy<NumbersApi>(() => new NumbersApi(RestApiClient));
             _NumberLeasesApi = new Lazy<NumberLeasesApi>(() => new NumberLeasesApi(RestApiClient));
+            _SubscriptionsApi = new Lazy<SubscriptionsApi>(() => new SubscriptionsApi(RestApiClient));
             _WebhooksApi = new Lazy<WebhooksApi>(() => new WebhooksApi(RestApiClient));
             _KeywordsApi = new Lazy<KeywordsApi>(() => new KeywordsApi(RestApiClient));
             _KeywordLeasesApi = new Lazy<KeywordLeasesApi>(() => new KeywordLeasesApi(RestApiClient));

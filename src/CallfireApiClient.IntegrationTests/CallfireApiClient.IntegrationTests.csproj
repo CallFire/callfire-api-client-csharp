@@ -61,6 +61,7 @@
     <Compile Include="Api\Campaigns\TextAutoRepliesApiIntegrationTest.cs" />
     <Compile Include="Api\Campaigns\TextBroadcastsApiIntegrationTest.cs" />
     <Compile Include="Api\Campaigns\CallBroadcastsApiIntegrationTest.cs" />
+    <Compile Include="Api\Webhooks\SubscriptionsApiIntegrationTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

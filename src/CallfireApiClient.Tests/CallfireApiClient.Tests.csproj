@@ -73,6 +73,7 @@
     <Compile Include="Utilities\ZipTask.cs" />
     <Compile Include="Utilities\XmlTask.cs" />
     <Compile Include="Utilities\VersionTask.cs" />
+    <Compile Include="Api\Webhooks\SubscriptionsApiTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -190,6 +191,11 @@
     <None Include="JsonMocks\campaigns\textBroadcastsApi\response\getTexts.json" />
     <None Include="JsonMocks\account\meApi\request\verifyCallerId.json" />
     <None Include="callfire-api-client.dll.config" />
+    <None Include="JsonMocks\webhooks\subscriptionsApi\request\createSubscription.json" />
+    <None Include="JsonMocks\webhooks\subscriptionsApi\request\updateSubscription.json" />
+    <None Include="JsonMocks\webhooks\subscriptionsApi\response\createSubscription.json" />
+    <None Include="JsonMocks\webhooks\subscriptionsApi\response\findSubscriptions.json" />
+    <None Include="JsonMocks\webhooks\subscriptionsApi\response\getSubscription.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CallfireApiClient\CallfireApiClient.csproj">
