@@ -177,6 +177,11 @@
     <Compile Include="UnauthorizedException.cs" />
     <Compile Include="UnixTimeJsonConverter.cs" />
     <Compile Include="Validate.cs" />
+    <Compile Include="Api\Webhooks\SubscriptionsApi.cs" />
+    <Compile Include="Api\Webhooks\Model\Request\FindSubscriptionsRequest.cs" />
+    <Compile Include="Api\Webhooks\Model\Subscription.cs" />
+    <Compile Include="Api\Webhooks\Model\NotificationFormat.cs" />
+    <Compile Include="Api\Webhooks\Model\TriggerEvent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

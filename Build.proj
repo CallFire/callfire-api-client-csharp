@@ -12,8 +12,6 @@
 		<TestResultsFolder>src/CallfireApiClient.Tests/TestResults</TestResultsFolder>
 		<PackagesFolder>packages</PackagesFolder>
 		<NuSpecFile>CallfireApiClient.nuspec</NuSpecFile>
-		<!-- must be specified as cmd argument -->
-		<!--<NuGetApiKey>-</NuGetApiKey>-->
 		<NuGetExec>tools/nuget/nuget.exe</NuGetExec>
 		<NUnitExec>packages/NUnit.Runners.Net4.2.6.4/tools/nunit-console.exe -work=$(TestResultsFolder) $(TestAssemblies)</NUnitExec>
 	</PropertyGroup>
@@ -80,17 +78,5 @@
 		<Message Text="creating NuGet package(s) ..." Importance="high" />
 		<Exec Command="$(NuGetExec) pack $(NuSpecFile) -o $(ReleasePkgFolder)" Condition="'$(OS)' != 'Unix'" />
 		<Exec Command="mono $(NuGetExec) pack $(NuSpecFile) -o $(ReleasePkgFolder)" Condition="'$(OS)' == 'Unix'" />
-	</Target>
-	<Target Name="PublishNuGet" DependsOnTargets="PackageNuGet">
-		<Message Text="publishing NuGet package(s) ..." Importance="high" />
-		<VersionTask AssemblyPath="src/CallfireApiClient/bin/Release/callfire-api-client.dll">
-			<Output TaskParameter="Version" PropertyName="Version" />
-		</VersionTask>
-		<!-- set key -->
-		<Exec Command="$(NuGetExec) setApiKey $(NugetApiKey)" Condition="'$(OS)' != 'Unix'" />
-		<Exec Command="mono $(NuGetExec) setApiKey $(NugetApiKey)" Condition="'$(OS)' == 'Unix'" />
-		<!-- publish -->
-		<Exec Command="$(NuGetExec) push $(ReleasePkgFolder)/CallfireApiClient.$(Version).nupkg" Condition="'$(OS)' != 'Unix'" />
-		<Exec Command="mono $(NuGetExec) push $(ReleasePkgFolder)/CallfireApiClient.$(Version).nupkg" Condition="'$(OS)' == 'Unix'" />
 	</Target>
 </Project>

@@ -1,0 +1,55 @@
+= Subscriptions API
+
+=== Find subscriptions
+'''
+Search for subscriptions on campaign, trigger event, format, fromNumber, toNumber.
+ Example how to get first 5 subscriptions which are assigned to campaign with id 1000000L and have formatted as JSON.
+[source,csharp]
+    var client = new CallfireClient("api login", "api password");
+    var request = new FindSubscriptionsRequest
+    {
+        Limit = 5,
+        CampaignId(1000000L),
+        Format = (NotificationFormat.JSON)
+    };
+    var subscriptions = client.SubscriptionsApi.Find(request);
+
+=== Get subscription
+'''
+Example how to get a single Subscription instance for a given subscription id.
+[source,csharp]
+    var client = new CallfireClient("api login", "api password");
+    var subscription = client.SubscriptionApi.Get(12345678L, "id,name,created");
+
+=== Create subscription
+'''
+Example how to create a subscription for campaign. Callfire will query your callback URL with http POST request when
+ specified campaign has FINISHED.
+[source,csharp]
+    var client = new CallfireClient("api login", "api password");
+    var subscription = new Subscription
+    {
+        Enabled = true,
+        Endpoint = "http://www.example.com/endpoint",
+        NotificationFormat = NotificationFormat.JSON,
+        BroadcastId = 1400000L,
+        TriggerEvent = TriggerEvent.CAMPAIGN_FINISHED
+    }
+    var id = client.SubscriptionsApi.Create(subscription);
+
+=== Update subscription
+'''
+Example how to update the information in a currently existing subscription. Most fields are updatable.
+[source,csharp]
+    var client = new CallfireClient("api login", "api password");
+    var subscription = client.SubscriptionsApi.Get(123456L);
+    subscription.TriggerEvent = TriggerEvent.CAMPAIGN_STARTED;
+    subscription.Callback = "https://yoursite.com/callback";
+    client.SubscriptionsApi.Update(subscription);
+
+=== Delete subscription
+'''
+Example how to delete a subscription. Will be removed permanently.
+[source,csharp]
+    var client = new CallfireClient("api login", "api password");
+    client.SubscriptionsApi.Delete(12345678L);

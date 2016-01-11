@@ -1,5 +1,8 @@
 Callfire API client Changelog
 =============================
 
+Version 1.1.0 - Jan 11 2016
+    - added Subscriptions API
+
 Version 1.0.0 - Dec 29 2015
     - initial release
