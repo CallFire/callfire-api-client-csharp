@@ -26,7 +26,7 @@ namespace CallfireApiClient
             ContentType = "application/json";
             Serializer = new Newtonsoft.Json.JsonSerializer
             {
-                MissingMemberHandling = MissingMemberHandling.Error,
+                MissingMemberHandling = MissingMemberHandling.Ignore,
                 NullValueHandling = NullValueHandling.Ignore,
                 DefaultValueHandling = DefaultValueHandling.Include,
                 ContractResolver = new CallfireContractResolver(),
