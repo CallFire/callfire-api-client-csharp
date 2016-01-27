@@ -72,9 +72,11 @@ namespace CallfireApiClient
             var path = this.GetType().Assembly.Location;
             var config = ConfigurationManager.OpenExeConfiguration(path);
             var appSettings = (AppSettingsSection)config.GetSection("appSettings");
-            if (appSettings.Settings.AllKeys.Length < 1)
+            var basePath = appSettings.Settings[ClientConstants.CONFIG_API_BASE_PATH];
+            if (basePath == null || string.IsNullOrWhiteSpace(basePath.Value))
             {
-                throw new CallfireClientException("Cannot read configuration file at: " + path + ".config");
+                throw new CallfireClientException("Cannot read " + ClientConstants.CONFIG_API_BASE_PATH +
+                    " property from configuration file at: " + path + ".config");
             }
             return appSettings;
         }

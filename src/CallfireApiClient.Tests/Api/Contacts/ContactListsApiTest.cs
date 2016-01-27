@@ -267,8 +267,8 @@ namespace CallfireApiClient.Tests.Api.Contacts
 
             Assert.AreEqual(Method.DELETE, restRequest.Value.Method);
             Assert.That(restRequest.Value.Resource, Is.StringContaining("/" + TEST_LONG));
-            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("id") && p.Value.Equals("123456")));
-            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("id") && p.Value.Equals("123457")));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("contactId") && p.Value.Equals("123456")));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("contactId") && p.Value.Equals("123457")));
         }
 
     }

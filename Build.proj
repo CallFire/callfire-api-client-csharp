@@ -59,6 +59,7 @@
 		</VersionTask>
 		<Message Text="updating version: to $(Version)" />
 		<XmlTask XmlFileName="$(NuSpecFile)" XPath="//metadata/version" Value="$(Version)" />
+		<XmlTask XmlFileName="$(NuSpecFile)" XPath="//metadata/releaseNotes" Value="$([System.IO.File]::ReadAllText('Changelog'))" />
 	</Target>
 	<Target Name="PackageZip" DependsOnTargets="Test">
 		<Message Text="creating zip package ..." />

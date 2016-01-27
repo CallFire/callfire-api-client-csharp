@@ -1,7 +1,14 @@
-[
-  {
-    "number": "18665552017",
-    "nationalFormat": "(866) 555-2017",
-    "tollFree": true
-  }
-]
+{
+   "items":[
+      {
+         "number":"18665552017",
+         "nationalFormat":"(866) 555-2017",
+         "tollFree":true
+      },
+      {
+         "number":"18665552018",
+         "nationalFormat":"(866) 555-2018",
+         "tollFree":true
+      }
+   ]
+}

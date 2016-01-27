@@ -78,7 +78,7 @@ Status Code 200 is the desired response code. A standard JSON response will foll
 Codes in the 400s range detail all of the errors a CallFire Developer could encounter while using the API. Bad
  Request, Rate Limit Reached, and Unauthorized are some of the sorts of responses in the 400s block.
 
-Codes in the 500s range are error responses from the CallFire system. If an error has occured anywhere in the
+Codes in the 500s range are error responses from the CallFire system. If an error has occurred anywhere in the
  execution of a resource that was not due to user input, a 500 response will be returned with a corresponding
  JSON error body. In that body will contain a message detailing what went wrong.
 
@@ -120,4 +120,13 @@ it will create callfire-api-client.log file in your work directory with debug ou
 
 == Platform compatibility
 
-Library was built and tested with mono 4.2.1 .NET 4 and Windows .NET 4 platform
+Library was built and tested on OS X with mono 4.2.1 .NET 4 and Windows 7 x64 .NET 4 platform
+
+
+== Troubleshooting
+In case you have an issue, please create a ticket at link:https://github.com/CallFire/callfire-api-client-csharp/issues[Issues] page.
+Issue description should contain a brief info (including versions) about platform, IDE, .NET framework where this SDK is used.
+
+.What you should verify:
+ * callfire-api-client.dll.config file is placed next to .dll assembly
+ * System.Configuration is selected in project's references window
