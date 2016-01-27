@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>CallfireApiClient</id>
-    <version>1.0.0</version>
+    <version>1.1.2</version>
     <title>CallFire API v2 client</title>
     <authors>
 			Vladimir Mikhailov
@@ -14,7 +14,21 @@
     <iconUrl>https://www.callfire.com/favicon.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>C# client library for integration with Callfire REST API v2 services</description>
-    <releaseNotes>initial release</releaseNotes>
+    <releaseNotes>Callfire API client Changelog
+=============================
+Version 1.1.2 - Jan 27 2016
+    - added find by batchId parameter to FindCalls &amp; FindTexts requests.
+    - fixed NumberApi.findNumbersLocal and NumberApi.findNumbersTollfree methods to accept an updated server responses
+
+Version 1.1.1 - Jan 25 2016
+    - default policy set to ignore unknown json fields on deserializing
+
+Version 1.1.0 - Jan 11 2016
+    - added Subscriptions API
+
+Version 1.0.0 - Dec 29 2015
+    - initial release
+</releaseNotes>
     <copyright>Copyright (c) 2015 CallFire Inc.</copyright>
     <tags>Callfire rest api client</tags>
     <dependencies>

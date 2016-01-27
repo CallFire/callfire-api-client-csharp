@@ -1,5 +1,11 @@
 Callfire API client Changelog
 =============================
+Version 1.1.2 - Jan 27 2016
+    - added find by batchId parameter to FindCalls & FindTexts requests.
+    - fixed NumberApi.findNumbersLocal and NumberApi.findNumbersTollfree methods to accept an updated server responses
+
+Version 1.1.1 - Jan 25 2016
+    - default policy set to ignore unknown json fields on deserializing
 
 Version 1.1.0 - Jan 11 2016
     - added Subscriptions API

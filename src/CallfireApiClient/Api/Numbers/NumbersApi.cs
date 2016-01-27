@@ -34,7 +34,7 @@ namespace CallfireApiClient.Api.Numbers
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public IList<Number> FindNumbersLocal(FindNumbersLocalRequest request)
         {
-            return Client.Get<List<Number>>(NUMBERS_LOCAL_PATH, request);
+            return Client.Get<ListHolder<Number>>(NUMBERS_LOCAL_PATH, request).Items;
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace CallfireApiClient.Api.Numbers
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public IList<Number> FindNumbersTollfree(CommonFindRequest request)
         {
-            return Client.Get<List<Number>>(NUMBERS_TOLLFREE_PATH, request);
+            return Client.Get<ListHolder<Number>>(NUMBERS_TOLLFREE_PATH, request).Items;
         }
     }
 }

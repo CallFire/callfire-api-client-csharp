@@ -18,7 +18,7 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             string responseJson = GetJsonPayload("/callstexts/textsApi/response/sendTexts.json");
             var restRequest = MockRestResponse(responseJson);
 
-            TextRecipient r1 = new TextRecipient { PhoneNumber = "12135551100" , Message = "Hello World!" };
+            TextRecipient r1 = new TextRecipient { PhoneNumber = "12135551100", Message = "Hello World!" };
             TextRecipient r2 = new TextRecipient { PhoneNumber = "12135551101", Message = "Testing 1 2 3" };
 
             IList<CallfireApiClient.Api.CallsTexts.Model.Text> texts = Client.TextsApi.Send(new List<TextRecipient> { r1, r2 });
@@ -43,7 +43,8 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
                 Limit = 5,
                 Offset = 0,
                 States = new List<StateType> { StateType.CALLBACK, StateType.DISABLED },
-                Id = new List<long> { 1, 2, 3 }
+                Id = new List<long> { 1, 2, 3 },
+                BatchId = 1001
             };
 
             Page<CallfireApiClient.Api.CallsTexts.Model.Text> texts = Client.TextsApi.Find(request);
@@ -52,6 +53,7 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             Assert.AreEqual(Method.GET, restRequest.Value.Method);
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("limit") && p.Value.Equals("5")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("offset") && p.Value.Equals("0")));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("batchId") && p.Value.Equals("1001")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("id") && p.Value.Equals("1")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("id") && p.Value.Equals("2")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("id") && p.Value.Equals("3")));

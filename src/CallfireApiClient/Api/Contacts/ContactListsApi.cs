@@ -232,7 +232,7 @@ namespace CallfireApiClient.Api.Contacts
             Validate.NotBlank(contactListId.ToString(), "id cannot be blank");
             string path = LISTS_ITEMS_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, contactListId.ToString());
             var queryParams = new List<KeyValuePair<string, object>>(1);
-            ClientUtils.AddQueryParamIfSet("id", contactIds, queryParams);
+            ClientUtils.AddQueryParamIfSet("contactId", contactIds, queryParams);
             Client.Delete(path, queryParams);
         }
     }

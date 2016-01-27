@@ -8,6 +8,8 @@ namespace CallfireApiClient.Api.CallsTexts.Model.Request
     {
         public long? CampaignId { get; set; }
 
+        public long? BatchId { get; set; }
+
         public string FromNumber { get; set; }
 
         public string ToNumber { get; set; }
@@ -31,8 +33,8 @@ namespace CallfireApiClient.Api.CallsTexts.Model.Request
 
         public override string ToString()
         {
-            return string.Format("[FindCallsTextsRequest: {0}, campaignId={1}, fromNumber={2}, toNumber={3}, label={4}, inbound={5}, intervalBegin={6}, intervalEnd={7}], id={8} states={9}]]",
-                base.ToString(), CampaignId, FromNumber, ToNumber, Label, Inbound, IntervalBegin, IntervalEnd, Id, States.ToPrettyString());
+            return string.Format("[FindCallsTextsRequest: {0}, campaignId={1}, fromNumber={2}, toNumber={3}, label={4}, inbound={5}, intervalBegin={6}, intervalEnd={7}], id={8} states={9} batchId={10}]]",
+                base.ToString(), CampaignId, FromNumber, ToNumber, Label, Inbound, IntervalBegin, IntervalEnd, Id, States.ToPrettyString(), BatchId);
         }
     }
 }

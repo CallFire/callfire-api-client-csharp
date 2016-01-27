@@ -4,6 +4,8 @@ using CallfireApiClient.Api.Numbers.Model.Request;
 using RestSharp;
 using System.Linq;
 using CallfireApiClient.Api.Common.Model.Request;
+using CallfireApiClient.Api.Common.Model;
+using CallfireApiClient.Api.Numbers.Model;
 
 namespace CallfireApiClient.Tests.Api.Numbers
 {
@@ -24,7 +26,7 @@ namespace CallfireApiClient.Tests.Api.Numbers
                 State = "LA"
             };
             var numbers = Client.NumbersApi.FindNumbersLocal(request);
-            Assert.That(Serializer.Serialize(numbers), Is.EqualTo(expectedJson));
+            Assert.That(Serializer.Serialize(new ListHolder<Number>(numbers)), Is.EqualTo(expectedJson));
 
             Assert.AreEqual(Method.GET, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
@@ -72,7 +74,7 @@ namespace CallfireApiClient.Tests.Api.Numbers
                 Offset = 2
             };
             var numbers = Client.NumbersApi.FindNumbersTollfree(request);
-            Assert.That(Serializer.Serialize(numbers), Is.EqualTo(expectedJson));
+            Assert.That(Serializer.Serialize(new ListHolder<Number>(numbers)), Is.EqualTo(expectedJson));
 
             Assert.AreEqual(Method.GET, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
