@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>CallfireApiClient</id>
-    <version>1.1.2</version>
+    <version>1.1.3</version>
     <title>CallFire API v2 client</title>
     <authors>
 			Vladimir Mikhailov
@@ -16,6 +16,9 @@
     <description>C# client library for integration with Callfire REST API v2 services</description>
     <releaseNotes>Callfire API client Changelog
 =============================
+Version 1.1.3 - Feb 16 2016
+    - added nuget symbolsource package to debug source code.
+
 Version 1.1.2 - Jan 27 2016
     - added find by batchId parameter to FindCalls &amp; FindTexts requests.
     - fixed NumberApi.findNumbersLocal and NumberApi.findNumbersTollfree methods to accept an updated server responses

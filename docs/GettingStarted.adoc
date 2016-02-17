@@ -118,6 +118,11 @@ it will create callfire-api-client.log file in your work directory with debug ou
   "permissions" : [ "ACCOUNT_HOLDER" ]
 }
 
+Source code debugging is available with a help of nuget symbolsource directory.
+Recommended configuration for Visual Studio:
+http://www.symbolsource.org/Public/Home/VisualStudio
+
+
 == Platform compatibility
 
 Library was built and tested on OS X with mono 4.2.1 .NET 4 and Windows 7 x64 .NET 4 platform
