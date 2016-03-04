@@ -253,5 +253,19 @@ namespace CallfireApiClient
                                 .Description == description).SingleOrDefault();
             return field == null ? default(T) : (T)field.Field.GetRawConstantValue();
         }
+
+        /// <summary>
+        /// Returns int converted from string with default possible value
+        /// </summary>
+        /// <param name="s">string to convert</param>
+        /// <param name="def">default to return if s is null</param>
+        /// <returns>int value</returns>
+        public static int StrToIntDef(string s, int def)
+        {
+            if (!Int32.TryParse(s, out def))
+                return def;
+
+            return Int32.Parse(s);
+        }
     }
 }
