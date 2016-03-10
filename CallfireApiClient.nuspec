@@ -43,12 +43,11 @@ Version 1.0.0 - Dec 29 2015
     </dependencies>
   </metadata>
   <files>
-    <file src="src/CallfireApiClient/bin/Release/callfire-api-client.dll" target="lib" />
-    <file src="src/CallfireApiClient/bin/Release/callfire-api-client.dll.config" target="lib" />
-    <file src="src/CallfireApiClient/bin/Release/callfire-api-client.xml" target="lib" />
-    <file src="src/CallfireApiClient/bin/Debug/callfire-api-client.pdb" target="lib" />
     <file src="**/*.cs" target="src" />
     <file src="LICENSE" />
     <file src="Changelog" />
+    <file src="src/CallfireApiClient/bin/Release/callfire-api-client.dll" target="lib" />
+    <file src="src/CallfireApiClient/bin/Release/callfire-api-client.dll.config" target="lib" />
+    <file src="src/CallfireApiClient/bin/Release/callfire-api-client.xml" target="lib" />
   </files>
 </package>

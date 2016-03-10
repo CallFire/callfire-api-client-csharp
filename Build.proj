@@ -68,6 +68,8 @@
 		<Message Text="updating version: to $(Version)" />
 		<XmlTask XmlFileName="$(NuSpecFile)" XPath="//metadata/version" Value="$(Version)" />
 		<XmlTask XmlFileName="$(NuSpecFile)" XPath="//metadata/releaseNotes" Value="$([System.IO.File]::ReadAllText('Changelog'))" />
+		<XmlTask XmlFileName="$(NuSpecFile)" XPath="//files" Value="&lt;file src=&quot;src/CallfireApiClient/bin/Debug/callfire-api-client.pdb&quot; target=&quot;lib&quot; /&gt;" AddValueAsChildNode="true" Condition="'$(OS)' != 'Unix'"/>
+		<XmlTask XmlFileName="$(NuSpecFile)" XPath="//files" Value="&lt;file src=&quot;src/CallfireApiClient/bin/Debug/callfire-api-client.dll.mdb&quot; target=&quot;lib&quot; /&gt;" AddValueAsChildNode="true" Condition="'$(OS)' == 'Unix'"/>
 	</Target>
 	<Target Name="PackageZip" DependsOnTargets="Test">
 		<Message Text="creating zip package ..." />

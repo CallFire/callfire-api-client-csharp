@@ -16,6 +16,8 @@ namespace CallfireApiClient.Tests.Utilities
         [Required]
         public string Value { get; set; }
 
+        public string AddValueAsChildNode { get; set; }
+
         public override bool Execute()
         {
             try
@@ -25,8 +27,31 @@ namespace CallfireApiClient.Tests.Utilities
                 XmlNode node = doc.SelectSingleNode(XPath);
                 if (node != null)
                 {
-                    Log.LogMessage(MessageImportance.Normal, "updating {0} node's value to {1}", node.Name, Value);
-                    node.InnerText = Value;
+                    if (AddValueAsChildNode == "true")
+                    {
+                        Log.LogMessage(MessageImportance.Normal, "appending {0} node by node with value {1}", node.Name, Value);
+                        XmlDocument docToAdd = new XmlDocument();
+                        docToAdd.LoadXml(Value);
+
+                        XmlNodeList childNodes = node.ChildNodes;
+                        for (int i = childNodes.Count - 1; i >= 0; i--)
+                        {
+                            if (childNodes[i].OuterXml == Value)
+                            {
+                                Log.LogMessage(MessageImportance.Normal, "Removing item from node");
+                                childNodes[i].ParentNode.RemoveChild(childNodes[i]);
+                            }
+                        }
+                        doc.Save(XmlFileName);
+
+                        XmlNode importNode = node.OwnerDocument.ImportNode(docToAdd.SelectSingleNode("/*"), true);
+                        node.AppendChild(importNode);
+                    }
+                    else
+                    {
+                        Log.LogMessage(MessageImportance.Normal, "updating {0} node's value to {1}", node.Name, Value);
+                        node.InnerText = Value;
+                    }
                     doc.Save(XmlFileName);
                     return true;
                 }
