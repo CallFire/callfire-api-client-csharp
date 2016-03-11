@@ -12,6 +12,7 @@ using System.Text;
 using System.IO;
 using System.Reflection;
 using System.Diagnostics;
+using System.Net;
 
 namespace CallfireApiClient
 {
@@ -25,6 +26,7 @@ namespace CallfireApiClient
         private readonly Logger Logger = new Logger();
         private readonly ISerializer JsonSerializer;
         private readonly IDeserializer JsonDeserializer;
+        private static KeyValueConfigurationCollection clientConfig;
 
         /// <summary>
         /// RestSharp client configured to query Callfire API
@@ -45,6 +47,22 @@ namespace CallfireApiClient
         public SortedSet<RequestFilter> Filters { get; }
 
         /// <summary>
+        /// loads client configuration
+        /// </summary>
+        static RestApiClient() {
+            clientConfig = loadAppSettings();
+        }
+
+        /// <summary>
+        /// Get client configuration
+        /// </summary>
+        /// <value>configuration properties collection</value>
+        public static KeyValueConfigurationCollection getClientConfig()
+        {
+            return clientConfig;
+        }
+
+        /// <summary>
         /// REST API client constructor
         /// <summary>/
         /// <param name="authenticator">
@@ -52,7 +70,7 @@ namespace CallfireApiClient
         /// </param>
         public RestApiClient(IAuthenticator authenticator)
         {
-            ApiBasePath = GetClientAppSettings().Settings[ClientConstants.CONFIG_API_BASE_PATH].Value;
+            ApiBasePath = clientConfig[ClientConstants.CONFIG_API_BASE_PATH].Value;
             JsonSerializer = new CallfireJsonConverter();
             JsonDeserializer = JsonSerializer as IDeserializer;
 
@@ -60,16 +78,43 @@ namespace CallfireApiClient
             RestClient.Authenticator = authenticator;
             RestClient.UserAgent = this.GetType().Assembly.GetName().Name + "-csharp-" + this.GetType().Assembly.GetName().Version;
             RestClient.AddHandler("application/json", JsonDeserializer);
+
+            
+            String proxyAddress = clientConfig[ClientConstants.PROXY_ADDRESS_PROPERTY] != null ? clientConfig[ClientConstants.PROXY_ADDRESS_PROPERTY].Value : null; 
+            String proxyCredentials = clientConfig[ClientConstants.PROXY_CREDENTIALS_PROPERTY] != null ? clientConfig[ClientConstants.PROXY_CREDENTIALS_PROPERTY].Value : null; 
+
+            if (!String.IsNullOrEmpty(proxyAddress))
+            {
+                Logger.Debug("Configuring proxy host for client: {} auth: {}", proxyAddress, proxyCredentials);
+                char[] delimiterChars = { ':' };
+                String[] parsedAddress = proxyAddress.Split(delimiterChars);
+                String[] parsedCredentials = (proxyCredentials == null ? "" : proxyCredentials).Split(delimiterChars);
+                int portValue = parsedAddress.Length > 1 ? ClientUtils.StrToIntDef(parsedAddress[1], ClientConstants.DEFAULT_PROXY_PORT) : ClientConstants.DEFAULT_PROXY_PORT;
+                WebProxy proxy = new WebProxy(parsedAddress[0], portValue);
+               
+                if (!String.IsNullOrEmpty(proxyCredentials))
+                {
+                    if (parsedCredentials.Length > 1)
+                    {
+                        proxy.Credentials = new NetworkCredential(parsedCredentials[0], parsedCredentials[0]);
+                    }
+                    else
+                    {
+                        Logger.Debug("Proxy credentials have wrong format, must be username:password");
+                    }
+                }
+                RestClient.Proxy = proxy;
+            }
+
             Filters = new SortedSet<RequestFilter>();
         }
 
         /// <summary>
-        /// Returns client's app settings config section
+        /// Loads client's app settings config section
         /// </summary>
-        /// <returns>The client app settings.</returns>
-        public AppSettingsSection GetClientAppSettings()
+        public static KeyValueConfigurationCollection loadAppSettings()
         {
-            var path = this.GetType().Assembly.Location;
+            var path = typeof(RestApiClient).Assembly.Location;
             var config = ConfigurationManager.OpenExeConfiguration(path);
             var appSettings = (AppSettingsSection)config.GetSection("appSettings");
             var basePath = appSettings.Settings[ClientConstants.CONFIG_API_BASE_PATH];
@@ -78,7 +123,7 @@ namespace CallfireApiClient
                 throw new CallfireClientException("Cannot read " + ClientConstants.CONFIG_API_BASE_PATH +
                     " property from configuration file at: " + path + ".config");
             }
-            return appSettings;
+           return appSettings.Settings;
         }
 
         /// <summary>

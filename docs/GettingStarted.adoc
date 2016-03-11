@@ -101,6 +101,20 @@ Codes in the 500s range are error responses from the CallFire system. If an erro
     string DeveloperMessage;
     string HelpLink;
 
+== Configuration
+=== Proxy
+
+Starting from version 1.1.4 users have possibility to make API calls go through proxy, here is an example how to configure it:
+[source,java]
+    RestApiClient.getClientConfig().Add(ClientConstants.PROXY_ADDRESS_PROPERTY, "localhost:3128");
+    RestApiClient.getClientConfig().Add(ClientConstants.PROXY_CREDENTIALS_PROPERTY, "proxyuser:proxypass");
+    // now create client
+    CallfireClient Client = new CallfireClient("api_user", "api_pass");
+    Console.WriteLine("account: " + Client.MeApi.GetAccount());
+
+*IMPORTANT.* You must add proxy address property and proxy credentials (if needed) before client instantiation!
+
+Proxy address port is optional, 8080 is used by default.
 
 == Debug & logging
 In case you want to see requests/responses which client sends/receives from Callfire platform you should copy
@@ -117,6 +131,11 @@ it will create callfire-api-client.log file in your work directory with debug ou
   "lastName" : "Doe",
   "permissions" : [ "ACCOUNT_HOLDER" ]
 }
+
+Source code debugging is available with a help of nuget symbolsource directory.
+Recommended configuration for Visual Studio:
+http://www.symbolsource.org/Public/Home/VisualStudio
+
 
 == Platform compatibility
 

@@ -1,5 +1,11 @@
 Callfire API client Changelog
 =============================
+Version 1.1.4 - Mar 4 2016
+    - added proxy with basic authorization support, see out docs how to configure it.
+
+Version 1.1.3 - Feb 16 2016
+    - added nuget symbolsource package to debug source code.
+
 Version 1.1.2 - Jan 27 2016
     - added find by batchId parameter to FindCalls & FindTexts requests.
     - fixed NumberApi.findNumbersLocal and NumberApi.findNumbersTollfree methods to accept an updated server responses
