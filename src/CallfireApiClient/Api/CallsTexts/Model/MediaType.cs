@@ -21,10 +21,10 @@ namespace CallfireApiClient.Api.CallsTexts.Model
         [EnumMember(Value = "video/mp4")]
         MP4,
         [Description("m4a")]
-        [EnumMember(Value = "audio/mp4")]
+        [EnumMember(Value = "audio/m4a")]
         M4A,
         [Description("mp3")]
-        [EnumMember(Value = "audio/mpeg")]
+        [EnumMember(Value = "audio/mp3")]
         MP3,
         [Description("wav")]
         [EnumMember(Value = "audio/x-wav")]
