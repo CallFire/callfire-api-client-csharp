@@ -1,5 +1,9 @@
 Callfire API client Changelog
 =============================
+Version 1.1.5 - Mar 14 2016
+    - added debug support for Mono platform
+    - fixed issue with uploading mp3 media
+
 Version 1.1.4 - Mar 4 2016
     - added proxy with basic authorization support, see out docs how to configure it.
 
