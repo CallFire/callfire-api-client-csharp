@@ -80,8 +80,8 @@ namespace CallfireApiClient
             RestClient.AddHandler("application/json", JsonDeserializer);
 
             
-            String proxyAddress = ClientConfig[ClientConstants.PROXY_ADDRESS_PROPERTY] != null ? ClientConfig[ClientConstants.PROXY_ADDRESS_PROPERTY].Value : null; 
-            String proxyCredentials = ClientConfig[ClientConstants.PROXY_CREDENTIALS_PROPERTY] != null ? ClientConfig[ClientConstants.PROXY_CREDENTIALS_PROPERTY].Value : null; 
+            String proxyAddress = ClientConfig[ClientConstants.PROXY_ADDRESS_PROPERTY]?.Value; 
+            String proxyCredentials = ClientConfig[ClientConstants.PROXY_CREDENTIALS_PROPERTY]?.Value; 
 
             if (!String.IsNullOrEmpty(proxyAddress))
             {
