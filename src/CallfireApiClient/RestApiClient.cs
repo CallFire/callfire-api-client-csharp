@@ -26,7 +26,7 @@ namespace CallfireApiClient
         private readonly Logger Logger = new Logger();
         private readonly ISerializer JsonSerializer;
         private readonly IDeserializer JsonDeserializer;
-        private static KeyValueConfigurationCollection clientConfig;
+        private static KeyValueConfigurationCollection ClientConfig;
 
         /// <summary>
         /// RestSharp client configured to query Callfire API
@@ -50,7 +50,7 @@ namespace CallfireApiClient
         /// loads client configuration
         /// </summary>
         static RestApiClient() {
-            clientConfig = loadAppSettings();
+            ClientConfig = LoadAppSettings();
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace CallfireApiClient
         /// <value>configuration properties collection</value>
         public static KeyValueConfigurationCollection getClientConfig()
         {
-            return clientConfig;
+            return ClientConfig;
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace CallfireApiClient
         /// </param>
         public RestApiClient(IAuthenticator authenticator)
         {
-            ApiBasePath = clientConfig[ClientConstants.CONFIG_API_BASE_PATH].Value;
+            ApiBasePath = ClientConfig[ClientConstants.CONFIG_API_BASE_PATH].Value;
             JsonSerializer = new CallfireJsonConverter();
             JsonDeserializer = JsonSerializer as IDeserializer;
 
@@ -80,8 +80,8 @@ namespace CallfireApiClient
             RestClient.AddHandler("application/json", JsonDeserializer);
 
             
-            String proxyAddress = clientConfig[ClientConstants.PROXY_ADDRESS_PROPERTY] != null ? clientConfig[ClientConstants.PROXY_ADDRESS_PROPERTY].Value : null; 
-            String proxyCredentials = clientConfig[ClientConstants.PROXY_CREDENTIALS_PROPERTY] != null ? clientConfig[ClientConstants.PROXY_CREDENTIALS_PROPERTY].Value : null; 
+            String proxyAddress = ClientConfig[ClientConstants.PROXY_ADDRESS_PROPERTY] != null ? ClientConfig[ClientConstants.PROXY_ADDRESS_PROPERTY].Value : null; 
+            String proxyCredentials = ClientConfig[ClientConstants.PROXY_CREDENTIALS_PROPERTY] != null ? ClientConfig[ClientConstants.PROXY_CREDENTIALS_PROPERTY].Value : null; 
 
             if (!String.IsNullOrEmpty(proxyAddress))
             {
@@ -96,7 +96,7 @@ namespace CallfireApiClient
                 {
                     if (parsedCredentials.Length > 1)
                     {
-                        proxy.Credentials = new NetworkCredential(parsedCredentials[0], parsedCredentials[0]);
+                        proxy.Credentials = new NetworkCredential(parsedCredentials[0], parsedCredentials[1]);
                     }
                     else
                     {
@@ -112,7 +112,7 @@ namespace CallfireApiClient
         /// <summary>
         /// Loads client's app settings config section
         /// </summary>
-        public static KeyValueConfigurationCollection loadAppSettings()
+        public static KeyValueConfigurationCollection LoadAppSettings()
         {
             var path = typeof(RestApiClient).Assembly.Location;
             var config = ConfigurationManager.OpenExeConfiguration(path);
