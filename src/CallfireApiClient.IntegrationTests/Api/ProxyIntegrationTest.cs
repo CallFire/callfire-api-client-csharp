@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace CallfireApiClient.Tests.Api
+namespace CallfireApiClient.IntegrationTests.Api
 {
     [TestFixture, Ignore]
     public class ProxyIntegrationTest
