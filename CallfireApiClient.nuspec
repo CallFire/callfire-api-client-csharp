@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>CallfireApiClient</id>
-    <version>1.1.5</version>
+    <version>1.1.6</version>
     <title>CallFire API v2 client</title>
     <authors>
 			Vladimir Mikhailov
@@ -16,6 +16,9 @@
     <description>C# client library for integration with Callfire REST API v2 services</description>
     <releaseNotes>Callfire API client Changelog
 =============================
+Version 1.1.6 - Mar 25 2016
+    - added mono debug files generation on Windows platform
+
 Version 1.1.5 - Mar 14 2016
     - added debug support for Mono platform
     - fixed issue with uploading mp3 media
