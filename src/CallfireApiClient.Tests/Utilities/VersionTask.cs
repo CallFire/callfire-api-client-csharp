@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.Build.Utilities;
 using Microsoft.Build.Framework;
-using System.Xml;
 using System.Reflection;
+using System.IO;
 
 namespace CallfireApiClient.Tests.Utilities
 {
@@ -18,7 +18,7 @@ namespace CallfireApiClient.Tests.Utilities
         {
             try
             {
-                var _version = Assembly.LoadFile(AssemblyPath).GetName().Version;
+                var _version = Assembly.LoadFile(Path.GetFullPath(AssemblyPath)).GetName().Version;
                 Version = string.Format("{0}.{1}.{2}", _version.Major, _version.Minor, _version.Build);
             }
             catch (Exception ex)

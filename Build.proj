@@ -8,19 +8,20 @@
 		<ToolsFolder>tools</ToolsFolder>
 		<BuildFolder>build</BuildFolder>
 		<ReleasePkgFolder>$(BuildFolder)/pkg</ReleasePkgFolder>
-		<TestAssemblies>src/CallfireApiClient.Tests/bin/Release/callfire-api-client-tests.dll</TestAssemblies>
-		<TestResultsFolder>src/CallfireApiClient.Tests/TestResults</TestResultsFolder>
+		<TestAssemblies>src\CallfireApiClient.Tests\bin\Release\callfire-api-client-tests.dll</TestAssemblies>
+		<TestResultsFolder>src\CallfireApiClient.Tests\TestResults</TestResultsFolder>
 		<PackagesFolder>packages</PackagesFolder>
 		<NuSpecFile>CallfireApiClient.nuspec</NuSpecFile>
-		<NuGetExec>tools/nuget/nuget.exe</NuGetExec>
-		<NUnitExec>packages/NUnit.Runners.Net4.2.6.4/tools/nunit-console.exe -work=$(TestResultsFolder) $(TestAssemblies)</NUnitExec>
+		<NuGetExec>tools\nuget\nuget.exe</NuGetExec>
+		<MonoInstallation>$(MONO_HOME)</MonoInstallation>
+		<MonoMdbGenerator>\bin\pdb2mdb.bat</MonoMdbGenerator>
+		<NUnitExec>packages\NUnit.Runners.Net4.2.6.4\tools\nunit-console.exe -work=$(TestResultsFolder) $(TestAssemblies)</NUnitExec>
 	</PropertyGroup>
 	<Target Name="Run">
 		<CallTarget Targets="Clean" />
 		<CallTarget Targets="Restore" />
 		<CallTarget Targets="Build-Release" />
 		<CallTarget Targets="Build-Debug" />
-		<CallTarget Targets="Test" />
 		<CallTarget Targets="UpdateNuspecVersion" />
 		<CallTarget Targets="PackageZip" />
 		<CallTarget Targets="PackageNuGet" />
@@ -42,16 +43,16 @@
 	</Target>
 	<Target Name="Build-Release" DependsOnTargets="Restore">
 		<ItemGroup>
-			<ProjectToBuild Include="src/CallfireApiClient/CallfireApiClient.csproj" />
-			<ProjectToBuild Include="src/CallfireApiClient.Tests/CallfireApiClient.Tests.csproj" />
-			<ProjectToBuild Include="src/CallfireApiClient.IntegrationTests/CallfireApiClient.IntegrationTests.csproj" />
+			<ProjectToBuild Include="src\CallfireApiClient\CallfireApiClient.csproj" />
+			<ProjectToBuild Include="src\CallfireApiClient.Tests\CallfireApiClient.Tests.csproj" />
+			<ProjectToBuild Include="src\CallfireApiClient.IntegrationTests\CallfireApiClient.IntegrationTests.csproj" />
 		</ItemGroup>
 		<Message Text="building project" />
 		<MSBuild Projects="@(ProjectToBuild)" Properties="Configuration=Release" ContinueOnError="False" />
 	</Target>
   <Target Name="Build-Debug" DependsOnTargets="Restore">
 		<ItemGroup>
-			<ProjectToBuild Include="src/CallfireApiClient/CallfireApiClient.csproj" />
+			<ProjectToBuild Include="src\CallfireApiClient\CallfireApiClient.csproj" />
 		</ItemGroup>
 		<Message Text="building project" />
 		<MSBuild Projects="@(ProjectToBuild)" Properties="Configuration=Debug" ContinueOnError="False" />
@@ -61,33 +62,37 @@
 		<Exec Command="$(NUnitExec)" Condition="'$(OS)' != 'Unix'" />
 		<Exec Command="mono $(NUnitExec)" Condition="'$(OS)' == 'Unix'" />
 	</Target>
-	<Target Name="UpdateNuspecVersion" DependsOnTargets="Test">
-		<VersionTask AssemblyPath="src/CallfireApiClient/bin/Release/callfire-api-client.dll">
+	<Target Name="UpdateNuspecVersion" DependsOnTargets="Build-Release">
+		<VersionTask AssemblyPath="src\CallfireApiClient\bin\Release\callfire-api-client.dll">
 			<Output TaskParameter="Version" PropertyName="Version" />
 		</VersionTask>
 		<Message Text="updating version: to $(Version)" />
 		<XmlTask XmlFileName="$(NuSpecFile)" XPath="//metadata/version" Value="$(Version)" />
 		<XmlTask XmlFileName="$(NuSpecFile)" XPath="//metadata/releaseNotes" Value="$([System.IO.File]::ReadAllText('Changelog'))" />
 		<XmlTask XmlFileName="$(NuSpecFile)" XPath="//files" Value="&lt;file src=&quot;src/CallfireApiClient/bin/Debug/callfire-api-client.pdb&quot; target=&quot;lib&quot; /&gt;" AddValueAsChildNode="true" Condition="'$(OS)' != 'Unix'"/>
-		<XmlTask XmlFileName="$(NuSpecFile)" XPath="//files" Value="&lt;file src=&quot;src/CallfireApiClient/bin/Debug/callfire-api-client.dll.mdb&quot; target=&quot;lib&quot; /&gt;" AddValueAsChildNode="true" Condition="'$(OS)' == 'Unix'"/>
+		<CallTarget Targets="GenerateMonoSymbols" Condition=" Exists('src\CallfireApiClient\bin\Debug\callfire-api-client.pdb')" />
+		<XmlTask XmlFileName="$(NuSpecFile)" XPath="//files" Value="&lt;file src=&quot;src/CallfireApiClient/bin/Debug/callfire-api-client.dll.mdb&quot; target=&quot;lib&quot; /&gt;" AddValueAsChildNode="true" Condition=" Exists('src\CallfireApiClient\bin\Debug\callfire-api-client.dll.mdb')" />
 	</Target>
-	<Target Name="PackageZip" DependsOnTargets="Test">
+	<Target Name="GenerateMonoSymbols">
+		<Exec Command="&quot;$(MonoInstallation)$(MonoMdbGenerator)&quot; src\CallfireApiClient\bin\Debug\callfire-api-client.dll" Condition="'$(MonoInstallation)'!=''"/>
+	</Target>
+	<Target Name="PackageZip" DependsOnTargets="Build-Release">
 		<Message Text="creating zip package ..." />
 		<ItemGroup>
-			<ZipFiles Include="src/CallfireApiClient/bin/Release/callfire-api-client.dll" />
-			<ZipFiles Include="src/CallfireApiClient/bin/Release/callfire-api-client.dll.config" />
-			<ZipFiles Include="src/CallfireApiClient/bin/Release/callfire-api-client.xml" />
+			<ZipFiles Include="src\CallfireApiClient\bin\Release\callfire-api-client.dll" />
+			<ZipFiles Include="src\CallfireApiClient\bin\Release\callfire-api-client.dll.config" />
+			<ZipFiles Include="src\CallfireApiClient\bin\Release\callfire-api-client.xml" />
 			<ZipFiles Include="LICENSE" />
 			<ZipFiles Include="Changelog" />
 		</ItemGroup>
-		<VersionTask AssemblyPath="src/CallfireApiClient/bin/Release/callfire-api-client.dll">
+		<VersionTask AssemblyPath="src\CallfireApiClient\bin\Release\callfire-api-client.dll">
 			<Output TaskParameter="Version" PropertyName="Version" />
 		</VersionTask>
-		<ZipTask Files="@(ZipFiles)" ZipFileName="$(ReleasePkgFolder)/CallfireApiClient.$(Version).zip" />
+		<ZipTask Files="@(ZipFiles)" ZipFileName="$(ReleasePkgFolder)\CallfireApiClient.$(Version).zip" />
 	</Target>
 	<Target Name="PackageNuGet" DependsOnTargets="UpdateNuspecVersion">
 		<Message Text="creating NuGet package(s) ..." Importance="high" />
 		<Exec Command="$(NuGetExec) pack $(NuSpecFile) -symbols -o $(ReleasePkgFolder)" Condition="'$(OS)' != 'Unix'" />
-		<Exec Command="mono $(NuGetExec) pack $(NuSpecFile) -symbols -o $(ReleasePkgFolder)" Condition="'$(OS)' == 'Unix'" />
+		<Exec Command="mono $(NuGetExec) pack $(NuSpecFile) -o $(ReleasePkgFolder)" Condition="'$(OS)' == 'Unix'" />
 	</Target>
 </Project>

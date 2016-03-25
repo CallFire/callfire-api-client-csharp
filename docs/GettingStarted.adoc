@@ -10,8 +10,15 @@ or using nuget console tool:
 [source]
 $ nuget install CallfireApiClient
 
-it will install the latest public version, other releases you can find at link:https://github.com/CallFire/callfire-api-client-csharp/releases[releases page]
+it will install the latest public version, other releases you can find at link:https://github.com/CallFire/callfire-api-client-csharp/releases[releases page].
 After these steps *CallfireApiClient* should appear in your project dependencies along with other transitive ones.
+
+* Note for Visual Studio installation: to be able to use api client please manually copy callfire-api-client.dll.config from your
+solutionFolder\packages\CallfireApiClient.?.?.? folder to target dir.
+You can use post-build event for that (https://msdn.microsoft.com/en-us/library/ke5z92ks.aspx).
+Command example for post-build event:
+[source]
+xcopy "$(SolutionDir)packages\CallfireApiClient.?.?.?\lib\callfire-api-client.dll.config" "$(TargetDir)" /i /R /Y
 
 In case you want to build it yourself:
 [source]
