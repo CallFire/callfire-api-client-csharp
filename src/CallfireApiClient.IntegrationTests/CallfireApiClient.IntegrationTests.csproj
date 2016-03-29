@@ -86,10 +86,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Api\Campaigns\" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
     <Content Include="callfire-api-client.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

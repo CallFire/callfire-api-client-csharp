@@ -11,7 +11,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
     public class CallBroadcastsApiIntegrationTest : AbstractIntegrationTest
     {
         [Test]
-        public void CrudOperations()
+        public void VoiceBroadcastCrudOperations()
         {
             var broadcast = new CallBroadcast
             {
@@ -38,6 +38,34 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
             savedBroadcast.Name = "updated_name";
             savedBroadcast.Sounds.LiveSoundText = null;
             savedBroadcast.Sounds.MachineSoundText = null;
+            Client.CallBroadcastsApi.Update(savedBroadcast);
+
+            var updatedBroadcast = Client.CallBroadcastsApi.Get(id.Id, "id,name");
+            Assert.Null(updatedBroadcast.Status);
+            Assert.NotNull(updatedBroadcast.Id);
+            Assert.AreEqual(savedBroadcast.Name, updatedBroadcast.Name);
+        }
+
+        [Test]
+        public void IvrsCrudOperations()
+        {
+            var broadcast = new CallBroadcast
+            {
+                Name = "ivr_broadcast1",
+                DialplanXml = "<dialplan name=\"Root\"></dialplan>",
+                Recipients = new List<Recipient>
+                {
+                    new Recipient { PhoneNumber = "12132212384" },
+                    new Recipient { PhoneNumber = "12132212385" }
+                }
+            };
+            var id = Client.CallBroadcastsApi.Create(broadcast, true);
+            Console.WriteLine("ivr id: " + id);
+            var savedBroadcast = Client.CallBroadcastsApi.Get(id.Id);
+            Assert.AreEqual(broadcast.Name, savedBroadcast.Name);
+
+            savedBroadcast.Name = "updated_name";
+            savedBroadcast.DialplanXml = "<dialplan name=\"Root\">\r\n\t<play type=\"tts\">Congratulations! You have successfully configured a CallFire I V R.</play>\r\n</dialplan>";
             Client.CallBroadcastsApi.Update(savedBroadcast);
 
             var updatedBroadcast = Client.CallBroadcastsApi.Get(id.Id, "id,name");

@@ -80,6 +80,9 @@
     <None Include="CallfireApiClient.Tests.csproj" />
     <None Include="JsonMocks\callstexts\mediaApi\response\getMedia.json" />
     <None Include="JsonMocks\callstexts\mediaApi\response\uploadSound.json" />
+    <None Include="JsonMocks\campaigns\callBroadcastsApi\request\createIvrBroadcast.json" />
+    <None Include="JsonMocks\campaigns\callBroadcastsApi\request\updateIvrBroadcast.json" />
+    <None Include="JsonMocks\campaigns\callBroadcastsApi\response\createIvrBroadcast.json" />
     <None Include="packages.config" />
     <None Include="JsonMocks\common\sampleErrorMessage.json" />
     <None Include="JsonMocks\contacts\contactsApi\request\createContactsList.csv" />
@@ -212,10 +215,5 @@
     <EmbeddedResource Include="Resources\File-examples\train.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Api\Campaigns\" />
-    <Folder Include="Properties\" />
-    <Folder Include="Utilities\" />
   </ItemGroup>
 </Project>
