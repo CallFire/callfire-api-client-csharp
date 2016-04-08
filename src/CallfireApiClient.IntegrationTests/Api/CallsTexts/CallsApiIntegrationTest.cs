@@ -4,6 +4,7 @@ using CallfireApiClient.Api.CallsTexts.Model.Request;
 using CallfireApiClient.Api.Common.Model;
 using System.Collections.Generic;
 using NUnit.Framework;
+using CallfireApiClient.Api.Contacts.Model.Request;
 
 namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
 {
@@ -19,7 +20,7 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
 
             Assert.AreEqual(1, call.Id);
             Assert.AreEqual("18088395900", call.ToNumber);
-            Assert.AreEqual(StateType.FINISHED, call.State); 
+            Assert.AreEqual(StateType.FINISHED, call.State);
         }
 
         [Test]
@@ -42,10 +43,12 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
         [Test]
         public void SendCall()
         {
-            var recipient1 = new CallRecipient { ContactId = 463633187003, LiveMessage = "testMessage" };
-            var recipient2 = new CallRecipient { ContactId = 463633187003, LiveMessage = "testMessage" };
+            var contacts = Client.ContactsApi.Find(new FindContactsRequest());
+
+            var recipient1 = new CallRecipient { ContactId = contacts.Items[0].Id, LiveMessage = "testMessage" };
+            var recipient2 = new CallRecipient { ContactId = contacts.Items[0].Id, LiveMessage = "testMessage" };
             var recipients = new List<CallRecipient> { recipient1, recipient2 };
-            
+
             IList<Call> calls = Client.CallsApi.Send(recipients, null, "items(id,fromNumber,state)");
             Console.WriteLine("Calls: " + calls);
 

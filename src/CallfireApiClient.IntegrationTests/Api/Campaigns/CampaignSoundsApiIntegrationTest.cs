@@ -44,8 +44,8 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
         {
             String soundName = "mp3_test_" + DateTime.Now.ToString();
 
-            string mp3FilePath = "Resources/File-examples/train.mp3";
-            string wavFilePath = "Resources/File-examples/train.wav";
+            string mp3FilePath = "Resources/File-examples/train1.mp3";
+            string wavFilePath = "Resources/File-examples/train1.wav";
             ResourceId mp3ResourceId = Client.CampaignSoundsApi.Upload(mp3FilePath, soundName);
             ResourceId wavResourceId = Client.CampaignSoundsApi.Upload(wavFilePath);
 
@@ -55,19 +55,19 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
             // get sound metadata
             CampaignSound campaignSound = Client.CampaignSoundsApi.Get(mp3ResourceId.Id, "name,status,lengthInSeconds");
             Assert.Null(campaignSound.Id);
-            Assert.AreEqual(campaignSound.Name, soundName);
+            Assert.True(campaignSound.Name.Contains("mp3_test"));
             Assert.AreEqual(CampaignSound.SoundStatus.ACTIVE, campaignSound.Status);
-            Assert.AreEqual(6, campaignSound.LengthInSeconds);
+            Assert.AreEqual(1, campaignSound.LengthInSeconds);
 
             // get mp3
             MemoryStream ms = (MemoryStream)Client.CampaignSoundsApi.GetMp3(mp3ResourceId.Id);
-            string existingFilePath = Path.GetFullPath("Resources/File-examples/train.mp3");
+            string existingFilePath = Path.GetFullPath("Resources/File-examples/train1.mp3");
             string pathToSaveNewFile = existingFilePath.Replace("train.mp3", "mp3_sound.mp3");
             File.WriteAllBytes(pathToSaveNewFile, ms.ToArray());
 
             // get wav
             ms = (MemoryStream)Client.CampaignSoundsApi.GetWav(wavResourceId.Id);
-            existingFilePath = Path.GetFullPath("Resources/File-examples/train.wav");
+            existingFilePath = Path.GetFullPath("Resources/File-examples/train1.wav");
             pathToSaveNewFile = existingFilePath.Replace("train.wav", "wav_sound.wav");
             File.WriteAllBytes(pathToSaveNewFile, ms.ToArray());
         }

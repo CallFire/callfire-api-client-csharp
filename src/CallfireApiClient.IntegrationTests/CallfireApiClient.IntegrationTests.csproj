@@ -78,10 +78,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\File-examples\train.mp3">
+    <EmbeddedResource Include="Resources\File-examples\train1.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\File-examples\train.wav">
+    <EmbeddedResource Include="Resources\File-examples\train1.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

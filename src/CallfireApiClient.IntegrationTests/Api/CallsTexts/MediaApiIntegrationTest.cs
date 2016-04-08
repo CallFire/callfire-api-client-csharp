@@ -3,17 +3,16 @@ using CallfireApiClient.Api.CallsTexts.Model;
 using CallfireApiClient.Api.Common.Model;
 using NUnit.Framework;
 using System.IO;
-using CallfireApiClient;
 
 namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
 {
     [TestFixture, Ignore("temporary disabled")]
     public class MediaApiIntegrationTest : AbstractIntegrationTest
     {
-        private const string mp3FilePath = "Resources/File-examples/train.mp3";
-        private const string wavFilePath = "Resources/File-examples/train.wav";
+        private const string mp3FilePath = "Resources/File-examples/train1.mp3";
+        private const string wavFilePath = "Resources/File-examples/train1.wav";
 
-        [Test, Ignore("Files should not be uploaded before")]
+        [Test]
         public void TestUpload()
         {
             String soundName = "mp3_test_" + DateTime.Now.Millisecond.ToString();
@@ -38,7 +37,7 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
             {
                 mp3ResourceId = new ResourceId { Id = SelectIdFromBadRequestErrorString(e.ApiErrorMessage.Message) };
             }
-           
+
             Media media = Client.MediaApi.Get(mp3ResourceId.Id);
 
             Assert.NotNull(media);

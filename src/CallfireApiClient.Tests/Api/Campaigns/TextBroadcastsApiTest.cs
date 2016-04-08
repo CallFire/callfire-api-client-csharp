@@ -183,29 +183,6 @@ namespace CallfireApiClient.Tests.Api.Campaigns
         }
 
         [Test]
-        public void GetBatch()
-        {
-            var expectedJson = GetJsonPayload("/campaigns/textBroadcastsApi/response/getBatch.json");
-            var restRequest = MockRestResponse(expectedJson);
-
-            var request = new GetByIdRequest
-            {
-                Offset = 0,
-                Fields = FIELDS,
-                Id = 11
-            };
-            var batch = Client.TextBroadcastsApi.GetBatch(request);
-            Assert.That(Serializer.Serialize(batch), Is.EqualTo(expectedJson));
-
-            Assert.AreEqual(Method.GET, restRequest.Value.Method);
-            var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.IsNull(requestBodyParam);
-            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("offset") && p.Value.Equals("0")));
-            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/batches/11"));
-        }
-
-        [Test]
         public void GetBatches()
         {
             var expectedJson = GetJsonPayload("/campaigns/textBroadcastsApi/response/getBatches.json");
@@ -255,25 +232,6 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
             Assert.That(restRequest.Value.Parameters, Has.No.Some.Matches<Parameter>(p => p.Name.Equals("campaignId")));
             Assert.That(restRequest.Value.Resource, Is.StringEnding("/15/batches"));
-        }
-
-        [Test]
-        public void UpdateBatch()
-        {
-            var expectedJson = GetJsonPayload("/campaigns/textBroadcastsApi/request/updateBatch.json");
-            var restRequest = MockRestResponse(expectedJson);
-
-            var batch = new Batch
-            {
-                Id = 11,
-                Enabled = true,
-            };
-            Client.TextBroadcastsApi.UpdateBatch(batch);
-
-            Assert.AreEqual(Method.PUT, restRequest.Value.Method);
-            var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.AreEqual(requestBodyParam.Value, expectedJson);
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/11"));
         }
 
         [Test]

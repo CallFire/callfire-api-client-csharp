@@ -1,9 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
 using CallfireApiClient.Api.Campaigns.Model;
-using System.Linq;
-using CallfireApiClient.IntegrationTests.Api;
-using CallfireApiClient.Api.Campaigns;
 using CallfireApiClient.Api.Campaigns.Model.Request;
 
 namespace CallfireApiClient.IntegrationTests.Api.Campaigns
@@ -16,20 +13,20 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
         {
             var textAutoReply = new TextAutoReply()
             {
-                Number = "19206596476",
+                Number = "12132041238",
                 Message = "test message",
                 Match = "test match"
             };
             var resourceId = Client.TextAutoRepliesApi.Create(textAutoReply);
             Assert.NotNull(resourceId.Id);
 
-            var request = new FindTextAutoRepliesRequest { Number = "19206596476" };
+            var request = new FindTextAutoRepliesRequest { Number = "12132041238" };
             var textAutoReplies = Client.TextAutoRepliesApi.Find(request);
             Console.WriteLine(textAutoReplies);
 
-            Assert.AreEqual(1, textAutoReplies.TotalCount);
-            Assert.AreEqual(1, textAutoReplies.Items.Count);
-            var savedTextAutoReply = textAutoReplies.Items[0];
+            Assert.True(textAutoReplies.TotalCount > 0);
+            Assert.AreEqual(textAutoReplies.Items.Count, textAutoReplies.TotalCount);
+            var savedTextAutoReply = textAutoReplies.Items[textAutoReplies.Items.Count - 1];
             Assert.AreEqual(resourceId.Id, savedTextAutoReply.Id);
             Assert.AreEqual(textAutoReply.Number, savedTextAutoReply.Number);
             Assert.AreEqual(textAutoReply.Message, savedTextAutoReply.Message);
