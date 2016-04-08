@@ -8,9 +8,9 @@ namespace CallfireApiClient.Api.Campaigns.Model
 {
     public class QuestionResponse : CallfireModel
     {
-        public string Question { get; set; }
+        public string Question { get; private set; }
 
-        public string Response { get; set; }
+        public string Response { get; private set; }
 
         public override string ToString()
         {
