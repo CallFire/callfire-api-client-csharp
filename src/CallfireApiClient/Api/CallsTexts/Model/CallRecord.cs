@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CallfireApiClient.Api.Campaigns.Model;
 
 namespace CallfireApiClient.Api.CallsTexts.Model
@@ -11,6 +10,8 @@ namespace CallfireApiClient.Api.CallsTexts.Model
         public IList<Note> Notes { get; set; }
 
         public IList<CallRecording> Recordings { get; private set; }
+
+        public IList<QuestionResponse> QuestionResponses { get; private set; }
 
         public enum CallResult
         {

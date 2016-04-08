@@ -15,37 +15,41 @@ namespace CallfireApiClient.IntegrationTests.Api.Numbers
             var leases = Client.NumberLeasesApi.Find(request);
             Console.WriteLine(leases);
 
-            Assert.AreEqual(1, leases.Items.Count);
+            Assert.True(leases.Items.Count > 0);
         }
 
         [Test]
         public void GetNumberLease()
         {
-            const String number = "18728100635";
+            const String number = "12132041238";
             var lease = Client.NumberLeasesApi.Get(number);
             Console.WriteLine(lease);
 
             Assert.IsNotNull(lease.Region);
             Assert.AreEqual(number, lease.PhoneNumber);
-            Assert.That(lease.Region.City, Is.StringContaining("APPLETON"));
+            Assert.That(lease.Region.City, Is.StringContaining("LOS ANGELES"));
         }
 
         [Test]
         public void UpdateNumberLease()
         {
-            const string number = "18728100635";
+            const string number = "12132041238";
             var lease = Client.NumberLeasesApi.Get(number);
             Assert.IsNotNull(lease.Region);
-            var autoRenewSaved = lease.AutoRenew;
-            lease.AutoRenew = !autoRenewSaved;
             lease.PhoneNumber = number;
+            lease.TextFeatureStatus = NumberLease.FeatureStatus.DISABLED;
+            lease.CallFeatureStatus = NumberLease.FeatureStatus.DISABLED;
 
             Client.NumberLeasesApi.Update(lease);
-            lease = Client.NumberLeasesApi.Get(number, "autoRenew,tollFree");
+            lease = Client.NumberLeasesApi.Get(number, "number,callFeatureStatus,textFeatureStatus");
             Console.WriteLine(lease);
+            Assert.NotNull(lease.PhoneNumber);
+            Assert.AreEqual(NumberLease.FeatureStatus.DISABLED, lease.TextFeatureStatus);
+            Assert.AreEqual(NumberLease.FeatureStatus.DISABLED, lease.CallFeatureStatus);
 
-            Assert.IsNull(lease.PhoneNumber);
-            Assert.AreNotEqual(autoRenewSaved, lease.AutoRenew);
+            lease.TextFeatureStatus = NumberLease.FeatureStatus.ENABLED;
+            lease.CallFeatureStatus = NumberLease.FeatureStatus.ENABLED;
+            Client.NumberLeasesApi.Update(lease);
         }
 
         [Test]
@@ -55,35 +59,34 @@ namespace CallfireApiClient.IntegrationTests.Api.Numbers
             var configs = Client.NumberLeasesApi.FindConfigs(request);
             Console.WriteLine(configs);
 
-            Assert.AreEqual(1, configs.Items.Count);
+            Assert.True(configs.Items.Count > 0);
         }
 
         [Test]
         public void GetNumberLeaseConfig()
         {
-            var config = Client.NumberLeasesApi.GetConfig("18728100635");
+            var config = Client.NumberLeasesApi.GetConfig("12132041238");
             Console.WriteLine(config);
 
-            Assert.AreEqual(NumberConfig.NumberConfigType.IVR, config.ConfigType);
-            Assert.IsNotNull(config.IvrInboundConfig);
+            Assert.True(NumberConfig.NumberConfigType.TRACKING.Equals(config.ConfigType));
+            Assert.True(config.CallTrackingConfig != null);
         }
 
         [Test]
         public void UpdateNumberLeaseConfig()
         {
-            const string number = "18728100635";
+            const string number = "12132041238";
             var config = Client.NumberLeasesApi.GetConfig(number);
-            Assert.IsNull(config.CallTrackingConfig);
-            Assert.AreEqual(NumberConfig.NumberConfigType.IVR, config.ConfigType);
+            Assert.IsNull(config.IvrInboundConfig);
+            Assert.AreEqual(NumberConfig.NumberConfigType.TRACKING, config.ConfigType);
 
             Client.NumberLeasesApi.UpdateConfig(config);
-            config = Client.NumberLeasesApi.GetConfig(number, "ivrInboundConfig,configType");
+            config = Client.NumberLeasesApi.GetConfig(number, "callTrackingConfig,configType");
             Console.WriteLine(config);
 
-            Assert.IsNotNull(config.IvrInboundConfig);
+            Assert.IsNotNull(config.CallTrackingConfig);
             Assert.IsNull(config.Number);
-            Assert.AreEqual(NumberConfig.NumberConfigType.IVR, config.ConfigType);
-            Assert.IsNotNull(config.IvrInboundConfig.DialplanXml);
+            Assert.AreEqual(NumberConfig.NumberConfigType.TRACKING, config.ConfigType);
         }
     }
 }

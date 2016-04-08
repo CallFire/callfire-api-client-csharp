@@ -15,7 +15,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
     public class CallBroadcastsApiTest : AbstractApiTest
     {
         [Test]
-        public void Create()
+        public void CreateVoiceBroadcast()
         {
             var requestJson = GetJsonPayload("/campaigns/callBroadcastsApi/request/createCallBroadcast.json");
             var responseJson = GetJsonPayload("/campaigns/callBroadcastsApi/response/createCallBroadcast.json");
@@ -33,6 +33,33 @@ namespace CallfireApiClient.Tests.Api.Campaigns
                     MachineSoundText = "This is an answering machine text to speech recording",
                     MachineSoundTextVoice = Voice.MALE1 
                 },
+                Recipients = new List<Recipient>
+                {
+                    new Recipient { PhoneNumber = "13233832214" },
+                    new Recipient { PhoneNumber = "13233832215" },
+                }
+            };
+            var id = Client.CallBroadcastsApi.Create(callBroadcast, true);
+            Assert.That(Serializer.Serialize(id), Is.EqualTo(responseJson));
+
+            Assert.AreEqual(Method.POST, restRequest.Value.Method);
+            var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
+            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("start") && p.Value.Equals("True")));
+        }
+
+        [Test]
+        public void CreateIvrBroadcast()
+        {
+            var requestJson = GetJsonPayload("/campaigns/callBroadcastsApi/request/createIvrBroadcast.json");
+            var responseJson = GetJsonPayload("/campaigns/callBroadcastsApi/response/createIvrBroadcast.json");
+            var restRequest = MockRestResponse(responseJson);
+
+            var callBroadcast = new CallBroadcast
+            {
+                Name = "Example API IVR",
+                FromNumber = "12135551189",
+                DialplanXml = "<dialplan name=\"Root\"></dialplan>",
                 Recipients = new List<Recipient>
                 {
                     new Recipient { PhoneNumber = "13233832214" },
@@ -74,7 +101,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
         }
 
         [Test]
-        public void Update()
+        public void UpdateVoiceBroadcast()
         {
             var expectedJson = GetJsonPayload("/campaigns/callBroadcastsApi/request/updateCallBroadcast.json");
             var restRequest = MockRestResponse(expectedJson);
@@ -97,6 +124,27 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.AreEqual(requestBodyParam.Value, expectedJson);
             Assert.That(restRequest.Value.Resource, Is.StringEnding("/11"));
+        }
+
+        [Test]
+        public void UpdateIvrBroadcast()
+        {
+            var expectedJson = GetJsonPayload("/campaigns/callBroadcastsApi/request/updateIvrBroadcast.json");
+            var restRequest = MockRestResponse(expectedJson);
+
+            var callBroadcast = new CallBroadcast
+            {
+                Id = 12,
+                Name = "Example API IVR updated",
+                FromNumber = "12135551189",
+                DialplanXml = "<dialplan name=\"Root\">\r\n\t<play type=\"tts\">Congratulations! You have successfully configured a CallFire I V R.</play>\r\n</dialplan>"
+            };
+            Client.CallBroadcastsApi.Update(callBroadcast);
+
+            Assert.AreEqual(Method.PUT, restRequest.Value.Method);
+            var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
+            Assert.AreEqual(requestBodyParam.Value, expectedJson);
+            Assert.That(restRequest.Value.Resource, Is.StringEnding("/12"));
         }
 
         [Test]

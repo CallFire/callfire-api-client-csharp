@@ -15,9 +15,8 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
         public void CrudOperations()
         {
             var broadcast = new TextBroadcast
-            {   
-                Name = "voice_broadcast",
-                FromNumber = "12132212384",
+            {
+                Name = "text_broadcast",
                 BigMessageStrategy = BigMessageStrategy.SEND_MULTIPLE,
                 Message = "test_msg",
                 LocalTimeRestriction = new LocalTimeRestriction
@@ -30,8 +29,8 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
                 },
                 Recipients = new List<TextRecipient>
                 {
-                    new TextRecipient { PhoneNumber = "12132212384" },
-                    new TextRecipient { PhoneNumber = "12132212385" }
+                    new TextRecipient { PhoneNumber = "14246525473" },
+                    new TextRecipient { PhoneNumber = "12132041238" }
                 }
             };
             var id = Client.TextBroadcastsApi.Create(broadcast, true);
@@ -70,7 +69,18 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
         [Test]
         public void GetBroadcastTexts()
         {
-            var request = new GetByIdRequest { Id = 3 };
+            var broadcast = new TextBroadcast
+            {
+                Name = "text_broadcast_1",
+                Message = "test_msg",
+                Recipients = new List<TextRecipient>
+                {
+                    new TextRecipient { PhoneNumber = "14246525473" }
+                }
+            };
+            var broadcastId = Client.TextBroadcastsApi.Create(broadcast, false);
+
+            var request = new GetByIdRequest { Id = broadcastId.Id };
             var texts = Client.TextBroadcastsApi.GetTexts(request);
             Console.WriteLine(texts);
             Assert.That(texts.Items, Is.Not.Empty);
@@ -79,10 +89,21 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
         [Test]
         public void GetBroadcastStats()
         {
+            var broadcast = new TextBroadcast
+            {
+                Name = "text_broadcast_2",
+                Message = "test_msg",
+                Recipients = new List<TextRecipient>
+                {
+                    new TextRecipient { PhoneNumber = "12132041238" }
+                }
+            };
+            var broadcastId = Client.TextBroadcastsApi.Create(broadcast, true);
+
             var begin = DateTime.Now.AddDays(-5d);
             var end = DateTime.Now;
             var fields = "TotalOutboundCount,remainingOutboundCount";
-            var stats = Client.TextBroadcastsApi.GetStats(3, fields, begin, end);
+            var stats = Client.TextBroadcastsApi.GetStats(broadcastId.Id, fields, begin, end);
             Console.WriteLine(stats);
         }
 
@@ -102,8 +123,8 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
             // add recipients
             var recipients = new List<TextRecipient>
             {
-                new TextRecipient { PhoneNumber = "12132212384" },
-                new TextRecipient { PhoneNumber = "12132212385" }
+                new TextRecipient { PhoneNumber = "14246525473" },
+                new TextRecipient { PhoneNumber = "12132041238" }
             };
             var texts = Client.TextBroadcastsApi.AddRecipients((long)id, recipients);
             Console.WriteLine(texts);
@@ -122,8 +143,8 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
                 Name = "new_batch",
                 Recipients = new List<Recipient>
                 {
-                    new TextRecipient { PhoneNumber = "12132212384" },
-                    new TextRecipient { PhoneNumber = "12132212385" }
+                    new TextRecipient { PhoneNumber = "14246525473" },
+                    new TextRecipient { PhoneNumber = "12132041238" }
                 }
             };
             var resourceId = Client.TextBroadcastsApi.AddBatch(addBatchRequest);
@@ -132,14 +153,13 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
             Console.WriteLine(batches);
             Assert.AreEqual(batches.Items.Count + 1, updatedBatches.Items.Count);
 
-            var getBatchRequest = new GetByIdRequest { Id = resourceId.Id };
-            Batch savedBatch = Client.TextBroadcastsApi.GetBatch(getBatchRequest);
+            Batch savedBatch = Client.BatchesApi.Get(resourceId.Id);
             Assert.True((bool)savedBatch.Enabled);
             Assert.AreEqual(addBatchRequest.Name, savedBatch.Name);
 
             savedBatch.Enabled = false;
-            Client.TextBroadcastsApi.UpdateBatch(savedBatch);
-            Batch updatedBatch = Client.TextBroadcastsApi.GetBatch(getBatchRequest);
+            Client.BatchesApi.Update(savedBatch);
+            Batch updatedBatch = Client.BatchesApi.Get(resourceId.Id);
             Assert.False((bool)updatedBatch.Enabled);
         }
     }

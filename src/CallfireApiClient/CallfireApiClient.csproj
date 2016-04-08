@@ -72,6 +72,7 @@
     <Compile Include="Api\CallsTexts\Model\TextRecord.cs" />
     <Compile Include="Api\CallsTexts\CallsApi.cs" />
     <Compile Include="Api\CallsTexts\TextsApi.cs" />
+    <Compile Include="Api\Campaigns\Model\QuestionResponse.cs" />
     <Compile Include="Api\Campaigns\Model\Request\AddBatchRequest.cs" />
     <Compile Include="Api\Campaigns\Model\Request\FindBroadcastsRequest.cs" />
     <Compile Include="Api\Campaigns\Model\Request\FindSoundsRequest.cs" />

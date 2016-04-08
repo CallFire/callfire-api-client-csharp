@@ -1,0 +1,13 @@
+{
+  "name": "Example API IVR",
+  "fromNumber": "12135551189",
+  "recipients": [
+    {
+      "phoneNumber": "13233832214"
+    },
+    {
+      "phoneNumber": "13233832215"
+    }
+  ],
+  "dialplanXml": "<dialplan name=\"Root\"></dialplan>"
+}
