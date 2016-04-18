@@ -146,7 +146,7 @@ http://www.symbolsource.org/Public/Home/VisualStudio
 
 == Platform compatibility
 
-Library was built and tested on OS X with mono 4.2.1 .NET 4 and Windows 7 x64 .NET 4 platform
+Library was built and tested on OS X with mono 4.2.1 .NET 4.5 and Windows 7 x64 .NET 4.5 platform
 
 
 == Troubleshooting
