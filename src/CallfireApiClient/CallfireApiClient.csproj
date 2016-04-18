@@ -9,7 +9,7 @@
     <AssemblyName>callfire-api-client</AssemblyName>
     <ReleaseVersion>1.0.0</ReleaseVersion>
     <CodePage>65001</CodePage>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
