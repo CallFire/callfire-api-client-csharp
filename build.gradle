@@ -1,0 +1,125 @@
+import org.gradle.internal.os.OperatingSystem
+import org.apache.tools.ant.taskdefs.condition.Os
+import groovy.xml.XmlUtil
+
+plugins {
+  id 'com.ullink.msbuild' version '2.14'
+  id 'com.ullink.nuget' version '2.12'
+  id 'com.ullink.nunit' version '1.4'
+  id 'com.ullink.opencover' version '1.2'
+  id 'net.researchgate.release' version '2.3.4'
+}
+
+archivesBaseName = 'callfire-api-client'
+ext['buildReleaseConfiguration'] = "Release"
+ext['buildDebugConfiguration'] = "Debug"
+ext['assemblyBinReleaseDir'] = "src/CallfireApiClient/bin/$buildReleaseConfiguration"
+ext['assemblyBinDebugDir'] = "src/CallfireApiClient/bin/$buildDebugConfiguration"
+ext['buildDistDir'] = "$buildDir/dist"
+ext['assemblyInfo'] = "src/CallfireApiClient/Properties/AssemblyInfo.cs"
+
+defaultTasks('nugetPack')
+
+nuget {
+    // oh boy, version 3.3.0 seems to freeze during restore on linux ... rollbacking.... again
+    version = '2.8.6'
+}
+
+task msbuildRelease (type: com.ullink.Msbuild) {
+		solutionFile = 'callfire-api-client-csharp.sln'
+		configuration = buildReleaseConfiguration
+		projectName = 'CallfireApiClient'
+		generateDoc = true
+}
+msbuildRelease.dependsOn nugetRestore
+
+task msbuildDebug (type: com.ullink.Msbuild) {
+    msbuild {
+		solutionFile = 'callfire-api-client-csharp.sln'
+		configuration = buildDebugConfiguration
+		projectName = 'CallfireApiClient'
+	}
+}
+msbuildDebug.dependsOn nunit
+
+nunit {
+    testAssemblies = [ msbuild.projects['CallfireApiClient.Tests'].properties.TargetPath ]
+}
+nunit.dependsOn msbuildRelease
+
+task updateNuspecFile << {
+    def specFile = file('CallfireApiClient.nuspec')
+    def spec = new XmlSlurper().parse(specFile)
+
+    project.version = patchVersion(spec.metadata.version.text)
+    spec.metadata.version = project.version
+    spec.metadata.releaseNotes = file('Changelog').text
+    // cleanup previous lib/ and src/ files since they depend on build configuration
+    spec.files.file.findAll { it.@target == 'lib' || it.@target == 'src' }.each { it.replaceNode {} }
+
+	def isWindowsOs = Os.isFamily(Os.FAMILY_WINDOWS)
+	def monoInstallation = "$System.env.MONO_HOME"
+	def pdbToMdbConverter
+	if (isWindowsOs) {
+		if (monoInstallation != 'null') {
+			pdbToMdbConverter = "$System.env.MONO_HOME" + "\\bin\\pdb2mdb.bat"
+			exec { commandLine = [pdbToMdbConverter, "$assemblyBinDebugDir/${archivesBaseName}.dll"] }
+		}
+	}
+	
+    spec.files.appendNode {
+		file(src: "src/**/*.cs", target: 'src') {}
+        file(src: "$assemblyBinDebugDir/${archivesBaseName}.dll", target: 'lib') {}
+        file(src: "$assemblyBinReleaseDir/${archivesBaseName}.dll.config", target: 'lib') {}
+        file(src: "$assemblyBinReleaseDir/${archivesBaseName}.xml", target: 'lib') {}
+		if (isWindowsOs) {
+			file(src: "$assemblyBinDebugDir/${archivesBaseName}.pdb", target: 'lib') {}
+		}
+		file(src: "$assemblyBinDebugDir/${archivesBaseName}.dll.mdb", target: 'lib') {}
+    }
+
+    def fw = new FileWriter('CallfireApiClient.nuspec')
+    XmlUtil.serialize(spec, fw)
+    // have to close manually because on windows file remains locked
+    fw.close()
+}
+updateNuspecFile.dependsOn msbuildDebug
+
+def patchVersion(version) {
+    def regex = ~/\[assembly: AssemblyVersion\("(.*)\.\*"\)\]/
+    def matcher = regex.matcher(new File(assemblyInfo).text)
+    while(matcher.find()) {
+        def updated = matcher.group(1)
+        println "Patching Nuspec version to $updated"
+        return updated
+    }
+    version
+}
+
+task zipBinaries(type: Zip) {
+    destinationDir = file(buildDistDir)
+    from 'LICENSE'
+    from 'Changelog'
+    from (assemblyBinReleaseDir) {
+        include "${archivesBaseName}.*"
+    }
+}
+zipBinaries.dependsOn nugetSpec
+
+// nuget package for upload to nuget
+nugetSpec {
+    nuspecFile = file('CallfireApiClient.nuspec')
+}
+nugetSpec.dependsOn updateNuspecFile
+
+nugetPack {
+    destinationDir = buildDistDir
+    generateSymbols = true
+}
+nugetPack.dependsOn zipBinaries
+
+// nuget package upload, requires API key to be set
+nugetPush {
+    apiKey = System.properties[ 'NUGET_API_KEY' ] ?: "key not set"
+    nupkgFile = nugetPack.packageFile
+}

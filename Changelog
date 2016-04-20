@@ -1,5 +1,9 @@
 Callfire API client Changelog
 =============================
+Version 1.1.7 - Apr 18 2016
+    - migration to 4.5 net framework
+	- migration to gradle
+
 Version 1.1.6 - Mar 25 2016
     - added mono debug files generation on Windows platform
     - removed get/update batch api calls from TextBroadcastsApi

@@ -1,8 +1,7 @@
-<?xml version="1.0"?>
-<package>
+<?xml version="1.0" encoding="UTF-8"?><package>
   <metadata>
     <id>CallfireApiClient</id>
-    <version>1.1.6</version>
+    <version>1.1.7</version>
     <title>CallFire API v2 client</title>
     <authors>
 			Vladimir Mikhailov
@@ -16,6 +15,10 @@
     <description>C# client library for integration with Callfire REST API v2 services</description>
     <releaseNotes>Callfire API client Changelog
 =============================
+Version 1.1.7 - Apr 18 2016
+    - migration to 4.5 net framework
+	- migration to gradle
+
 Version 1.1.6 - Mar 25 2016
     - added mono debug files generation on Windows platform
     - removed get/update batch api calls from TextBroadcastsApi
@@ -46,16 +49,16 @@ Version 1.0.0 - Dec 29 2015
     <copyright>Copyright (c) 2015 CallFire Inc.</copyright>
     <tags>Callfire rest api client</tags>
     <dependencies>
-      <dependency id="Newtonsoft.Json" version="7.0.1" />
-      <dependency id="RestSharp" version="105.2.3" />
+      <dependency id="Newtonsoft.Json" version="7.0.1"/>
+      <dependency id="RestSharp" version="105.2.3"/>
     </dependencies>
   </metadata>
   <files>
-    <file src="**/*.cs" target="src" />
-    <file src="LICENSE" />
-    <file src="Changelog" />
-    <file src="src/CallfireApiClient/bin/Debug/callfire-api-client.dll" target="lib" />
-    <file src="src/CallfireApiClient/bin/Release/callfire-api-client.dll.config" target="lib" />
-    <file src="src/CallfireApiClient/bin/Release/callfire-api-client.xml" target="lib" />
+    <file src="LICENSE"/>
+    <file src="Changelog"/>
+    <file src="src/**/*.cs" target="src"/>
+    <file src="src/CallfireApiClient/bin/Debug/callfire-api-client.dll" target="lib"/>
+    <file src="src/CallfireApiClient/bin/Release/callfire-api-client.dll.config" target="lib"/>
+    <file src="src/CallfireApiClient/bin/Release/callfire-api-client.xml" target="lib"/>
   </files>
 </package>

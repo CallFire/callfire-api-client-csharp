@@ -74,6 +74,28 @@
     <Compile Include="Utilities\XmlTask.cs" />
     <Compile Include="Utilities\VersionTask.cs" />
     <Compile Include="Api\Webhooks\SubscriptionsApiTest.cs" />
+    <Compile Include="Integration\Account\MeApiIntegrationTest.cs" />
+    <Compile Include="Integration\Account\OrdersApiIntegrationTest.cs" />
+    <Compile Include="Integration\CallsTexts\CallsApiIntegrationTest.cs" />
+    <Compile Include="Integration\CallsTexts\MediaApiIntegrationTest.cs" />
+    <Compile Include="Integration\CallsTexts\TextsApiIntegrationTest.cs" />
+    <Compile Include="Integration\Campaigns\BatchesApiIntegrationTest.cs" />
+    <Compile Include="Integration\Campaigns\CallBroadcastsApiIntegrationTest.cs" />
+    <Compile Include="Integration\Campaigns\CampaignSoundsApiIntegrationTest.cs" />
+    <Compile Include="Integration\Campaigns\TextAutoRepliesApiIntegrationTest.cs" />
+    <Compile Include="Integration\Campaigns\TextBroadcastsApiIntegrationTest.cs" />
+    <Compile Include="Integration\Contacts\ContactListsApiIntegrationTest.cs" />
+    <Compile Include="Integration\Contacts\ContactsApiIntegrationTest.cs" />
+    <Compile Include="Integration\Contacts\DncApiIntegrationTest.cs" />
+    <Compile Include="Integration\Contacts\DncListsApiIntegrationTest.cs" />
+    <Compile Include="Integration\Keywords\KeywordLeasesApiIntegrationTest.cs" />
+    <Compile Include="Integration\Keywords\KeywordsApiIntegrationTest.cs" />
+    <Compile Include="Integration\Numbers\NumberLeasesApiIntegrationTest.cs" />
+    <Compile Include="Integration\Numbers\NumbersApiIntegrationTest.cs" />
+    <Compile Include="Integration\Webhooks\SubscriptionsApiIntegrationTest.cs" />
+    <Compile Include="Integration\Webhooks\WebhooksApiIntegrationTest.cs" />
+    <Compile Include="Integration\AbstractIntegrationTest.cs" />
+    <Compile Include="Integration\ProxyIntegrationTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -215,5 +237,18 @@
     <EmbeddedResource Include="Resources\File-examples\train.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Integration\Resources\File-examples\train1.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Integration\Resources\File-examples\train1.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
 </Project>
