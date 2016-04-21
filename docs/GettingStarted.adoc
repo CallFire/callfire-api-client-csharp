@@ -25,11 +25,11 @@ In case you want to build it yourself:
     $ git clone https://github.com/CallFire/callfire-api-client-csharp.git
     $ cd callfire-api-client-csharp
     // build on windows platform
-    $ msbuild Build.proj
-    // build on unix (mono) platforms
-    $ xbuild Build.proj
+    $ gradlew.bat clean nugetPack
+    // build on unix platforms
+    $ ./gradlew clean nugetPack
 
-it will produce zip & Nuget packages in *build/pkg* directory:
+it will produce zip & Nuget packages in *build/dist* directory:
 [source]
     callfire-api-client.dll - client assembly
     callfire-api-client.dll.config - configuration file

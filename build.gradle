@@ -25,27 +25,25 @@ nuget {
     version = '2.8.6'
 }
 
-task msbuildRelease (type: com.ullink.Msbuild) {
-		solutionFile = 'callfire-api-client-csharp.sln'
-		configuration = buildReleaseConfiguration
-		projectName = 'CallfireApiClient'
-		generateDoc = true
+msbuild.dependsOn nugetRestore
+msbuild {
+	solutionFile = 'callfire-api-client-csharp.sln'
+	configuration = buildReleaseConfiguration
+	projectName = 'CallfireApiClient'
+	generateDoc = true
 }
-msbuildRelease.dependsOn nugetRestore
 
 task msbuildDebug (type: com.ullink.Msbuild) {
-    msbuild {
-		solutionFile = 'callfire-api-client-csharp.sln'
-		configuration = buildDebugConfiguration
-		projectName = 'CallfireApiClient'
-	}
+	solutionFile = 'callfire-api-client-csharp.sln'
+	configuration = buildDebugConfiguration
+	projectName = 'CallfireApiClient'
 }
 msbuildDebug.dependsOn nunit
 
 nunit {
     testAssemblies = [ msbuild.projects['CallfireApiClient.Tests'].properties.TargetPath ]
 }
-nunit.dependsOn msbuildRelease
+nunit.dependsOn msbuild
 
 task updateNuspecFile << {
     def specFile = file('CallfireApiClient.nuspec')
@@ -53,7 +51,7 @@ task updateNuspecFile << {
 
     project.version = patchVersion(spec.metadata.version.text)
     spec.metadata.version = project.version
-    spec.metadata.releaseNotes = file('Changelog').text
+    spec.metadata.releaseNotes = file('Changelog.txt').text
     // cleanup previous lib/ and src/ files since they depend on build configuration
     spec.files.file.findAll { it.@target == 'lib' || it.@target == 'src' }.each { it.replaceNode {} }
 
