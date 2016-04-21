@@ -60,7 +60,5 @@ Version 1.0.0 - Dec 29 2015
     <file src="src/CallfireApiClient/bin/Debug/callfire-api-client.dll" target="lib"/>
     <file src="src/CallfireApiClient/bin/Release/callfire-api-client.dll.config" target="lib"/>
     <file src="src/CallfireApiClient/bin/Release/callfire-api-client.xml" target="lib"/>
-    <file src="src/CallfireApiClient/bin/Debug/callfire-api-client.pdb" target="lib"/>
-    <file src="src/CallfireApiClient/bin/Debug/callfire-api-client.dll.mdb" target="lib"/>
   </files>
 </package>
