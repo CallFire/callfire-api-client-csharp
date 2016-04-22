@@ -96,8 +96,9 @@ def patchVersion(version) {
 
 task zipBinaries(type: Zip) {
     destinationDir = file(buildDistDir)
-    from 'LICENSE'
-    from 'Changelog'
+	baseName = "CallfireApiClient"
+    from 'LICENSE.txt'
+    from 'Changelog.txt'
     from (assemblyBinReleaseDir) {
         include "${archivesBaseName}.*"
     }
