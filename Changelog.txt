@@ -1,0 +1,32 @@
+Callfire API client Changelog
+=============================
+Version 1.1.7 - Apr 18 2016
+    - migration to 4.5 net framework
+	- migration to gradle
+
+Version 1.1.6 - Mar 25 2016
+    - added mono debug files generation on Windows platform
+    - removed get/update batch api calls from TextBroadcastsApi
+
+Version 1.1.5 - Mar 14 2016
+    - added debug support for Mono platform
+    - fixed issue with uploading mp3 media
+
+Version 1.1.4 - Mar 4 2016
+    - added proxy with basic authorization support, see out docs how to configure it.
+
+Version 1.1.3 - Feb 16 2016
+    - added nuget symbolsource package to debug source code.
+
+Version 1.1.2 - Jan 27 2016
+    - added find by batchId parameter to FindCalls & FindTexts requests.
+    - fixed NumberApi.findNumbersLocal and NumberApi.findNumbersTollfree methods to accept an updated server responses
+
+Version 1.1.1 - Jan 25 2016
+    - default policy set to ignore unknown json fields on deserializing
+
+Version 1.1.0 - Jan 11 2016
+    - added Subscriptions API
+
+Version 1.0.0 - Dec 29 2015
+    - initial release
