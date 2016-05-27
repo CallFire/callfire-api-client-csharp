@@ -1,9 +1,9 @@
 {
   "name": "API hook",
-  "resource": "textCampaign",
+  "resource": "TextBroadcast",
   "callback": "http://yoursite.com/webhook",
   "events": [
-    "start",
-    "stop"
+    "Started",
+    "Stopped"
   ]
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using CallfireApiClient.Api.Common.Model;
-using Newtonsoft.Json;
 
 namespace CallfireApiClient.Api.Campaigns.Model
 {
@@ -16,6 +15,8 @@ namespace CallfireApiClient.Api.Campaigns.Model
 
         public SoundStatus? Status { get; private set; }
 
+        public bool? Duplicate { get; private set; }
+
         public enum SoundStatus
         {
             UPLOAD,
@@ -27,8 +28,8 @@ namespace CallfireApiClient.Api.Campaigns.Model
 
         public override string ToString()
         {
-            return string.Format("[CampaignSound: Id={0}, Name={1}, StatusString={2}, Created={3}, lengthInSeconds={4}]",
-                Id, Name, Status, Created, LengthInSeconds);
+            return string.Format("[CampaignSound: Id={0}, Name={1}, StatusString={2}, Created={3}, lengthInSeconds={4}, status={4}, duplicate={4}]",
+                Id, Name, Status, Created, LengthInSeconds, Status, Duplicate);
         }
     }
 }

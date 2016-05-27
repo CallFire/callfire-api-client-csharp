@@ -28,22 +28,25 @@ namespace CallfireApiClient.Tests.Integration.Campaigns
                 {
                     new Recipient { PhoneNumber = "12132212384" },
                     new Recipient { PhoneNumber = "12132212385" }
-                }
+                },
+                ResumeNextDay = true
             };
             var id = Client.CallBroadcastsApi.Create(broadcast, true);
             Console.WriteLine("broadcast id: " + id);
             var savedBroadcast = Client.CallBroadcastsApi.Get(id.Id);
             Assert.AreEqual(broadcast.Name, savedBroadcast.Name);
-
+            Assert.AreEqual(savedBroadcast.ResumeNextDay, true);
             savedBroadcast.Name = "updated_name";
             savedBroadcast.Sounds.LiveSoundText = null;
             savedBroadcast.Sounds.MachineSoundText = null;
+            savedBroadcast.ResumeNextDay = false;
             Client.CallBroadcastsApi.Update(savedBroadcast);
 
-            var updatedBroadcast = Client.CallBroadcastsApi.Get(id.Id, "id,name");
+            var updatedBroadcast = Client.CallBroadcastsApi.Get(id.Id, "id,name,resumeNextDay");
             Assert.Null(updatedBroadcast.Status);
             Assert.NotNull(updatedBroadcast.Id);
             Assert.AreEqual(savedBroadcast.Name, updatedBroadcast.Name);
+            Assert.AreEqual(updatedBroadcast.ResumeNextDay, false);
         }
 
         [Test]
@@ -101,6 +104,13 @@ namespace CallfireApiClient.Tests.Integration.Campaigns
             var calls = Client.CallBroadcastsApi.GetCalls(getCallsRequest);
             Console.WriteLine(calls);
             Assert.That(calls.Items, Is.Not.Empty);
+
+            long testBatchId = (long) calls.Items[0].BatchId;
+
+            getCallsRequest = new GetBroadcastCallsTextsRequest { Id = 1, batchId = testBatchId };
+            calls = Client.CallBroadcastsApi.GetCalls(getCallsRequest);
+            Console.WriteLine(calls);
+            Assert.AreEqual(calls.Items[0].BatchId, testBatchId);
         }
 
         [Test]

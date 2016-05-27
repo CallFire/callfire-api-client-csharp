@@ -2,6 +2,7 @@ using CallfireApiClient.Api.Common.Model;
 using CallfireApiClient.Api.CallsTexts.Model;
 using System.Collections.Generic;
 using CallfireApiClient.Api.CallsTexts.Model.Request;
+using CallfireApiClient.Api.Common.Model.Request;
 
 namespace CallfireApiClient.Api.CallsTexts
 {
@@ -81,6 +82,27 @@ namespace CallfireApiClient.Api.CallsTexts
             ClientUtils.AddQueryParamIfSet("campaignId", campaignId, queryParams);
             ClientUtils.AddQueryParamIfSet("fields", fields, queryParams);  
             return Client.Post<ListHolder<Text>>(TEXTS_PATH, recipients, queryParams).Items;
+        }
+
+        /// <summary>
+        /// Send texts to recipients through existing campaign, if null default campaign will be used
+        /// Use the /texts API to quickly send individual texts.A verified Caller ID and sufficient
+        /// credits are required to make a call.
+        /// </summary>
+        /// <param name="request">request object with different fields to filter</param>
+        /// <returns>list with created text objects</returns>
+        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
+        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
+        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
+        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
+        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
+        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
+        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        public IList<Text> Send(SendTextsRequest request)
+        {
+            Validate.NotBlank(request.Recipients.ToString(), "recipients cannot be blank");
+            var queryParams = ClientUtils.BuildQueryParams(request);
+            return Client.Post<ListHolder<Text>>(TEXTS_PATH, request.Recipients, queryParams).Items;
         }
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><package>
   <metadata>
     <id>CallfireApiClient</id>
-    <version>1.1.7</version>
+    <version>1.1.8</version>
     <title>CallFire API v2 client</title>
     <authors>
 			Vladimir Mikhailov
@@ -15,9 +15,22 @@
     <description>C# client library for integration with Callfire REST API v2 services</description>
     <releaseNotes>Callfire API client Changelog
 =============================
+Version 1.1.8 - May 27 2016
+    - defaultLiveMessage, defaultMachineMessage, defaultLiveMessageSoundId, defaultMachineMessageSoundId, defaultVoice params added to send calls api
+    - added batch id filter parameter for get broadcast calls/texts
+    - added fields filter parameter for add sound via call, returns CampaignSound object
+    - added fields filter parameter for add sound via text-to-speech, returns CampaignSound object
+    - defaultMessage parameter added to send texts function
+    - added findWebhookResource and findWebhookResources methods to use new webhooks apis
+    - resumeNextDay parameter added to CallBroadcast object
+    - transferMessage, transferMessageSoundId, transferDigit, transferNumber params added to CallRecipient object for sending calls and texts
+    - added questionResponses parameter to CallRecord object
+    - added duplicate parameter to CampaignSound object
+    - get call recordings api functions implemented in CallsApi
+
 Version 1.1.7 - Apr 18 2016
     - migration to 4.5 net framework
-	- migration to gradle
+    - migration to gradle
 
 Version 1.1.6 - Mar 25 2016
     - added mono debug files generation on Windows platform
@@ -60,5 +73,7 @@ Version 1.0.0 - Dec 29 2015
     <file src="src/CallfireApiClient/bin/Debug/callfire-api-client.dll" target="lib"/>
     <file src="src/CallfireApiClient/bin/Release/callfire-api-client.dll.config" target="lib"/>
     <file src="src/CallfireApiClient/bin/Release/callfire-api-client.xml" target="lib"/>
+    <file src="src/CallfireApiClient/bin/Debug/callfire-api-client.pdb" target="lib"/>
+    <file src="src/CallfireApiClient/bin/Debug/callfire-api-client.dll.mdb" target="lib"/>
   </files>
 </package>

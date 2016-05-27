@@ -30,11 +30,17 @@ namespace CallfireApiClient.Api.Webhooks.Model
 
         private static Dictionary<ResourceType, HashSet<ResourceEvent>> supportedEvents = new Dictionary<ResourceType, HashSet<ResourceEvent>>
         {
+            { ResourceType.MONTHLY_RENEWAL, new HashSet<ResourceEvent> { ResourceEvent.FINISHED, ResourceEvent.FAILED } },
+            { ResourceType.LOW_BALANCE, new HashSet<ResourceEvent> { ResourceEvent.FINISHED, ResourceEvent.FAILED } },
             { ResourceType.CCC_CAMPAIGN, new HashSet<ResourceEvent> { ResourceEvent.FINISHED, ResourceEvent.STARTED, ResourceEvent.STOPPED } },
-            { ResourceType.IVR_BROADCAST, new HashSet<ResourceEvent> { ResourceEvent.FINISHED, ResourceEvent.STARTED, ResourceEvent.STOPPED } },
+            { ResourceType.CALL_BROADCAST, new HashSet<ResourceEvent> { ResourceEvent.FINISHED, ResourceEvent.STARTED, ResourceEvent.STOPPED } },
             { ResourceType.TEXT_BROADCAST, new HashSet<ResourceEvent> { ResourceEvent.FINISHED, ResourceEvent.STARTED, ResourceEvent.STOPPED } },
-            { ResourceType.VOICE_BROADCAST, new HashSet<ResourceEvent> { ResourceEvent.FINISHED, ResourceEvent.STARTED, ResourceEvent.STOPPED } }
-        };
+            { ResourceType.INBOUND_CALL, new HashSet<ResourceEvent> { ResourceEvent.FINISHED } },
+            { ResourceType.OUTBOUND_CALL, new HashSet<ResourceEvent> { ResourceEvent.FINISHED } },
+            { ResourceType.INBOUND_TEXT, new HashSet<ResourceEvent> { ResourceEvent.FINISHED } },
+            { ResourceType.OUTBOUND_TEXT, new HashSet<ResourceEvent> { ResourceEvent.FINISHED } },
+            { ResourceType.UNKNOWN, new HashSet<ResourceEvent> {  } }
+    };
 
         public override string ToString()
         {

@@ -37,7 +37,9 @@ Create a call broadcast campaign using the Call Broadcast API. Send a CallBroadc
         {
             new Recipient { PhoneNumber = "12132212384" },
             new Recipient { PhoneNumber = "12132212385" }
-        }
+        },
+        ResumeNextDay = true
+
     };
     // create broadcast with 'start' argument = true to start campaign immediately
     var id = client.CallBroadcastsApi.Create(broadcast, true);
@@ -92,6 +94,13 @@ Get calls associated with call broadcast ordered by date.
     var client = new CallfireClient("api_login", "api_password");
     var request = new GetByIdRequest { Id = 1234 };
     var calls = client.CallBroadcastsApi.GetCalls(request);
+    Console.WriteLine(calls);
+
+If you want to get calls filtered by batch id please use code like:
+[source,csharp]
+    var client = new CallfireClient("api_login", "api_password");
+    var request = new GetBroadcastCallsTextsRequest { Id = 1234, batchId = 12345 };
+    var calls = client.CallBroadcastsApi.GetCalls(getCallsRequest);
     Console.WriteLine(calls);
 
 === Get broadcast stats

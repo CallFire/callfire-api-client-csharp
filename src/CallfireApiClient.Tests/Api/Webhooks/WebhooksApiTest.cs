@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using CallfireApiClient.Api.Webhooks.Model.Request;
 using CallfireApiClient.Api.Webhooks.Model;
+using CallfireApiClient.Api.Common.Model;
 
 namespace CallfireApiClient.Tests.Api.Webhooks
 {
@@ -110,11 +111,35 @@ namespace CallfireApiClient.Tests.Api.Webhooks
         {
             var webhook = new Webhook
             {
-                Resource = ResourceType.VOICE_BROADCAST,
+                Resource = ResourceType.CALL_BROADCAST,
                 Events = new HashSet<ResourceEvent> { ResourceEvent.FINISHED, ResourceEvent.STARTED, ResourceEvent.UNKNOWN }
             };
             var ex = Assert.Throws<ModelValidationException>(() => Client.WebhooksApi.Update(webhook));
-            Assert.That(ex.Message, Is.StringContaining("Event [unknown] is unsupported for voiceCampaign resource"));
+            Assert.That(ex.Message, Is.StringContaining("Event [unknown] is unsupported for CallBroadcast resource"));
+        }
+
+        [Test]
+        public void TestFindWebhookResources()
+        {
+            var expectedJson = GetJsonPayload("/webhooks/webhooksApi/response/findWebhookResources.json");
+            var restRequest = MockRestResponse(expectedJson);
+
+            IList<WebhookResource> resources = Client.WebhooksApi.FindWebhookResources(FIELDS);
+            Assert.That(Serializer.Serialize(new ListHolder<WebhookResource>(resources)), Is.EqualTo(expectedJson));
+            Assert.AreEqual(Method.GET, restRequest.Value.Method);
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
+        }
+
+        [Test]
+        public void TestFindWebhookResource()
+        {
+            var expectedJson = GetJsonPayload("/webhooks/webhooksApi/response/findSpecificWebhookResource.json");
+            var restRequest = MockRestResponse(expectedJson);
+
+            WebhookResource resource = Client.WebhooksApi.FindWebhookResource(ResourceType.CALL_BROADCAST, FIELDS);
+            Assert.That(Serializer.Serialize(resource), Is.EqualTo(expectedJson));
+            Assert.AreEqual(Method.GET, restRequest.Value.Method);
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
         }
     }
 }

@@ -50,7 +50,17 @@ Use this API to create a sound via phone call. Supply the required phone number 
     };
     ResourceId resourceId = Client.CampaignSoundsApi.RecordViaPhone(callCreateSound);
     Console.WriteLine("Sound id: " + resourceId.Id);
-    
+
+If you want to see created sound details please use code like:
+[source,csharp]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    CallCreateSound callCreateSound = new CallCreateSound
+    {
+        Name = "call_in_sound_" + new DateTime().Millisecond,
+        ToNumber = "12132212384"
+    };
+    CampaignSound sound = Client.CampaignSoundsApi.RecordViaPhoneAndGetSoundDetails(callCreateSound, "id,name");
+
 === Add sound via text-to-speech
 '''
 Use this API to create a sound file via a supplied string of text. Send the required text in the
@@ -62,3 +72,17 @@ Use this API to create a sound file via a supplied string of text. Send the requ
     ResourceId resourceId = Client.CampaignSoundsApi.CreateFromTts(tts);
     CampaignSound campaignSound = Client.CampaignSoundsApi.Get(resourceId.Id);
     Console.WriteLine("Campaign sound: " + campaignSound);
+
+If you want to see created sound details please use code like:
+[source,csharp]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    TextToSpeech tts = new TextToSpeech { Message = "this is TTS message from csharp client" };
+    CampaignSound sound = Client.CampaignSoundsApi.CreateFromTtsAndGetSoundDetails(tts, "id,name");
+
+=== Upload sound file
+'''
+Upload mp3 or wav sound file.
+[source,csharp]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    string mp3FilePath = "Resources/File-examples/train.mp3";
+    CampaignSound mp3Resource = Client.CampaignSoundsApi.UploadAndGetSoundDetails(mp3FilePath, "fileName");

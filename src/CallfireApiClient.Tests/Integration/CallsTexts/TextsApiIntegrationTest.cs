@@ -4,6 +4,7 @@ using CallfireApiClient.Api.CallsTexts.Model.Request;
 using CallfireApiClient.Api.Common.Model;
 using System.Collections.Generic;
 using NUnit.Framework;
+using CallfireApiClient.Api.Common.Model.Request;
 
 namespace CallfireApiClient.Tests.Integration.CallsTexts
 {
@@ -45,6 +46,18 @@ namespace CallfireApiClient.Tests.Integration.CallsTexts
             Assert.NotNull(texts[0].Id);
             Assert.IsNull(texts[0].CampaignId);
             Assert.IsTrue(StateType.READY == texts[0].State || StateType.FINISHED == texts[0].State);
+
+            recipient1.Message = null;
+            var request = new SendTextsRequest
+            {
+                Recipients = recipients,
+                CampaignId = 7415135003,
+                DefaultMessage = "DefaultLiveMessage",
+                Fields = "items(id,fromNumber,state)"
+            };
+            texts = Client.TextsApi.Send(request);
+            CallfireApiClient.Api.CallsTexts.Model.Text text = Client.TextsApi.Get((long)texts[0].Id);
+            Assert.AreEqual(text.Message, "DefaultLiveMessage");
         }
     }
 }

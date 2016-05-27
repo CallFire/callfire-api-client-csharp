@@ -1,7 +1,10 @@
 [
   {
     "phoneNumber": "12135551100",
-    "liveMessage": "Why hello there!"
+    "liveMessage": "Why hello there!",
+    "transferMessage": "testMessage",
+    "transferDigit": "1",
+    "transferNumber": "12135551101"
   },
   {
     "phoneNumber": "12135551101",

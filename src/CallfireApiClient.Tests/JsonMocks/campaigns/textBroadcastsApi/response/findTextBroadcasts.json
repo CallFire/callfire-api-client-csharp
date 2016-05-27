@@ -9,6 +9,7 @@
       "localTimeRestriction": {
         "enabled": false
       },
+      "resumeNextDay": true,
       "message": "This is a text broadcast",
       "bigMessageStrategy": "DO_NOT_SEND"
     },
@@ -21,6 +22,7 @@
       "localTimeRestriction": {
         "enabled": false
       },
+      "resumeNextDay": true,
       "message": "Hello World!"
     }
   ],

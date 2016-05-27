@@ -2,6 +2,7 @@
   "id": 11,
   "name": "Example API VB updated",
   "fromNumber": "12135551189",
+  "resumeNextDay": true,
   "sounds": {
     "liveSoundText": "Hello! This is an updated VB config tts",
     "machineSoundId": 1258704003

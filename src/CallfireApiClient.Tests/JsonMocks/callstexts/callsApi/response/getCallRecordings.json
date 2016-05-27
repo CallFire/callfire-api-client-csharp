@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "id": 10,
+      "callId": 12,
+      "campaignId": 13,
+      "name": "test",
+      "created": 1480896000000,
+      "lengthInBytes": 150,
+      "lengthInSeconds": 10,
+      "hash": "hashTest",
+      "mp3Url": "http://test",
+      "state": "RECORDING"
+    },
+    {
+      "id": 11,
+      "callId": 13,
+      "campaignId": 13,
+      "name": "test",
+      "created": 1480896000000,
+      "lengthInBytes": 150,
+      "lengthInSeconds": 10,
+      "hash": "hashTest",
+      "mp3Url": "http://test",
+      "state": "RECORDING"
+    }
+  ]
+}

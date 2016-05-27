@@ -11,7 +11,7 @@ Search for webhooks on name, resource, event, callback URL, or whether they are 
     {
         Limit = 5,
         Enabled = true,
-        Resource = Webhook.ResourceType.TEXT_BROADCAST
+        Name = "test_name"
     };
     Page<Webhook> webhooks = Client.WebhooksApi.Find(findRequest);
     Console.WriteLine(webhooks);
@@ -33,7 +33,7 @@ Example how to create a webhook for voice campaign. Callfire will query your cal
     var webhook = new Webhook
     {
         Name = "new webhook",
-        Resource = ResourceType.VOICE_BROADCAST,
+        Resource = ResourceType.TEXT_BROADCAST,
         Events = new HashSet<ResourceEvent> { ResourceEvent.STARTED, ResourceEvent.FINISHED },
         Callback = "https://yoursite.com/callback"
     };
@@ -49,7 +49,7 @@ Example how to update the information in a currently existing webhook. Most fiel
     {
         Id = 12345678,
         Name = "new webhook",
-        Resource = ResourceType.VOICE_BROADCAST,
+        Resource = ResourceType.TEXT_BROADCAST,
         Events = new HashSet<ResourceEvent> { ResourceEvent.STARTED, ResourceEvent.FINISHED },
         Callback = "https://yoursite.com/callback"
     };
@@ -61,3 +61,17 @@ Example how to delete a webhook. Will be removed permenantly.
 [source,csharp]
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     Client.WebhooksApi.Delete(12345678);
+
+=== Find webhook resources
+'''
+Example how to find webhook resources.
+[source,csharp]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    var resources = Client.WebhooksApi.FindWebhookResources("items(resource)");
+
+=== Find webhook resource
+'''
+Example how to find webhook resource.
+[source,csharp]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    var resource = Client.WebhooksApi.FindWebhookResource(ResourceType.CALL_BROADCAST, "resource");

@@ -1,0 +1,8 @@
+{
+  "resource": "CallBroadcast",
+  "supportedEvents": [
+    "Started",
+    "Stopped",
+    "Finished"
+  ]
+}

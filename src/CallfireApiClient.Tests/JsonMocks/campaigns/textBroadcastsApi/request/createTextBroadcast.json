@@ -1,6 +1,7 @@
 {
   "name": "Example API SMS",
   "fromNumber": "19206596476",
+  "resumeNextDay": true,
   "message": "Hello World!",
   "recipients": [
     {
