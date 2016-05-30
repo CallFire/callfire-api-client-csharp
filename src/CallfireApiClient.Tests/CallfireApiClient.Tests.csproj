@@ -51,6 +51,7 @@
     <Compile Include="Api\Account\OrdersApiTest.cs" />
     <Compile Include="Api\Account\MeApiTest.cs" />
     <Compile Include="Api\AbstractApiTest.cs" />
+    <Compile Include="Api\CallsTexts\CallRecording.cs" />
     <Compile Include="Api\CallsTexts\MediaApiTest.cs" />
     <Compile Include="Api\CallsTexts\TextsApiTest.cs" />
     <Compile Include="Api\CallsTexts\CallsApiTest.cs" />
@@ -100,11 +101,20 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="CallfireApiClient.Tests.csproj" />
+    <None Include="JsonMocks\callstexts\callsApi\response\getCallRecording.json" />
+    <None Include="JsonMocks\callstexts\callsApi\response\getCallRecordings.json" />
     <None Include="JsonMocks\callstexts\mediaApi\response\getMedia.json" />
     <None Include="JsonMocks\callstexts\mediaApi\response\uploadSound.json" />
     <None Include="JsonMocks\campaigns\callBroadcastsApi\request\createIvrBroadcast.json" />
     <None Include="JsonMocks\campaigns\callBroadcastsApi\request\updateIvrBroadcast.json" />
     <None Include="JsonMocks\campaigns\callBroadcastsApi\response\createIvrBroadcast.json" />
+    <None Include="JsonMocks\campaigns\campaignSoundsApi\response\uploadSoundWithDetails.json" />
+    <None Include="JsonMocks\webhooks\webhooksApi\response\findSpecificWebhookResource.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="JsonMocks\webhooks\webhooksApi\response\findWebhookResources.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="JsonMocks\common\sampleErrorMessage.json" />
     <None Include="JsonMocks\contacts\contactsApi\request\createContactsList.csv" />

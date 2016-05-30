@@ -1,6 +1,7 @@
 {
   "name": "Example API VB",
   "fromNumber": "12135551189",
+  "resumeNextDay": true,
   "recipients": [
     {
       "phoneNumber": "13233832214"

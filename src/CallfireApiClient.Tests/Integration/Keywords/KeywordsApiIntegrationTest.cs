@@ -31,7 +31,7 @@ namespace CallfireApiClient.Tests.Integration.Keywords
         public void IsAvailable()
         {
             Boolean isAvaialble = Client.KeywordsApi.IsAvailable("TEST");
-            Assert.AreEqual(false, isAvaialble);
+            Assert.AreEqual(true, isAvaialble);
         }
 
     }

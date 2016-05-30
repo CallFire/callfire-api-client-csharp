@@ -31,19 +31,22 @@ namespace CallfireApiClient.Tests.Integration.Campaigns
                 {
                     new TextRecipient { PhoneNumber = "14246525473" },
                     new TextRecipient { PhoneNumber = "12132041238" }
-                }
+                },
+                ResumeNextDay = true
             };
             var id = Client.TextBroadcastsApi.Create(broadcast, true);
             var savedBroadcast = Client.TextBroadcastsApi.Get(id.Id);
             Assert.AreEqual(broadcast.Name, savedBroadcast.Name);
-
+            Assert.AreEqual(savedBroadcast.ResumeNextDay, true);
             savedBroadcast.Name = "updated_name";
+            savedBroadcast.ResumeNextDay = false;
             Client.TextBroadcastsApi.Update(savedBroadcast);
 
             var updatedBroadcast = Client.TextBroadcastsApi.Get(id.Id, "id,name");
             Assert.Null(updatedBroadcast.Status);
             Assert.NotNull(updatedBroadcast.Id);
             Assert.AreEqual(savedBroadcast.Name, updatedBroadcast.Name);
+            Assert.AreEqual(savedBroadcast.ResumeNextDay, false);
         }
 
         [Test]
@@ -84,6 +87,12 @@ namespace CallfireApiClient.Tests.Integration.Campaigns
             var texts = Client.TextBroadcastsApi.GetTexts(request);
             Console.WriteLine(texts);
             Assert.That(texts.Items, Is.Not.Empty);
+
+            long testBatchId = (long)texts.Items[0].BatchId;
+
+            request = new GetBroadcastCallsTextsRequest { Id = broadcastId.Id, batchId = testBatchId };
+            texts = Client.TextBroadcastsApi.GetTexts(request);
+            Assert.AreEqual(texts.Items[0].BatchId, testBatchId);
         }
 
         [Test]

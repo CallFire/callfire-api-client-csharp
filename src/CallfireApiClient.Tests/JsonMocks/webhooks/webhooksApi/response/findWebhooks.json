@@ -4,26 +4,26 @@
       "id": 4321,
       "enabled": false,
       "name": "API hook",
-      "resource": "textCampaign",
+      "resource": "TextBroadcast",
       "callback": "https://callfire.com/newText",
       "createdAt": 1443408255000,
       "updatedAt": 1443408255000,
       "events": [
-        "stop",
-        "start"
+        "Started",
+        "Stopped"
       ]
     },
     {
       "id": 2,
       "enabled": false,
       "name": "API hook",
-      "resource": "textCampaign",
+      "resource": "TextBroadcast",
       "callback": "https://www.callfire.com/stoppedTexts",
       "createdAt": 1443408445000,
       "updatedAt": 1443408445000,
       "events": [
-        "stop",
-        "start"
+        "Started",
+        "Stopped"
       ]
     }
   ],

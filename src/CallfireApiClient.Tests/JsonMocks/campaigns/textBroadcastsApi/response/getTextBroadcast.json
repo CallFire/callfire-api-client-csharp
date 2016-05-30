@@ -7,5 +7,6 @@
   "localTimeRestriction": {
     "enabled": false
   },
+  "resumeNextDay": true,
   "message": "Hello World!"
 }

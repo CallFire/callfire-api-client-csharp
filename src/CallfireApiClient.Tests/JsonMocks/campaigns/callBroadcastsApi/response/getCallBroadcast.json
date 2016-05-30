@@ -12,6 +12,7 @@
     "endMinute": 0
   },
   "maxActive": 100,
+  "resumeNextDay": true,
   "retryConfig": {
     "maxAttempts": 1,
     "minutesBetweenAttempts": 60,

@@ -5,6 +5,7 @@ using CallfireApiClient.Api.CallsTexts.Model;
 using CallfireApiClient.Api.CallsTexts.Model.Request;
 using RestSharp;
 using System.Linq;
+using CallfireApiClient.Api.Common.Model.Request;
 
 namespace CallfireApiClient.Tests.Api.CallsTexts
 {
@@ -31,6 +32,35 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             texts = Client.TextsApi.Send(new List<TextRecipient> { r1, r2 }, 100, FIELDS);
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("campaignId") && p.Value.Equals("100")));
+        }
+
+        [Test]
+        public void SendTextsUsingRequest()
+        {
+            string requestJson = GetJsonPayload("/callstexts/textsApi/request/sendTexts.json");
+            string responseJson = GetJsonPayload("/callstexts/textsApi/response/sendTexts.json");
+            var restRequest = MockRestResponse(responseJson);
+
+            TextRecipient r1 = new TextRecipient { PhoneNumber = "12135551100", Message = "Hello World!" };
+            TextRecipient r2 = new TextRecipient { PhoneNumber = "12135551101", Message = "Testing 1 2 3" };
+
+            var request = new SendTextsRequest
+            {
+               Recipients = new List<TextRecipient> { r1, r2 },
+               CampaignId = 100,
+               Fields = FIELDS,
+               DefaultMessage = "defaultMessage"
+            };
+
+            IList<CallfireApiClient.Api.CallsTexts.Model.Text> texts = Client.TextsApi.Send(request);
+
+            Assert.That(Serializer.Serialize(new ListHolder<CallfireApiClient.Api.CallsTexts.Model.Text>(texts)), Is.EqualTo(responseJson));
+            Assert.AreEqual(Method.POST, restRequest.Value.Method);
+            var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
+            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("campaignId") && p.Value.Equals("100")));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("defaultMessage") && p.Value.Equals("defaultMessage")));
         }
 
         [Test]

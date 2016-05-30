@@ -27,10 +27,12 @@ namespace CallfireApiClient.Api.Campaigns.Model
 
         public IList<string> Labels { get; set; }
 
+        public bool? ResumeNextDay { get; set; }
+
         public override string ToString()
         {
-            return string.Format("[Broadcast: Id={0}, Name={1}, Status={2}, LastModified={3}, FromNumber={4}, LocalTimeRestriction={5}, Schedules={6}, MaxActive={7}, Labels={8}]", 
-                Id, Name, Status, LastModified, FromNumber, LocalTimeRestriction, Schedules, MaxActive, Labels);
+            return string.Format("[Broadcast: Id={0}, Name={1}, Status={2}, LastModified={3}, FromNumber={4}, LocalTimeRestriction={5}, Schedules={6}, MaxActive={7}, Labels={8}, ResumeNextDay={9}]", 
+                Id, Name, Status, LastModified, FromNumber, LocalTimeRestriction, Schedules, MaxActive, Labels, ResumeNextDay);
         }
     }
 }

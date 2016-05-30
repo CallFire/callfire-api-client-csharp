@@ -38,7 +38,8 @@ Example how to create text broadcast and then start it. Broadcast will send mess
         {
             new TextRecipient { PhoneNumber = "12132212384" },
             new TextRecipient { PhoneNumber = "12132212385" }
-        }
+        },
+        ResumeNextDay = true
     };
     // create broadcast
     var id = client.TextBroadcastsApi.Create(broadcast, true);
@@ -86,6 +87,12 @@ This operation will enable the user to page through all of the texts for a parti
     var request = new GetByIdRequest { Id = 123 };
     var texts = client.TextBroadcastsApi.GetTexts(request);
     Console.WriteLine(texts);
+
+If you want to get texts filtered by batch id please use code like:
+[source,csharp]
+    var client = new CallfireClient("api_login", "api_password");
+    var request = new GetBroadcastCallsTextsRequest { Id = 123, batchId = 1234 };
+    var texts = client.TextBroadcastsApi.GetTexts(request);
 
 === Get broadcast stats
 Get broadcast statistics.

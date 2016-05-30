@@ -2,6 +2,7 @@
 using CallfireApiClient.Api.Common.Model;
 using CallfireApiClient.Api.CallsTexts.Model.Request;
 using System.IO;
+using System;
 
 namespace CallfireApiClient.Api.Campaigns
 {
@@ -114,9 +115,31 @@ namespace CallfireApiClient.Api.Campaigns
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        [Obsolete]
         public ResourceId RecordViaPhone(CallCreateSound callCreateSound)
         {
             return Client.Post<ResourceId>(SOUNDS_CALLS_PATH, callCreateSound);
+        }
+
+        /// <summary>
+        /// Use this API to create a sound via phone call. Supply the required phone number in
+        /// the CallCreateSound object inside of the request, and the user will receive a call
+        /// shortly after with instructions on how to record a sound over the phone.
+        /// </summary>
+        /// <param name="callCreateSound"> request object to create campaign sound</param>
+        /// <param name="fields">Limit text fields returned. Example fields=limit,offset,items(id,message)</param>
+        /// <returns>CampaignSound object with sound details</returns>
+        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
+        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
+        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
+        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
+        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
+        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
+        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        public CampaignSound RecordViaPhoneAndGetSoundDetails(CallCreateSound callCreateSound, string fields)
+        {
+            var queryParams = ClientUtils.BuildQueryParams("fields", fields);
+            return Client.Post<CampaignSound>(SOUNDS_CALLS_PATH, callCreateSound, queryParams);
         }
 
         /// <summary>
@@ -132,9 +155,28 @@ namespace CallfireApiClient.Api.Campaigns
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        [Obsolete]
         public ResourceId Upload(string pathToFile, string name = null)
         {
             return Client.PostFile<ResourceId>(SOUNDS_FILES_PATH, name, pathToFile);
+        }
+
+        /// <summary>
+        /// Upload a MP3 or WAV file to account
+        /// </summary>
+        /// <param name="name">contact list name</param>
+        /// <param name="pathToFile">path to MP3 or WAV file</param>
+        /// <returns> CampaignSound object with sound details</returns>
+        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
+        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
+        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
+        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
+        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
+        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
+        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        public CampaignSound UploadAndGetSoundDetails(string pathToFile, string name = null)
+        {
+            return Client.PostFile<CampaignSound>(SOUNDS_FILES_PATH, name, pathToFile);
         }
 
         /// <summary>
@@ -149,9 +191,29 @@ namespace CallfireApiClient.Api.Campaigns
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        [Obsolete]
         public ResourceId CreateFromTts(TextToSpeech textToSpeech)
         {
             return Client.Post<ResourceId>(SOUNDS_TTS_PATH, textToSpeech);
+        }
+
+        /// <summary>
+        /// Use this API to create a sound file via a supplied string of text.
+        /// </summary>
+        /// <param name="textToSpeech">TTS object to create</param>
+        /// <param name="fields">Limit text fields returned. Example fields=limit,offset,items(id,message)</param>
+        /// <returns> CampaignSound object with sound details</returns>
+        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
+        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
+        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
+        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
+        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
+        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
+        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        public CampaignSound CreateFromTtsAndGetSoundDetails(TextToSpeech textToSpeech, string fields)
+        {
+            var queryParams = ClientUtils.BuildQueryParams("fields", fields);
+            return Client.Post<CampaignSound>(SOUNDS_TTS_PATH, textToSpeech, queryParams);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace CallfireApiClient.Tests.Integration.Webhooks
                 Fields = "items(id,callback,name,resource,events)"
             };
             var page = api.Find(findRequest);
-            Assert.That(page.Items, Has.Count.EqualTo(1));
+            Assert.That(page.Items.Count > 1);
             Assert.AreEqual("test_name1", page.Items[0].Name);
             Assert.AreEqual("test_callback", page.Items[0].Callback);
             Assert.AreEqual(ResourceType.TEXT_BROADCAST, page.Items[0].Resource);
@@ -39,7 +39,7 @@ namespace CallfireApiClient.Tests.Integration.Webhooks
             Assert.NotNull(page.Items[0].Id);
 
             webhook = page.Items[0];
-            webhook.Resource = ResourceType.VOICE_BROADCAST;
+            webhook.Name = "test_name2";
             api.Update(webhook);
             Webhook updated = api.Get((long)webhook.Id);
             Assert.AreEqual(webhook.Resource, updated.Resource);
@@ -50,6 +50,25 @@ namespace CallfireApiClient.Tests.Integration.Webhooks
             Assert.Throws<ResourceNotFoundException>(() => api.Get((long)resourceId1.Id));
             Assert.Throws<ResourceNotFoundException>(() => api.Get((long)resourceId2.Id));
         }
+
+        [Test]
+        public void TestResourceTypeOperations()
+        {
+            var api = Client.WebhooksApi;
+            var resources = api.FindWebhookResources(null);
+            Assert.NotNull(resources);
+            Assert.AreEqual(resources.Count, 9);
+            resources = api.FindWebhookResources("items(resource)");
+            Assert.NotNull(resources[0].Resource);
+            Assert.AreEqual(resources[0].SupportedEvents, null);
+
+            WebhookResource resource = api.FindWebhookResource(ResourceType.CALL_BROADCAST, null);
+            Assert.NotNull(resource);
+            Assert.NotNull(resource.SupportedEvents);
+            Assert.AreEqual(resource.Resource, "CallBroadcast");
+            resource = api.FindWebhookResource(ResourceType.CALL_BROADCAST, "resource");
+            Assert.NotNull(resource.Resource);
+            Assert.AreEqual(resource.SupportedEvents, null);
+        }
     }
 }
-

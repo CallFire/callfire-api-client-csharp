@@ -1,7 +1,7 @@
-﻿using System;
-using CallfireApiClient.Api.Common.Model;
+﻿using CallfireApiClient.Api.Common.Model;
 using CallfireApiClient.Api.Webhooks.Model;
 using CallfireApiClient.Api.Webhooks.Model.Request;
+using System.Collections.Generic;
 
 namespace CallfireApiClient.Api.Webhooks
 {
@@ -9,6 +9,8 @@ namespace CallfireApiClient.Api.Webhooks
     {
         private const string WEBHOOKS_PATH = "/webhooks";
         private const string WEBHOOKS_ITEM_PATH = "/webhooks/{}";
+        private const string WEBHOOKS_RESOURCES_PATH = "/webhooks/resources";
+        private const string WEBHOOKS_RESOURCE_PATH = "/webhooks/resources/{}";
 
         private readonly RestApiClient Client;
 
@@ -107,6 +109,41 @@ namespace CallfireApiClient.Api.Webhooks
         {
             Client.Delete(WEBHOOKS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString()));
         }
+
+        /// <summary>
+        /// Find webhook resources
+        /// </summary>
+        /// <param name="fields">limit fields returned. Example fields=id,name</param>
+        /// <returns>List of WebhookResource objects</returns>
+        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
+        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
+        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
+        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
+        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
+        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
+        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        public IList<WebhookResource> FindWebhookResources(string fields)
+        {
+            var queryParams = ClientUtils.BuildQueryParams("fields", fields);
+            return Client.Get<ListHolder<WebhookResource>>(WEBHOOKS_RESOURCES_PATH, queryParams).Items;
+        }
+
+        /// <summary>
+        /// Find specific webhook resource
+        /// </summary>
+        /// <param name="resource">resource type object</param>
+        /// <returns>WebhookResource object</returns>
+        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
+        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
+        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
+        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
+        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
+        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
+        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        public WebhookResource FindWebhookResource(ResourceType resource, string fields)
+        {
+            var queryParams = ClientUtils.BuildQueryParams("fields", fields);
+            return Client.Get<WebhookResource>(WEBHOOKS_RESOURCE_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, resource.ToString()), queryParams);
+        }
     }
 }
-

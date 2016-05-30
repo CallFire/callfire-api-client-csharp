@@ -58,6 +58,8 @@
     <Compile Include="Api\CallsTexts\Model\MediaType.cs" />
     <Compile Include="Api\CallsTexts\Model\Request\FindCallsRequest.cs" />
     <Compile Include="Api\CallsTexts\Model\Request\FindCallsTextsRequest.cs" />
+    <Compile Include="Api\CallsTexts\Model\Request\SendTextsRequest.cs" />
+    <Compile Include="Api\CallsTexts\Model\Request\SendCallsRequest.cs" />
     <Compile Include="Api\CallsTexts\Model\Request\FindTextsRequest.cs" />
     <Compile Include="Api\CallsTexts\Model\Action.cs" />
     <Compile Include="Api\CallsTexts\Model\ActionRecord.cs" />
@@ -94,6 +96,7 @@
     <Compile Include="Api\Campaigns\Model\LocalTime.cs" />
     <Compile Include="Api\Campaigns\Model\LocalTimeRestriction.cs" />
     <Compile Include="Api\Campaigns\Model\Recipient.cs" />
+    <Compile Include="Api\Campaigns\Model\Request\GetBroadcastCallsTextsRequest.cs" />
     <Compile Include="Api\Campaigns\Model\RetryConfig.cs" />
     <Compile Include="Api\Campaigns\Model\RetryPhoneTypes.cs" />
     <Compile Include="Api\Campaigns\Model\RetryResults.cs" />
@@ -157,6 +160,7 @@
     <Compile Include="Api\Numbers\NumbersApi.cs" />
     <Compile Include="Api\Webhooks\Model\Request\FindWebhooksRequest.cs" />
     <Compile Include="Api\Webhooks\Model\ResourceType.cs" />
+    <Compile Include="Api\Webhooks\Model\WebhookResource.cs" />
     <Compile Include="Api\Webhooks\Model\Webhook.cs" />
     <Compile Include="Api\Webhooks\WebhooksApi.cs" />
     <Compile Include="AccessForbiddenException.cs" />

@@ -30,6 +30,23 @@ Example how to use the /texts API to quickly send individual texts via existing 
 
 In case you want to send text via default campaign use *Send(List<TextRecipient> recipients, long? campaignId)* method.
 
+In case you want to send text with default text which will be used in case when recipient doesn't have that info specified,
+ see example below:
+[source,csharp]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    //Only "recipients" param required
+    var recipient1 = new TextRecipient { Message = "msg", PhoneNumber = "12132212384" };
+    var recipient2 = new TextRecipient { Message = "msg", PhoneNumber = "12132212384" };
+    var recipients = new List<TextRecipient> { recipient1, recipient2 };
+    var request = new SendTextsRequest
+    {
+        Recipients = recipients,
+        CampaignId = 7415135003,
+        DefaultMessage = "DefaultLiveMessage",
+        Fields = "items(id,fromNumber,state)"
+    };
+    IList<Text> texts = Client.TextsApi.Send(request);
+
 === Get text
 '''
 Example how to return a single Text instance for a given text id.

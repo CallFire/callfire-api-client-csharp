@@ -30,7 +30,8 @@ namespace CallfireApiClient.Tests.Api.Campaigns
                 {
                     new TextRecipient { PhoneNumber = "13233832214" },
                     new TextRecipient { PhoneNumber = "13233832215" },
-                }
+                },
+                ResumeNextDay = true
             };
             var id = Client.TextBroadcastsApi.Create(textBroadcast, true);
             Assert.That(Serializer.Serialize(id), Is.EqualTo(responseJson));
@@ -76,7 +77,8 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             {
                 Id = 11,
                 Name = "Example API SMS updated",
-                Message = "a new test message"
+                Message = "a new test message",
+                ResumeNextDay = true
             };
             Client.TextBroadcastsApi.Update(textBroadcast);
 
@@ -132,7 +134,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
         }
 
         [Test]
-        public void GetTexts()
+        public void GetTextsWithGetByIdRequest()
         {
             var expectedJson = GetJsonPayload("/campaigns/textBroadcastsApi/response/getTexts.json");
             var restRequest = MockRestResponse(expectedJson);
@@ -153,6 +155,32 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             Assert.That(restRequest.Value.Parameters, Has.No.Some.Matches<Parameter>(p => p.Name.Equals("id")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("offset") && p.Value.Equals("5")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
+        }
+
+        [Test]
+        public void GetTextsWithGetByIdAndBatchIdRequest()
+        {
+            var expectedJson = GetJsonPayload("/campaigns/textBroadcastsApi/response/getTexts.json");
+            var restRequest = MockRestResponse(expectedJson);
+
+            var request = new GetBroadcastCallsTextsRequest
+            {
+                Offset = 5,
+                Fields = FIELDS,
+                Id = 11,
+                batchId = 13
+            };
+            var texts = Client.TextBroadcastsApi.GetTexts(request);
+            Assert.That(Serializer.Serialize(texts), Is.EqualTo(expectedJson));
+
+            Assert.AreEqual(Method.GET, restRequest.Value.Method);
+            var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
+            Assert.IsNull(requestBodyParam);
+            Assert.That(restRequest.Value.Resource, Is.StringEnding("/11/texts"));
+            Assert.That(restRequest.Value.Parameters, Has.No.Some.Matches<Parameter>(p => p.Name.Equals("id")));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("offset") && p.Value.Equals("5")));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("batchId") && p.Value.Equals("13")));
         }
 
         [Test]

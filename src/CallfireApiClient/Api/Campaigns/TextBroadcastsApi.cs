@@ -205,7 +205,26 @@ namespace CallfireApiClient.Api.Campaigns
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        [Obsolete]
         public Page<Text> GetTexts(GetByIdRequest request)
+        {
+            String path = TB_ITEM_TEXTS_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, request.Id.ToString());
+            return Client.Get<Page<Text>>(path, request);
+        }
+
+        /// <summary>
+        /// Get texts associated with text broadcast ordered by date
+        /// </summary>
+        /// <param name="request">request with properties to filter</param>
+        /// <returns>texts assosiated with broadcast</returns>
+        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
+        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
+        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
+        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
+        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
+        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
+        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        public Page<Text> GetTexts(GetBroadcastCallsTextsRequest request)
         {
             String path = TB_ITEM_TEXTS_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, request.Id.ToString());
             return Client.Get<Page<Text>>(path, request);

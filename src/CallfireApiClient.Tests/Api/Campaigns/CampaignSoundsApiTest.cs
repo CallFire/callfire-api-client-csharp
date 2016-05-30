@@ -34,7 +34,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
         }
 
         [Test]
-        public void TestGet()
+        public void TestGetWithFieldsParam()
         {
             string expectedJson = GetJsonPayload("/campaigns/campaignSoundsApi/response/getCampaignSound.json");
             var restRequest = MockRestResponse(expectedJson);
@@ -45,9 +45,20 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             Assert.AreEqual(Method.GET, restRequest.Value.Method);
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
             Assert.That(restRequest.Value.Resource, Is.StringEnding("/11"));
+        }
 
-            Client.CampaignSoundsApi.Get(11);
+        [Test]
+        public void TestGet()
+        {
+            string expectedJson = GetJsonPayload("/campaigns/campaignSoundsApi/response/getCampaignSound.json");
+            var restRequest = MockRestResponse(expectedJson);
+
+            CampaignSound campaignSound = Client.CampaignSoundsApi.Get(11);
+
+            Assert.That(Serializer.Serialize(campaignSound), Is.EqualTo(expectedJson));
+            Assert.AreEqual(Method.GET, restRequest.Value.Method);
             Assert.That(restRequest.Value.Parameters, Has.None.Matches<Parameter>(p => p.Name.Equals("FIELDS") && p.Value.Equals(FIELDS)));
+            Assert.That(restRequest.Value.Resource, Is.StringEnding("/11"));
         }
 
         [Test]
@@ -60,6 +71,18 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             ResourceId id = Client.CampaignSoundsApi.Upload(mp3FilePath, "fname");
 
             Assert.That(Serializer.Serialize(id), Is.EqualTo(expectedJson));
+            Assert.AreEqual(Method.POST, restRequest.Value.Method);
+        }
+
+        [Test]
+        public void TestUploadAndGetSoundDetails()
+        {
+            string expectedJson = GetJsonPayload("/campaigns/campaignSoundsApi/response/uploadSoundWithDetails.json");
+            var restRequest = MockRestResponse(expectedJson);
+
+            string mp3FilePath = "Resources/File-examples/train.mp3";
+            CampaignSound sound = Client.CampaignSoundsApi.UploadAndGetSoundDetails(mp3FilePath, "fname");
+            Assert.That(Serializer.Serialize(sound), Is.EqualTo(expectedJson));
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
         }
 
@@ -85,6 +108,29 @@ namespace CallfireApiClient.Tests.Api.Campaigns
         }
 
         [Test]
+        public void TestRecordViaPhoneAndGetSoundDetails()
+        {
+            string responseJson = GetJsonPayload("/campaigns/campaignSoundsApi/response/uploadSoundWithDetails.json");
+            string requestJson = GetJsonPayload("/campaigns/campaignSoundsApi/request/recordViaPhone.json");
+            var restRequest = MockRestResponse(responseJson);
+
+            CallCreateSound callCreateSound = new CallCreateSound
+            {
+                Name = "My sound file",
+                ToNumber = "12135551122"
+            };
+
+            CampaignSound sound = Client.CampaignSoundsApi.RecordViaPhoneAndGetSoundDetails(callCreateSound, FIELDS);
+
+            Assert.That(Serializer.Serialize(sound), Is.EqualTo(responseJson));
+            Assert.AreEqual(Method.POST, restRequest.Value.Method);
+            var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
+            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(restRequest.Value.Parameters, Has.None.Matches<Parameter>(p => p.Name.Equals("FIELDS") && p.Value.Equals(FIELDS)));
+
+        }
+
+        [Test]
         public void TestCreateFromTts()
         {
             string responseJson = GetJsonPayload("/campaigns/campaignSoundsApi/response/uploadSound.json");
@@ -103,6 +149,28 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+        }
+
+        [Test]
+        public void TestCreateFromTtsAndGetSoundDetails()
+        {
+            string responseJson = GetJsonPayload("/campaigns/campaignSoundsApi/response/uploadSoundWithDetails.json");
+            string requestJson = GetJsonPayload("/campaigns/campaignSoundsApi/request/createFromTts.json");
+            var restRequest = MockRestResponse(responseJson);
+
+            TextToSpeech textToSpeech = new TextToSpeech
+            {
+                Voice = Voice.MALE1,
+                Message = "This is a TTS sound"
+            };
+
+            CampaignSound sound = Client.CampaignSoundsApi.CreateFromTtsAndGetSoundDetails(textToSpeech, FIELDS);
+
+            Assert.That(Serializer.Serialize(sound), Is.EqualTo(responseJson));
+            Assert.AreEqual(Method.POST, restRequest.Value.Method);
+            var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
+            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(restRequest.Value.Parameters, Has.None.Matches<Parameter>(p => p.Name.Equals("FIELDS") && p.Value.Equals(FIELDS)));
         }
     }
 }

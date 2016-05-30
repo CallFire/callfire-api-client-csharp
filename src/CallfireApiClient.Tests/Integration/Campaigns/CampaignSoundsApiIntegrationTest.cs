@@ -37,6 +37,11 @@ namespace CallfireApiClient.Tests.Integration.Campaigns
             ResourceId resourceId = Client.CampaignSoundsApi.RecordViaPhone(callCreateSound);
 
             Assert.NotNull(resourceId.Id);
+
+            CampaignSound sound = Client.CampaignSoundsApi.RecordViaPhoneAndGetSoundDetails(callCreateSound, "id,name");
+            Assert.NotNull(sound.Id);
+            Assert.NotNull(sound.Name);
+            Assert.Null(sound.Status);
         }
 
         [Test]
@@ -70,6 +75,14 @@ namespace CallfireApiClient.Tests.Integration.Campaigns
             existingFilePath = Path.GetFullPath("Integration/Resources/File-examples/train1.wav");
             pathToSaveNewFile = existingFilePath.Replace("train.wav", "wav_sound.wav");
             File.WriteAllBytes(pathToSaveNewFile, ms.ToArray());
+
+            CampaignSound mp3Resource = Client.CampaignSoundsApi.UploadAndGetSoundDetails(mp3FilePath, soundName);
+            Assert.True(mp3Resource.Name.Contains("mp3_test"));
+            Assert.AreEqual(1, mp3Resource.LengthInSeconds);
+            Assert.True((bool) mp3Resource.Duplicate);
+
+            CampaignSound wavResource = Client.CampaignSoundsApi.UploadAndGetSoundDetails(wavFilePath);
+            Assert.NotNull(wavResource.Id);
         }
 
         [Test, Ignore("need TTS setup")]
@@ -80,6 +93,12 @@ namespace CallfireApiClient.Tests.Integration.Campaigns
             CampaignSound campaignSound = Client.CampaignSoundsApi.Get(resourceId.Id);
             Assert.AreEqual(resourceId.Id, campaignSound.Id);
             Assert.Greater(campaignSound.LengthInSeconds, 2);
+
+            CampaignSound sound = Client.CampaignSoundsApi.CreateFromTtsAndGetSoundDetails(tts, "id,name");
+            Assert.NotNull(sound.Id);
+            Assert.NotNull(sound.Name);
+            Assert.Null(sound.Status);
+            Assert.AreEqual(sound.Id, campaignSound.Id);
         }
     }
 }
