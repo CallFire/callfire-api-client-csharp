@@ -8,7 +8,7 @@ namespace CallfireApiClient.Tests.Integration
 
         public AbstractIntegrationTest()
         {
-            Client = new CallfireClient("9b4f74b51316", "608bec4e28889510");
+            Client = new CallfireClient("login", "password");
         }
     }
 }
