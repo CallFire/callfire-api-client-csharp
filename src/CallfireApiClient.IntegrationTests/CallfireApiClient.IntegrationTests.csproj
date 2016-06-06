@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CAE3C5E6-7BBB-4673-BF70-7AA012A57F2C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>CallfireApiClient.IntegrationTests</RootNamespace>
+    <AssemblyName>IntegrationTests</AssemblyName>
+    <UseMSBuildEngine>True</UseMSBuildEngine>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Api\Account\MeApiIntegrationTest.cs" />
+    <Compile Include="Api\Account\OrdersApiIntegrationTest.cs" />
+    <Compile Include="Api\CallsTexts\CallsApiIntegrationTest.cs" />
+    <Compile Include="Api\CallsTexts\MediaApiIntegrationTest.cs" />
+    <Compile Include="Api\CallsTexts\TextsApiIntegrationTest.cs" />
+    <Compile Include="Api\Campaigns\BatchesApiIntegrationTest.cs" />
+    <Compile Include="Api\Campaigns\CallBroadcastsApiIntegrationTest.cs" />
+    <Compile Include="Api\Campaigns\CampaignSoundsApiIntegrationTest.cs" />
+    <Compile Include="Api\Campaigns\TextAutoRepliesApiIntegrationTest.cs" />
+    <Compile Include="Api\Campaigns\TextBroadcastsApiIntegrationTest.cs" />
+    <Compile Include="Api\Contacts\ContactListsApiIntegrationTest.cs" />
+    <Compile Include="Api\Contacts\ContactsApiIntegrationTest.cs" />
+    <Compile Include="Api\Contacts\DncApiIntegrationTest.cs" />
+    <Compile Include="Api\Contacts\DncListsApiIntegrationTest.cs" />
+    <Compile Include="Api\Keywords\KeywordLeasesApiIntegrationTest.cs" />
+    <Compile Include="Api\Keywords\KeywordsApiIntegrationTest.cs" />
+    <Compile Include="Api\Numbers\NumberLeasesApiIntegrationTest.cs" />
+    <Compile Include="Api\Numbers\NumbersApiIntegrationTest.cs" />
+    <Compile Include="Api\Webhooks\SubscriptionsApiIntegrationTest.cs" />
+    <Compile Include="Api\Webhooks\WebhooksApiIntegrationTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Api\AbstractIntegrationTest.cs" />
+    <Compile Include="Api\ProxyIntegrationTest.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\CallfireApiClient\CallfireApiClient.csproj">
+      <Project>{7C6961C8-3576-4499-92B6-3B5D798BDBFC}</Project>
+      <Name>CallfireApiClient</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <EmbeddedResource Include="Resources\File-examples\contacts1.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\File-examples\train1.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\File-examples\train1.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="callfire-api-client.dll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+</Project>

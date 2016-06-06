@@ -1,6 +1,8 @@
 import org.gradle.internal.os.OperatingSystem
 import org.apache.tools.ant.taskdefs.condition.Os
+import org.gradle.api.tasks.AbstractExecTask
 import groovy.xml.XmlUtil
+import groovy.xml.StreamingMarkupBuilder
 
 plugins {
   id 'com.ullink.msbuild' version '2.14'
@@ -8,9 +10,11 @@ plugins {
   id 'com.ullink.nunit' version '1.4'
   id 'com.ullink.opencover' version '1.2'
   id 'net.researchgate.release' version '2.3.4'
+  id 'com.github.jlouns.cpe' version '0.4.1'
 }
 
 archivesBaseName = 'callfire-api-client'
+ext['buildReleaseConfiguration'] = "CallfireApiClient"
 ext['buildReleaseConfiguration'] = "Release"
 ext['buildDebugConfiguration'] = "Debug"
 ext['assemblyBinReleaseDir'] = "src/CallfireApiClient/bin/$buildReleaseConfiguration"
@@ -45,7 +49,7 @@ nunit {
 }
 nunit.dependsOn msbuild
 
-task updateNuspecFile << {
+task updateNuspecFile {
     def specFile = file('CallfireApiClient.nuspec')
     def spec = new XmlSlurper().parse(specFile)
 
@@ -84,7 +88,7 @@ task updateNuspecFile << {
 updateNuspecFile.dependsOn msbuildDebug
 
 def patchVersion(version) {
-    def regex = ~/\[assembly: AssemblyVersion\("(.*)\.\*"\)\]/
+    def regex = ~/\[assembly: AssemblyVersion\("(.*)\.\*"\)\]/ 
     def matcher = regex.matcher(new File(assemblyInfo).text)
     while(matcher.find()) {
         def updated = matcher.group(1)
@@ -96,7 +100,7 @@ def patchVersion(version) {
 
 task zipBinaries(type: Zip) {
     destinationDir = file(buildDistDir)
-	baseName = "CallfireApiClient"
+    baseName = "CallfireApiClient"
     from 'LICENSE.txt'
     from 'Changelog.txt'
     from (assemblyBinReleaseDir) {
@@ -116,6 +120,47 @@ nugetPack {
     generateSymbols = true
 }
 nugetPack.dependsOn zipBinaries
+
+task prepareTestData () {
+	def inFile = file('src/CallfireApiClient.IntegrationTests/App.config')
+	def xml = new XmlSlurper().parse(inFile)
+	
+	def apiLogin
+	def apiPassword
+	
+	try { 
+		apiLogin = "${testApiUsername}"
+		apiPassword = "${testApiPassword}"
+	} catch(Exception ex) {
+		println("Api Username and/or Password cannot be empty, set them with -PtestApiUsername/-PtestApiPassword options")
+		apiLogin = "login" 
+		apiPassword = "password"
+	}
+	
+	if (apiLogin != 'null' && apiPassword != 'null') {
+		xml.appSettings.add.findAll { it.@key == 'testLogin' || it.@key == 'testPassword' }.each { it.replaceNode {} }
+		xml.appSettings.appendNode {
+			add(key: "testLogin", value: apiLogin) {}
+			add(key: "testPassword", value: apiPassword) {}
+		}
+	}
+	def fw = new FileWriter('src/CallfireApiClient.IntegrationTests/App.config')
+    XmlUtil.serialize(xml, fw)
+    // have to close manually because on windows file remains locked
+    fw.close()
+}
+
+task msbuildForIntegrationTests (type: com.ullink.Msbuild) {
+	solutionFile = 'callfire-api-client-csharp.sln'
+	configuration = buildReleaseConfiguration
+	projectName = 'CallfireApiClient'
+}
+msbuildForIntegrationTests.dependsOn prepareTestData
+
+task integrationTests (type: com.ullink.gradle.nunit.NUnit) {
+	testAssemblies = [ msbuild.projects['CallfireApiClient.IntegrationTests'].properties.TargetPath ]
+}
+integrationTests.dependsOn msbuildForIntegrationTests
 
 // nuget package upload, requires API key to be set
 nugetPush {
