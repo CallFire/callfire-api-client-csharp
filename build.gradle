@@ -11,6 +11,7 @@ plugins {
   id 'com.ullink.opencover' version '1.2'
   id 'net.researchgate.release' version '2.3.4'
   id 'com.github.jlouns.cpe' version '0.4.1'
+  id "co.riiid.gradle" version "0.4.2"
 }
 
 archivesBaseName = 'callfire-api-client'
@@ -121,7 +122,7 @@ nugetPack {
 }
 nugetPack.dependsOn zipBinaries
 
-task prepareTestData () {
+task prepareTestData () << {
 	def inFile = file('src/CallfireApiClient.IntegrationTests/App.config')
 	def xml = new XmlSlurper().parse(inFile)
 	
@@ -131,8 +132,9 @@ task prepareTestData () {
 	try { 
 		apiLogin = "${testApiUsername}"
 		apiPassword = "${testApiPassword}"
+		println([ msbuild.projects['CallfireApiClient.IntegrationTests'].properties.TargetPath ])
 	} catch(Exception ex) {
-		println("Api Username and/or Password cannot be empty, set them with -PtestApiUsername/-PtestApiPassword options")
+		println("Api Username and/or Password are empty, you can't run integrationTests task, set them with -PtestApiUsername/-PtestApiPassword options")
 		apiLogin = "login" 
 		apiPassword = "password"
 	}
@@ -161,6 +163,34 @@ task integrationTests (type: com.ullink.gradle.nunit.NUnit) {
 	testAssemblies = [ msbuild.projects['CallfireApiClient.IntegrationTests'].properties.TargetPath ]
 }
 integrationTests.dependsOn msbuildForIntegrationTests
+
+task prepareReleaseData () << {
+	try { 
+		println("${gitHubOwner}")
+		println("${gitHubToken}")
+	} catch(Exception ex) {
+		println("GitHub Owner and/or Token are empty, you can't run github release task, set them with -PgitHubOwner/-PgitHubToken options")
+	}
+}
+prepareReleaseData.dependsOn nugetPack
+
+task configureCustomGitHubRelease () << {
+	github {
+		owner = "${gitHubOwner}"
+		repo = 'callfire-api-client-csharp'
+		token = "${gitHubToken}"
+		tagName = project.version
+		targetCommitish = 'master'
+		name = project.version
+		body = file('CurrentReleaseChanges.txt').text
+		assets = [
+			'build/dist/CallfireApiClient-' + project.version + '.zip',
+			'build/dist/CallfireApiClient.' + project.version + '.nupkg'
+		]
+	}
+}
+configureCustomGitHubRelease.dependsOn prepareReleaseData
+githubRelease.dependsOn configureCustomGitHubRelease
 
 // nuget package upload, requires API key to be set
 nugetPush {
