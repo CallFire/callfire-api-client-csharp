@@ -50,7 +50,7 @@ nunit {
 }
 nunit.dependsOn msbuild
 
-task updateNuspecFile {
+task updateNuspecFile << {
     def specFile = file('CallfireApiClient.nuspec')
     def spec = new XmlSlurper().parse(specFile)
 
