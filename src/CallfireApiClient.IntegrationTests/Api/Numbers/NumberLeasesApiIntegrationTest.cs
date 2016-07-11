@@ -16,6 +16,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Numbers
             Console.WriteLine(leases);
 
             Assert.True(leases.Items.Count > 0);
+            Assert.True(leases.Items[0].Labels.Count > 0);
         }
 
         [Test]
@@ -27,6 +28,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Numbers
 
             Assert.IsNotNull(lease.Region);
             Assert.AreEqual(number, lease.PhoneNumber);
+            Assert.AreEqual(lease.Labels.Count, 2);
             Assert.That(lease.Region.City, Is.StringContaining("LOS ANGELES"));
         }
 

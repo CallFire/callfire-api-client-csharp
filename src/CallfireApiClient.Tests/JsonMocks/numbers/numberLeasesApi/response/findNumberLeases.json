@@ -20,7 +20,8 @@
       "autoRenew": true,
       "status": "ACTIVE",
       "callFeatureStatus": "ENABLED",
-      "textFeatureStatus": "ENABLED"
+      "textFeatureStatus": "ENABLED",
+      "labels": ["label","label2"]
     },
     {
       "number": "13025178999",
@@ -40,7 +41,8 @@
       "autoRenew": true,
       "status": "ACTIVE",
       "callFeatureStatus": "UNSUPPORTED",
-      "textFeatureStatus": "ENABLED"
+      "textFeatureStatus": "ENABLED",
+      "labels": ["label","label3"]
     }
   ],
   "limit": 100,

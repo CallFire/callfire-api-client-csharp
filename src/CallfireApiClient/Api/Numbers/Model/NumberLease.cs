@@ -1,5 +1,6 @@
 ﻿using System;
 using CallfireApiClient.Api.Keywords.Model;
+using System.Collections.Generic;
 
 namespace CallfireApiClient.Api.Numbers.Model
 {
@@ -17,6 +18,8 @@ namespace CallfireApiClient.Api.Numbers.Model
 
         public FeatureStatus? TextFeatureStatus { get; set; }
 
+        public IList<String> Labels { get; set; }
+
         public enum FeatureStatus
         {
             UNSUPPORTED,
@@ -27,8 +30,8 @@ namespace CallfireApiClient.Api.Numbers.Model
 
         public override string ToString()
         {
-            return string.Format("[NumberLease: {0} LeaseBegin={1}, LeaseEnd={2}, AutoRenew={3}, Status={4}, CallFeatureStatus={5}, TextFeatureStatus={6}]",
-                base.ToString(), LeaseBegin, LeaseEnd, AutoRenew, Status, CallFeatureStatus, TextFeatureStatus);
+            return string.Format("[NumberLease: {0} LeaseBegin={1}, LeaseEnd={2}, AutoRenew={3}, Status={4}, CallFeatureStatus={5}, TextFeatureStatus={6}, Labels={7}]",
+                base.ToString(), LeaseBegin, LeaseEnd, AutoRenew, Status, CallFeatureStatus, TextFeatureStatus, Labels);
         }
     }
 }
