@@ -18,5 +18,6 @@
   "autoRenew": true,
   "status": "ACTIVE",
   "callFeatureStatus": "ENABLED",
-  "textFeatureStatus": "ENABLED"
+  "textFeatureStatus": "ENABLED",
+  "labels": ["label","label2"]
 }

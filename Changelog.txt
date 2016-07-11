@@ -1,5 +1,7 @@
 Callfire API client Changelog
 =============================
+Version 1.1.9 - Jul 11 2016
+    - added loading labels parameter in Number Lease objects	
 Version 1.1.8 - May 27 2016
     - defaultLiveMessage, defaultMachineMessage, defaultLiveMessageSoundId, defaultMachineMessageSoundId, defaultVoice params added to send calls api
     - added batch id filter parameter for get broadcast calls/texts
