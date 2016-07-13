@@ -182,7 +182,7 @@ task configureCustomGitHubRelease () << {
         tagName = project.version
         targetCommitish = 'master'
         name = project.version
-        body = file('CurrentReleaseChanges.txt').text
+        body = releaseDescription()
         assets = [
             'build/dist/CallfireApiClient-' + project.version + '.zip',
             'build/dist/CallfireApiClient.' + project.version + '.nupkg'
@@ -196,4 +196,12 @@ githubRelease.dependsOn configureCustomGitHubRelease
 nugetPush {
     apiKey = System.properties[ 'NUGET_API_KEY' ] ?: "key not set"
     nupkgFile = nugetPack.packageFile
+}
+
+def releaseDescription() {
+    String releaseNotes = file("Changelog.txt").text
+    Integer start = releaseNotes.indexOf("Version") + 28;
+    Integer end = releaseNotes.indexOf("Version", start);
+    String currentReleaseChanges = releaseNotes.substring(start, end).trim()
+    "$currentReleaseChanges"
 }
