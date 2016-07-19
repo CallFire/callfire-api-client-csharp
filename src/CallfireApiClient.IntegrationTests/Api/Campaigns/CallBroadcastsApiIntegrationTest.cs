@@ -80,7 +80,26 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
         [Test]
         public void StartStopArchiveCampaign()
         {
-            CallBroadcast campaign = Client.CallBroadcastsApi.Get(8729046003);
+            var broadcast = new CallBroadcast
+            {
+                Name = "call_broadcast",
+                AnsweringMachineConfig = AnsweringMachineConfig.AM_AND_LIVE,
+                Sounds = new CallBroadcastSounds
+                {
+                    LiveSoundText = "Hello! This is a live answer text to speech recording",
+                    LiveSoundTextVoice = Voice.MALE1,
+                    MachineSoundText = "This is an answering machine text to speech recording",
+                    MachineSoundTextVoice = Voice.MALE1
+                },
+                Recipients = new List<Recipient>
+                {
+                    new Recipient { PhoneNumber = "12132041238" },
+                    new Recipient { PhoneNumber = "14246525473" }
+                }
+            };
+            var id = Client.CallBroadcastsApi.Create(broadcast, true);
+
+            CallBroadcast campaign = Client.CallBroadcastsApi.Get(id.Id);
             Console.WriteLine(campaign);
             Assert.NotNull(campaign);
             // start
