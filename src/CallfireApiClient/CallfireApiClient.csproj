@@ -91,10 +91,9 @@
     <Compile Include="Api\Campaigns\Model\CallCreateSound.cs" />
     <Compile Include="Api\Campaigns\Model\CallRecording.cs" />
     <Compile Include="Api\Campaigns\Model\CampaignSound.cs" />
-    <Compile Include="Api\Campaigns\Model\DayOfWeek.cs" />
-    <Compile Include="Api\Campaigns\Model\LocalDate.cs" />
-    <Compile Include="Api\Campaigns\Model\LocalTime.cs" />
-    <Compile Include="Api\Campaigns\Model\LocalTimeRestriction.cs" />
+    <Compile Include="Api\Common\Model\LocalDate.cs" />
+    <Compile Include="Api\Common\Model\LocalTime.cs" />
+    <Compile Include="Api\Common\Model\LocalTimeRestriction.cs" />
     <Compile Include="Api\Campaigns\Model\Recipient.cs" />
     <Compile Include="Api\Campaigns\Model\Request\GetBroadcastCallsTextsRequest.cs" />
     <Compile Include="Api\Campaigns\Model\RetryConfig.cs" />
@@ -146,6 +145,8 @@
     <Compile Include="Api\Keywords\Model\LeaseStatus.cs" />
     <Compile Include="Api\Numbers\Model\CallTrackingConfig.cs" />
     <Compile Include="Api\Numbers\Model\IvrInboundConfig.cs" />
+    <Compile Include="Api\Numbers\Model\GoogleAnalytics.cs" />
+    <Compile Include="Api\Common\Model\WeeklySchedule.cs" />
     <Compile Include="Api\Numbers\Model\Number.cs" />
     <Compile Include="Api\Numbers\Model\NumberConfig.cs" />
     <Compile Include="Api\Numbers\Model\NumberLease.cs" />

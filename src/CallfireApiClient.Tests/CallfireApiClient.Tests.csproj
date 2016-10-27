@@ -51,7 +51,6 @@
     <Compile Include="Api\Account\OrdersApiTest.cs" />
     <Compile Include="Api\Account\MeApiTest.cs" />
     <Compile Include="Api\AbstractApiTest.cs" />
-    <Compile Include="Api\CallsTexts\CallRecording.cs" />
     <Compile Include="Api\CallsTexts\MediaApiTest.cs" />
     <Compile Include="Api\CallsTexts\TextsApiTest.cs" />
     <Compile Include="Api\CallsTexts\CallsApiTest.cs" />

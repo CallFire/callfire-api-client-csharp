@@ -1,7 +1,6 @@
-﻿using System;
-using CallfireApiClient.Api.Common.Model;
+﻿
 
-namespace CallfireApiClient.Api.Campaigns.Model
+namespace CallfireApiClient.Api.Common.Model
 {
     public class LocalDate : CallfireModel
     {

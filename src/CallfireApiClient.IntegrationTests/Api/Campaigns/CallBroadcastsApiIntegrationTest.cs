@@ -4,6 +4,7 @@ using CallfireApiClient.Api.Campaigns.Model;
 using System.Collections.Generic;
 using CallfireApiClient.Api.Campaigns.Model.Request;
 using CallfireApiClient.Api.Common.Model.Request;
+using CallfireApiClient.Api.Common.Model;
 
 namespace CallfireApiClient.IntegrationTests.Api.Campaigns
 {
@@ -175,15 +176,14 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
                 Name = "new_batch",
                 Recipients = new List<Recipient>
                 {
-                    new Recipient { PhoneNumber = "12132212384" },
-                    new Recipient { PhoneNumber = "12132212384" }
+                    new Recipient { PhoneNumber = "12132212386" },
+                    new Recipient { PhoneNumber = "12132212387" }
                 }
             };
-            Client.CallBroadcastsApi.AddBatch(addBatchRequest);
+            ResourceId addedBatchId = Client.CallBroadcastsApi.AddBatch(addBatchRequest);
 
-            var updatedBatches = Client.CallBroadcastsApi.GetBatches(getBatchesRequest);
-            Console.WriteLine(batches);
-            Assert.AreEqual(batches.Items.Count + 1, updatedBatches.Items.Count);
+            var addedBatch = Client.BatchesApi.Get(addedBatchId.Id);
+            Assert.AreEqual(addedBatch.BroadcastId, id);
         }
     }
 }
