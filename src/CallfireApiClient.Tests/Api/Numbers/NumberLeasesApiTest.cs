@@ -5,6 +5,7 @@ using System.Linq;
 using CallfireApiClient.Api.Numbers.Model.Request;
 using CallfireApiClient.Api.Numbers.Model;
 using System.Collections.Generic;
+using CallfireApiClient.Api.Common.Model;
 
 namespace CallfireApiClient.Tests.Api.Numbers
 {
@@ -127,10 +128,29 @@ namespace CallfireApiClient.Tests.Api.Numbers
                 {
                     Screen = false,
                     Recorded = true,
-                    TransferNumbers = new List<string>{ "12135551122", "12135551189" }
+                    TransferNumbers = new List<string>{ "12135551122", "12135551189" },
+                    Voicemail = true,
+                    IntroSoundId = 1234,
+                    VoicemailSoundId = 1234,
+                    FailedTransferSoundId = 1234,
+                    WhisperSoundId = 1234,
+                    WeeklySchedule = new WeeklySchedule
+                    {
+                        StartTimeOfDay = new LocalTime { Hour = 1, Minute = 1, Second = 1 },
+                        StopTimeOfDay = new LocalTime { Hour = 2, Minute = 2, Second = 2 },
+                        DaysOfWeek = new HashSet<DayOfWeek> { DayOfWeek.Friday },
+                        TimeZone = "America/Los_Angeles"
+                    },
+                    GoogleAnalytics = new GoogleAnalytics
+                    {
+                        Category = "Sales",
+                        GoogleAccountId = "UA-12345-26",
+                        Domain = "testDomain"
+                    }
                 }
             };
             Client.NumberLeasesApi.UpdateConfig(config);
+            Console.WriteLine(config);
 
             Assert.AreEqual(Method.PUT, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
@@ -139,4 +159,3 @@ namespace CallfireApiClient.Tests.Api.Numbers
         }
     }
 }
-

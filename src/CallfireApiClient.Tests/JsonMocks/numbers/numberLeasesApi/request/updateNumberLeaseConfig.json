@@ -4,9 +4,35 @@
   "callTrackingConfig": {
     "screen": false,
     "recorded": true,
+    "introSoundId": 1234,
+    "whisperSoundId": 1234,
     "transferNumbers": [
       "12135551122",
       "12135551189"
-    ]
+    ],
+    "voicemail": true,
+    "voicemailSoundId": 1234,
+    "failedTransferSoundId": 1234,
+    "weeklySchedule": {
+      "startTimeOfDay": {
+        "hour": 1,
+        "minute": 1,
+        "second": 1
+      },
+      "stopTimeOfDay": {
+        "hour": 2,
+        "minute": 2,
+        "second": 2
+      },
+      "daysOfWeek": [
+        "Friday"
+      ],
+      "timeZone": "America/Los_Angeles"
+    },
+    "googleAnalytics": {
+      "domain": "testDomain",
+      "googleAccountId": "UA-12345-26",
+      "category": "Sales"
+    }
   }
 }

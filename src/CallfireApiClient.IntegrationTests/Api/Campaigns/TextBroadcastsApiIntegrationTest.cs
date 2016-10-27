@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using CallfireApiClient.Api.CallsTexts.Model;
 using CallfireApiClient.Api.Campaigns.Model.Request;
 using CallfireApiClient.Api.Common.Model.Request;
+using CallfireApiClient.Api.Common.Model;
 
 namespace CallfireApiClient.IntegrationTests.Api.Campaigns
 {
@@ -156,19 +157,17 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
                     new TextRecipient { PhoneNumber = "12132041238" }
                 }
             };
-            var resourceId = Client.TextBroadcastsApi.AddBatch(addBatchRequest);
+            ResourceId addedBatchId = Client.TextBroadcastsApi.AddBatch(addBatchRequest);
 
-            var updatedBatches = Client.TextBroadcastsApi.GetBatches(getBatchesRequest);
+            var addedBatch = Client.BatchesApi.Get(addedBatchId.Id);
             Console.WriteLine(batches);
-            Assert.AreEqual(batches.Items.Count + 1, updatedBatches.Items.Count);
+            Assert.AreEqual(addedBatch.BroadcastId, id);
+            Assert.True((bool)addedBatch.Enabled);
+            Assert.AreEqual(addBatchRequest.Name, addedBatch.Name);
 
-            Batch savedBatch = Client.BatchesApi.Get(resourceId.Id);
-            Assert.True((bool)savedBatch.Enabled);
-            Assert.AreEqual(addBatchRequest.Name, savedBatch.Name);
-
-            savedBatch.Enabled = false;
-            Client.BatchesApi.Update(savedBatch);
-            Batch updatedBatch = Client.BatchesApi.Get(resourceId.Id);
+            addedBatch.Enabled = false;
+            Client.BatchesApi.Update(addedBatch);
+            Batch updatedBatch = Client.BatchesApi.Get(addedBatchId.Id);
             Assert.False((bool)updatedBatch.Enabled);
         }
     }

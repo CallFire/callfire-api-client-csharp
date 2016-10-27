@@ -2,6 +2,8 @@
 using NUnit.Framework;
 using CallfireApiClient.Api.Numbers.Model;
 using CallfireApiClient.Api.Numbers.Model.Request;
+using System.Collections.Generic;
+using CallfireApiClient.Api.Common.Model;
 
 namespace CallfireApiClient.IntegrationTests.Api.Numbers
 {
@@ -78,9 +80,35 @@ namespace CallfireApiClient.IntegrationTests.Api.Numbers
         public void UpdateNumberLeaseConfig()
         {
             const string number = "12132041238";
-            var config = Client.NumberLeasesApi.GetConfig(number);
+            var config = Client.NumberLeasesApi.GetConfig(number, "number,configType,callTrackingConfig");
             Assert.IsNull(config.IvrInboundConfig);
             Assert.AreEqual(NumberConfig.NumberConfigType.TRACKING, config.ConfigType);
+            CallTrackingConfig callTrackingConfig = new CallTrackingConfig();
+            callTrackingConfig.Recorded = true;
+            callTrackingConfig.Screen = true;
+            callTrackingConfig.TransferNumbers = new List<string> { "12132212384" };
+            callTrackingConfig.Voicemail = true;
+            callTrackingConfig.IntroSoundId = 1;
+            callTrackingConfig.VoicemailSoundId = 1;
+            callTrackingConfig.FailedTransferSoundId = 1;
+            callTrackingConfig.WhisperSoundId = 1;
+
+            WeeklySchedule weeklySchedule = new WeeklySchedule
+            {
+                StartTimeOfDay = new LocalTime { Hour = 1, Minute = 1, Second = 1 },
+                StopTimeOfDay = new LocalTime { Hour = 2, Minute = 2, Second = 2 },
+                TimeZone = "America/New_York",
+                DaysOfWeek = new HashSet<DayOfWeek> { DayOfWeek.Monday, DayOfWeek.Friday }
+            };
+            callTrackingConfig.WeeklySchedule = weeklySchedule;
+
+            GoogleAnalytics googleAnalytics = new GoogleAnalytics
+            {
+                Category = "Sales",
+                GoogleAccountId = "UA-12345-26",
+                Domain = "testDomain"
+            };
+            callTrackingConfig.GoogleAnalytics = googleAnalytics;
 
             Client.NumberLeasesApi.UpdateConfig(config);
             config = Client.NumberLeasesApi.GetConfig(number, "callTrackingConfig,configType");
@@ -92,4 +120,3 @@ namespace CallfireApiClient.IntegrationTests.Api.Numbers
         }
     }
 }
-

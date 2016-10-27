@@ -19,6 +19,8 @@
           "id": 10306,
           "billedAmount": 1.1667,
           "finishTime": 1443373425000,
+          "toNumber": "12135551101",
+          "labels": ["12135551102"],
           "result": "AM"
         }
       ],
@@ -44,6 +46,8 @@
           "id": 10305,
           "billedAmount": 0.0,
           "finishTime": 1443373408000,
+          "toNumber": "12135551101",
+          "labels": ["12135551102"],
           "result": "CARRIER_ERROR"
         }
       ],

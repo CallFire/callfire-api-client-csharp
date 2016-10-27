@@ -1,5 +1,8 @@
 Callfire API client Changelog
 =============================
+Version 1.1.10 - Oct 26 2016
+- added more parameters to call tracking config in Number Lease config object
+
 Version 1.1.9 - Jul 11 2016
 - added loading labels parameter in Number Lease objects
 
