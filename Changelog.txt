@@ -1,5 +1,10 @@
 Callfire API client Changelog
 =============================
+Version 1.1.11 - Nov 18 2016
+- added deleteCampaignSound api
+- added getCreditsHistory api
+- remove dnc lists api (not supported anymore)
+
 Version 1.1.10 - Oct 26 2016
 - added more parameters to call tracking config in Number Lease config object
 
