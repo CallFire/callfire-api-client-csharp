@@ -12,11 +12,10 @@
 *** link:campaigns/BatchesApi.adoc[Contact batches]
 *** link:campaigns/CallBroadcastsApi.adoc[Call broadcasts]
 *** link:campaigns/TextBroadcastsApi.adoc[Text broadcasts]
-* Contacts & Do Not Contact (DNC) lists
+* Contacts & Dncs
 ** link:contacts/ContactsApi.adoc[User contacts]
 ** link:contacts/ContactListsApi.adoc[Contact lists]
 ** link:contacts/DncApi.adoc[Do Not Contact API]
-** link:contacts/DncListsApi.adoc[Do Not Contact lists API]
 * link:keywords/KeywordsMain.adoc[Keywords & keyword leases API]
 * link:numbers/NumbersMain.adoc[Numbers & number leases API]
 * link:webhooks/SubscriptionsApi.adoc[Subscriptions API]

@@ -12,6 +12,7 @@ namespace CallfireApiClient.Api.Account
     {
         private const string ME_ACCOUNT_PATH = "/me/account";
         private const string ME_BILLING_PATH = "/me/billing/plan-usage";
+        private const string ME_BILLING_CREDIT_PATH = "/me/billing/credit-usage";
         private const string ME_API_CREDS_PATH = "/me/api/credentials";
         private const string ME_API_CREDS_ITEM_PATH = "/me/api/credentials/{}";
         private const string ME_CALLERIDS_PATH = "/me/callerids";
@@ -55,6 +56,26 @@ namespace CallfireApiClient.Api.Account
         public BillingPlanUsage GetBillingPlanUsage()
         {
             return Client.Get<BillingPlanUsage>(ME_BILLING_PATH);
+        }
+
+        /// <summary>
+        /// Find credit usage for the user. Returns credits usage for time period specified or if unspecified then total for all time.
+        /// </summary>
+        /// <param name="request">request for date range filtering</param>
+        /// <returns>CreditsUsage object</returns>
+        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
+        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
+        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
+        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
+        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
+        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
+        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        public CreditsUsage GetCreditUsage(DateIntervalRequest request = null)
+        {
+            if (request != null)
+                return Client.Get<CreditsUsage>(ME_BILLING_CREDIT_PATH, request);
+            else
+                return Client.Get<CreditsUsage>(ME_BILLING_CREDIT_PATH);
         }
 
         /// <summary>

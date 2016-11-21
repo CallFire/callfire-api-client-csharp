@@ -25,6 +25,22 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
             }
         }
 
+        [Test]
+        public void TestUploadSoundAndDeleteIt()
+        {
+            String soundName = "mp3_test_" + DateTime.Now.ToString();
+            string mp3FilePath = "Resources/File-examples/train1.mp3";
+            CampaignSound campaignSound = Client.CampaignSoundsApi.UploadAndGetSoundDetails(mp3FilePath, soundName);
+            Assert.NotNull(campaignSound.Id);
+
+            Client.CampaignSoundsApi.Delete((long) campaignSound.Id);
+
+            FindSoundsRequest request = new FindSoundsRequest { Filter = soundName };
+            Page<CampaignSound> campaignSounds = Client.CampaignSoundsApi.Find(request);
+            Assert.True(campaignSounds.Items.Count == 0);
+
+        }
+
         [Test, Ignore("performs real call to specified number")]
         public void TestCallInToRecord()
         {

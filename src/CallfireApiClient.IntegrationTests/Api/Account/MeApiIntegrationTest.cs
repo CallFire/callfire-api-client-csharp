@@ -25,6 +25,32 @@ namespace CallfireApiClient.IntegrationTests.Api.Account
         }
 
         [Test]
+        public void GetCreditsUsage()
+        {
+            var request = new DateIntervalRequest
+            {
+                IntervalBegin = DateTime.UtcNow.AddMonths(-2),
+                IntervalEnd = DateTime.UtcNow
+            };
+            var creditsUsage = Client.MeApi.GetCreditUsage(request);
+            Assert.NotNull(creditsUsage.IntervalBegin);
+            Assert.NotNull(creditsUsage.IntervalEnd);
+            Assert.NotNull(creditsUsage.TextsSent);
+            Assert.NotNull(creditsUsage.CallsDurationMinutes);
+            Assert.NotNull(creditsUsage.CreditsUsed);
+
+            creditsUsage = Client.MeApi.GetCreditUsage();
+            Assert.NotNull(creditsUsage);
+
+            request = new DateIntervalRequest
+            {
+                IntervalEnd = DateTime.UtcNow.AddMonths(-2)
+            };
+            creditsUsage = Client.MeApi.GetCreditUsage(request);
+            Assert.NotNull(creditsUsage);
+        }
+
+        [Test]
         public void GetCallerIds()
         {
             var callerIds = Client.MeApi.GetCallerIds();

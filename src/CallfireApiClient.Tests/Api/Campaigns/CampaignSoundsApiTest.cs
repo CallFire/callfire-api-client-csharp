@@ -34,6 +34,17 @@ namespace CallfireApiClient.Tests.Api.Campaigns
         }
 
         [Test]
+        public void TestDelete()
+        {
+            var restRequest = MockRestResponse();
+
+            Client.CampaignSoundsApi.Delete(11L);
+
+            Assert.AreEqual(Method.DELETE, restRequest.Value.Method);
+            Assert.That(restRequest.Value.Resource, Is.StringEnding("/11"));
+        }
+
+        [Test]
         public void TestGetWithFieldsParam()
         {
             string expectedJson = GetJsonPayload("/campaigns/campaignSoundsApi/response/getCampaignSound.json");

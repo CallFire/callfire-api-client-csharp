@@ -140,7 +140,7 @@ namespace CallfireApiClient
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public T Get<T>(String path, FindRequest request = null) where T : new()
+        public T Get<T>(String path, CallfireModel request = null) where T : new()
         {
             return Get<T>(path, ClientUtils.BuildQueryParams(request));
         }

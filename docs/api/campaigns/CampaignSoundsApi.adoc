@@ -20,6 +20,13 @@ Returns a single CampaignSound instance for a given campaign sound id. This is t
     CallfireClient Client = new CallfireClient("api_login", "api_password");
     CampaignSound campaignSound = Client.CampaignSoundsApi.Get(12345, "name,status,lengthInSeconds");
 
+=== Delete campaign sound
+'''
+Example how to delete a single CampaignSound instance for a given campaign sound id.
+[source,csharp]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    Client.CampaignSoundsApi.Delete(12345);
+
 === Download MP3 sound
 '''
 Download the MP3 version of the hosted file.

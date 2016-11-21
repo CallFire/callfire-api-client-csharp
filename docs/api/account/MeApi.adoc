@@ -18,6 +18,18 @@ Example how to find billing plan usage for the user. Returns billing plan usage 
     BillingPlanUsage plan = Client.MeApi.GetBillingPlanUsage();
     Console.WriteLine("Plan: " + plan.ToString());
 
+=== Get credits usage info
+'''
+Example how find credit usage for the user. Returns credits usage for time period specified or if unspecified then total for all time.
+[source,csharp]
+    CallfireClient Client = new CallfireClient("api_login", "api_password");
+    var request = new DateIntervalRequest
+    {
+        IntervalBegin = DateTime.UtcNow.AddMonths(-2),
+        IntervalEnd = DateTime.UtcNow
+    };
+    CreditsUsage creditsUsage = Client.MeApi.GetCreditUsage(request);
+
 === Get account caller IDs
 '''
 Example how to get a list of verified caller ids. If the number is not shown in the list, then it is not verified,

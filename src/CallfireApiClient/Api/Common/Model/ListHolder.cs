@@ -11,6 +11,7 @@ namespace CallfireApiClient.Api.Common.Model
 
         public ListHolder()
         {
+            Items = new List<T>();
         }
 
         public ListHolder(IList<T> items)
