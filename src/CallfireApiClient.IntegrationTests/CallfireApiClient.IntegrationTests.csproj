@@ -53,7 +53,6 @@
     <Compile Include="Api\Contacts\ContactListsApiIntegrationTest.cs" />
     <Compile Include="Api\Contacts\ContactsApiIntegrationTest.cs" />
     <Compile Include="Api\Contacts\DncApiIntegrationTest.cs" />
-    <Compile Include="Api\Contacts\DncListsApiIntegrationTest.cs" />
     <Compile Include="Api\Keywords\KeywordLeasesApiIntegrationTest.cs" />
     <Compile Include="Api\Keywords\KeywordsApiIntegrationTest.cs" />
     <Compile Include="Api\Numbers\NumberLeasesApiIntegrationTest.cs" />

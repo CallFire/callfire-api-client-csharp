@@ -1,3 +1,0 @@
-include::KeywordsApi.adoc[]
-
-include::KeywordLeasesApi.adoc[]

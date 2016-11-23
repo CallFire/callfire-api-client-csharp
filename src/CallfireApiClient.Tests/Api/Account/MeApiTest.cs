@@ -33,6 +33,32 @@ namespace CallfireApiClient.Tests.Api.Account
         }
 
         [Test]
+        public void GetCreditsUsage()
+        {
+            string expectedJson = GetJsonPayload("/account/meApi/response/getCreditsUsage.json");
+            var restRequest = MockRestResponse(expectedJson);
+
+            var request = new DateIntervalRequest
+            {
+                IntervalBegin = DateTime.UtcNow.AddMonths(-2),
+                IntervalEnd = DateTime.UtcNow
+            };
+
+
+            CreditsUsage creditsUsage = Client.MeApi.GetCreditUsage(request);
+            Assert.That(Serializer.Serialize(creditsUsage), Is.EqualTo(expectedJson));
+
+            DateTime intBeg = (DateTime) request.IntervalBegin;
+            DateTime intEnd = (DateTime) request.IntervalEnd;
+            long ib = (long)(intBeg.ToUniversalTime() - ClientConstants.EPOCH).TotalMilliseconds;
+            long ie = (long)(intEnd.ToUniversalTime() - ClientConstants.EPOCH).TotalMilliseconds;
+
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("intervalBegin") && p.Value.Equals(ib.ToString())));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("intervalEnd") && p.Value.Equals(ie.ToString())));
+        }
+
+
+        [Test]
         public void GetCallerIds()
         {
             string expectedJson = GetJsonPayload("/account/meApi/response/getCallerIds.json");

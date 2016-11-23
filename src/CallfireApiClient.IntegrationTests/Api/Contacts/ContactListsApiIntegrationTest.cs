@@ -116,7 +116,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
 
             Client.ContactListsApi.RemoveListItems(id.Id, new List<long> { (long)items[0].Id, (long)items[1].Id });
             contactListItems = Client.ContactListsApi.GetListItems(getItemsRequest);
-            Assert.IsNull(contactListItems.Items);
+            Assert.True(contactListItems.Items.Count == 0);
             Assert.AreEqual(0, contactListItems.TotalCount);
 
             Client.ContactListsApi.Delete(id.Id);

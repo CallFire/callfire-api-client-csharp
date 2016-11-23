@@ -1,6 +1,6 @@
 = Callfire API v2 REST client
 
-C# client for Callfire platform API version 2. See link:docs/GettingStarted.adoc[Getting Started]
+C# client for Callfire platform API version 2. See link:https://developers.callfire.com/callfire-api-client-csharp.html[Getting Started]
  page for setup instructions.
 
 .*Requirements:*
@@ -11,9 +11,8 @@ C# client for Callfire platform API version 2. See link:docs/GettingStarted.adoc
 * RestSharp >= 105.2.3
 
 .*Table of contents*
-* link:docs/GettingStarted.adoc[Getting Started]
-* link:docs/api/ApiExamples.adoc[API code examples]
-* link:https://developers.callfire.com/docs.html[REST endpoints documentation]
+* link:https://developers.callfire.com/callfire-api-client-csharp.html[Getting Started]
+* link:https://developers.callfire.com/docs.html[REST endpoints documentation and api code samples]
 * Have a question ?
 ** link:https://developers.callfire.com/chat.html[Public chat room]
 ** link:http://stackoverflow.com/questions/tagged/callfire[Ask on stackoverflow]

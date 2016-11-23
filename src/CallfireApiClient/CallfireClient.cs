@@ -29,7 +29,6 @@ namespace CallfireApiClient
         readonly Lazy<KeywordsApi> _KeywordsApi;
         readonly Lazy<KeywordLeasesApi> _KeywordLeasesApi;
         readonly Lazy<DncApi> _DncApi;
-        readonly Lazy<DncListsApi> _DncListsApi;
         readonly Lazy<CallsApi> _CallsApi;
         readonly Lazy<TextsApi> _TextsApi;
         readonly Lazy<TextAutoRepliesApi> _TextAutoRepliesApi;
@@ -65,8 +64,6 @@ namespace CallfireApiClient
 
         public DncApi DncApi { get { return _DncApi.Value; } }
 
-        public DncListsApi DncListsApi { get { return _DncListsApi.Value; } }
-
         public CallsApi CallsApi { get { return _CallsApi.Value; } }
 
         public TextsApi TextsApi { get { return _TextsApi.Value; } }
@@ -96,7 +93,6 @@ namespace CallfireApiClient
             _KeywordsApi = new Lazy<KeywordsApi>(() => new KeywordsApi(RestApiClient));
             _KeywordLeasesApi = new Lazy<KeywordLeasesApi>(() => new KeywordLeasesApi(RestApiClient));
             _DncApi = new Lazy<DncApi>(() => new DncApi(RestApiClient));
-            _DncListsApi = new Lazy<DncListsApi>(() => new DncListsApi(RestApiClient));
             _CallsApi = new Lazy<CallsApi>(() => new CallsApi(RestApiClient));
             _TextsApi = new Lazy<TextsApi>(() => new TextsApi(RestApiClient));
             _TextAutoRepliesApi = new Lazy<TextAutoRepliesApi>(() => new TextAutoRepliesApi(RestApiClient));

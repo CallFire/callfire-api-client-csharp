@@ -56,10 +56,26 @@ namespace CallfireApiClient.Api.Campaigns
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public CampaignSound Get(long id, string fields = null)
         {
-            Validate.NotBlank(id.ToString(), "id cannot be blank");
             string path = SOUNDS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString());
             var queryParams = ClientUtils.BuildQueryParams("fields", fields);
             return Client.Get<CampaignSound>(path, queryParams);
+        }
+
+        /// <summary>
+        /// Delete a single CampaignSound instance for a given campaign sound id.
+        /// </summary>
+        /// <param name="id">id of campaign sound</param>
+        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
+        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
+        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
+        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
+        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
+        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
+        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        public void Delete(long id)
+        {
+            string path = SOUNDS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString());
+            Client.Delete(path);
         }
 
         /// <summary>
@@ -76,7 +92,6 @@ namespace CallfireApiClient.Api.Campaigns
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public Stream GetMp3(long id)
         {
-            Validate.NotBlank(id.ToString(), "id cannot be blank");
             string path = SOUNDS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString()) + ".mp3";
             return Client.GetFileData(path);
         }
@@ -95,9 +110,7 @@ namespace CallfireApiClient.Api.Campaigns
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public Stream GetWav(long id)
         {
-            Validate.NotBlank(id.ToString(), "id cannot be blank");
             string path = SOUNDS_ITEM_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString()) + ".wav";
-
             return Client.GetFileData(path);
         }
 

@@ -16,7 +16,7 @@ namespace CallfireApiClient.Tests.Api.Contacts
         [Test]
         public void Find()
         {
-            string expectedJson = GetJsonPayload("/contacts/dncApi/response/findDncList.json");
+            string expectedJson = GetJsonPayload("/contacts/dncApi/response/findDncs.json");
             var restRequest = MockRestResponse(expectedJson);
 
             FindDncContactsRequest request = new FindDncContactsRequest

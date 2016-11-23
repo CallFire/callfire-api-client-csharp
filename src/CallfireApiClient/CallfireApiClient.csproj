@@ -44,6 +44,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\Account\Model\CreditsUsage.cs" />
+    <Compile Include="Api\Account\Model\Request\DateIntervalRequest.cs" />
     <Compile Include="Api\Account\Model\Request\CallerIdVerificationRequest.cs" />
     <Compile Include="Api\Account\Model\ApiCredentials.cs" />
     <Compile Include="Api\Account\Model\BillingPlanUsage.cs" />
@@ -120,23 +122,19 @@
     <Compile Include="Api\Common\Model\ResourceId.cs" />
     <Compile Include="Api\Contacts\Model\Request\AddContactListContactsRequest.cs" />
     <Compile Include="Api\Contacts\Model\Request\AddContactsRequest.cs" />
-    <Compile Include="Api\Contacts\Model\Request\AddDncListItemsRequest.cs" />
     <Compile Include="Api\Contacts\Model\Request\CreateContactListRequest.cs" />
     <Compile Include="Api\Contacts\Model\Request\FindContactListsRequest.cs" />
     <Compile Include="Api\Contacts\Model\Request\FindContactsRequest.cs" />
     <Compile Include="Api\Contacts\Model\Request\FindDncContactsRequest.cs" />
-    <Compile Include="Api\Contacts\Model\Request\FindDncListsRequest.cs" />
     <Compile Include="Api\Contacts\Model\Request\UpdateContactListRequest.cs" />
     <Compile Include="Api\Contacts\Model\Contact.cs" />
     <Compile Include="Api\Contacts\Model\ContactHistory.cs" />
     <Compile Include="Api\Contacts\Model\ContactList.cs" />
-    <Compile Include="Api\Contacts\Model\DncList.cs" />
     <Compile Include="Api\Contacts\Model\DoNotContact.cs" />
     <Compile Include="Api\Contacts\Model\UniversalDnc.cs" />
     <Compile Include="Api\Contacts\ContactListsApi.cs" />
     <Compile Include="Api\Contacts\ContactsApi.cs" />
     <Compile Include="Api\Contacts\DncApi.cs" />
-    <Compile Include="Api\Contacts\DncListsApi.cs" />
     <Compile Include="Api\Keywords\Model\Request\KeywordPurchaseRequest.cs" />
     <Compile Include="Api\Keywords\KeywordLeasesApi.cs" />
     <Compile Include="Api\Keywords\KeywordsApi.cs" />

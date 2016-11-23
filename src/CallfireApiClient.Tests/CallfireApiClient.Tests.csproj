@@ -57,7 +57,6 @@
     <Compile Include="Api\Campaigns\CampaignSoundsApiTest.cs" />
     <Compile Include="Api\Contacts\DncApiTest.cs" />
     <Compile Include="Api\Contacts\ContactListsApiTest.cs" />
-    <Compile Include="Api\Contacts\DncListsApiTest.cs" />
     <Compile Include="Api\Keywords\KeywordLeasesApiTest.cs" />
     <Compile Include="Api\Keywords\KeywordsApiTest.cs" />
     <Compile Include="MockRestClient.cs" />
@@ -78,6 +77,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="CallfireApiClient.Tests.csproj" />
+    <None Include="JsonMocks\account\meApi\response\getCreditsUsage.json" />
     <None Include="JsonMocks\callstexts\callsApi\response\getCallRecording.json" />
     <None Include="JsonMocks\callstexts\callsApi\response\getCallRecordings.json" />
     <None Include="JsonMocks\callstexts\mediaApi\response\getMedia.json" />
@@ -104,14 +104,8 @@
     <None Include="JsonMocks\contacts\contactsApi\response\getContactById.json" />
     <None Include="JsonMocks\contacts\contactsApi\response\getContactHistory.json" />
     <None Include="JsonMocks\contacts\contactsApi\response\getContactList.json" />
-    <None Include="JsonMocks\contacts\dncApi\request\addDncItems.json" />
-    <None Include="JsonMocks\contacts\dncApi\request\createDncList.json" />
     <None Include="JsonMocks\contacts\dncApi\request\updateDnc.json" />
-    <None Include="JsonMocks\contacts\dncApi\response\createDncList.json" />
-    <None Include="JsonMocks\contacts\dncApi\response\findDncList.json" />
-    <None Include="JsonMocks\contacts\dncApi\response\findDncLists.json" />
-    <None Include="JsonMocks\contacts\dncApi\response\getDncList.json" />
-    <None Include="JsonMocks\contacts\dncApi\response\getUniversalDncNumbers.json" />
+    <None Include="JsonMocks\contacts\dncApi\response\findDncs.json" />
     <None Include="JsonMocks\numbers\numberLeasesApi\request\updateNumberLease.json" />
     <None Include="JsonMocks\numbers\numberLeasesApi\request\updateNumberLeaseConfig.json" />
     <None Include="JsonMocks\numbers\numberLeasesApi\response\findNumberLeaseConfigs.json" />
