@@ -120,7 +120,7 @@ namespace CallfireApiClient.Tests.Api.Contacts
         }
 
         [Test]
-        public void GetContactHistory()
+        public void GetObsoleteContactHistory()
         {
             var expectedJson = GetJsonPayload("/contacts/contactsApi/response/getContactHistory.json");
             var restRequest = MockRestResponse(expectedJson);
@@ -137,6 +137,52 @@ namespace CallfireApiClient.Tests.Api.Contacts
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.IsNull(requestBodyParam);
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("limit") && p.Value.Equals("1")));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("offset") && p.Value.Equals("5")));
+        }
+
+        [Test]
+        public void GetContactHistoryById()
+        {
+            var expectedJson = GetJsonPayload("/contacts/contactsApi/response/getContactHistory.json");
+            var restRequest = MockRestResponse(expectedJson);
+
+            var contactHistory = Client.ContactsApi.GetHistory(1);
+            Assert.That(Serializer.Serialize(contactHistory), Is.EqualTo(expectedJson));
+
+            Assert.AreEqual(Method.GET, restRequest.Value.Method);
+            var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
+            Assert.IsNull(requestBodyParam);
+        }
+
+        [Test]
+        public void GetContactHistoryByIdAndLimit()
+        {
+            var expectedJson = GetJsonPayload("/contacts/contactsApi/response/getContactHistory.json");
+            var restRequest = MockRestResponse(expectedJson);
+           
+            var contactHistory = Client.ContactsApi.GetHistory(1, 1);
+            Assert.That(Serializer.Serialize(contactHistory), Is.EqualTo(expectedJson));
+
+            Assert.AreEqual(Method.GET, restRequest.Value.Method);
+            var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
+            Assert.IsNull(requestBodyParam);
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("limit") && p.Value.Equals("1")));
+        }
+
+        [Test]
+        public void GetContactHistoryByAllFilters()
+        {
+            var expectedJson = GetJsonPayload("/contacts/contactsApi/response/getContactHistory.json");
+            var restRequest = MockRestResponse(expectedJson);
+
+            var contactHistory = Client.ContactsApi.GetHistory(1, 1, 5);
+            Assert.That(Serializer.Serialize(contactHistory), Is.EqualTo(expectedJson));
+
+            Assert.AreEqual(Method.GET, restRequest.Value.Method);
+            var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
+            Assert.IsNull(requestBodyParam);
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("limit") && p.Value.Equals("1")));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("offset") && p.Value.Equals("5")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("offset") && p.Value.Equals("5")));
         }
     }

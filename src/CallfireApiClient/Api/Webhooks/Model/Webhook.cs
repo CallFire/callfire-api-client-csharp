@@ -28,6 +28,8 @@ namespace CallfireApiClient.Api.Webhooks.Model
 
         public ISet<ResourceEvent> Events { get; set; }
 
+        public bool? SingleUse { get; set; }
+
         private static Dictionary<ResourceType, HashSet<ResourceEvent>> supportedEvents = new Dictionary<ResourceType, HashSet<ResourceEvent>>
         {
             { ResourceType.MONTHLY_RENEWAL, new HashSet<ResourceEvent> { ResourceEvent.FINISHED, ResourceEvent.FAILED } },
@@ -40,7 +42,7 @@ namespace CallfireApiClient.Api.Webhooks.Model
             { ResourceType.INBOUND_TEXT, new HashSet<ResourceEvent> { ResourceEvent.FINISHED } },
             { ResourceType.OUTBOUND_TEXT, new HashSet<ResourceEvent> { ResourceEvent.FINISHED } },
             { ResourceType.UNKNOWN, new HashSet<ResourceEvent> {  } }
-    };
+        };
 
         public override string ToString()
         {

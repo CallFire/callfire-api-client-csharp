@@ -73,10 +73,23 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
         }
 
         [Test]
-        public void GetContactHistory()
+        public void GetObsoleteContactHistory()
         {
             var request = new GetByIdRequest { Id = 1, Limit = 5 };
             var contactHistory = Client.ContactsApi.GetHistory(request);
+            Assert.AreEqual(2, contactHistory.Calls.Count);
+
+            Console.WriteLine("ContactHistory:" + contactHistory);
+        }
+
+        [Test]
+        public void GetContactHistory()
+        {
+            var request = new GetByIdRequest { Id = 1, Limit = 5 };
+            var contactHistory = Client.ContactsApi.GetHistory(1, 0, 0);
+            Assert.AreEqual(2, contactHistory.Calls.Count);
+
+            contactHistory = Client.ContactsApi.GetHistory(1);
             Assert.AreEqual(2, contactHistory.Calls.Count);
 
             Console.WriteLine("ContactHistory:" + contactHistory);

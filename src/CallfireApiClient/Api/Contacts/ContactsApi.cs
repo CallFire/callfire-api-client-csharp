@@ -120,11 +120,32 @@ namespace CallfireApiClient.Api.Contacts
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        [Obsolete]
         public ContactHistory GetHistory(GetByIdRequest request)
         {
             String path = CONTACTS_ITEM_HISTORY_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, request.Id.ToString());
             return Client.Get<ContactHistory>(path, request);
         }
+
+        /// <summary>
+        /// Find all texts and calls attributed to a contact.
+        /// </summary>
+        /// <param name="request">request to get particular contact's history</param>
+        /// <returns>a list of calls and texts a contact has been involved with.</returns>
+        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
+        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
+        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
+        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
+        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
+        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
+        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        public ContactHistory GetHistory(long id, long? limit = null, long? offset = null)
+        {
+            String path = CONTACTS_ITEM_HISTORY_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString());
+            var queryParams = new List<KeyValuePair<string, object>>(2);
+            ClientUtils.AddQueryParamIfSet("limit", limit, queryParams);
+            ClientUtils.AddQueryParamIfSet("offset", offset, queryParams);
+            return Client.Get<ContactHistory>(path, queryParams);
+        }
     }
 }
-

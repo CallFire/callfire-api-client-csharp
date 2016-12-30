@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using CallfireApiClient.Api.Numbers.Model.Request;
 using RestSharp;
 using System.Linq;
@@ -82,6 +81,7 @@ namespace CallfireApiClient.Tests.Api.Numbers
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("limit") && p.Value.Equals("1")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("offset") && p.Value.Equals("2")));
         }
+
     }
 }
 

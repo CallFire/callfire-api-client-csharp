@@ -1,0 +1,12 @@
+{
+  "items": [
+    {
+      "toNumber": "12135551188",
+      "fromNumber": "18442800143",
+      "inboundCall": false,
+      "inboundText": false,
+      "outboundCall": false,
+      "outboundText": true
+    }
+  ]
+}

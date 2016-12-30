@@ -13,7 +13,14 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
         [Test]
         public void TestFind()
         {
-            FindSoundsRequest request = new FindSoundsRequest { Limit = 3, Filter = "sample" };
+            FindSoundsRequest request = new FindSoundsRequest
+            {
+                Limit = 3,
+                Filter = "sample",
+                IncludeScrubbed = true,
+                IncludePending = true,
+                IncludeArchived = true
+            };
             Page<CampaignSound> campaignSounds = Client.CampaignSoundsApi.Find(request);
 
             Assert.AreEqual(4, campaignSounds.TotalCount);
@@ -92,10 +99,16 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
             pathToSaveNewFile = existingFilePath.Replace("train.wav", "wav_sound.wav");
             File.WriteAllBytes(pathToSaveNewFile, ms.ToArray());
 
-            CampaignSound mp3Resource = Client.CampaignSoundsApi.UploadAndGetSoundDetails(mp3FilePath, soundName);
+            CampaignSound mp3Resource = Client.CampaignSoundsApi.UploadAndGetSoundDetails(mp3FilePath, soundName, "id,name,created,lengthInSeconds,status,duplicate");
             Assert.True(mp3Resource.Name.Contains("mp3_test"));
             Assert.AreEqual(1, mp3Resource.LengthInSeconds);
             Assert.True((bool) mp3Resource.Duplicate);
+
+            mp3Resource = Client.CampaignSoundsApi.UploadAndGetSoundDetails(mp3FilePath);
+            Assert.True((bool)mp3Resource.Duplicate);
+
+            mp3Resource = Client.CampaignSoundsApi.UploadAndGetSoundDetails(mp3FilePath, soundName);
+            Assert.True((bool)mp3Resource.Duplicate);
 
             CampaignSound wavResource = Client.CampaignSoundsApi.UploadAndGetSoundDetails(wavFilePath);
             Assert.NotNull(wavResource.Id);

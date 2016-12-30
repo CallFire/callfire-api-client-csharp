@@ -23,7 +23,8 @@ namespace CallfireApiClient.Tests.Api.Webhooks
                 Name = "API hook",
                 Resource = ResourceType.TEXT_BROADCAST,
                 Events = new HashSet<ResourceEvent> { ResourceEvent.STARTED, ResourceEvent.STOPPED },
-                Callback = "http://yoursite.com/webhook"
+                Callback = "http://yoursite.com/webhook",
+                SingleUse = true
             };
             var id = Client.WebhooksApi.Create(webhook);
             Assert.That(Serializer.Serialize(id), Is.EqualTo(responseJson));
@@ -85,7 +86,8 @@ namespace CallfireApiClient.Tests.Api.Webhooks
                 Name = "API hook",
                 Resource = ResourceType.TEXT_BROADCAST,
                 Events = new HashSet<ResourceEvent> { ResourceEvent.STOPPED },
-                Callback = "http://yoursite.com/webhook"
+                Callback = "http://yoursite.com/webhook",
+                SingleUse = true
             };
             Client.WebhooksApi.Update(webhook);
 

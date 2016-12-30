@@ -7,6 +7,12 @@ namespace CallfireApiClient.Api.CallsTexts.Model
     {
         public CallResult? Result { get; private set; }
 
+        public long? OriginateTime { get; private set; }
+
+        public long? AnswerTime { get; private set; }
+
+        public long? Duration { get; private set; }
+
         public IList<Note> Notes { get; set; }
 
         public IList<CallRecording> Recordings { get; private set; }
@@ -34,8 +40,8 @@ namespace CallfireApiClient.Api.CallsTexts.Model
 
         public override string ToString()
         {
-            return string.Format("{0} [CallRecord: Result={1}, Notes={2}, Recordings={3}]", base.ToString(),
-                Result, Notes?.ToPrettyString(), Recordings?.ToPrettyString());
+            return string.Format("{0} [CallRecord: Result={1}, OriginateTime={2}, AnswerTime={3}, AnswerTime={4}, Notes={5}, Recordings={6}]", base.ToString(),
+                Result, OriginateTime, AnswerTime, AnswerTime, Notes?.ToPrettyString(), Recordings?.ToPrettyString());
         }
     }
 }

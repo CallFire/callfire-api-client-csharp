@@ -123,9 +123,13 @@
     <Compile Include="Api\Contacts\Model\Request\AddContactListContactsRequest.cs" />
     <Compile Include="Api\Contacts\Model\Request\AddContactsRequest.cs" />
     <Compile Include="Api\Contacts\Model\Request\CreateContactListRequest.cs" />
+    <Compile Include="Api\Contacts\Model\Request\FindUniversalDncsRequest.cs" />
+    <Compile Include="Api\Contacts\Model\Request\UpdateDncRequest.cs" />
     <Compile Include="Api\Contacts\Model\Request\FindContactListsRequest.cs" />
     <Compile Include="Api\Contacts\Model\Request\FindContactsRequest.cs" />
-    <Compile Include="Api\Contacts\Model\Request\FindDncContactsRequest.cs" />
+    <Compile Include="Api\Contacts\Model\Request\FindDncNumbersRequest.cs" />
+    <Compile Include="Api\Contacts\Model\Request\CreateDncsRequest.cs" />
+    <Compile Include="Api\Contacts\Model\Request\CallsTextsRequest.cs" />
     <Compile Include="Api\Contacts\Model\Request\UpdateContactListRequest.cs" />
     <Compile Include="Api\Contacts\Model\Contact.cs" />
     <Compile Include="Api\Contacts\Model\ContactHistory.cs" />

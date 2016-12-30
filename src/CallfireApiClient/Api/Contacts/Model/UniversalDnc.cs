@@ -1,4 +1,3 @@
-using System;
 using CallfireApiClient.Api.Common.Model;
 
 namespace CallfireApiClient.Api.Contacts.Model

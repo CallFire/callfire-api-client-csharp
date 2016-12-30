@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CallfireApiClient.Api.Numbers.Model;
 using CallfireApiClient.Api.Numbers.Model.Request;
 using CallfireApiClient.Api.Common.Model;
@@ -71,6 +70,7 @@ namespace CallfireApiClient.Api.Numbers
         {
             return Client.Get<ListHolder<Number>>(NUMBERS_TOLLFREE_PATH, request).Items;
         }
+
     }
 }
 

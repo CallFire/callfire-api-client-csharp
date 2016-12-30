@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><package>
   <metadata>
     <id>CallfireApiClient</id>
-    <version>1.1.11</version>
+    <version>1.1.12</version>
     <title>CallFire API v2 client</title>
     <authors>
       Vladimir Mikhailov
@@ -15,6 +15,12 @@
     <description>C# client library for integration with Callfire REST API v2 services</description>
     <releaseNotes>Callfire API client Changelog
 =============================
+Version 1.1.12 - Dec 28 2016
+- updated CallRecord dto to include originateTime, answerTime, duration, callerName and switchId fields
+- updated Webhook dto to include singleUse parameter
+- minor extension of requests objects for upload and find sounds api, get contacts history api and find tollfree numbers api
+- temporary turning dnc api off due to full remake of callfire dnc apis
+
 Version 1.1.11 - Nov 18 2016
 - added deleteCampaignSound api
 - added getCreditsHistory api

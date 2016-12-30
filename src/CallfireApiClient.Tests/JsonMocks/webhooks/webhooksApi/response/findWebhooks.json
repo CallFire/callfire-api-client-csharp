@@ -11,7 +11,8 @@
       "events": [
         "Started",
         "Stopped"
-      ]
+      ],
+      "singleUse": true
     },
     {
       "id": 2,
@@ -24,7 +25,8 @@
       "events": [
         "Started",
         "Stopped"
-      ]
+      ],
+      "singleUse": true
     }
   ],
   "limit": 1000,

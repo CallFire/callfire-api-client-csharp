@@ -21,7 +21,10 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             {
                 Limit = 5,
                 Offset = 0,
-                Filter = "1234"
+                Filter = "1234",
+                IncludeArchived = true,
+                IncludePending = true,
+                IncludeScrubbed = true
             };
 
             Page<CampaignSound> sounds = Client.CampaignSoundsApi.Find(request);
@@ -31,6 +34,9 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("limit") && p.Value.Equals("5")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("offset") && p.Value.Equals("0")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("filter") && p.Value.Equals("1234")));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("includeArchived") && p.Value.Equals("True")));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("includePending") && p.Value.Equals("True")));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("includeScrubbed") && p.Value.Equals("True")));
         }
 
         [Test]
@@ -68,7 +74,6 @@ namespace CallfireApiClient.Tests.Api.Campaigns
 
             Assert.That(Serializer.Serialize(campaignSound), Is.EqualTo(expectedJson));
             Assert.AreEqual(Method.GET, restRequest.Value.Method);
-            Assert.That(restRequest.Value.Parameters, Has.None.Matches<Parameter>(p => p.Name.Equals("FIELDS") && p.Value.Equals(FIELDS)));
             Assert.That(restRequest.Value.Resource, Is.StringEnding("/11"));
         }
 
@@ -86,13 +91,38 @@ namespace CallfireApiClient.Tests.Api.Campaigns
         }
 
         [Test]
-        public void TestUploadAndGetSoundDetails()
+        public void TestUploadAndGetSoundDetailsWithoutFileName()
+        {
+            string expectedJson = GetJsonPayload("/campaigns/campaignSoundsApi/response/uploadSoundWithDetails.json");
+            var restRequest = MockRestResponse(expectedJson);
+
+            string mp3FilePath = "Resources/File-examples/train.mp3";
+            CampaignSound sound = Client.CampaignSoundsApi.UploadAndGetSoundDetails(mp3FilePath);
+            Assert.That(Serializer.Serialize(sound), Is.EqualTo(expectedJson));
+            Assert.AreEqual(Method.POST, restRequest.Value.Method);
+        }
+
+        [Test]
+        public void TestUploadAndGetSoundDetailsWithFileName()
         {
             string expectedJson = GetJsonPayload("/campaigns/campaignSoundsApi/response/uploadSoundWithDetails.json");
             var restRequest = MockRestResponse(expectedJson);
 
             string mp3FilePath = "Resources/File-examples/train.mp3";
             CampaignSound sound = Client.CampaignSoundsApi.UploadAndGetSoundDetails(mp3FilePath, "fname");
+            Assert.That(Serializer.Serialize(sound), Is.EqualTo(expectedJson));
+            Assert.AreEqual(Method.POST, restRequest.Value.Method);
+        }
+
+        [Test]
+        public void TestUploadAndGetSoundDetailsWithFileNameAndFields()
+        {
+            string expectedJson = GetJsonPayload("/campaigns/campaignSoundsApi/response/uploadSoundWithDetails.json");
+            var restRequest = MockRestResponse(expectedJson);
+
+            string mp3FilePath = "Resources/File-examples/train.mp3";
+            CampaignSound sound = Client.CampaignSoundsApi.UploadAndGetSoundDetails(mp3FilePath, "fname", FIELDS);
+            Assert.That(restRequest.Value.Parameters, Has.None.Matches<Parameter>(p => p.Name.Equals("FIELDS") && p.Value.Equals(FIELDS)));
             Assert.That(Serializer.Serialize(sound), Is.EqualTo(expectedJson));
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
         }
