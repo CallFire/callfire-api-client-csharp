@@ -1,5 +1,8 @@
 Callfire API client Changelog
 =============================
+Version 1.1.13 - Dec 30 2016
+- minor fixes for get contacts history api
+
 Version 1.1.12 - Dec 28 2016
 - updated CallRecord dto to include originateTime, answerTime, duration, callerName and switchId fields
 - updated Webhook dto to include singleUse parameter
