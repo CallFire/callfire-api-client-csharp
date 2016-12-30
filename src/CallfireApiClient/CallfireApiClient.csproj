@@ -158,7 +158,6 @@
     <Compile Include="Api\Numbers\Model\Request\FindNumberLeasesRequest.cs" />
     <Compile Include="Api\Numbers\Model\Request\FindNumberRegionsRequest.cs" />
     <Compile Include="Api\Numbers\Model\Request\FindNumbersLocalRequest.cs" />
-    <Compile Include="Api\Numbers\Model\Request\FindTollfreeNumbersRequest.cs" />
     <Compile Include="Api\Numbers\Model\Request\NumberPurchaseRequest.cs" />
     <Compile Include="Api\Numbers\NumberLeasesApi.cs" />
     <Compile Include="Api\Numbers\NumbersApi.cs" />

@@ -9,30 +9,12 @@ namespace CallfireApiClient.IntegrationTests.Api.Numbers
     public class NumbersApiIntegrationTest : AbstractIntegrationTest
     {
         [Test]
-        public void FindObsoleteTollfreeNumbers()
+        public void FindTollfreeNumbers()
         {
             var request = new CommonFindRequest { Limit = 2 };
             var numbers = Client.NumbersApi.FindNumbersTollfree(request);
             Assert.AreEqual(2, numbers.Count);
 
-            Console.WriteLine(numbers);
-        }
-
-        [Test]
-        public void FindTollfreeNumbers()
-        {
-            var request = new FindTollfreeNumbersRequest
-            {
-                Limit = 2,
-                Pattern = "84*",
-                Fields = "items(number)"
-            };
-            var numbers = Client.NumbersApi.FindNumbersTollfree(request);
-            Assert.AreEqual(2, numbers.Count);
-            Assert.True(numbers[0].PhoneNumber.Contains("84"));
-            Assert.True(numbers[1].PhoneNumber.Contains("84"));
-            Assert.Null(numbers[0].NationalFormat);
-            Assert.Null(numbers[0].Region);
             Console.WriteLine(numbers);
         }
 
