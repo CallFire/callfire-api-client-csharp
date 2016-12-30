@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CallfireApiClient.Api.Numbers.Model;
 using CallfireApiClient.Api.Numbers.Model.Request;
 using CallfireApiClient.Api.Common.Model;
@@ -71,6 +72,22 @@ namespace CallfireApiClient.Api.Numbers
             return Client.Get<ListHolder<Number>>(NUMBERS_TOLLFREE_PATH, request).Items;
         }
 
+        /// <summary>
+        /// Find numbers in the CallFire tollfree numbers catalog that are available for purchase.
+        /// </summary>
+        /// <param name="request">request object</param>
+        /// <returns>list of numbers</returns>
+        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
+        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
+        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
+        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
+        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
+        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
+        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        public IList<Number> FindNumbersTollfree(FindTollfreeNumbersRequest request)
+        {
+            return Client.Get<ListHolder<Number>>(NUMBERS_TOLLFREE_PATH, request).Items;
+        }
     }
 }
 

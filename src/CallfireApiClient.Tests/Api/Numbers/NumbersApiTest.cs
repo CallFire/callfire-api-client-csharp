@@ -82,6 +82,26 @@ namespace CallfireApiClient.Tests.Api.Numbers
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("offset") && p.Value.Equals("2")));
         }
 
+        [Test]
+        public void FindNumbersTollfreeWithPattern()
+        {
+            var expectedJson = GetJsonPayload("/numbers/numbersApi/response/findNumbersTollfree.json");
+            var restRequest = MockRestResponse(expectedJson);
+
+            var request = new FindTollfreeNumbersRequest
+            {
+                Pattern = "86*",
+                Limit = 1
+            };
+            var numbers = Client.NumbersApi.FindNumbersTollfree(request);
+            Assert.That(Serializer.Serialize(new ListHolder<Number>(numbers)), Is.EqualTo(expectedJson));
+
+            Assert.AreEqual(Method.GET, restRequest.Value.Method);
+            var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
+            Assert.IsNull(requestBodyParam);
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("pattern") && p.Value.Equals("86*")));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("limit") && p.Value.Equals("1")));
+        }
     }
 }
 
