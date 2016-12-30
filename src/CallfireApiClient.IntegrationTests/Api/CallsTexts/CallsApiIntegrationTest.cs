@@ -34,13 +34,13 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
                 States = { StateType.FINISHED, StateType.READY },
                 IntervalBegin = DateTime.UtcNow.AddMonths(-2),
                 IntervalEnd = DateTime.UtcNow,
-                Limit = 3
+                Limit = 1
             };
 
             Page<Call> calls = Client.CallsApi.Find(request);
             Console.WriteLine("Calls: " + calls);
 
-            Assert.AreEqual(3, calls.Items.Count);
+            Assert.AreEqual(1, calls.Items.Count);
         }
 
         [Test]

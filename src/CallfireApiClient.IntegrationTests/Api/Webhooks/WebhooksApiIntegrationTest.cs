@@ -17,7 +17,8 @@ namespace CallfireApiClient.IntegrationTests.Api.Webhooks
                 Name = "test_name1",
                 Callback = "test_callback",
                 Resource = ResourceType.TEXT_BROADCAST,
-                Events = new HashSet<ResourceEvent> { ResourceEvent.STARTED }
+                Events = new HashSet<ResourceEvent> { ResourceEvent.STARTED },
+                SingleUse = true
             };
             var resourceId1 = api.Create(webhook);
             Assert.NotNull(resourceId1.Id);
@@ -28,7 +29,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Webhooks
             {
                 Limit = 30L,
                 Name = "test_name1",
-                Fields = "items(id,callback,name,resource,events)"
+                Fields = "items(id,callback,name,resource,events,singleUse)"
             };
             var page = api.Find(findRequest);
             Assert.That(page.Items.Count > 1);
@@ -37,12 +38,15 @@ namespace CallfireApiClient.IntegrationTests.Api.Webhooks
             Assert.AreEqual(ResourceType.TEXT_BROADCAST, page.Items[0].Resource);
             Assert.AreEqual(1, page.Items[0].Events.Count);
             Assert.NotNull(page.Items[0].Id);
+            Assert.True(page.Items[0].SingleUse.GetValueOrDefault());
 
             webhook = page.Items[0];
             webhook.Name = "test_name2";
+            webhook.SingleUse = false;
             api.Update(webhook);
             Webhook updated = api.Get((long)webhook.Id);
             Assert.AreEqual(webhook.Resource, updated.Resource);
+            Assert.False(page.Items[0].SingleUse.GetValueOrDefault());
 
             api.Delete((long)resourceId1.Id);
             api.Delete((long)resourceId2.Id);

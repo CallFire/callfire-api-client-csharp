@@ -3,63 +3,110 @@ using NUnit.Framework;
 using CallfireApiClient.Api.Contacts.Model;
 using CallfireApiClient.Api.Contacts.Model.Request;
 using CallfireApiClient.Api.Common.Model;
+using System.Collections.Generic;
 
 namespace CallfireApiClient.IntegrationTests.Api.Contacts
 {
     [TestFixture]
     public class DncApiIntegrationTest : AbstractIntegrationTest
     {
+        //TODO vmalinovskiy: uncomment when dnc apis will be tested and available on docs site
+        /*
         [Test]
         public void FindDncs()
         {
-            var request = new FindDncContactsRequest();
+            var request = new FindDncNumbersRequest()
+            {
+                Text = true,
+                Limit = 1,
+                Numbers = new List<string> { "12135551189" }
+            };
+
             Page<DoNotContact> dncs = Client.DncApi.Find(request);
             Console.WriteLine("Page of credentials:" + dncs);
 
             Assert.NotNull(dncs);
-            Assert.GreaterOrEqual(dncs.Items.Count, 0);
+            Assert.AreEqual(dncs.Items.Count, 1);
         }
 
         [Test]
-        public void UpdateDnc()
+        public void CrudAndGetDnc()
         {
-            long listId = 2021478003;
-            string number = "13234324554";
-            string prefix = "13234";
-        
-            DoNotContact dncToUpdate = new DoNotContact
+            CreateDncsRequest crRequest = new CreateDncsRequest()
             {
-                ListId = listId,
-                Text = true,
                 Call = true,
-                Number = number
+                Text = true,
+                Numbers = new List<string> { "12135551188" },
+                Source = "testSource"
             };
-            Client.DncApi.Update(dncToUpdate);
+            Client.DncApi.Create(crRequest);
 
-            var request = new FindDncContactsRequest
+            DoNotContact dnc = Client.DncApi.Get("12135551188");
+            Assert.AreEqual(dnc.Number, "12135551188");
+            Assert.AreEqual(dnc.Call, true);
+            Assert.AreEqual(dnc.Text, true);
+
+            UpdateDncRequest updRequest = new UpdateDncRequest()
             {
-                DncListId = listId,
-                Prefix = prefix,
-                CallDnc = true,
-                TextDnc = true,
-                Limit = 1,
-                Offset = 0
+                Call = true,
+                Text = false,
+                Number = "12135551188"
             };
-            Page<DoNotContact> dnc = Client.DncApi.Find(request);
-            Assert.NotNull(dnc);
-            Assert.AreEqual(dnc.Items.Count, 1);
-            Assert.AreEqual(dnc.Items[0].ListId, listId);
-            Assert.AreEqual(dnc.Items[0].Number, number);
-            Assert.AreEqual(dnc.Items[0].Text, true);
-            Assert.AreEqual(dnc.Items[0].Call, true);
+            Client.DncApi.Update(updRequest);
 
-            //get back initial db stage as before test
-            dncToUpdate.Text = true;
-            dncToUpdate.Call = true;
-            Client.DncApi.Update(dncToUpdate);
+            dnc = Client.DncApi.Get("12135551188");
+            Assert.AreEqual(dnc.Call, true);
+            Assert.AreEqual(dnc.Text, false);
+
+            Client.DncApi.Delete("12135551188");
+
+            dnc = Client.DncApi.Get("12135551188");
+            Assert.AreEqual(dnc.Call, false);
+            Assert.AreEqual(dnc.Text, false);
         }
 
+        [Test]
+        public void DeleteDncsFromSource()
+        {
+            CreateDncsRequest crRequest = new CreateDncsRequest()
+            {
+                Call = true,
+                Text = true,
+                Numbers = new List<string> { "12135551189" },
+                Source = "testSourceForDeleteDncs"
+            };
+            Client.DncApi.Create(crRequest);
+
+            FindDncNumbersRequest request = new FindDncNumbersRequest()
+            {
+                Source = "testSourceForDeleteDncs"
+            };
+            Page<DoNotContact> dncContacts = Client.DncApi.Find(request);
+            Assert.True(dncContacts.Items.Count > 0);
+
+            Client.DncApi.DeleteDncsFromSource("testSourceForDeleteDncs");
+
+            dncContacts = Client.DncApi.Find(request);
+            Assert.True(dncContacts.Items.Count == 0);
+        }
+
+        [Test]
+        public void FindUniversalDncs()
+        {
+            FindUniversalDncsRequest request = new FindUniversalDncsRequest()
+            {
+                ToNumber = "12135551188",
+                FromNumber = "18442800143"
+            };
+
+            var uDncs = Client.DncApi.FindUniversalDncs(request);
+            Assert.AreEqual("18442800143", uDncs[0].FromNumber);
+            Assert.AreEqual("12135551188", uDncs[0].ToNumber);
+            Assert.NotNull(uDncs[0].InboundCall);
+            Assert.NotNull(uDncs[0].InboundText);
+            Assert.NotNull(uDncs[0].OutboundCall);
+            Assert.NotNull(uDncs[0].OutboundText);
+        }
+        */
     }
-
 }
-

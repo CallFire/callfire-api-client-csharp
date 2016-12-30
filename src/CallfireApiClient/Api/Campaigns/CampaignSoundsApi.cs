@@ -189,7 +189,27 @@ namespace CallfireApiClient.Api.Campaigns
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public CampaignSound UploadAndGetSoundDetails(string pathToFile, string name = null)
         {
-            return Client.PostFile<CampaignSound>(SOUNDS_FILES_PATH, name, pathToFile);
+            return UploadAndGetSoundDetails(pathToFile, name, null);
+        }
+
+        /// <summary>
+        /// Upload a MP3 or WAV file to account
+        /// </summary>
+        /// <param name="name">contact list name</param>
+        /// <param name="pathToFile">path to MP3 or WAV file</param>
+        /// <param name="fields">Limit text fields returned. Example fields=limit,offset,items(id,message)</param>
+        /// <returns> CampaignSound object with sound details</returns>
+        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
+        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
+        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
+        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
+        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
+        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
+        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        public CampaignSound UploadAndGetSoundDetails(string pathToFile, string name, string fields = null)
+        {
+            var queryParams = ClientUtils.BuildQueryParams("fields", fields);
+            return Client.PostFile<CampaignSound>(SOUNDS_FILES_PATH, name, pathToFile, queryParams);
         }
 
         /// <summary>

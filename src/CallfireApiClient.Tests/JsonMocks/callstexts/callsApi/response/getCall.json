@@ -18,8 +18,13 @@
       "billedAmount": 1.1667,
       "finishTime": 1443333972000,
       "toNumber": "12135551101",
+      "callerName": "12345",
+      "switchId": "1234",
       "labels": ["12135551102"],
-      "result": "LA"
+      "result": "LA",
+      "originateTime": 213231,
+      "answerTime": 2131223,
+      "duration": 20
     }
   ],
   "finalCallResult": "LA",

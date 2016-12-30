@@ -86,6 +86,9 @@
     <None Include="JsonMocks\campaigns\callBroadcastsApi\request\updateIvrBroadcast.json" />
     <None Include="JsonMocks\campaigns\callBroadcastsApi\response\createIvrBroadcast.json" />
     <None Include="JsonMocks\campaigns\campaignSoundsApi\response\uploadSoundWithDetails.json" />
+    <None Include="JsonMocks\contacts\dncApi\request\addDnc.json" />
+    <None Include="JsonMocks\contacts\dncApi\response\findUniversalDncs.json" />
+    <None Include="JsonMocks\contacts\dncApi\response\getDnc.json" />
     <None Include="JsonMocks\webhooks\webhooksApi\response\findSpecificWebhookResource.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

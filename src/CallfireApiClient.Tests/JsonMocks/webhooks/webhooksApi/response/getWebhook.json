@@ -9,5 +9,6 @@
   "events": [
      "Started",
      "Stopped"
-  ]
+  ],
+  "singleUse": true
 }

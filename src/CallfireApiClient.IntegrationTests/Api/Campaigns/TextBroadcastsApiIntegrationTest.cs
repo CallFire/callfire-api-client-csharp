@@ -53,7 +53,19 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
         [Test]
         public void StartStopArchiveCampaign()
         {
-            var campaign = Client.TextBroadcastsApi.Get(8729792003);
+            var broadcast = new TextBroadcast
+            {
+                Name = "text_broadcast",
+                Message = "test_msg",
+                Recipients = new List<TextRecipient>
+                {
+                    new TextRecipient { PhoneNumber = "14246525473" }
+                }
+            };
+
+            ResourceId id = Client.TextBroadcastsApi.Create(broadcast, false);
+
+            var campaign = Client.TextBroadcastsApi.Get(id.Id);
             Console.WriteLine(campaign);
             Assert.NotNull(campaign);
             // start
