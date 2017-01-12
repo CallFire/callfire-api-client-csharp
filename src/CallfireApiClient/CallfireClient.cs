@@ -18,25 +18,25 @@ namespace CallfireApiClient
     {
         public RestApiClient RestApiClient { get; set; }
 
-        readonly Lazy<MeApi> _MeApi;
-        readonly Lazy<OrdersApi> _OrdersApi;
-        readonly Lazy<BatchesApi> _BatchesApi;
-        readonly Lazy<CampaignSoundsApi> _CampaignSoundsApi;
-        readonly Lazy<ContactsApi> _ContactsApi;
-        readonly Lazy<ContactListsApi> _ContactListsApi;
-        readonly Lazy<NumbersApi> _NumbersApi;
-        readonly Lazy<NumberLeasesApi> _NumberLeasesApi;
-        readonly Lazy<KeywordsApi> _KeywordsApi;
-        readonly Lazy<KeywordLeasesApi> _KeywordLeasesApi;
-        readonly Lazy<DncApi> _DncApi;
-        readonly Lazy<CallsApi> _CallsApi;
-        readonly Lazy<TextsApi> _TextsApi;
-        readonly Lazy<TextAutoRepliesApi> _TextAutoRepliesApi;
-        readonly Lazy<TextBroadcastsApi> _TextBroadcastsApi;
-        readonly Lazy<CallBroadcastsApi> _CallBroadcastsApi;
-        readonly Lazy<MediaApi> _MediaApi;
-        readonly Lazy<SubscriptionsApi> _SubscriptionsApi;
-        readonly Lazy<WebhooksApi> _WebhooksApi;
+        private Lazy<MeApi> _MeApi;
+        private Lazy<OrdersApi> _OrdersApi;
+        private Lazy<BatchesApi> _BatchesApi;
+        private Lazy<CampaignSoundsApi> _CampaignSoundsApi;
+        private Lazy<ContactsApi> _ContactsApi;
+        private Lazy<ContactListsApi> _ContactListsApi;
+        private Lazy<NumbersApi> _NumbersApi;
+        private Lazy<NumberLeasesApi> _NumberLeasesApi;
+        private Lazy<KeywordsApi> _KeywordsApi;
+        private Lazy<KeywordLeasesApi> _KeywordLeasesApi;
+        private Lazy<DncApi> _DncApi;
+        private Lazy<CallsApi> _CallsApi;
+        private Lazy<TextsApi> _TextsApi;
+        private Lazy<TextAutoRepliesApi> _TextAutoRepliesApi;
+        private Lazy<TextBroadcastsApi> _TextBroadcastsApi;
+        private Lazy<CallBroadcastsApi> _CallBroadcastsApi;
+        private Lazy<MediaApi> _MediaApi;
+        private Lazy<SubscriptionsApi> _SubscriptionsApi;
+        private Lazy<WebhooksApi> _WebhooksApi;
 
         public MeApi MeApi { get { return _MeApi.Value; } }
 
@@ -80,7 +80,17 @@ namespace CallfireApiClient
         public CallfireClient(string username, string password)
         {
             RestApiClient = new RestApiClient(new HttpBasicAuthenticator(username, password));
+            InitApis();
+        }
 
+        public CallfireClient(ProxyAuthenticator proxyAuth)
+        {
+            RestApiClient = new RestApiClient(proxyAuth);
+            InitApis();
+        }
+
+        private void InitApis()
+        {
             _MeApi = new Lazy<MeApi>(() => new MeApi(RestApiClient));
             _OrdersApi = new Lazy<OrdersApi>(() => new OrdersApi(RestApiClient));
             _BatchesApi = new Lazy<BatchesApi>(() => new BatchesApi(RestApiClient));

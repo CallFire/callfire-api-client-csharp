@@ -1,6 +1,5 @@
 using System;
 using RestSharp;
-using CallfireApiClient.Api.Common.Model.Request;
 using RestSharp.Authenticators;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,8 +9,6 @@ using RestSharp.Serializers;
 using System.Collections;
 using System.Text;
 using System.IO;
-using System.Reflection;
-using System.Diagnostics;
 using System.Net;
 
 namespace CallfireApiClient
@@ -21,11 +18,9 @@ namespace CallfireApiClient
     /// </summary>
     public class RestApiClient
     {
-        private const string DEFAULT_FILE_CONTENT_TYPE = "application/octet-stream";
-
-        private readonly Logger Logger = new Logger();
-        private readonly ISerializer JsonSerializer;
-        private readonly IDeserializer JsonDeserializer;
+        private static ISerializer JsonSerializer;
+        private static IDeserializer JsonDeserializer;
+        private static Logger Logger = new Logger();
         private static KeyValueConfigurationCollection ClientConfig;
 
         /// <summary>
@@ -38,19 +33,44 @@ namespace CallfireApiClient
         /// Returns base URL path for all Callfire's API 2.0 endpoints
         /// <summary>/
         /// <returns>string representation of base URL path</returns>
-        public string ApiBasePath { get; private set; }
+        public static string ApiBasePath { get; private set; }
+
+        /// <summary>
+        /// Returns proxy adress for all Callfire's API 2.0 endpoints
+        /// <summary>/
+        /// <returns>string representation of proxy adress</returns>
+        public static string ProxyAddress { get; private set; }
+
+        /// <summary>
+        /// Returns proxy port for all Callfire's API 2.0 endpoints
+        /// <summary>/
+        /// <returns>string representation of proxy port</returns>
+        public static int ProxyPort { get; private set; }
+
+        /// <summary>
+        /// Returns proxy login for all Callfire's API 2.0 endpoints
+        /// <summary>/
+        /// <returns>string representation of proxy login</returns>
+        public static string ProxyLogin { get; private set; }
+
+        /// <summary>
+        /// Returns proxy password for all Callfire's API 2.0 endpoints
+        /// <summary>/
+        /// <returns>string representation of proxy login</returns>
+        public static string ProxyPassword { get; private set; }
 
         /// <summary>
         /// Returns HTTP request filters associated with API client
         /// </summary>
         /// <value>active filters.</value>
-        public SortedSet<RequestFilter> Filters { get; }
+        public SortedSet<RequestFilter> Filters { get; private set; }
 
         /// <summary>
         /// loads client configuration
         /// </summary>
         static RestApiClient() {
             ClientConfig = LoadAppSettings();
+            SetAppSettings();
         }
 
         /// <summary>
@@ -70,43 +90,21 @@ namespace CallfireApiClient
         /// </param>
         public RestApiClient(IAuthenticator authenticator)
         {
-            ApiBasePath = ClientConfig[ClientConstants.CONFIG_API_BASE_PATH].Value;
-            JsonSerializer = new CallfireJsonConverter();
-            JsonDeserializer = JsonSerializer as IDeserializer;
+            InitRestApiClient(authenticator);
+            SetUpRestClientProxy();
+        }
 
-            RestClient = new RestClient(ApiBasePath);
-            RestClient.Authenticator = authenticator;
-            RestClient.UserAgent = this.GetType().Assembly.GetName().Name + "-csharp-" + this.GetType().Assembly.GetName().Version;
-            RestClient.AddHandler("application/json", JsonDeserializer);
-
-            
-            String proxyAddress = ClientConfig[ClientConstants.PROXY_ADDRESS_PROPERTY]?.Value; 
-            String proxyCredentials = ClientConfig[ClientConstants.PROXY_CREDENTIALS_PROPERTY]?.Value; 
-
-            if (!String.IsNullOrEmpty(proxyAddress))
-            {
-                Logger.Debug("Configuring proxy host for client: {} auth: {}", proxyAddress, proxyCredentials);
-                char[] delimiterChars = { ':' };
-                String[] parsedAddress = proxyAddress.Split(delimiterChars);
-                String[] parsedCredentials = (proxyCredentials == null ? "" : proxyCredentials).Split(delimiterChars);
-                int portValue = parsedAddress.Length > 1 ? ClientUtils.StrToIntDef(parsedAddress[1], ClientConstants.DEFAULT_PROXY_PORT) : ClientConstants.DEFAULT_PROXY_PORT;
-                WebProxy proxy = new WebProxy(parsedAddress[0], portValue);
-               
-                if (!String.IsNullOrEmpty(proxyCredentials))
-                {
-                    if (parsedCredentials.Length > 1)
-                    {
-                        proxy.Credentials = new NetworkCredential(parsedCredentials[0], parsedCredentials[1]);
-                    }
-                    else
-                    {
-                        Logger.Debug("Proxy credentials have wrong format, must be username:password");
-                    }
-                }
-                RestClient.Proxy = proxy;
-            }
-
-            Filters = new SortedSet<RequestFilter>();
+        /// <summary>
+        /// REST API client constructor
+        /// <summary>/
+        /// <param name="authenticator">
+        ///  authentication API authentication method
+        /// </param>
+        public RestApiClient(ProxyAuthenticator authenticator)
+        {
+            InitRestApiClient(new HttpBasicAuthenticator("", ""));
+            ConfigureProxyParameters(authenticator.ProxyAddress, authenticator.ProxyCredentials);
+            SetUpRestClientProxy();
         }
 
         /// <summary>
@@ -117,13 +115,93 @@ namespace CallfireApiClient
             var path = typeof(RestApiClient).Assembly.Location;
             var config = ConfigurationManager.OpenExeConfiguration(path);
             var appSettings = (AppSettingsSection)config.GetSection("appSettings");
-            var basePath = appSettings.Settings[ClientConstants.CONFIG_API_BASE_PATH];
+            return appSettings.Settings;
+        }
+
+        /// <summary>
+        /// Initialize main RestClient parameters
+        /// </summary>
+        private void InitRestApiClient(IAuthenticator authenticator)
+        {
+            JsonSerializer = new CallfireJsonConverter();
+            JsonDeserializer = JsonSerializer as IDeserializer;
+
+            RestClient = new RestClient(ApiBasePath);
+            RestClient.Authenticator = authenticator;
+            RestClient.UserAgent = this.GetType().Assembly.GetName().Name + "-csharp-" + this.GetType().Assembly.GetName().Version;
+            RestClient.AddHandler("application/json", JsonDeserializer);
+
+            Filters = new SortedSet<RequestFilter>();
+        }
+
+        /// <summary>
+        /// Set up client's app config parameters from app settings
+        /// </summary>
+        private static void SetAppSettings()
+        {
+            //basePath
+            var basePath = ClientConfig[ClientConstants.CONFIG_API_BASE_PATH];
+            
             if (basePath == null || string.IsNullOrWhiteSpace(basePath.Value))
             {
-                throw new CallfireClientException("Cannot read " + ClientConstants.CONFIG_API_BASE_PATH +
-                    " property from configuration file at: " + path + ".config");
+                ApiBasePath = ClientConstants.API_BASE_PATH_DEFAULT_VALUE;
             }
-           return appSettings.Settings;
+            else
+            {
+                ApiBasePath = basePath.Value;
+            }
+
+            //proxy
+            String proxyAddress = ClientConfig[ClientConstants.PROXY_ADDRESS_PROPERTY]?.Value;
+            String proxyCredentials = ClientConfig[ClientConstants.PROXY_CREDENTIALS_PROPERTY]?.Value;
+            ConfigureProxyParameters(proxyAddress, proxyCredentials);
+        }
+
+        /// <summary>
+        /// Configure app proxy parameters
+        /// </summary>
+        private static void ConfigureProxyParameters(String proxyAddress, String proxyCredentials)
+        {
+            if (!String.IsNullOrEmpty(proxyAddress))
+            {
+                Logger.Debug("Configuring proxy host for client: {} auth: {}", proxyAddress, proxyCredentials);
+                char[] delimiterChars = { ':' };
+                String[] parsedAddress = proxyAddress.Split(delimiterChars);
+                String[] parsedCredentials = (proxyCredentials == null ? "" : proxyCredentials).Split(delimiterChars);
+                int portValue = parsedAddress.Length > 1 ? ClientUtils.StrToIntDef(parsedAddress[1], ClientConstants.DEFAULT_PROXY_PORT) : ClientConstants.DEFAULT_PROXY_PORT;
+
+                if (!String.IsNullOrEmpty(proxyCredentials))
+                {
+                    if (parsedCredentials.Length > 1)
+                    {
+                        ProxyAddress = parsedAddress[0];
+                        ProxyPort = portValue;
+                        ProxyLogin = parsedCredentials[0];
+                        ProxyPassword = parsedCredentials[1];
+                    }
+                    else
+                    {
+                        Logger.Debug("Proxy credentials have wrong format, must be username:password");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Set up client's app proxy 
+        /// </summary>
+        private void SetUpRestClientProxy()
+        {
+            if (!String.IsNullOrEmpty(ProxyAddress))
+            {
+                WebProxy proxy = new WebProxy(ProxyAddress, ProxyPort);
+                proxy.Credentials = new NetworkCredential(ProxyLogin, ProxyPassword);
+                RestClient.Proxy = proxy;
+            }
+            else
+            {
+                Logger.Debug("Proxy wasn't configured, please check input parameters");
+            }
         }
 
         /// <summary>
@@ -266,7 +344,7 @@ namespace CallfireApiClient
             var queryParams = ClientUtils.BuildQueryParams("name", fileName);
             var restRequest = CreateRestRequest(path, Method.POST, queryParams);
             restRequest.AddHeader("Content-Type", "multipart/form-data");
-            restRequest.AddFileBytes("file", File.ReadAllBytes(filePath), Path.GetFileName(filePath), contentType != null ? contentType : DEFAULT_FILE_CONTENT_TYPE);
+            restRequest.AddFileBytes("file", File.ReadAllBytes(filePath), Path.GetFileName(filePath), contentType != null ? contentType : ClientConstants.DEFAULT_FILE_CONTENT_TYPE);
             restRequest.AddParameter("name", fileName);
             return DoRequest<T>(restRequest);
         }
@@ -294,7 +372,7 @@ namespace CallfireApiClient
             
             var restRequest = CreateRestRequest(path, Method.POST, queryParams);
             restRequest.AddHeader("Content-Type", "multipart/form-data");
-            restRequest.AddFileBytes("file", File.ReadAllBytes(filePath), Path.GetFileName(filePath), DEFAULT_FILE_CONTENT_TYPE);
+            restRequest.AddFileBytes("file", File.ReadAllBytes(filePath), Path.GetFileName(filePath), ClientConstants.DEFAULT_FILE_CONTENT_TYPE);
             restRequest.AddParameter("name", fileName);
             return DoRequest<T>(restRequest);
         }
