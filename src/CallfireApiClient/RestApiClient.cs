@@ -18,10 +18,28 @@ namespace CallfireApiClient
     /// </summary>
     public class RestApiClient
     {
-        private static ISerializer JsonSerializer;
-        private static IDeserializer JsonDeserializer;
+        private readonly ISerializer JsonSerializer;
+        private readonly IDeserializer JsonDeserializer;
         private static Logger Logger = new Logger();
-        private static KeyValueConfigurationCollection ClientConfig;
+
+        private static KeyValueConfigurationCollection ApplicationConfig;
+
+        private ClientConfig _ClientConfig = new ClientConfig();
+
+        public ClientConfig ClientConfig
+        {
+            get
+            {
+                return _ClientConfig;
+            }
+
+            set
+            {
+                _ClientConfig = value;
+                RestClient.BaseUrl = !string.IsNullOrWhiteSpace(value.ApiBasePath) ? new Uri(value.ApiBasePath) : RestClient.BaseUrl;
+                SetUpRestClientProxy();
+            }
+        }
 
         /// <summary>
         /// RestSharp client configured to query Callfire API
@@ -30,56 +48,25 @@ namespace CallfireApiClient
         public IRestClient RestClient { get; set; }
 
         /// <summary>
-        /// Returns base URL path for all Callfire's API 2.0 endpoints
-        /// <summary>/
-        /// <returns>string representation of base URL path</returns>
-        public static string ApiBasePath { get; private set; }
-
-        /// <summary>
-        /// Returns proxy adress for all Callfire's API 2.0 endpoints
-        /// <summary>/
-        /// <returns>string representation of proxy adress</returns>
-        public static string ProxyAddress { get; private set; }
-
-        /// <summary>
-        /// Returns proxy port for all Callfire's API 2.0 endpoints
-        /// <summary>/
-        /// <returns>string representation of proxy port</returns>
-        public static int ProxyPort { get; private set; }
-
-        /// <summary>
-        /// Returns proxy login for all Callfire's API 2.0 endpoints
-        /// <summary>/
-        /// <returns>string representation of proxy login</returns>
-        public static string ProxyLogin { get; private set; }
-
-        /// <summary>
-        /// Returns proxy password for all Callfire's API 2.0 endpoints
-        /// <summary>/
-        /// <returns>string representation of proxy login</returns>
-        public static string ProxyPassword { get; private set; }
-
-        /// <summary>
         /// Returns HTTP request filters associated with API client
         /// </summary>
         /// <value>active filters.</value>
-        public SortedSet<RequestFilter> Filters { get; private set; }
+        public SortedSet<RequestFilter> Filters { get; }
 
         /// <summary>
         /// loads client configuration
         /// </summary>
         static RestApiClient() {
-            ClientConfig = LoadAppSettings();
-            SetAppSettings();
+            ApplicationConfig = LoadAppSettings();
         }
 
         /// <summary>
         /// Get client configuration
         /// </summary>
         /// <value>configuration properties collection</value>
-        public static KeyValueConfigurationCollection getClientConfig()
+        public static KeyValueConfigurationCollection getApplicationConfig()
         {
-            return ClientConfig;
+            return ApplicationConfig;
         }
 
         /// <summary>
@@ -90,20 +77,18 @@ namespace CallfireApiClient
         /// </param>
         public RestApiClient(IAuthenticator authenticator)
         {
-            InitRestApiClient(authenticator);
-            SetUpRestClientProxy();
-        }
+            SetAppSettings();
 
-        /// <summary>
-        /// REST API client constructor
-        /// <summary>/
-        /// <param name="authenticator">
-        ///  authentication API authentication method
-        /// </param>
-        public RestApiClient(ProxyAuthenticator authenticator)
-        {
-            InitRestApiClient(new HttpBasicAuthenticator("", ""));
-            ConfigureProxyParameters(authenticator.ProxyAddress, authenticator.ProxyCredentials);
+            JsonSerializer = new CallfireJsonConverter();
+            JsonDeserializer = JsonSerializer as IDeserializer;
+
+            RestClient = new RestClient(_ClientConfig.ApiBasePath);
+            RestClient.Authenticator = authenticator;
+            RestClient.UserAgent = this.GetType().Assembly.GetName().Name + "-csharp-" + this.GetType().Assembly.GetName().Version;
+            RestClient.AddHandler("application/json", JsonDeserializer);
+
+            Filters = new SortedSet<RequestFilter>();
+
             SetUpRestClientProxy();
         }
 
@@ -119,48 +104,32 @@ namespace CallfireApiClient
         }
 
         /// <summary>
-        /// Initialize main RestClient parameters
-        /// </summary>
-        private void InitRestApiClient(IAuthenticator authenticator)
-        {
-            JsonSerializer = new CallfireJsonConverter();
-            JsonDeserializer = JsonSerializer as IDeserializer;
-
-            RestClient = new RestClient(ApiBasePath);
-            RestClient.Authenticator = authenticator;
-            RestClient.UserAgent = this.GetType().Assembly.GetName().Name + "-csharp-" + this.GetType().Assembly.GetName().Version;
-            RestClient.AddHandler("application/json", JsonDeserializer);
-
-            Filters = new SortedSet<RequestFilter>();
-        }
-
-        /// <summary>
         /// Set up client's app config parameters from app settings
         /// </summary>
-        private static void SetAppSettings()
+        private void SetAppSettings()
         {
             //basePath
-            var basePath = ClientConfig[ClientConstants.CONFIG_API_BASE_PATH];
+            var basePath = ApplicationConfig[ClientConstants.CONFIG_API_BASE_PATH];
             
             if (basePath == null || string.IsNullOrWhiteSpace(basePath.Value))
             {
-                ApiBasePath = ClientConstants.API_BASE_PATH_DEFAULT_VALUE;
+                _ClientConfig.ApiBasePath = ClientConstants.API_BASE_PATH_DEFAULT_VALUE;
             }
             else
             {
-                ApiBasePath = basePath.Value;
+                _ClientConfig.ApiBasePath = basePath.Value;
             }
 
             //proxy
-            String proxyAddress = ClientConfig[ClientConstants.PROXY_ADDRESS_PROPERTY]?.Value;
-            String proxyCredentials = ClientConfig[ClientConstants.PROXY_CREDENTIALS_PROPERTY]?.Value;
+            String proxyAddress = ApplicationConfig[ClientConstants.PROXY_ADDRESS_PROPERTY]?.Value;
+            String proxyCredentials = ApplicationConfig[ClientConstants.PROXY_CREDENTIALS_PROPERTY]?.Value;
             ConfigureProxyParameters(proxyAddress, proxyCredentials);
         }
 
         /// <summary>
         /// Configure app proxy parameters
         /// </summary>
-        private static void ConfigureProxyParameters(String proxyAddress, String proxyCredentials)
+        private void ConfigureProxyParameters(String proxyAddress, String proxyCredentials)
         {
             if (!String.IsNullOrEmpty(proxyAddress))
             {
@@ -174,10 +143,10 @@ namespace CallfireApiClient
                 {
                     if (parsedCredentials.Length > 1)
                     {
-                        ProxyAddress = parsedAddress[0];
-                        ProxyPort = portValue;
-                        ProxyLogin = parsedCredentials[0];
-                        ProxyPassword = parsedCredentials[1];
+                        _ClientConfig.ProxyAddress = parsedAddress[0];
+                        _ClientConfig.ProxyPort = portValue;
+                        _ClientConfig.ProxyLogin = parsedCredentials[0];
+                        _ClientConfig.ProxyPassword = parsedCredentials[1];
                     }
                     else
                     {
@@ -192,10 +161,10 @@ namespace CallfireApiClient
         /// </summary>
         private void SetUpRestClientProxy()
         {
-            if (!String.IsNullOrEmpty(ProxyAddress))
+            if (!String.IsNullOrEmpty(_ClientConfig.ProxyAddress))
             {
-                WebProxy proxy = new WebProxy(ProxyAddress, ProxyPort);
-                proxy.Credentials = new NetworkCredential(ProxyLogin, ProxyPassword);
+                WebProxy proxy = new WebProxy(_ClientConfig.ProxyAddress, _ClientConfig.ProxyPort);
+                proxy.Credentials = new NetworkCredential(_ClientConfig.ProxyLogin, _ClientConfig.ProxyPassword);
                 RestClient.Proxy = proxy;
             }
             else
