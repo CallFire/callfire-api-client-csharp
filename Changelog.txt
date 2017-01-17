@@ -1,5 +1,8 @@
 Callfire API client Changelog
 =============================
+Version 1.1.14 - Jan 17 2017
+- added possibility to use client without config file
+
 Version 1.1.13 - Dec 30 2016
 - minor fixes for get contacts history api
 
