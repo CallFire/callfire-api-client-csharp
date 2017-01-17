@@ -32,7 +32,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Webhooks
                 Fields = "items(id,callback,name,resource,events,singleUse)"
             };
             var page = api.Find(findRequest);
-            Assert.That(page.Items.Count > 1);
+            Assert.That(page.Items.Count > 0);
             Assert.AreEqual("test_name1", page.Items[0].Name);
             Assert.AreEqual("test_callback", page.Items[0].Callback);
             Assert.AreEqual(ResourceType.TEXT_BROADCAST, page.Items[0].Resource);

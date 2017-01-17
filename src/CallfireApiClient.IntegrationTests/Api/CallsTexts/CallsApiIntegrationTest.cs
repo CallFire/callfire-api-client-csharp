@@ -31,8 +31,7 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
         {
             var request = new FindCallsRequest
             {
-                States = { StateType.FINISHED, StateType.READY },
-                IntervalBegin = DateTime.UtcNow.AddMonths(-2),
+                IntervalBegin = DateTime.UtcNow.AddMonths(-10),
                 IntervalEnd = DateTime.UtcNow,
                 Limit = 1
             };
