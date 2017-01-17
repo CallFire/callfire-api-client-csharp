@@ -16,6 +16,12 @@ namespace CallfireApiClient
     /// </summary>
     public class CallfireClient
     {
+
+        public void SetClientConfig(ClientConfig config)
+        {
+            RestApiClient.ClientConfig = config;
+        }
+
         public RestApiClient RestApiClient { get; set; }
 
         readonly Lazy<MeApi> _MeApi;

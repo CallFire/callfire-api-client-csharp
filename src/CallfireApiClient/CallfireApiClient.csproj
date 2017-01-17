@@ -179,6 +179,7 @@
     <Compile Include="InternalServerErrorException.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ClientConfig.cs" />
     <Compile Include="RequestFilter.cs" />
     <Compile Include="ResourceNotFoundException.cs" />
     <Compile Include="RestApiClient.cs" />
