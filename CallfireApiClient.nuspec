@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><package>
   <metadata>
     <id>CallfireApiClient</id>
-    <version>1.1.13</version>
+    <version>1.1.14</version>
     <title>CallFire API v2 client</title>
     <authors>
       Vladimir Mikhailov
@@ -15,6 +15,9 @@
     <description>C# client library for integration with Callfire REST API v2 services</description>
     <releaseNotes>Callfire API client Changelog
 =============================
+Version 1.1.14 - Jan 17 2017
+- added possibility to use client without config file
+
 Version 1.1.13 - Dec 30 2016
 - minor fixes for get contacts history api
 
