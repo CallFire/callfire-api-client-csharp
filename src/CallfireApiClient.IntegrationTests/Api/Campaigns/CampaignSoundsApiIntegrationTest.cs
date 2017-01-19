@@ -23,7 +23,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
             };
             Page<CampaignSound> campaignSounds = Client.CampaignSoundsApi.Find(request);
 
-            Assert.AreEqual(4, campaignSounds.TotalCount);
+            Assert.True(campaignSounds.TotalCount >= 3);
             Assert.AreEqual(3, campaignSounds.Items.Count);
 
             foreach (var item in campaignSounds.Items)

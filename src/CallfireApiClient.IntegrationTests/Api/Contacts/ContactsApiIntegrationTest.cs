@@ -23,6 +23,13 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
 
             Assert.AreEqual(1, contacts.Items.Count);
             Assert.AreEqual("18088395900", contacts.Items[0].WorkPhone);
+
+            request = new FindContactsRequest
+            {
+                Number = new List<string> { "18088395900", "18778973473" }
+            };
+            contacts = Client.ContactsApi.Find(request);
+            Assert.AreEqual("18088395900", contacts.Items[0].WorkPhone);
         }
 
         [Test]
