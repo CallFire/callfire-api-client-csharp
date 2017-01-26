@@ -13,23 +13,39 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
         [Test]
         public void Find()
         {
-            var request = new FindContactsRequest
-            {
-                Number = new List<string> { "16506190257", "18778973473" },
-                Id = new List<long> { 1, 2 }
-            };
+            var request = new FindContactsRequest{};
             var contacts = Client.ContactsApi.Find(request);
             Console.WriteLine(String.Join(",", contacts));
 
-            Assert.AreEqual(1, contacts.Items.Count);
-            Assert.AreEqual("18088395900", contacts.Items[0].WorkPhone);
+            Assert.AreEqual(100, contacts.Items.Count);
 
-            request = new FindContactsRequest
+            string numberToFilter;
+            numberToFilter = null;
+
+            if (contacts.Items[0].HomePhone != null)
             {
-                Number = new List<string> { "18088395900", "18778973473" }
-            };
-            contacts = Client.ContactsApi.Find(request);
-            Assert.AreEqual("18088395900", contacts.Items[0].WorkPhone);
+                numberToFilter = contacts.Items[0].HomePhone;
+            }
+            else if (contacts.Items[0].WorkPhone != null)
+            {
+                numberToFilter = contacts.Items[0].WorkPhone;
+            }
+            else if (contacts.Items[0].MobilePhone != null)
+            {
+                numberToFilter = contacts.Items[0].MobilePhone;
+            }
+
+            if (numberToFilter != null)
+            {
+                request = new FindContactsRequest
+                {
+                    Number = new List<string> { numberToFilter }
+                };
+                contacts = Client.ContactsApi.Find(request);
+                Assert.True(numberToFilter.Equals(contacts.Items[0].WorkPhone) ||
+                            numberToFilter.Equals(contacts.Items[0].MobilePhone) ||
+                            numberToFilter.Equals(contacts.Items[0].HomePhone));
+            }
         }
 
         [Test]
