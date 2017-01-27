@@ -68,8 +68,7 @@ namespace CallfireApiClient
 
         public KeywordLeasesApi KeywordLeasesApi { get { return _KeywordLeasesApi.Value; } }
 
-        //TODO vmalinovskiy: uncomment when dnc apis will be tested and available on docs site
-        //public DncApi DncApi { get { return _DncApi.Value; } }
+        public DncApi DncApi { get { return _DncApi.Value; } }
 
         public CallsApi CallsApi { get { return _CallsApi.Value; } }
 
@@ -99,10 +98,7 @@ namespace CallfireApiClient
             _WebhooksApi = new Lazy<WebhooksApi>(() => new WebhooksApi(RestApiClient));
             _KeywordsApi = new Lazy<KeywordsApi>(() => new KeywordsApi(RestApiClient));
             _KeywordLeasesApi = new Lazy<KeywordLeasesApi>(() => new KeywordLeasesApi(RestApiClient));
-
-            //TODO vmalinovskiy: uncomment when dnc apis will be tested and available on docs site
-            //_DncApi = new Lazy<DncApi>(() => new DncApi(RestApiClient));
-
+            _DncApi = new Lazy<DncApi>(() => new DncApi(RestApiClient));
             _CallsApi = new Lazy<CallsApi>(() => new CallsApi(RestApiClient));
             _TextsApi = new Lazy<TextsApi>(() => new TextsApi(RestApiClient));
             _TextAutoRepliesApi = new Lazy<TextAutoRepliesApi>(() => new TextAutoRepliesApi(RestApiClient));

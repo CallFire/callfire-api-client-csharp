@@ -10,8 +10,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
     [TestFixture]
     public class DncApiIntegrationTest : AbstractIntegrationTest
     {
-        //TODO vmalinovskiy: uncomment when dnc apis will be tested and available on docs site
-        /*
+
         [Test]
         public void FindDncs()
         {
@@ -107,6 +106,6 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
             Assert.NotNull(uDncs[0].OutboundCall);
             Assert.NotNull(uDncs[0].OutboundText);
         }
-        */
+
     }
 }

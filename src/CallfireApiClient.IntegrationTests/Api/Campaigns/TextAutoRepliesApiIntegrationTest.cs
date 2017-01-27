@@ -26,13 +26,8 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
 
             Assert.True(textAutoReplies.TotalCount > 0);
             Assert.AreEqual(textAutoReplies.Items.Count, textAutoReplies.TotalCount);
-            var savedTextAutoReply = textAutoReplies.Items[textAutoReplies.Items.Count - 1];
-            Assert.AreEqual(resourceId.Id, savedTextAutoReply.Id);
-            Assert.AreEqual(textAutoReply.Number, savedTextAutoReply.Number);
-            Assert.AreEqual(textAutoReply.Message, savedTextAutoReply.Message);
-            Assert.AreEqual(textAutoReply.Match, savedTextAutoReply.Match);
 
-            savedTextAutoReply = Client.TextAutoRepliesApi.Get(resourceId.Id, "number,message");
+            var savedTextAutoReply = Client.TextAutoRepliesApi.Get(resourceId.Id, "number,message");
             Console.WriteLine(savedTextAutoReply);
 
             Assert.IsNull(savedTextAutoReply.Id);

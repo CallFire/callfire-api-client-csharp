@@ -12,8 +12,7 @@ namespace CallfireApiClient.Tests.Api.Contacts
     [TestFixture]
     public class DncApiTest : AbstractApiTest
     {
-        //TODO vmalinovskiy: uncomment when dnc apis will be tested and available on docs site
-        /*
+
         [Test]
         public void Find()
         {
@@ -177,6 +176,6 @@ namespace CallfireApiClient.Tests.Api.Contacts
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fromNumber") && p.Value.Equals("18442800143")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
          }
-         */
+
     }
 }

@@ -7,8 +7,7 @@ namespace CallfireApiClient.Api.Contacts
 {
     public class DncApi
     {
-        //TODO vmalinovskiy: uncomment when dnc apis will be tested and available on docs site
-        /*
+
         private const string DNC_PATH = "/contacts/dncs";
         private const string DNC_SOURCES_PATH = "/contacts/dncs/sources/{}";
         private const string UNIVERSAL_DNC_PATH = "/contacts/dncs/universals/{}";
@@ -146,6 +145,6 @@ namespace CallfireApiClient.Api.Contacts
             string path = DNC_SOURCES_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, source);
             Client.Delete(path);
         }
-        */
+
     }
 }
