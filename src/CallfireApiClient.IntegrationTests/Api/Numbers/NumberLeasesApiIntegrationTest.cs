@@ -30,7 +30,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Numbers
 
             Assert.IsNotNull(lease.Region);
             Assert.AreEqual(number, lease.PhoneNumber);
-            Assert.AreEqual(lease.Labels.Count, 2);
+            Assert.True(lease.Labels.Count > 0);
             Assert.That(lease.Region.City, Is.StringContaining("LOS ANGELES"));
         }
 
