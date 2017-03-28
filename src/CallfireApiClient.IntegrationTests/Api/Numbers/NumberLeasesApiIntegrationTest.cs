@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using CallfireApiClient.Api.Numbers.Model;
 using CallfireApiClient.Api.Numbers.Model.Request;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Numbers
         {
             var request = new FindNumberLeasesRequest { Limit = 2 };
             var leases = Client.NumberLeasesApi.Find(request);
-            Console.WriteLine(leases);
+            System.Console.WriteLine(leases);
 
             Assert.True(leases.Items.Count > 0);
             Assert.True(leases.Items[0].Labels.Count > 0);
@@ -24,9 +23,9 @@ namespace CallfireApiClient.IntegrationTests.Api.Numbers
         [Test]
         public void GetNumberLease()
         {
-            const String number = "12132041238";
+            const System.String number = "12132041238";
             var lease = Client.NumberLeasesApi.Get(number);
-            Console.WriteLine(lease);
+            System.Console.WriteLine(lease);
 
             Assert.IsNotNull(lease.Region);
             Assert.AreEqual(number, lease.PhoneNumber);
@@ -46,7 +45,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Numbers
 
             Client.NumberLeasesApi.Update(lease);
             lease = Client.NumberLeasesApi.Get(number, "number,callFeatureStatus,textFeatureStatus");
-            Console.WriteLine(lease);
+            System.Console.WriteLine(lease);
             Assert.NotNull(lease.PhoneNumber);
             Assert.AreEqual(NumberLease.FeatureStatus.DISABLED, lease.TextFeatureStatus);
             Assert.AreEqual(NumberLease.FeatureStatus.DISABLED, lease.CallFeatureStatus);
@@ -61,7 +60,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Numbers
         {
             var request = new FindNumberLeaseConfigsRequest { Limit = 2 };
             var configs = Client.NumberLeasesApi.FindConfigs(request);
-            Console.WriteLine(configs);
+            System.Console.WriteLine(configs);
 
             Assert.True(configs.Items.Count > 0);
         }
@@ -70,7 +69,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Numbers
         public void GetNumberLeaseConfig()
         {
             var config = Client.NumberLeasesApi.GetConfig("12132041238");
-            Console.WriteLine(config);
+            System.Console.WriteLine(config);
 
             Assert.True(NumberConfig.NumberConfigType.TRACKING.Equals(config.ConfigType));
             Assert.True(config.CallTrackingConfig != null);
@@ -98,7 +97,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Numbers
                 StartTimeOfDay = new LocalTime { Hour = 1, Minute = 1, Second = 1 },
                 StopTimeOfDay = new LocalTime { Hour = 2, Minute = 2, Second = 2 },
                 TimeZone = "America/New_York",
-                DaysOfWeek = new HashSet<DayOfWeek> { DayOfWeek.Monday, DayOfWeek.Friday }
+                DaysOfWeek = new HashSet<DayOfWeek> { DayOfWeek.MONDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY }
             };
             callTrackingConfig.WeeklySchedule = weeklySchedule;
 
@@ -110,10 +109,17 @@ namespace CallfireApiClient.IntegrationTests.Api.Numbers
             };
             callTrackingConfig.GoogleAnalytics = googleAnalytics;
 
-            Client.NumberLeasesApi.UpdateConfig(config);
-            config = Client.NumberLeasesApi.GetConfig(number, "callTrackingConfig,configType");
-            Console.WriteLine(config);
+            config.CallTrackingConfig = callTrackingConfig;
+            config.ConfigType = NumberConfig.NumberConfigType.TRACKING;
 
+            Client.NumberLeasesApi.UpdateConfig(config);
+            config = Client.NumberLeasesApi.GetConfig(number);
+            Assert.AreEqual(config.ConfigType, NumberConfig.NumberConfigType.TRACKING);
+            Assert.AreEqual(config.Number, number);
+            Assert.NotNull(config.CallTrackingConfig);
+            System.Console.WriteLine(config);
+
+            config = Client.NumberLeasesApi.GetConfig(number, "callTrackingConfig,configType");
             Assert.IsNotNull(config.CallTrackingConfig);
             Assert.IsNull(config.Number);
             Assert.AreEqual(NumberConfig.NumberConfigType.TRACKING, config.ConfigType);

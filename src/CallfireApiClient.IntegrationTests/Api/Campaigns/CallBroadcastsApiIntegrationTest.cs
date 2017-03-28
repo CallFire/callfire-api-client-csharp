@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using CallfireApiClient.Api.Campaigns.Model;
 using System.Collections.Generic;
 using CallfireApiClient.Api.Campaigns.Model.Request;
@@ -30,10 +29,18 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
                     new Recipient { PhoneNumber = "12132212384" },
                     new Recipient { PhoneNumber = "12132212385" }
                 },
+                Schedules = new List<Schedule>
+                {
+                    new Schedule {
+                                    StartTimeOfDay = new LocalTime { Hour = 1, Minute = 1, Second = 1 },
+                                    StopTimeOfDay = new LocalTime { Hour = 2, Minute = 2, Second = 2 },
+                                    TimeZone = "America/New_York",
+                                    DaysOfWeek = new HashSet<DayOfWeek> { DayOfWeek.MONDAY, DayOfWeek.FRIDAY } }
+                },
                 ResumeNextDay = true
             };
             var id = Client.CallBroadcastsApi.Create(broadcast, true);
-            Console.WriteLine("broadcast id: " + id);
+            System.Console.WriteLine("broadcast id: " + id);
             var savedBroadcast = Client.CallBroadcastsApi.Get(id.Id);
             Assert.AreEqual(broadcast.Name, savedBroadcast.Name);
             Assert.AreEqual(savedBroadcast.ResumeNextDay, true);
@@ -64,7 +71,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
                 }
             };
             var id = Client.CallBroadcastsApi.Create(broadcast, true);
-            Console.WriteLine("ivr id: " + id);
+            System.Console.WriteLine("ivr id: " + id);
             var savedBroadcast = Client.CallBroadcastsApi.Get(id.Id);
             Assert.AreEqual(broadcast.Name, savedBroadcast.Name);
 
@@ -101,7 +108,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
             var id = Client.CallBroadcastsApi.Create(broadcast, true);
 
             CallBroadcast campaign = Client.CallBroadcastsApi.Get(id.Id);
-            Console.WriteLine(campaign);
+            System.Console.WriteLine(campaign);
             Assert.NotNull(campaign);
             // start
             Client.CallBroadcastsApi.Start((long)campaign.Id);
@@ -122,25 +129,25 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
         {
             var getCallsRequest = new GetByIdRequest { Id = 1 };
             var calls = Client.CallBroadcastsApi.GetCalls(getCallsRequest);
-            Console.WriteLine(calls);
+            System.Console.WriteLine(calls);
             Assert.That(calls.Items, Is.Not.Empty);
 
             long testBatchId = (long) calls.Items[0].BatchId;
 
             getCallsRequest = new GetBroadcastCallsTextsRequest { Id = 1, batchId = testBatchId };
             calls = Client.CallBroadcastsApi.GetCalls(getCallsRequest);
-            Console.WriteLine(calls);
+            System.Console.WriteLine(calls);
             Assert.AreEqual(calls.Items[0].BatchId, testBatchId);
         }
 
         [Test]
         public void GetBroadcastStats()
         {
-            var begin = DateTime.Now.AddDays(-5d);
-            var end = DateTime.Now;
+            var begin = System.DateTime.Now.AddDays(-5d);
+            var end = System.DateTime.Now;
             var fields = "callsAttempted,callsPlaced,callsDuration";
             var stats = Client.CallBroadcastsApi.GetStats(1, fields, begin, end);
-            Console.WriteLine(stats);
+            System.Console.WriteLine(stats);
         }
 
         [Test]
@@ -152,7 +159,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
                 Limit = 1
             };
             var broadcasts = Client.CallBroadcastsApi.Find(findRequest);
-            Console.WriteLine(broadcasts);
+            System.Console.WriteLine(broadcasts);
             Assert.That(broadcasts.Items, Is.Not.Empty);
             var id = broadcasts.Items[0].Id;
 
@@ -161,13 +168,13 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
                     new Recipient { PhoneNumber = "12132212384" },
                     new Recipient { PhoneNumber = "12132212385" }
                 });
-            Console.WriteLine(calls);
+            System.Console.WriteLine(calls);
             Assert.AreEqual(2, calls.Count);
 
             // get batches
             var getBatchesRequest = new GetByIdRequest { Id = id };
             var batches = Client.CallBroadcastsApi.GetBatches(getBatchesRequest);
-            Console.WriteLine(batches);
+            System.Console.WriteLine(batches);
 
             // add batch
             var addBatchRequest = new AddBatchRequest
