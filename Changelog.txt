@@ -1,5 +1,8 @@
 Callfire API client Changelog
 =============================
+Version 1.1.16 - Mar 28 2017
+- fixed DayOfWeek enum for scheduler
+
 Version 1.1.15 - Jan 27 2017
 - added dnc apis
 

@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using RestSharp;
 using System.Linq;
 using CallfireApiClient.Api.Numbers.Model.Request;
@@ -138,7 +137,7 @@ namespace CallfireApiClient.Tests.Api.Numbers
                     {
                         StartTimeOfDay = new LocalTime { Hour = 1, Minute = 1, Second = 1 },
                         StopTimeOfDay = new LocalTime { Hour = 2, Minute = 2, Second = 2 },
-                        DaysOfWeek = new HashSet<DayOfWeek> { DayOfWeek.Friday },
+                        DaysOfWeek = new HashSet<DayOfWeek> { DayOfWeek.FRIDAY },
                         TimeZone = "America/Los_Angeles"
                     },
                     GoogleAnalytics = new GoogleAnalytics
@@ -150,7 +149,7 @@ namespace CallfireApiClient.Tests.Api.Numbers
                 }
             };
             Client.NumberLeasesApi.UpdateConfig(config);
-            Console.WriteLine(config);
+            System.Console.WriteLine(config);
 
             Assert.AreEqual(Method.PUT, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);

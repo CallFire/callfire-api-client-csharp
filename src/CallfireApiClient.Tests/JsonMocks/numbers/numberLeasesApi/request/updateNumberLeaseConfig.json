@@ -25,7 +25,7 @@
         "second": 2
       },
       "daysOfWeek": [
-        "Friday"
+        "FRIDAY"
       ],
       "timeZone": "America/Los_Angeles"
     },

@@ -94,6 +94,7 @@
     <Compile Include="Api\Campaigns\Model\CallRecording.cs" />
     <Compile Include="Api\Campaigns\Model\CampaignSound.cs" />
     <Compile Include="Api\Common\Model\LocalDate.cs" />
+    <Compile Include="Api\Common\Model\DayOfWeek.cs" />
     <Compile Include="Api\Common\Model\LocalTime.cs" />
     <Compile Include="Api\Common\Model\LocalTimeRestriction.cs" />
     <Compile Include="Api\Campaigns\Model\Recipient.cs" />

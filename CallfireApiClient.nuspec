@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><package>
   <metadata>
     <id>CallfireApiClient</id>
-    <version>1.1.15</version>
+    <version>1.1.16</version>
     <title>CallFire API v2 client</title>
     <authors>
       Vladimir Mikhailov
@@ -15,6 +15,9 @@
     <description>C# client library for integration with Callfire REST API v2 services</description>
     <releaseNotes>Callfire API client Changelog
 =============================
+Version 1.1.16 - Mar 28 2017
+- fixed DayOfWeek enum for scheduler
+
 Version 1.1.15 - Jan 27 2017
 - added dnc apis
 

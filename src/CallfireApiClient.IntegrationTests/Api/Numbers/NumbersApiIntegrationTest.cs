@@ -39,11 +39,13 @@ namespace CallfireApiClient.IntegrationTests.Api.Numbers
         [Test]
         public void FindNumbersLocal()
         {
-            var request = new FindNumbersLocalRequest { Limit = 2, State = "LA" };
+            var request = new FindNumbersLocalRequest { Limit = 1, State = "LA" };
             var numbers = Client.NumbersApi.FindNumbersLocal(request);
-            Assert.AreEqual(2, numbers.Count);
-            Assert.That(numbers[0].NationalFormat, Is.StringStarting("(225)"));
-
+            Assert.AreEqual(1, numbers.Count);
+            Assert.NotNull(numbers[0].NationalFormat);
+            Assert.NotNull(numbers[0].PhoneNumber);
+            Assert.NotNull(numbers[0].Region);
+            Assert.NotNull(numbers[0].TollFree);
             Console.WriteLine(numbers);
         }
 
