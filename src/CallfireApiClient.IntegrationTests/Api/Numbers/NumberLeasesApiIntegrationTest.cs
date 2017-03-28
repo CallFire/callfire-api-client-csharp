@@ -114,6 +114,9 @@ namespace CallfireApiClient.IntegrationTests.Api.Numbers
 
             Client.NumberLeasesApi.UpdateConfig(config);
             config = Client.NumberLeasesApi.GetConfig(number);
+            Assert.AreEqual(config.ConfigType, NumberConfig.NumberConfigType.TRACKING);
+            Assert.AreEqual(config.Number, number);
+            Assert.NotNull(config.CallTrackingConfig);
             System.Console.WriteLine(config);
 
             config = Client.NumberLeasesApi.GetConfig(number, "callTrackingConfig,configType");
