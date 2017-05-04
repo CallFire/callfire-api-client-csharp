@@ -7,11 +7,11 @@ namespace CallfireApiClient.Api.Common.Model.Request
     /// </summary>
     public class GetBroadcastCallsTextsRequest : GetByIdRequest
     {
-        public long? batchId { get; set; }
+        public long? BatchId { get; set; }
 
         public override string ToString()
         {
-            return string.Format("{0} [GetBroadcastCallsTextsRequest: batchId={1}]", base.ToString(), batchId);
+            return string.Format("{0} [GetBroadcastCallsTextsRequest: batchId={1}]", base.ToString(), BatchId);
         }
     }
 }

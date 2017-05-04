@@ -45,7 +45,7 @@ namespace CallfireApiClient.Tests.Api.Webhooks
                 Limit = 5,
                 Offset = 0,
                 Enabled = false,
-                Resource = "resource"
+                Resource = ResourceType.TEXT_BROADCAST
             };
             var webhooks = Client.WebhooksApi.Find(request);
             Assert.That(Serializer.Serialize(webhooks), Is.EqualTo(expectedJson));
@@ -55,7 +55,7 @@ namespace CallfireApiClient.Tests.Api.Webhooks
             Assert.IsNull(requestBodyParam);
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("limit") && p.Value.Equals("5")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("offset") && p.Value.Equals("0")));
-            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("resource") && p.Value.Equals("resource")));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("resource") && p.Value.Equals(ResourceType.TEXT_BROADCAST.ToString())));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("enabled") && p.Value.Equals("False")));
         }
 

@@ -72,7 +72,6 @@
     <Compile Include="Utilities\ZipTask.cs" />
     <Compile Include="Utilities\XmlTask.cs" />
     <Compile Include="Utilities\VersionTask.cs" />
-    <Compile Include="Api\Webhooks\SubscriptionsApiTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

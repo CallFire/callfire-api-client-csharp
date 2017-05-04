@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Api\Account\MeApiIntegrationTest.cs" />
     <Compile Include="Api\Account\OrdersApiIntegrationTest.cs" />
+    <Compile Include="Api\DocTest.cs" />
     <Compile Include="Api\CallsTexts\CallsApiIntegrationTest.cs" />
     <Compile Include="Api\CallsTexts\MediaApiIntegrationTest.cs" />
     <Compile Include="Api\CallsTexts\TextsApiIntegrationTest.cs" />
@@ -57,7 +58,6 @@
     <Compile Include="Api\Keywords\KeywordsApiIntegrationTest.cs" />
     <Compile Include="Api\Numbers\NumberLeasesApiIntegrationTest.cs" />
     <Compile Include="Api\Numbers\NumbersApiIntegrationTest.cs" />
-    <Compile Include="Api\Webhooks\SubscriptionsApiIntegrationTest.cs" />
     <Compile Include="Api\Webhooks\WebhooksApiIntegrationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Api\AbstractIntegrationTest.cs" />

@@ -7,9 +7,9 @@ namespace CallfireApiClient.Api.Webhooks.Model.Request
     {
         public string Name { get; set; }
 
-        public string Resource { get; set; }
+        public ResourceType? Resource { get; set; }
 
-        public string Event { get; set; }
+        public ResourceEvent? Event { get; set; }
 
         public string Callback { get; set; }
 
