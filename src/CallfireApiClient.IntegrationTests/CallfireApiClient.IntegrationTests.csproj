@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="Api\Account\MeApiIntegrationTest.cs" />
     <Compile Include="Api\Account\OrdersApiIntegrationTest.cs" />
-    <Compile Include="Api\DocTest.cs" />
     <Compile Include="Api\CallsTexts\CallsApiIntegrationTest.cs" />
     <Compile Include="Api\CallsTexts\MediaApiIntegrationTest.cs" />
     <Compile Include="Api\CallsTexts\TextsApiIntegrationTest.cs" />
