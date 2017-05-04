@@ -14,6 +14,15 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
         [Test]
         public void FindDncs()
         {
+            CreateDncsRequest crRequest = new CreateDncsRequest()
+            {
+                Call = true,
+                Text = true,
+                Numbers = new List<string> { "12135551189" },
+                Source = "testSourceForGetDncByNumber"
+            };
+            Client.DncApi.Create(crRequest);
+
             var request = new FindDncNumbersRequest()
             {
                 Text = true,
@@ -26,6 +35,8 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
 
             Assert.NotNull(dncs);
             Assert.AreEqual(dncs.Items.Count, 1);
+
+            Client.DncApi.Delete("12135551189");
         }
 
         [Test]

@@ -168,7 +168,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
                 Offset = 5,
                 Fields = FIELDS,
                 Id = 11,
-                batchId = 13
+                BatchId = 13
             };
             var texts = Client.TextBroadcastsApi.GetTexts(request);
             Assert.That(Serializer.Serialize(texts), Is.EqualTo(expectedJson));

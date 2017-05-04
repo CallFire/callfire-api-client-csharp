@@ -17,6 +17,8 @@ namespace CallfireApiClient.Api.Contacts.Model.Request
         [JsonIgnore]
         public List<T> Contacts { get; set; }
 
+        public string ContactNumbersField { get; set; }
+
         [OnSerializing]
         private void OnSerializing(StreamingContext context)
         {
@@ -46,7 +48,7 @@ namespace CallfireApiClient.Api.Contacts.Model.Request
 
         public override string ToString()
         {
-            return string.Format("[AddContactsRequest: Contacts={0}]", Contacts?.ToPrettyString());
+            return string.Format("[AddContactsRequest: Contacts={0}, ContactNumbersField={1}]", Contacts?.ToPrettyString(), ContactNumbersField);
         }
 
     }

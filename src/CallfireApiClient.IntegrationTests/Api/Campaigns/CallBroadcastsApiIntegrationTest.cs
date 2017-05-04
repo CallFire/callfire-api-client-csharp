@@ -105,7 +105,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
                     new Recipient { PhoneNumber = "14246525473" }
                 }
             };
-            var id = Client.CallBroadcastsApi.Create(broadcast, true);
+            var id = Client.CallBroadcastsApi.Create(broadcast, false);
 
             CallBroadcast campaign = Client.CallBroadcastsApi.Get(id.Id);
             System.Console.WriteLine(campaign);
@@ -134,7 +134,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
 
             long testBatchId = (long) calls.Items[0].BatchId;
 
-            getCallsRequest = new GetBroadcastCallsTextsRequest { Id = 1, batchId = testBatchId };
+            getCallsRequest = new GetBroadcastCallsTextsRequest { Id = 1, BatchId = testBatchId };
             calls = Client.CallBroadcastsApi.GetCalls(getCallsRequest);
             System.Console.WriteLine(calls);
             Assert.AreEqual(calls.Items[0].BatchId, testBatchId);

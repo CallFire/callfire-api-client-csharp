@@ -229,7 +229,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
                 Offset = 5,
                 Fields = FIELDS,
                 Id = 11,
-                batchId = 13
+                BatchId = 13
             };
             var calls = Client.CallBroadcastsApi.GetCalls(request);
             Assert.That(Serializer.Serialize(calls), Is.EqualTo(expectedJson));

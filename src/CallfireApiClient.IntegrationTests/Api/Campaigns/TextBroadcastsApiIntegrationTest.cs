@@ -103,7 +103,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
 
             long testBatchId = (long)texts.Items[0].BatchId;
 
-            request = new GetBroadcastCallsTextsRequest { Id = broadcastId.Id, batchId = testBatchId };
+            request = new GetBroadcastCallsTextsRequest { Id = broadcastId.Id, BatchId = testBatchId };
             texts = Client.TextBroadcastsApi.GetTexts(request);
             Assert.AreEqual(texts.Items[0].BatchId, testBatchId);
         }
