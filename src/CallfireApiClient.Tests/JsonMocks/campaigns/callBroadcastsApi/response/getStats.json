@@ -1,7 +1,7 @@
 {
   "totalOutboundCount": 3,
   "remainingOutboundCount": 0,
-  "billedAmount": 0.0000,
+  "billedAmount": 0.0,
   "callsAttempted": 3,
   "callsPlaced": 3,
   "callsDuration": 0,
