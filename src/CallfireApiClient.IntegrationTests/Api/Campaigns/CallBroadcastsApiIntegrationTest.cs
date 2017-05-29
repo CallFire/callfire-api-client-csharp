@@ -127,15 +127,34 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
         [Test]
         public void GetBroadcastCalls()
         {
-            var getCallsRequest = new GetByIdRequest { Id = 1 };
+            var broadcast = new CallBroadcast
+            {
+                Name = "call_broadcast",
+                AnsweringMachineConfig = AnsweringMachineConfig.AM_AND_LIVE,
+                Sounds = new CallBroadcastSounds
+                {
+                    LiveSoundText = "Hello! This is a live answer text to speech recording",
+                    LiveSoundTextVoice = Voice.MALE1,
+                    MachineSoundText = "This is an answering machine text to speech recording",
+                    MachineSoundTextVoice = Voice.MALE1
+                },
+                Recipients = new List<Recipient>
+                {
+                    new Recipient { PhoneNumber = "12132041238" },
+                    new Recipient { PhoneNumber = "14246525473" }
+                }
+            };
+            var id = Client.CallBroadcastsApi.Create(broadcast, false);
+
+            var getCallsRequest = new GetByIdRequest { Id = id.Id };
             var calls = Client.CallBroadcastsApi.GetCalls(getCallsRequest);
             System.Console.WriteLine(calls);
             Assert.That(calls.Items, Is.Not.Empty);
 
             long testBatchId = (long) calls.Items[0].BatchId;
 
-            getCallsRequest = new GetBroadcastCallsTextsRequest { Id = 1, BatchId = testBatchId };
-            calls = Client.CallBroadcastsApi.GetCalls(getCallsRequest);
+            var getCallsRequestNew = new GetBroadcastCallsTextsRequest { Id = id.Id, BatchId = testBatchId };
+            calls = Client.CallBroadcastsApi.GetCalls(getCallsRequestNew);
             System.Console.WriteLine(calls);
             Assert.AreEqual(calls.Items[0].BatchId, testBatchId);
         }

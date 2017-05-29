@@ -115,7 +115,7 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
 
             recs = Client.CallsApi.GetCallRecordings((long)rec.CallId, "items(callId)");
             Assert.Null(recs[0].Id);
-            Assert.Null(recs[0].CallId);
+            Assert.NotNull(recs[0].CallId);
         }
 
         [Test]
@@ -131,7 +131,7 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
 
             recording = Client.CallsApi.GetCallRecordingByName((long)rec.CallId, rec.Name, "callId");
             Assert.Null(recording.Id);
-            Assert.Null(recording.CallId);
+            Assert.NotNull(recording.CallId);
         }
 
         [Test]
