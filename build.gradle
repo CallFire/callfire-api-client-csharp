@@ -26,8 +26,7 @@ ext['assemblyInfo'] = "src/CallfireApiClient/Properties/AssemblyInfo.cs"
 defaultTasks('nugetPack')
 
 nuget {
-    // oh boy, version 3.3.0 seems to freeze during restore on linux ... rollbacking.... again
-    version = '2.8.6'
+    version = '4.1.0'
 }
 
 msbuild.dependsOn nugetRestore
