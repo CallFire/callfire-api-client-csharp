@@ -5,12 +5,12 @@ import groovy.xml.XmlUtil
 import groovy.xml.StreamingMarkupBuilder
 
 plugins {
-  id 'com.ullink.msbuild' version '2.14'
-  id 'com.ullink.nuget' version '2.12'
-  id 'com.ullink.nunit' version '1.4'
-  id 'com.ullink.opencover' version '1.2'
-  id 'net.researchgate.release' version '2.3.4'
-  id 'com.github.jlouns.cpe' version '0.4.1'
+  id 'com.ullink.msbuild' version '2.16'
+  id 'com.ullink.nuget' version '2.15'
+  id 'com.ullink.nunit' version '1.10'
+  id 'com.ullink.opencover' version '1.7'
+  id 'net.researchgate.release' version '2.6.0'
+  id 'com.github.jlouns.cpe' version '0.5.0'
   id "co.riiid.gradle" version "0.4.2"
 }
 
@@ -50,41 +50,43 @@ nunit {
 }
 nunit.dependsOn msbuild
 
-task updateNuspecFile << {
-    def specFile = file('CallfireApiClient.nuspec')
-    def spec = new XmlSlurper().parse(specFile)
-
-    project.version = patchVersion(spec.metadata.version.text)
-    spec.metadata.version = project.version
-    spec.metadata.releaseNotes = file('Changelog.txt').text
-    // cleanup previous lib/ and src/ files since they depend on build configuration
-    spec.files.file.findAll { it.@target == 'lib' || it.@target == 'src' }.each { it.replaceNode {} }
-
-    def isWindowsOs = Os.isFamily(Os.FAMILY_WINDOWS)
-    def monoInstallation = "$System.env.MONO_HOME"
-    def pdbToMdbConverter
-    if (isWindowsOs) {
-        if (monoInstallation != 'null') {
-            pdbToMdbConverter = "$System.env.MONO_HOME" + "\\bin\\pdb2mdb.bat"
-            exec { commandLine = [pdbToMdbConverter, "$assemblyBinDebugDir/${archivesBaseName}.dll"] }
-        }
-    }
+task updateNuspecFile {
+    doLast {
+        def specFile = file('CallfireApiClient.nuspec')
+        def spec = new XmlSlurper().parse(specFile)
     
-    spec.files.appendNode {
-        file(src: "src/**/*.cs", target: 'src') {}
-        file(src: "$assemblyBinDebugDir/${archivesBaseName}.dll", target: 'lib') {}
-        file(src: "$assemblyBinReleaseDir/${archivesBaseName}.dll.config", target: 'lib') {}
-        file(src: "$assemblyBinReleaseDir/${archivesBaseName}.xml", target: 'lib') {}
+        project.version = patchVersion(spec.metadata.version.text)
+        spec.metadata.version = project.version
+        spec.metadata.releaseNotes = file('Changelog.txt').text
+        // cleanup previous lib/ and src/ files since they depend on build configuration
+        spec.files.file.findAll { it.@target == 'lib' || it.@target == 'src' }.each { it.replaceNode {} }
+    
+        def isWindowsOs = Os.isFamily(Os.FAMILY_WINDOWS)
+        def monoInstallation = "$System.env.MONO_HOME"
+        def pdbToMdbConverter
         if (isWindowsOs) {
-            file(src: "$assemblyBinDebugDir/${archivesBaseName}.pdb", target: 'lib') {}
+            if (monoInstallation != 'null') {
+                pdbToMdbConverter = "$System.env.MONO_HOME" + "\\bin\\pdb2mdb.bat"
+                exec { commandLine = [pdbToMdbConverter, "$assemblyBinDebugDir/${archivesBaseName}.dll"] }
+            }
         }
-        file(src: "$assemblyBinDebugDir/${archivesBaseName}.dll.mdb", target: 'lib') {}
+        
+        spec.files.appendNode {
+            file(src: "src/**/*.cs", target: 'src') {}
+            file(src: "$assemblyBinDebugDir/${archivesBaseName}.dll", target: 'lib') {}
+            file(src: "$assemblyBinReleaseDir/${archivesBaseName}.dll.config", target: 'lib') {}
+            file(src: "$assemblyBinReleaseDir/${archivesBaseName}.xml", target: 'lib') {}
+            if (isWindowsOs) {
+                file(src: "$assemblyBinDebugDir/${archivesBaseName}.pdb", target: 'lib') {}
+            }
+            file(src: "$assemblyBinDebugDir/${archivesBaseName}.dll.mdb", target: 'lib') {}
+        }
+    
+        def fw = new FileWriter('CallfireApiClient.nuspec')
+        XmlUtil.serialize(spec, fw)
+        // have to close manually because on windows file remains locked
+        fw.close()
     }
-
-    def fw = new FileWriter('CallfireApiClient.nuspec')
-    XmlUtil.serialize(spec, fw)
-    // have to close manually because on windows file remains locked
-    fw.close()
 }
 updateNuspecFile.dependsOn msbuildDebug
 
@@ -122,34 +124,36 @@ nugetPack {
 }
 nugetPack.dependsOn zipBinaries
 
-task prepareTestData () << {
-    def inFile = file('src/CallfireApiClient.IntegrationTests/App.config')
-    def xml = new XmlSlurper().parse(inFile)
-    
-    def apiLogin
-    def apiPassword
-    
-    try { 
-        apiLogin = "${testApiUsername}"
-        apiPassword = "${testApiPassword}"
-        println([ msbuild.projects['CallfireApiClient.IntegrationTests'].properties.TargetPath ])
-    } catch(Exception ex) {
-        println("Api Username and/or Password are empty, you can't run integrationTests task, set them with -PtestApiUsername/-PtestApiPassword options")
-        apiLogin = "login" 
-        apiPassword = "password"
-    }
-    
-    if (apiLogin != 'null' && apiPassword != 'null') {
-        xml.appSettings.add.findAll { it.@key == 'testLogin' || it.@key == 'testPassword' }.each { it.replaceNode {} }
-        xml.appSettings.appendNode {
-            add(key: "testLogin", value: apiLogin) {}
-            add(key: "testPassword", value: apiPassword) {}
+task prepareTestData {
+    doLast {
+        def inFile = file('src/CallfireApiClient.IntegrationTests/App.config')
+        def xml = new XmlSlurper().parse(inFile)
+        
+        def apiLogin
+        def apiPassword
+        
+        try { 
+            apiLogin = "${testApiUsername}"
+            apiPassword = "${testApiPassword}"
+            println([ msbuild.projects['CallfireApiClient.IntegrationTests'].properties.TargetPath ])
+        } catch(Exception ex) {
+            println("Api Username and/or Password are empty, you can't run integrationTests task, set them with -PtestApiUsername/-PtestApiPassword options")
+            apiLogin = "login" 
+            apiPassword = "password"
         }
+        
+        if (apiLogin != 'null' && apiPassword != 'null') {
+            xml.appSettings.add.findAll { it.@key == 'testLogin' || it.@key == 'testPassword' }.each { it.replaceNode {} }
+            xml.appSettings.appendNode {
+                add(key: "testLogin", value: apiLogin) {}
+                add(key: "testPassword", value: apiPassword) {}
+            }
+        }
+        def fw = new FileWriter('src/CallfireApiClient.IntegrationTests/App.config')
+        XmlUtil.serialize(xml, fw)
+        // have to close manually because on windows file remains locked
+        fw.close()
     }
-    def fw = new FileWriter('src/CallfireApiClient.IntegrationTests/App.config')
-    XmlUtil.serialize(xml, fw)
-    // have to close manually because on windows file remains locked
-    fw.close()
 }
 
 task msbuildForIntegrationTests (type: com.ullink.Msbuild) {
@@ -164,29 +168,33 @@ task integrationTests (type: com.ullink.gradle.nunit.NUnit) {
 }
 integrationTests.dependsOn msbuildForIntegrationTests
 
-task prepareReleaseData () << {
-    try { 
-        println("${gitHubOwner}")
-        println("${gitHubToken}")
-    } catch(Exception ex) {
-        println("GitHub Owner and/or Token are empty, you can't run github release task, set them with -PgitHubOwner/-PgitHubToken options")
+task prepareReleaseData {
+    doLast {
+        try { 
+            println("${gitHubOwner}")
+            println("${gitHubToken}")
+        } catch(Exception ex) {
+            println("GitHub Owner and/or Token are empty, you can't run github release task, set them with -PgitHubOwner/-PgitHubToken options")
+        }
     }
 }
 prepareReleaseData.dependsOn nugetPack
 
-task configureCustomGitHubRelease () << {
-    github {
-        owner = "${gitHubOwner}"
-        repo = 'callfire-api-client-csharp'
-        token = "${gitHubToken}"
-        tagName = project.version
-        targetCommitish = 'master'
-        name = project.version
-        body = releaseDescription()
-        assets = [
-            'build/dist/CallfireApiClient-' + project.version + '.zip',
-            'build/dist/CallfireApiClient.' + project.version + '.nupkg'
-        ]
+task configureCustomGitHubRelease {
+    doLast {
+        github {
+            owner = "${gitHubOwner}"
+            repo = 'callfire-api-client-csharp'
+            token = "${gitHubToken}"
+            tagName = project.version
+            targetCommitish = 'master'
+            name = project.version
+            body = releaseDescription()
+            assets = [
+                'build/dist/CallfireApiClient-' + project.version + '.zip',
+                'build/dist/CallfireApiClient.' + project.version + '.nupkg'
+            ]
+        }
     }
 }
 configureCustomGitHubRelease.dependsOn prepareReleaseData
