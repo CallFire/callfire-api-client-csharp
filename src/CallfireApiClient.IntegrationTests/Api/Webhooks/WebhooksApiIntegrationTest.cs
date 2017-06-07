@@ -24,6 +24,9 @@ namespace CallfireApiClient.IntegrationTests.Api.Webhooks
             Assert.NotNull(resourceId1.Id);
             webhook.Name = "test_name2";
             var resourceId2 = api.Create(webhook);
+            webhook.Resource = ResourceType.CONTACT_LIST;
+            webhook.Events = new HashSet<ResourceEvent> { ResourceEvent.VALIDATION_FINISHED };
+            var resourceId3 = api.Create(webhook);
 
             var findRequest = new FindWebhooksRequest
             {
@@ -50,6 +53,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Webhooks
 
             api.Delete((long)resourceId1.Id);
             api.Delete((long)resourceId2.Id);
+            api.Delete((long)resourceId3.Id);
 
             Assert.Throws<ResourceNotFoundException>(() => api.Get((long)resourceId1.Id));
             Assert.Throws<ResourceNotFoundException>(() => api.Get((long)resourceId2.Id));
