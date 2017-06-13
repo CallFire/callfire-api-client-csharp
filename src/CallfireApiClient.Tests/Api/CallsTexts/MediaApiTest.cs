@@ -3,6 +3,7 @@ using CallfireApiClient.Api.Common.Model;
 using CallfireApiClient.Api.CallsTexts.Model;
 using RestSharp;
 using System;
+using System.IO;
 
 namespace CallfireApiClient.Tests.Api.CallsTexts
 {
@@ -19,6 +20,19 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
 
             string mp3FilePath = "Resources/File-examples/train.mp3";
             ResourceId id = Client.MediaApi.Upload(mp3FilePath, "fname");
+
+            Assert.That(Serializer.Serialize(id), Is.EqualTo(expectedJson));
+            Assert.AreEqual(Method.POST, restRequest.Value.Method);
+        }
+
+        [Test]
+        public void UploadWithFileData()
+        {
+            string expectedJson = GetJsonPayload("/callstexts/mediaApi/response/uploadSound.json");
+            var restRequest = MockRestResponse(expectedJson);
+
+            string mp3FilePath = "Resources/File-examples/train.mp3";
+            ResourceId id = Client.MediaApi.Upload(File.ReadAllBytes(mp3FilePath), MediaType.MP3, "fname");
 
             Assert.That(Serializer.Serialize(id), Is.EqualTo(expectedJson));
             Assert.AreEqual(Method.POST, restRequest.Value.Method);

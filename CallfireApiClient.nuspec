@@ -20,6 +20,7 @@ Version 1.1.19 - Jun 13 2017
 - added strictValidation flag for adding contacts to broadcast 
 - added useCustomFields to createContactList/addContactListContacts apis
 - added media array parameter for TextRecipient
+- added a way to upload files from byte array for media and campaign sounds api
 
 Version 1.1.18 - May 29 2017
 - upgraded dependencies

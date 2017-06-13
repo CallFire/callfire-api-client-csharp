@@ -39,6 +39,25 @@ namespace CallfireApiClient.Api.CallsTexts
         }
 
         /// <summary>
+        /// Upload media file to account
+        /// </summary>
+        /// <param name="fileData">binary file data to upload</param>
+        /// <param name="type">media type for file uploaded</param>
+        /// <param name="name">name for file uploaded</param>
+        /// <returns>ResourceId object with sound id</returns>
+        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
+        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
+        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
+        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
+        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
+        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
+        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        public ResourceId Upload(byte[] fileData, MediaType type, string name = null)
+        {
+            return Client.PostFile<ResourceId>(MEDIA_PATH, fileData, name, ClientUtils.EnumMemberAttr<MediaType>(type));
+        }
+
+        /// <summary>
         /// Returns a single Media instance for a given media file id. This is the metadata
         /// for the media only.No content data is returned from this API.
         /// </summary>
