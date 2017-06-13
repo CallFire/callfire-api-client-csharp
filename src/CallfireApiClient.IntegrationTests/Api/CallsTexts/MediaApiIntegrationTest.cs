@@ -25,6 +25,15 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
         }
 
         [Test]
+        public void TestUploadWithFileData()
+        {
+            String soundName = "mp3_test_" + DateTime.Now.Millisecond.ToString();
+            ResourceId wavResourceId = Client.MediaApi.Upload(File.ReadAllBytes(wavFilePath), MediaType.WAV);
+            ResourceId mp3ResourceId = Client.MediaApi.Upload(File.ReadAllBytes(mp3FilePath), MediaType.MP3, soundName);
+            Assert.NotNull(mp3ResourceId.Id);
+        }
+
+        [Test]
         public void TestGet()
         {
             String soundName = "mp3_test_" + DateTime.Now.Millisecond.ToString();

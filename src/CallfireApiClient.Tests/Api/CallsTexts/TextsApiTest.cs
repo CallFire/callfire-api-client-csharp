@@ -20,7 +20,7 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             var restRequest = MockRestResponse(responseJson);
 
             TextRecipient r1 = new TextRecipient { PhoneNumber = "12135551100", Message = "Hello World!" };
-            TextRecipient r2 = new TextRecipient { PhoneNumber = "12135551101", Message = "Testing 1 2 3" };
+            TextRecipient r2 = new TextRecipient { PhoneNumber = "12135551101", Message = "Testing 1 2 3", FromNumber = "12135551102" };
 
             IList<CallfireApiClient.Api.CallsTexts.Model.Text> texts = Client.TextsApi.Send(new List<TextRecipient> { r1, r2 });
 
@@ -42,14 +42,15 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             var restRequest = MockRestResponse(responseJson);
 
             TextRecipient r1 = new TextRecipient { PhoneNumber = "12135551100", Message = "Hello World!" };
-            TextRecipient r2 = new TextRecipient { PhoneNumber = "12135551101", Message = "Testing 1 2 3" };
+            TextRecipient r2 = new TextRecipient { PhoneNumber = "12135551101", Message = "Testing 1 2 3", FromNumber = "12135551102" };
 
             var request = new SendTextsRequest
             {
                Recipients = new List<TextRecipient> { r1, r2 },
                CampaignId = 100,
                Fields = FIELDS,
-               DefaultMessage = "defaultMessage"
+               DefaultMessage = "defaultMessage",
+               StrictValidation = true
             };
 
             IList<CallfireApiClient.Api.CallsTexts.Model.Text> texts = Client.TextsApi.Send(request);
@@ -61,6 +62,7 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("campaignId") && p.Value.Equals("100")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("defaultMessage") && p.Value.Equals("defaultMessage")));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("strictValidation") && p.Value.Equals("True")));
         }
 
         [Test]

@@ -25,7 +25,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
         public void TestCreateContactListFromFile()
         {
             string path = "Resources/File-examples/contacts1.csv";
-            ResourceId listId = Client.ContactListsApi.CreateFromCsv("fileList", Path.GetFullPath(path));
+            ResourceId listId = Client.ContactListsApi.CreateFromCsv("fileList", Path.GetFullPath(path), true);
 
             ContactList contactList = Client.ContactListsApi.Get(listId.Id);
             Assert.AreEqual(2, contactList.Size);
@@ -39,7 +39,8 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
             CreateContactListRequest<string> request = new CreateContactListRequest<string>
             {
                 Contacts = new List<string> { "12135543211", "12135678882" },
-                Name = "listFromNumbers"
+                Name = "listFromNumbers",
+                UseCustomFields = true
             };
             ResourceId numbersListId = Client.ContactListsApi.Create(request);
 
@@ -93,14 +94,16 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
             CreateContactListRequest<Contact> request = new CreateContactListRequest<Contact>
             {
                 Contacts = new List<Contact> { c1, c2 },
-                Name = "listFromContacts"
+                Name = "listFromContacts",
+                UseCustomFields = true
             };
             ResourceId id = Client.ContactListsApi.Create(request);
 
             AddContactListContactsRequest<string> addItemsRequest = new AddContactListContactsRequest<string>
             {
                 ContactListId = id.Id,
-                Contacts = new List<string> { "12345543211" }
+                Contacts = new List<string> { "12345543211" },
+                UseCustomFields = true
             };
             Client.ContactListsApi.AddListItems(addItemsRequest);
 

@@ -59,6 +59,7 @@
     <Compile Include="Api\CallsTexts\MediaApi.cs" />
     <Compile Include="Api\CallsTexts\Model\MediaType.cs" />
     <Compile Include="Api\CallsTexts\Model\Request\FindCallsRequest.cs" />
+    <Compile Include="Api\CallsTexts\Model\Request\SendCallsTextsRequest.cs" />
     <Compile Include="Api\CallsTexts\Model\Request\FindCallsTextsRequest.cs" />
     <Compile Include="Api\CallsTexts\Model\Request\SendTextsRequest.cs" />
     <Compile Include="Api\CallsTexts\Model\Request\SendCallsRequest.cs" />

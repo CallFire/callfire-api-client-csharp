@@ -310,13 +310,43 @@ namespace CallfireApiClient
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
         public T PostFile<T>(String path, string fileName, string filePath, string contentType = null) where T : new()
         {
-            var queryParams = ClientUtils.BuildQueryParams("name", fileName);
-            var restRequest = CreateRestRequest(path, Method.POST, queryParams);
+            var restRequest = CreateRestRequest(path, Method.POST);
             restRequest.AddHeader("Content-Type", "multipart/form-data");
             restRequest.AddFileBytes("file", File.ReadAllBytes(filePath), Path.GetFileName(filePath), contentType != null ? contentType : ClientConstants.DEFAULT_FILE_CONTENT_TYPE);
             restRequest.AddParameter("name", fileName);
             return DoRequest<T>(restRequest);
         }
+
+        /// <summary>
+        /// Performs POST request with binary body to specified path
+        /// <summary>
+        /// <typeparam name="T">The type of object to create and populate with the returned data.</typeparam>
+        /// <param name="path">relative API request path</param>
+        /// <param name="filePath">path to file</param>
+        /// <param name="formParams">form parameters to include in request</param>
+        /// <returns>mapped object</returns>
+        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
+        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
+        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
+        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
+        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
+        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
+        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        public T PostFile<T>(String path, string filePath, IList<KeyValuePair<string, object>> formParams) where T : new()
+        {
+            var restRequest = CreateRestRequest(path, Method.POST);
+            restRequest.AddHeader("Content-Type", "multipart/form-data");
+            restRequest.AddFileBytes("file", File.ReadAllBytes(filePath), Path.GetFileName(filePath), ClientConstants.DEFAULT_FILE_CONTENT_TYPE);
+
+            foreach (KeyValuePair<string, object> pair in formParams)
+            {
+                restRequest.AddParameter(pair.Key, pair.Value.ToString());
+            }
+
+            return DoRequest<T>(restRequest);
+        }
+
+
 
         /// <summary>
         /// Performs POST request with binary body to specified path
@@ -334,14 +364,37 @@ namespace CallfireApiClient
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public T PostFile<T>(String path, string fileName, string filePath, IList<KeyValuePair<string, object>> additionalQueryParams) where T : new()
+        public T PostFile<T>(String path, string fileName, string filePath, IList<KeyValuePair<string, object>> queryParams) where T : new()
         {
-            var queryParams = new List<KeyValuePair<string, object>>(ClientUtils.BuildQueryParams("name", fileName));
-            queryParams.AddRange(additionalQueryParams);
-            
             var restRequest = CreateRestRequest(path, Method.POST, queryParams);
             restRequest.AddHeader("Content-Type", "multipart/form-data");
             restRequest.AddFileBytes("file", File.ReadAllBytes(filePath), Path.GetFileName(filePath), ClientConstants.DEFAULT_FILE_CONTENT_TYPE);
+            restRequest.AddParameter("name", fileName);
+            return DoRequest<T>(restRequest);
+        }
+
+        /// <summary>
+        /// Performs POST request with binary body to specified path
+        /// <summary>
+        /// <typeparam name="T">The type of object to create and populate with the returned data.</typeparam>
+        /// <param name="path">relative API request path</param>
+        /// <param name="fileData">binary file data to upload</param>
+        /// <param name="fileName">name of file</param>
+        /// <param name="contentType">media type for file uploaded</param>
+        /// <param name="queryParams">query parameters</param>
+        /// <returns>mapped object</returns>
+        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
+        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
+        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
+        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
+        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
+        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
+        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        public T PostFile<T>(String path, byte[] fileData, string fileName, string contentType = null, IList<KeyValuePair<string, object>> queryParams = null) where T : new()
+        {
+            var restRequest = CreateRestRequest(path, Method.POST, queryParams);
+            restRequest.AddHeader("Content-Type", "multipart/form-data");
+            restRequest.AddFileBytes("file", fileData, fileName, contentType != null ? contentType : ClientConstants.DEFAULT_FILE_CONTENT_TYPE);
             restRequest.AddParameter("name", fileName);
             return DoRequest<T>(restRequest);
         }

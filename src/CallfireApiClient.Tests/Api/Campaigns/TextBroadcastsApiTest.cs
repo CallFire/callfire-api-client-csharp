@@ -33,13 +33,14 @@ namespace CallfireApiClient.Tests.Api.Campaigns
                 },
                 ResumeNextDay = true
             };
-            var id = Client.TextBroadcastsApi.Create(textBroadcast, true);
+            var id = Client.TextBroadcastsApi.Create(textBroadcast, true, true);
             Assert.That(Serializer.Serialize(id), Is.EqualTo(responseJson));
 
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("start") && p.Value.Equals("True")));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("strictValidation") && p.Value.Equals("True")));
         }
 
         [Test]
@@ -78,14 +79,15 @@ namespace CallfireApiClient.Tests.Api.Campaigns
                 Id = 11,
                 Name = "Example API SMS updated",
                 Message = "a new test message",
-                ResumeNextDay = true
+                ResumeNextDay = true,
             };
-            Client.TextBroadcastsApi.Update(textBroadcast);
+            Client.TextBroadcastsApi.Update(textBroadcast, true);
 
             Assert.AreEqual(Method.PUT, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.AreEqual(requestBodyParam.Value, expectedJson);
             Assert.That(restRequest.Value.Resource, Is.StringEnding("/11"));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("strictValidation") && p.Value.Equals("True")));
         }
 
         [Test]
@@ -250,7 +252,8 @@ namespace CallfireApiClient.Tests.Api.Campaigns
                 {
                     new TextRecipient { PhoneNumber = "12135551122" },
                     new TextRecipient { PhoneNumber = "12135551123" },
-                }
+                },
+                StrictValidation = true
             };
             var id = Client.TextBroadcastsApi.AddBatch(request);
             Assert.That(Serializer.Serialize(id), Is.EqualTo(responseJson));
@@ -260,6 +263,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
             Assert.That(restRequest.Value.Parameters, Has.No.Some.Matches<Parameter>(p => p.Name.Equals("campaignId")));
             Assert.That(restRequest.Value.Resource, Is.StringEnding("/15/batches"));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("strictValidation") && p.Value.Equals("True")));
         }
 
         [Test]
@@ -274,13 +278,14 @@ namespace CallfireApiClient.Tests.Api.Campaigns
                 new TextRecipient { PhoneNumber = "12135551100" },
                 new TextRecipient { PhoneNumber = "12135551101" },
             };
-            var texts = Client.TextBroadcastsApi.AddRecipients(15, recipients);
+            var texts = Client.TextBroadcastsApi.AddRecipients(15, recipients, null, true);
             Assert.That(Serializer.Serialize(new ListHolder<CallfireApiClient.Api.CallsTexts.Model.Text>(texts)), Is.EqualTo(responseJson));
 
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
             Assert.That(restRequest.Value.Resource, Is.StringEnding("/15/recipients"));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("strictValidation") && p.Value.Equals("True")));
 
             Client.TextBroadcastsApi.AddRecipients(15, recipients, FIELDS);
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));

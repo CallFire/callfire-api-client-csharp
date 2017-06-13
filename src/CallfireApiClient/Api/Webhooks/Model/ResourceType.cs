@@ -12,6 +12,10 @@ namespace CallfireApiClient.Api.Webhooks.Model
         FINISHED,
         [EnumMember(Value = "Failed")]
         FAILED,
+        [EnumMember(Value = "ValidationFinished")]
+        VALIDATION_FINISHED,
+        [EnumMember(Value = "ValidationFailed")]
+        VALIDATION_FAILED,
         [EnumMember(Value = "unknown")]
         UNKNOWN
     }
@@ -36,6 +40,8 @@ namespace CallfireApiClient.Api.Webhooks.Model
         OUTBOUND_TEXT,
         [EnumMember(Value = "InboundText")]
         INBOUND_TEXT,
+        [EnumMember(Value = "ContactList")]
+        CONTACT_LIST,
         [EnumMember(Value = "unknown")]
         UNKNOWN
     }

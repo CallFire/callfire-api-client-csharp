@@ -41,6 +41,7 @@ namespace CallfireApiClient.Api.Webhooks.Model
             { ResourceType.OUTBOUND_CALL, new HashSet<ResourceEvent> { ResourceEvent.FINISHED } },
             { ResourceType.INBOUND_TEXT, new HashSet<ResourceEvent> { ResourceEvent.FINISHED } },
             { ResourceType.OUTBOUND_TEXT, new HashSet<ResourceEvent> { ResourceEvent.FINISHED } },
+            { ResourceType.CONTACT_LIST, new HashSet<ResourceEvent> { ResourceEvent.VALIDATION_FINISHED, ResourceEvent.VALIDATION_FAILED } },
             { ResourceType.UNKNOWN, new HashSet<ResourceEvent> {  } }
         };
 

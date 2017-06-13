@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><package>
   <metadata>
     <id>CallfireApiClient</id>
-    <version>1.1.18</version>
+    <version>1.1.19</version>
     <title>CallFire API v2 client</title>
     <authors>
       Vladimir Mikhailov
@@ -15,6 +15,13 @@
     <description>C# client library for integration with Callfire REST API v2 services</description>
     <releaseNotes>Callfire API client Changelog
 =============================
+Version 1.1.19 - Jun 13 2017
+- added fromNumber to Recipient object for sending calls/texts
+- added strictValidation flag for adding contacts to broadcast 
+- added useCustomFields to createContactList/addContactListContacts apis
+- added media array parameter for TextRecipient
+- added a way to upload files from byte array for media and campaign sounds api
+
 Version 1.1.18 - May 29 2017
 - upgraded dependencies
 

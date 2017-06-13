@@ -2,7 +2,6 @@ using CallfireApiClient.Api.Common.Model;
 using CallfireApiClient.Api.CallsTexts.Model;
 using System.Collections.Generic;
 using CallfireApiClient.Api.CallsTexts.Model.Request;
-using CallfireApiClient.Api.Common.Model.Request;
 
 namespace CallfireApiClient.Api.CallsTexts
 {
@@ -80,7 +79,7 @@ namespace CallfireApiClient.Api.CallsTexts
             Validate.NotBlank(recipients.ToString(), "recipients cannot be blank");
             var queryParams = new List<KeyValuePair<string, object>>(2);
             ClientUtils.AddQueryParamIfSet("campaignId", campaignId, queryParams);
-            ClientUtils.AddQueryParamIfSet("fields", fields, queryParams);  
+            ClientUtils.AddQueryParamIfSet("fields", fields, queryParams);
             return Client.Post<ListHolder<Text>>(TEXTS_PATH, recipients, queryParams).Items;
         }
 

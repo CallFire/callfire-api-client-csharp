@@ -40,13 +40,14 @@ namespace CallfireApiClient.Tests.Api.Campaigns
                 },
                 ResumeNextDay = true
             };
-            var id = Client.CallBroadcastsApi.Create(callBroadcast, true);
+            var id = Client.CallBroadcastsApi.Create(callBroadcast, true, true);
             Assert.That(Serializer.Serialize(id), Is.EqualTo(responseJson));
 
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("start") && p.Value.Equals("True")));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("strictValidation") && p.Value.Equals("True")));
         }
 
         [Test]
@@ -120,12 +121,13 @@ namespace CallfireApiClient.Tests.Api.Campaigns
                 },
                 ResumeNextDay = true
             };
-            Client.CallBroadcastsApi.Update(callBroadcast);
+            Client.CallBroadcastsApi.Update(callBroadcast, true);
 
             Assert.AreEqual(Method.PUT, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.AreEqual(requestBodyParam.Value, expectedJson);
             Assert.That(restRequest.Value.Resource, Is.StringEnding("/11"));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("strictValidation") && p.Value.Equals("True")));
         }
 
         [Test]
@@ -310,7 +312,8 @@ namespace CallfireApiClient.Tests.Api.Campaigns
                 {
                     new Recipient { PhoneNumber = "12135551100" },
                     new Recipient { PhoneNumber = "12135551101" },
-                }
+                },
+                StrictValidation = true
             };
             var id = Client.CallBroadcastsApi.AddBatch(request);
             Assert.That(Serializer.Serialize(id), Is.EqualTo(responseJson));
@@ -320,6 +323,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
             Assert.That(restRequest.Value.Parameters, Has.No.Some.Matches<Parameter>(p => p.Name.Equals("campaignId")));
             Assert.That(restRequest.Value.Resource, Is.StringEnding("/15/batches"));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("strictValidation") && p.Value.Equals("True")));
         }
 
         [Test]
@@ -334,13 +338,14 @@ namespace CallfireApiClient.Tests.Api.Campaigns
                 new Recipient { PhoneNumber = "12135551100" },
                 new Recipient { PhoneNumber = "12135551101" },
             };
-            var calls = Client.CallBroadcastsApi.AddRecipients(15, recipients);
+            var calls = Client.CallBroadcastsApi.AddRecipients(15, recipients, null, true);
             Assert.That(Serializer.Serialize(new ListHolder<Call>(calls)), Is.EqualTo(responseJson));
 
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
             Assert.That(restRequest.Value.Resource, Is.StringEnding("/15/recipients"));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("strictValidation") && p.Value.Equals("True")));
 
             Client.CallBroadcastsApi.AddRecipients(15, recipients, FIELDS);
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));

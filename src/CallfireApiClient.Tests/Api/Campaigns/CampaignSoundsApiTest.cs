@@ -5,6 +5,7 @@ using RestSharp;
 using System.Linq;
 using CallfireApiClient.Api.CallsTexts.Model.Request;
 using CallfireApiClient.Api.Common.Model;
+using System.IO;
 
 namespace CallfireApiClient.Tests.Api.Campaigns
 {
@@ -122,6 +123,19 @@ namespace CallfireApiClient.Tests.Api.Campaigns
 
             string mp3FilePath = "Resources/File-examples/train.mp3";
             CampaignSound sound = Client.CampaignSoundsApi.UploadAndGetSoundDetails(mp3FilePath, "fname", FIELDS);
+            Assert.That(restRequest.Value.Parameters, Has.None.Matches<Parameter>(p => p.Name.Equals("FIELDS") && p.Value.Equals(FIELDS)));
+            Assert.That(Serializer.Serialize(sound), Is.EqualTo(expectedJson));
+            Assert.AreEqual(Method.POST, restRequest.Value.Method);
+        }
+
+        [Test]
+        public void TestUploadWithFileData()
+        {
+            string expectedJson = GetJsonPayload("/campaigns/campaignSoundsApi/response/uploadSoundWithDetails.json");
+            var restRequest = MockRestResponse(expectedJson);
+
+            string mp3FilePath = "Resources/File-examples/train.mp3";
+            CampaignSound sound = Client.CampaignSoundsApi.UploadAndGetSoundDetails(File.ReadAllBytes(mp3FilePath), "fname", FIELDS);
             Assert.That(restRequest.Value.Parameters, Has.None.Matches<Parameter>(p => p.Name.Equals("FIELDS") && p.Value.Equals(FIELDS)));
             Assert.That(Serializer.Serialize(sound), Is.EqualTo(expectedJson));
             Assert.AreEqual(Method.POST, restRequest.Value.Method);

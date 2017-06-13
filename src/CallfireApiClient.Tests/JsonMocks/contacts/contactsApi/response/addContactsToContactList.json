@@ -1,5 +1,6 @@
 {
   "contactNumbersField": "homePhone",
+  "useCustomFields": true,
   "contacts": [
     {"homePhone": "123456"},
     {"homePhone": "123457"}
