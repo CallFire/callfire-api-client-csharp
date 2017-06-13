@@ -24,7 +24,7 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             var restRequest = MockRestResponse(responseJson);
 
             CallRecipient r1 = new CallRecipient { PhoneNumber = "12135551100", LiveMessage = "Why hello there!", TransferDigit = "1", TransferMessage = "testMessage", TransferNumber = "12135551101" };
-            CallRecipient r2 = new CallRecipient { PhoneNumber = "12135551101", LiveMessage = "And hello to you too." };
+            CallRecipient r2 = new CallRecipient { PhoneNumber = "12135551101", LiveMessage = "And hello to you too.", FromNumber = "12135551102" };
             IList<Call> calls = Client.CallsApi.Send(new List<CallRecipient> { r1, r2 });
 
             Assert.That(Serializer.Serialize(new ListHolder<Call>(calls)), Is.EqualTo(responseJson));
@@ -45,7 +45,7 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             var restRequest = MockRestResponse(responseJson);
 
             CallRecipient r1 = new CallRecipient { PhoneNumber = "12135551100", LiveMessage = "Why hello there!", TransferDigit = "1", TransferMessage = "testMessage", TransferNumber = "12135551101" };
-            CallRecipient r2 = new CallRecipient { PhoneNumber = "12135551101", LiveMessage = "And hello to you too." };
+            CallRecipient r2 = new CallRecipient { PhoneNumber = "12135551101", LiveMessage = "And hello to you too.", FromNumber = "12135551102" };
 
             var request = new SendCallsRequest
             {
@@ -56,7 +56,8 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
                 DefaultMachineMessage = "DefaultMachineMessage",
                 DefaultLiveMessageSoundId = 1,
                 DefaultMachineMessageSoundId = 1,
-                DefaultVoice = CallfireApiClient.Api.Campaigns.Model.Voice.FRENCHCANADIAN1
+                DefaultVoice = Voice.FRENCHCANADIAN1,
+                StrictValidation = true
             };
 
             IList<Call> calls = Client.CallsApi.Send(request);
@@ -75,6 +76,7 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             Assert.That(restRequest.Value.Resource, !Is.StringContaining("defaultMachineMessageSoundId=1"));
             Assert.That(restRequest.Value.Resource, !Is.StringContaining("defaultMachineMessageSoundId=1"));
             Assert.That(restRequest.Value.Resource, !Is.StringContaining("defaultVoice=FRENCHCANADIAN1"));
+            Assert.That(restRequest.Value.Resource, !Is.StringContaining("strictValidation=TRUE"));
         }
 
         [Test]

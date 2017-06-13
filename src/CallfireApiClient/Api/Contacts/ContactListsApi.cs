@@ -89,6 +89,7 @@ namespace CallfireApiClient.Api.Contacts
         /// </summary>
         /// <param name="name">contact list name</param>
         /// <param name="filePath">path to CSV file with contacts to upload</param>
+        /// <param name="useCustomFields">A flag to indicate how to define property names for contacts. If true, uses the field and property names exactly as defined. If false will assign custom properties and fields to A, B, C, etc</param>
         /// <returns>newly created contact list id</returns>
         /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
         /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
@@ -97,9 +98,12 @@ namespace CallfireApiClient.Api.Contacts
         /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
         /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
         /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
-        public ResourceId CreateFromCsv(string name, string filePath)
+        public ResourceId CreateFromCsv(string name, string filePath, bool? useCustomFields = null)
         {
-            return Client.PostFile<ResourceId>(LISTS_UPLOAD_PATH, name, filePath);
+            var formParams = new List<KeyValuePair<string, object>>(2);
+            ClientUtils.AddQueryParamIfSet("name", name, formParams);
+            ClientUtils.AddQueryParamIfSet("useCustomFields", useCustomFields, formParams);
+            return Client.PostFile<ResourceId>(LISTS_UPLOAD_PATH, filePath, formParams);
         }
 
         /// <summary>

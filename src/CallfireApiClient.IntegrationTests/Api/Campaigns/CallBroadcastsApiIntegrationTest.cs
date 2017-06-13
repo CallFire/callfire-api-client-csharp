@@ -37,9 +37,9 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
                                     TimeZone = "America/New_York",
                                     DaysOfWeek = new HashSet<DayOfWeek> { DayOfWeek.MONDAY, DayOfWeek.FRIDAY } }
                 },
-                ResumeNextDay = true
+                ResumeNextDay = true,
             };
-            var id = Client.CallBroadcastsApi.Create(broadcast, true);
+            var id = Client.CallBroadcastsApi.Create(broadcast, true, true);
             System.Console.WriteLine("broadcast id: " + id);
             var savedBroadcast = Client.CallBroadcastsApi.Get(id.Id);
             Assert.AreEqual(broadcast.Name, savedBroadcast.Name);
@@ -77,7 +77,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
 
             savedBroadcast.Name = "updated_name";
             savedBroadcast.DialplanXml = "<dialplan name=\"Root\">\r\n\t<play type=\"tts\">Congratulations! You have successfully configured a CallFire I V R.</play>\r\n</dialplan>";
-            Client.CallBroadcastsApi.Update(savedBroadcast);
+            Client.CallBroadcastsApi.Update(savedBroadcast, true);
 
             var updatedBroadcast = Client.CallBroadcastsApi.Get(id.Id, "id,name");
             Assert.Null(updatedBroadcast.Status);
@@ -186,7 +186,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
                 {
                     new Recipient { PhoneNumber = "12132212384" },
                     new Recipient { PhoneNumber = "12132212385" }
-                });
+                }, null, true);
             System.Console.WriteLine(calls);
             Assert.AreEqual(2, calls.Count);
 
@@ -204,7 +204,8 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
                 {
                     new Recipient { PhoneNumber = "12132212386" },
                     new Recipient { PhoneNumber = "12132212387" }
-                }
+                },
+                StrictValidation = true
             };
             ResourceId addedBatchId = Client.CallBroadcastsApi.AddBatch(addBatchRequest);
 

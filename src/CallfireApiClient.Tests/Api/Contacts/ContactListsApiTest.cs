@@ -114,7 +114,8 @@ namespace CallfireApiClient.Tests.Api.Contacts
             CreateContactListRequest<Contact> requestContact = new CreateContactListRequest<Contact>
             {
                 Name = "listFromContacts",
-                Contacts = new List<Contact> { c1, c2 }
+                Contacts = new List<Contact> { c1, c2 },
+                UseCustomFields = true
             };
 
             ResourceId res = Client.ContactListsApi.Create(requestContact);
@@ -129,10 +130,11 @@ namespace CallfireApiClient.Tests.Api.Contacts
             string responseJson = GetJsonPayload("/contacts/contactsApi/response/createContactList.json");
             var restRequest = MockRestResponse(responseJson);
 
-            ResourceId resourceId = Client.ContactListsApi.CreateFromCsv("fileList", "Resources/File-examples/contacts1.csv");
+            ResourceId resourceId = Client.ContactListsApi.CreateFromCsv("fileList", "Resources/File-examples/contacts1.csv", true);
 
             Assert.That(Serializer.Serialize(resourceId), Is.EqualTo(responseJson));
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("useCustomFields") && p.Value.Equals("True")));
         }
 
         [Test]
@@ -225,8 +227,8 @@ namespace CallfireApiClient.Tests.Api.Contacts
         [Test]
         public void TestAddContactsToContactListById()
         {
-            string expectedJson = GetJsonPayload("/contacts/contactsApi/response/addContactsToContactList.json");
-            var restRequest = MockRestResponse(expectedJson);
+            string requestJson = GetJsonPayload("/contacts/contactsApi/response/addContactsToContactList.json");
+            var restRequest = MockRestResponse(requestJson);
 
             Contact c1 = new Contact { HomePhone = "123456" };
             Contact c2 = new Contact { HomePhone = "123457" };
@@ -235,13 +237,14 @@ namespace CallfireApiClient.Tests.Api.Contacts
             {
                 ContactNumbersField = "homePhone",
                 ContactListId = TEST_LONG,
-                Contacts = new List<Contact> { c1, c2 }
+                Contacts = new List<Contact> { c1, c2 },
+                UseCustomFields = true
             };
 
             Client.ContactListsApi.AddListItems(request);
 
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.AreEqual(requestBodyParam.Value, expectedJson);
+            Assert.AreEqual(requestBodyParam.Value, requestJson);
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             Assert.That(restRequest.Value.Resource, Is.StringContaining("/" + TEST_LONG));
         }

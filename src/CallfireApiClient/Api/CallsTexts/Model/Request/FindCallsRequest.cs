@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using CallfireApiClient.Api.CallsTexts.Model;
-using CallfireApiClient.Api.Common.Model.Request;
 
 namespace CallfireApiClient.Api.CallsTexts.Model.Request
 {

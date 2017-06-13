@@ -37,7 +37,7 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
         public void SendText()
         {
             var recipient1 = new TextRecipient { Message = "msg", PhoneNumber = "12132212384" };
-            var recipient2 = new TextRecipient { Message = "msg", PhoneNumber = "12132212384" };
+            var recipient2 = new TextRecipient { Message = "msg", PhoneNumber = "12132212384", FromNumber = "12132041238" };
             var recipients = new List<TextRecipient> { recipient1, recipient2 };
             
             IList<CallfireApiClient.Api.CallsTexts.Model.Text> texts = Client.TextsApi.Send(recipients, null, "items(id,fromNumber,state)");
@@ -54,7 +54,8 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
                 Recipients = recipients,
                 CampaignId = 7415135003,
                 DefaultMessage = "DefaultLiveMessage",
-                Fields = "items(id,fromNumber,state)"
+                Fields = "items(id,fromNumber,state)",
+                StrictValidation = true
             };
             texts = Client.TextsApi.Send(request);
             CallfireApiClient.Api.CallsTexts.Model.Text text = Client.TextsApi.Get((long)texts[0].Id);

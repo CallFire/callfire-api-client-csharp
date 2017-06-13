@@ -35,13 +35,13 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
                 },
                 ResumeNextDay = true
             };
-            var id = Client.TextBroadcastsApi.Create(broadcast, true);
+            var id = Client.TextBroadcastsApi.Create(broadcast, true, true);
             var savedBroadcast = Client.TextBroadcastsApi.Get(id.Id);
             Assert.AreEqual(broadcast.Name, savedBroadcast.Name);
             Assert.AreEqual(savedBroadcast.ResumeNextDay, true);
             savedBroadcast.Name = "updated_name";
             savedBroadcast.ResumeNextDay = false;
-            Client.TextBroadcastsApi.Update(savedBroadcast);
+            Client.TextBroadcastsApi.Update(savedBroadcast, true);
 
             var updatedBroadcast = Client.TextBroadcastsApi.Get(id.Id, "id,name");
             Assert.Null(updatedBroadcast.Status);
@@ -148,7 +148,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
                 new TextRecipient { PhoneNumber = "14246525473" },
                 new TextRecipient { PhoneNumber = "12132041238" }
             };
-            var texts = Client.TextBroadcastsApi.AddRecipients((long)id, recipients);
+            var texts = Client.TextBroadcastsApi.AddRecipients((long)id, recipients, null, true);
             Console.WriteLine(texts);
             Assert.AreEqual(2, texts.Count);
             Assert.That(texts[0].Message, Is.StringStarting("test_msg"));
@@ -167,7 +167,8 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
                 {
                     new TextRecipient { PhoneNumber = "14246525473" },
                     new TextRecipient { PhoneNumber = "12132041238" }
-                }
+                },
+                StrictValidation = true
             };
             ResourceId addedBatchId = Client.TextBroadcastsApi.AddBatch(addBatchRequest);
 

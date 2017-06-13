@@ -48,7 +48,7 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
             var contacts = Client.ContactsApi.Find(new FindContactsRequest());
 
             var recipient1 = new CallRecipient { ContactId = contacts.Items[0].Id, LiveMessage = "testMessage", TransferDigit = "1", TransferMessage = "transferTestMessage", TransferNumber = "14246525473" };
-            var recipient2 = new CallRecipient { ContactId = contacts.Items[0].Id, LiveMessage = "testMessage", TransferDigit = "1", TransferMessageSoundId = 1, TransferNumber = "14246525473" };
+            var recipient2 = new CallRecipient { ContactId = contacts.Items[0].Id, LiveMessage = "testMessage", TransferDigit = "1", TransferMessageSoundId = 1, TransferNumber = "14246525473", FromNumber = "12132041238" };
             var recipients = new List<CallRecipient> { recipient1, recipient2 };
 
             IList<Call> calls = Client.CallsApi.Send(recipients, null, "items(id,fromNumber,state)");
@@ -66,7 +66,8 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
                 Fields = "items(id, fromNumber, state, campaignId)",
                 DefaultLiveMessage = "DefaultLiveMessage",
                 DefaultMachineMessage = "DefaultMachineMessage",
-                DefaultVoice = CallfireApiClient.Api.Campaigns.Model.Voice.FRENCHCANADIAN1
+                DefaultVoice = Voice.FRENCHCANADIAN1,
+                StrictValidation = true
             };
             calls = Client.CallsApi.Send(request);
             Assert.AreEqual(2, calls.Count);
@@ -79,7 +80,7 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
                 Fields = "items(id, fromNumber, state, campaignId)",
                 DefaultLiveMessageSoundId = 1,
                 DefaultMachineMessageSoundId = 1,
-                DefaultVoice = CallfireApiClient.Api.Campaigns.Model.Voice.FRENCHCANADIAN1
+                DefaultVoice = Voice.FRENCHCANADIAN1
             };
             calls = Client.CallsApi.Send(request);
             Assert.AreEqual(2, calls.Count);

@@ -1,7 +1,10 @@
 Callfire API client Changelog
 =============================
-Version 1.1.19 - Jun 6 2017
-- added contact list validation webhook support
+Version 1.1.19 - Jun 13 2017
+- added fromNumber to Recipient object for sending calls/texts
+- added strictValidation flag for adding contacts to broadcast 
+- added useCustomFields to createContactList/addContactListContacts apis
+- added media array parameter for TextRecipient
 
 Version 1.1.18 - May 29 2017
 - upgraded dependencies
