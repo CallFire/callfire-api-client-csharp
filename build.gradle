@@ -202,7 +202,7 @@ githubRelease.dependsOn configureCustomGitHubRelease
 // nuget package upload, requires API key to be set
 nugetPush {
     apiKey = System.properties[ 'NUGET_API_KEY' ] ?: "key not set"
-    serverUrl = System.properties[ 'SOURCE_URL' ] ?: "source not set"
+    serverUrl = 'https://www.nuget.org/api/v2/package'
     nupkgFile = nugetPack.packageFile
 }
 
