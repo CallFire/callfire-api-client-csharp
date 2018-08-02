@@ -1,5 +1,8 @@
 Callfire API client Changelog
 =============================
+Version 1.1.2 - August 1 2018
+    - updated .NET framework target version to latest for support TLS 1.2 by default
+
 Version 1.1.19 - Jun 13 2017
 - added fromNumber to Recipient object for sending calls/texts
 - added strictValidation flag for adding contacts to broadcast 

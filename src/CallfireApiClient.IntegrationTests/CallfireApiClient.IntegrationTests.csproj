@@ -9,7 +9,7 @@
     <AssemblyName>IntegrationTests</AssemblyName>
     <UseMSBuildEngine>True</UseMSBuildEngine>
     <ReleaseVersion>1.0.0</ReleaseVersion>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
