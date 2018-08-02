@@ -5,7 +5,7 @@ import groovy.xml.XmlUtil
 import groovy.xml.StreamingMarkupBuilder
 
 plugins {
-  id 'com.ullink.msbuild' version '2.16'
+  id 'com.ullink.msbuild' version '2.21'
   id 'com.ullink.nuget' version '2.15'
   id 'com.ullink.nunit' version '1.10'
   id 'com.ullink.opencover' version '1.7'
@@ -26,7 +26,7 @@ ext['assemblyInfo'] = "src/CallfireApiClient/Properties/AssemblyInfo.cs"
 defaultTasks('nugetPack')
 
 nuget {
-    version = '4.1.0'
+    version = '4.4.0'
 }
 
 msbuild.dependsOn nugetRestore
