@@ -210,4 +210,5 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <Import Project="..\..\packages\StrongNamer.0.0.7\build\StrongNamer.targets" Condition="Exists('..\..\packages\StrongNamer.0.0.7\build\StrongNamer.targets')" />
 </Project>
