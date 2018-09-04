@@ -8,7 +8,7 @@
     <RootNamespace>CallfireApiClient.Tests</RootNamespace>
     <AssemblyName>callfire-api-client-tests</AssemblyName>
     <ReleaseVersion>1.0.0</ReleaseVersion>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -35,13 +35,13 @@
     <Reference Include="DotNetZip, Version=1.10.1.0, Culture=neutral, PublicKeyToken=6583c7c814667745">
       <HintPath>..\..\packages\DotNetZip.1.10.1\lib\net20\DotNetZip.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=106.3.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75">
+      <HintPath>..\..\packages\RestSharp.106.3.0\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="nunit.framework">
       <HintPath>..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="RestSharp">
-      <HintPath>..\..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="Microsoft.Build.Framework" />
@@ -224,5 +224,4 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <Import Project="..\..\packages\StrongNamer.0.0.7\build\StrongNamer.targets" Condition="Exists('..\..\packages\StrongNamer.0.0.7\build\StrongNamer.targets')" />
 </Project>
