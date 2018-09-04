@@ -9,7 +9,7 @@
     <AssemblyName>IntegrationTests</AssemblyName>
     <UseMSBuildEngine>True</UseMSBuildEngine>
     <ReleaseVersion>1.0.0</ReleaseVersion>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -94,5 +94,4 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <Import Project="..\..\packages\StrongNamer.0.0.7\build\StrongNamer.targets" Condition="Exists('..\..\packages\StrongNamer.0.0.7\build\StrongNamer.targets')" />
 </Project>

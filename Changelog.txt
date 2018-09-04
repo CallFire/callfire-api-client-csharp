@@ -1,5 +1,9 @@
 Callfire API client Changelog
 =============================
+Version 1.1.22 - Sept 04 2018
+    - updated version of RestSharp client to 106.3.0
+    - downgraded version of .NET framework to 4.6
+
 Version 1.1.21 - August 10 2018
     - added StrongNamer library to sign unsigned assembly in a nuget package
 

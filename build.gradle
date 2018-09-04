@@ -78,7 +78,6 @@ task updateNuspecFile {
             if (isWindowsOs) {
                 file(src: "$assemblyBinDebugDir/${archivesBaseName}.pdb", target: 'lib') {}
             }
-            file(src: "$assemblyBinDebugDir/${archivesBaseName}.dll.mdb", target: 'lib') {}
         }
     
         def fw = new FileWriter('CallfireApiClient.nuspec')
