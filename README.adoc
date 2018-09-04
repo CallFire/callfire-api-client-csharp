@@ -4,11 +4,11 @@ C# client for Callfire platform API version 2. See link:https://developers.callf
  page for setup instructions.
 
 .*Requirements:*
-* .NET 4.5+
+* .NET 4.6+
 
 .*Dependencies:*
 * Newtonsoft.Json >= 7.0.1
-* RestSharp >= 105.2.3
+* RestSharp >= 106.3.0
 
 .*Table of contents*
 * link:https://developers.callfire.com/callfire-api-client-csharp.html[Getting Started]
