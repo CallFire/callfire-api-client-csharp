@@ -1,6 +1,7 @@
 using CallfireApiClient.Api.Common.Model;
 using CallfireApiClient.Api.CallsTexts.Model;
 using System.IO;
+using CallfireApiClient.Api.CallsTexts.Model.Request;
 
 namespace CallfireApiClient.Api.CallsTexts
 {
@@ -17,6 +18,23 @@ namespace CallfireApiClient.Api.CallsTexts
         internal MediaApi(RestApiClient client)
         {
             Client = client;
+        }
+        
+        /// <summary>
+        /// Finds all media files which was uploaded by the user, filtered by file name.
+        /// </summary>
+        /// <param name="request">request object with different fields to filter</param>
+        /// <returns>paged list with media objects</returns>
+        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
+        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
+        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
+        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
+        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
+        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
+        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        public Page<Media> Find(FindMediaRequest request)
+        {
+            return Client.Get<Page<Media>>(MEDIA_PATH, request);
         }
 
         /// <summary>

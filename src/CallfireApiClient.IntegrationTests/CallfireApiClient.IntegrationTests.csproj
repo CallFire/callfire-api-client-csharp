@@ -85,6 +85,12 @@
     <EmbeddedResource Include="Resources\File-examples\train1.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\File-examples\cf.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\File-examples\ez.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>  
   </ItemGroup>
   <ItemGroup>
     <Content Include="callfire-api-client.dll.config">
