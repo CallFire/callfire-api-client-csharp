@@ -8,7 +8,7 @@ C# client for Callfire platform API version 2. See link:https://developers.callf
 
 .*Dependencies:*
 * Newtonsoft.Json >= 7.0.1
-* RestSharp >= 106.3.0
+* RestSharp >= 106.4.2
 
 .*Table of contents*
 * link:https://developers.callfire.com/callfire-api-client-csharp.html[Getting Started]

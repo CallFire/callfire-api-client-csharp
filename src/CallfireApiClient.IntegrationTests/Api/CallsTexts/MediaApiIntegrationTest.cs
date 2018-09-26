@@ -3,6 +3,7 @@ using CallfireApiClient.Api.CallsTexts.Model;
 using CallfireApiClient.Api.Common.Model;
 using NUnit.Framework;
 using System.IO;
+using CallfireApiClient.Api.CallsTexts.Model.Request;
 
 namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
 {
@@ -11,6 +12,27 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
     {
         private const string mp3FilePath = "Resources/File-examples/train1.mp3";
         private const string wavFilePath = "Resources/File-examples/train1.wav";
+        private const string cfLogoFilePath = "Resources/File-examples/cf.png";
+        private const string ezLogoFilePath = "Resources/File-examples/ez.png";
+        
+        [Test]
+        public void TestFind()
+        {
+            ResourceId cfLogoResourceId = Client.MediaApi.Upload(cfLogoFilePath);
+            ResourceId ezLogoResourceId = Client.MediaApi.Upload(ezLogoFilePath);
+            Assert.NotNull(cfLogoResourceId.Id);
+            Assert.NotNull(ezLogoResourceId.Id);
+            
+            var request = new FindMediaRequest
+            {
+                Filter = "cf.png"
+            };
+            
+            Page<Media> media = Client.MediaApi.Find(request);
+            
+            Console.WriteLine(media);
+            Assert.AreEqual(1, media.Items.Count);
+        }
 
         [Test]
         public void TestUpload()

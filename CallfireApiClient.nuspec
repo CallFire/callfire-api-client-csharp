@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><package>
   <metadata>
     <id>CallfireApiClient</id>
-    <version>1.1.22</version>
+    <version>1.1.23</version>
     <title>CallFire API v2 client</title>
     <authors>
       Vladimir Mikhailov
@@ -15,6 +15,9 @@
     <description>C# client library for integration with Callfire REST API v2 services</description>
     <releaseNotes>Callfire API client Changelog
 =============================
+Version 1.1.23 - Sept 26 2018
+    - added findMedia API operation to sdk
+
 Version 1.1.22 - Sept 04 2018
     - updated version of RestSharp client to 106.3.0
     - downgraded version of .NET framework to 4.6
@@ -117,7 +120,7 @@ Version 1.0.0 - Dec 29 2015
     <tags>Callfire rest api client</tags>
     <dependencies>
       <dependency id="Newtonsoft.Json" version="10.0.2"/>
-      <dependency id="RestSharp" version="106.3.0"/>
+      <dependency id="RestSharp" version="106.4.2"/>
     </dependencies>
   </metadata>
   <files>
