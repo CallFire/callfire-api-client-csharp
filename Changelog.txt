@@ -1,5 +1,8 @@
 Callfire API client Changelog
 =============================
+Version 1.1.24 - Oct 17 2018
+    - removed potential security vulnerability connected with DotNetZip library
+
 Version 1.1.23 - Sept 26 2018
     - added findMedia API operation to sdk
 
