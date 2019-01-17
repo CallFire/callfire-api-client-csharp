@@ -9,21 +9,20 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
         [Test]
         public void Get()
         {
-            var batch = Client.BatchesApi.Get(5506387003);
+            var batch = Client.BatchesApi.Get(5283098003);
             Console.WriteLine("batch: " + batch);
         }
 
         [Test]
         public void Update()
         {
-            var batch = Client.BatchesApi.Get(5506387003);
+            var batch = Client.BatchesApi.Get(5283098003);
             Console.WriteLine("batch: " + batch);
             batch.Enabled = false;
 
             Client.BatchesApi.Update(batch);
-            var updated = Client.BatchesApi.Get(5506387003);
+            var updated = Client.BatchesApi.Get(5283098003);
             Console.WriteLine("updated batch: " + updated);
         }
     }
 }
-

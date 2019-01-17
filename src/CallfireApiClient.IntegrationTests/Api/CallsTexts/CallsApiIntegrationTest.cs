@@ -18,11 +18,11 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
         [Test]
         public void GetCall()
         {
-            Call call = Client.CallsApi.Get(1, "id,toNumber,state");
+            Call call = Client.CallsApi.Get(1930885149003, "id,toNumber,state");
             Console.WriteLine("Call: " + call);
 
-            Assert.AreEqual(1, call.Id);
-            Assert.AreEqual("18088395900", call.ToNumber);
+            Assert.AreEqual(1930885149003, call.Id);
+            Assert.AreEqual("12132212384", call.ToNumber);
             Assert.AreEqual(StateType.FINISHED, call.State);
         }
 
@@ -47,8 +47,8 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
         {
             var contacts = Client.ContactsApi.Find(new FindContactsRequest());
 
-            var recipient1 = new CallRecipient { ContactId = contacts.Items[0].Id, LiveMessage = "testMessage", TransferDigit = "1", TransferMessage = "transferTestMessage", TransferNumber = "14246525473" };
-            var recipient2 = new CallRecipient { ContactId = contacts.Items[0].Id, LiveMessage = "testMessage", TransferDigit = "1", TransferMessageSoundId = 1, TransferNumber = "14246525473", FromNumber = "12132041238" };
+            var recipient1 = new CallRecipient { ContactId = contacts.Items[0].Id, LiveMessage = "testMessage", TransferDigit = "1", TransferMessage = "transferTestMessage" };
+            var recipient2 = new CallRecipient { ContactId = contacts.Items[0].Id, LiveMessage = "testMessage", TransferDigit = "1", TransferMessageSoundId = 9643523003 };
             var recipients = new List<CallRecipient> { recipient1, recipient2 };
 
             IList<Call> calls = Client.CallsApi.Send(recipients, null, "items(id,fromNumber,state)");
@@ -78,8 +78,8 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
                 Recipients = recipients,
                 CampaignId = 7373471003,
                 Fields = "items(id, fromNumber, state, campaignId)",
-                DefaultLiveMessageSoundId = 1,
-                DefaultMachineMessageSoundId = 1,
+                DefaultLiveMessageSoundId = 9643523003,
+                DefaultMachineMessageSoundId = 9643523003,
                 DefaultVoice = Voice.FRENCHCANADIAN1
             };
             calls = Client.CallsApi.Send(request);
@@ -89,12 +89,12 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
         [Test]
         public void GetCallRecording()
         {
-            CallRecording rec = Client.CallsApi.GetCallRecording(1);
+            CallRecording rec = Client.CallsApi.GetCallRecording(64837518003);
             Assert.NotNull(rec);
             Assert.NotNull(rec.Id);
             Assert.NotNull(rec.Mp3Url);
 
-            rec = Client.CallsApi.GetCallRecording(1, "campaignId");
+            rec = Client.CallsApi.GetCallRecording(64837518003, "campaignId");
             Assert.Null(rec.Id);
         }
 
@@ -102,14 +102,14 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
         public void GetCallRecordingInMp3Format()
         {
             string mp3FilePath = "Resources/File-examples/testDownloadRecordingById.mp3";
-            MemoryStream ms = (MemoryStream)Client.CallsApi.GetCallRecordingMp3(1);
+            MemoryStream ms = (MemoryStream)Client.CallsApi.GetCallRecordingMp3(64837518003);
             File.WriteAllBytes(mp3FilePath, ms.ToArray());
         }
 
         [Test]
         public void GetCallRecordings()
         {
-            CallRecording rec = Client.CallsApi.GetCallRecording(1);
+            CallRecording rec = Client.CallsApi.GetCallRecording(64837518003);
             IList<CallRecording> recs = Client.CallsApi.GetCallRecordings((long) rec.CallId, null);
             Assert.NotNull(recs);
             Assert.AreEqual(rec.CallId, recs[0].CallId);

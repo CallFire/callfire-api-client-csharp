@@ -15,6 +15,9 @@
     <description>C# client library for integration with Callfire REST API v2 services</description>
     <releaseNotes>Callfire API client Changelog
 =============================
+Version 1.1.24 - Jan 17 2019
+    - updated RestSharp version to 106.6
+
 Version 1.1.23 - Sept 26 2018
     - added findMedia API operation to sdk
 
@@ -130,5 +133,6 @@ Version 1.0.0 - Dec 29 2015
     <file src="src/CallfireApiClient/bin/Debug/callfire-api-client.dll" target="lib"/>
     <file src="src/CallfireApiClient/bin/Release/callfire-api-client.dll.config" target="lib"/>
     <file src="src/CallfireApiClient/bin/Release/callfire-api-client.xml" target="lib"/>
+    <file src="src/CallfireApiClient/bin/Debug/callfire-api-client.pdb" target="lib"/>
   </files>
 </package>

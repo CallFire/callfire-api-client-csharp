@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using CallfireApiClient.Api.Keywords.Model.Request;
 using RestSharp;
 using System.Linq;
@@ -23,7 +22,7 @@ namespace CallfireApiClient.Tests.Api.Account
 
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
         }
 
         [Test]
@@ -39,7 +38,7 @@ namespace CallfireApiClient.Tests.Api.Account
 
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
         }
 
         [Test]

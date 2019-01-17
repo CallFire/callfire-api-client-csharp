@@ -29,15 +29,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
                     new Recipient { PhoneNumber = "12132212384" },
                     new Recipient { PhoneNumber = "12132212385" }
                 },
-                Schedules = new List<Schedule>
-                {
-                    new Schedule {
-                                    StartTimeOfDay = new LocalTime { Hour = 1, Minute = 1, Second = 1 },
-                                    StopTimeOfDay = new LocalTime { Hour = 2, Minute = 2, Second = 2 },
-                                    TimeZone = "America/New_York",
-                                    DaysOfWeek = new HashSet<DayOfWeek> { DayOfWeek.MONDAY, DayOfWeek.FRIDAY } }
-                },
-                ResumeNextDay = true,
+                ResumeNextDay = true
             };
             var id = Client.CallBroadcastsApi.Create(broadcast, true, true);
             System.Console.WriteLine("broadcast id: " + id);
@@ -165,7 +157,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
             var begin = System.DateTime.Now.AddDays(-5d);
             var end = System.DateTime.Now;
             var fields = "callsAttempted,callsPlaced,callsDuration";
-            var stats = Client.CallBroadcastsApi.GetStats(1, fields, begin, end);
+            var stats = Client.CallBroadcastsApi.GetStats(7373471003, fields, begin, end);
             System.Console.WriteLine(stats);
         }
 

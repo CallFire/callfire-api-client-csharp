@@ -74,7 +74,7 @@ namespace CallfireApiClient.Tests.Api.Keywords
             Assert.AreEqual(Method.PUT, restRequest.Value.Method);
             Assert.That(restRequest.Value.Resource, Is.StringContaining("/keywords/leases/" + TEST_STRING));
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
         }
 
         [Test]

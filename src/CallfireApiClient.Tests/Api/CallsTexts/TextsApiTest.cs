@@ -5,7 +5,6 @@ using CallfireApiClient.Api.CallsTexts.Model;
 using CallfireApiClient.Api.CallsTexts.Model.Request;
 using RestSharp;
 using System.Linq;
-using CallfireApiClient.Api.Common.Model.Request;
 
 namespace CallfireApiClient.Tests.Api.CallsTexts
 {
@@ -27,7 +26,7 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             Assert.That(Serializer.Serialize(new ListHolder<CallfireApiClient.Api.CallsTexts.Model.Text>(texts)), Is.EqualTo(responseJson));
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
 
             texts = Client.TextsApi.Send(new List<TextRecipient> { r1, r2 }, 100, FIELDS);
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
@@ -58,7 +57,7 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             Assert.That(Serializer.Serialize(new ListHolder<CallfireApiClient.Api.CallsTexts.Model.Text>(texts)), Is.EqualTo(responseJson));
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("campaignId") && p.Value.Equals("100")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("defaultMessage") && p.Value.Equals("defaultMessage")));

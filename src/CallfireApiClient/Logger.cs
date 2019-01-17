@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Collections.Specialized;
 using CallfireApiClient.Api.Common.Model;
-using RestSharp.Serializers;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
+using RestSharp.Serialization.Json;
 
 namespace CallfireApiClient
 {

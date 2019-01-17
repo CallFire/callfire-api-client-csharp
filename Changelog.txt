@@ -1,5 +1,8 @@
 Callfire API client Changelog
 =============================
+Version 1.1.24 - Jan 17 2019
+    - updated RestSharp version to 106.6
+
 Version 1.1.23 - Sept 26 2018
     - added findMedia API operation to sdk
 
