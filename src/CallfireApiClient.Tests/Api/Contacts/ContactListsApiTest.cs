@@ -171,7 +171,7 @@ namespace CallfireApiClient.Tests.Api.Contacts
             Assert.That(restRequest.Value.Resource, Is.StringContaining("/" + TEST_LONG));
             Assert.AreEqual(Method.PUT, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
         }
 
         [Test]
@@ -244,7 +244,7 @@ namespace CallfireApiClient.Tests.Api.Contacts
             Client.ContactListsApi.AddListItems(request);
 
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.AreEqual(requestBodyParam.Value, requestJson);
+            Assert.AreEqual(Serializer.Serialize(requestBodyParam.Value), requestJson);
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             Assert.That(restRequest.Value.Resource, Is.StringContaining("/" + TEST_LONG));
         }

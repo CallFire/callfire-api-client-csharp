@@ -76,6 +76,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Numbers
         }
 
         [Test]
+        [Ignore]
         public void UpdateNumberLeaseConfig()
         {
             const string number = "12132041238";
@@ -87,10 +88,10 @@ namespace CallfireApiClient.IntegrationTests.Api.Numbers
             callTrackingConfig.Screen = true;
             callTrackingConfig.TransferNumbers = new List<string> { "12132212384" };
             callTrackingConfig.Voicemail = true;
-            callTrackingConfig.IntroSoundId = 1;
-            callTrackingConfig.VoicemailSoundId = 1;
-            callTrackingConfig.FailedTransferSoundId = 1;
-            callTrackingConfig.WhisperSoundId = 1;
+            callTrackingConfig.IntroSoundId = 9643523003;
+            callTrackingConfig.VoicemailSoundId = 9643523003;
+            callTrackingConfig.FailedTransferSoundId = 9643523003;
+            callTrackingConfig.WhisperSoundId = 9643523003;
 
             WeeklySchedule weeklySchedule = new WeeklySchedule
             {

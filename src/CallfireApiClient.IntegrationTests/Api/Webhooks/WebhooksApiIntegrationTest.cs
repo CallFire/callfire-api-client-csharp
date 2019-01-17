@@ -15,7 +15,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Webhooks
             var webhook = new Webhook
             {
                 Name = "test_name1",
-                Callback = "test_callback",
+                Callback = "https://test_callback",
                 Resource = ResourceType.TEXT_BROADCAST,
                 Events = new HashSet<ResourceEvent> { ResourceEvent.STARTED },
                 SingleUse = true
@@ -37,7 +37,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Webhooks
             var page = api.Find(findRequest);
             Assert.That(page.Items.Count > 0);
             Assert.AreEqual("test_name1", page.Items[0].Name);
-            Assert.AreEqual("test_callback", page.Items[0].Callback);
+            Assert.AreEqual("https://test_callback", page.Items[0].Callback);
             Assert.AreEqual(ResourceType.TEXT_BROADCAST, page.Items[0].Resource);
             Assert.AreEqual(1, page.Items[0].Events.Count);
             Assert.NotNull(page.Items[0].Id);
@@ -63,10 +63,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Webhooks
         public void TestResourceTypeOperations()
         {
             var api = Client.WebhooksApi;
-            var resources = api.FindWebhookResources(null);
-            Assert.NotNull(resources);
-            Assert.AreEqual(resources.Count, 9);
-            resources = api.FindWebhookResources("items(resource)");
+            var resources = api.FindWebhookResources("items(resource)");
             Assert.NotNull(resources[0].Resource);
             Assert.AreEqual(resources[0].SupportedEvents, null);
 

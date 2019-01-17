@@ -113,11 +113,13 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
             Assert.AreEqual(3, items.Count);
 
             Client.ContactListsApi.RemoveListItem(id.Id, (long)items[0].Id);
+            System.Threading.Thread.Sleep(5000);
             contactListItems = Client.ContactListsApi.GetListItems(getItemsRequest);
             items = contactListItems.Items;
             Assert.AreEqual(2, items.Count);
 
             Client.ContactListsApi.RemoveListItems(id.Id, new List<long> { (long)items[0].Id, (long)items[1].Id });
+            System.Threading.Thread.Sleep(5000);
             contactListItems = Client.ContactListsApi.GetListItems(getItemsRequest);
             Assert.True(contactListItems.Items.Count == 0);
             Assert.AreEqual(0, contactListItems.TotalCount);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><package>
   <metadata>
     <id>CallfireApiClient</id>
-    <version>1.1.24</version>
+    <version>1.1.25</version>
     <title>CallFire API v2 client</title>
     <authors>
       Vladimir Mikhailov
@@ -15,6 +15,9 @@
     <description>C# client library for integration with Callfire REST API v2 services</description>
     <releaseNotes>Callfire API client Changelog
 =============================
+Version 1.1.25 - Jan 17 2019
+    - updated RestSharp version to 106.6
+
 Version 1.1.24 - Oct 17 2018
     - removed potential security vulnerability connected with DotNetZip library
 
@@ -133,5 +136,6 @@ Version 1.0.0 - Dec 29 2015
     <file src="src/CallfireApiClient/bin/Debug/callfire-api-client.dll" target="lib"/>
     <file src="src/CallfireApiClient/bin/Release/callfire-api-client.dll.config" target="lib"/>
     <file src="src/CallfireApiClient/bin/Release/callfire-api-client.xml" target="lib"/>
+    <file src="src/CallfireApiClient/bin/Debug/callfire-api-client.pdb" target="lib"/>
   </files>
 </package>

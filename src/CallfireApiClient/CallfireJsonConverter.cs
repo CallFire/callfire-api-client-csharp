@@ -1,12 +1,9 @@
-﻿using System;
-using System.IO;
-using RestSharp.Serializers;
+﻿using System.IO;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json.Converters;
-using RestSharp.Deserializers;
 using RestSharp;
 using System.Globalization;
+using RestSharp.Serialization;
 
 namespace CallfireApiClient
 {
@@ -14,7 +11,7 @@ namespace CallfireApiClient
     /// Default JSON serializer for request bodies
     /// Doesn't currently use the SerializeAs attribute, defers to Newtonsoft's attributes
     /// </summary>
-    public class CallfireJsonConverter : ISerializer, IDeserializer
+    public class CallfireJsonConverter : IRestSerializer
     {
         private readonly Newtonsoft.Json.JsonSerializer Serializer;
 
@@ -23,7 +20,7 @@ namespace CallfireApiClient
         /// </summary>
         public CallfireJsonConverter()
         {
-            ContentType = "application/json";
+            DataFormat = DataFormat.Json;
             Serializer = new Newtonsoft.Json.JsonSerializer
             {
                 MissingMemberHandling = MissingMemberHandling.Ignore,
@@ -52,6 +49,11 @@ namespace CallfireApiClient
                     return result;
                 }
             }
+        }
+
+        public string Serialize(Parameter parameter)
+        {
+            return JsonConvert.SerializeObject(parameter.Value);
         }
 
         public T Deserialize<T>(IRestResponse response)
@@ -86,6 +88,13 @@ namespace CallfireApiClient
         /// </summary>
         public string ContentType { get; set; }
 
+        public DataFormat DataFormat { get; set; }
+
         public CultureInfo Culture { get; set; }
+
+        public string[] SupportedContentTypes { get; } =
+        {
+            "application/json", "text/json", "text/x-json", "text/javascript", "*+json"
+        };
     }
 }

@@ -1,5 +1,8 @@
 Callfire API client Changelog
 =============================
+Version 1.1.25 - Jan 17 2019
+    - updated RestSharp version to 106.6
+
 Version 1.1.24 - Oct 17 2018
     - removed potential security vulnerability connected with DotNetZip library
 

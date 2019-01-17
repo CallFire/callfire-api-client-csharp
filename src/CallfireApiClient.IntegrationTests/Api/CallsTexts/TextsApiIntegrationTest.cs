@@ -4,7 +4,6 @@ using CallfireApiClient.Api.CallsTexts.Model.Request;
 using CallfireApiClient.Api.Common.Model;
 using System.Collections.Generic;
 using NUnit.Framework;
-using CallfireApiClient.Api.Common.Model.Request;
 
 
 namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
@@ -42,7 +41,7 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
             
             IList<CallfireApiClient.Api.CallsTexts.Model.Text> texts = Client.TextsApi.Send(recipients, null, "items(id,fromNumber,state)");
             Console.WriteLine("Texts: " + texts);
-
+             
             Assert.AreEqual(2, texts.Count);
             Assert.NotNull(texts[0].Id);
             Assert.IsNull(texts[0].CampaignId);

@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using CallfireApiClient.Api.Campaigns.Model;
 using RestSharp;
 using System.Linq;
@@ -159,7 +158,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             Assert.That(Serializer.Serialize(id), Is.EqualTo(responseJson));
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
         }
 
         [Test]
@@ -180,7 +179,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             Assert.That(Serializer.Serialize(sound), Is.EqualTo(responseJson));
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
             Assert.That(restRequest.Value.Parameters, Has.None.Matches<Parameter>(p => p.Name.Equals("FIELDS") && p.Value.Equals(FIELDS)));
 
         }
@@ -203,7 +202,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             Assert.That(Serializer.Serialize(id), Is.EqualTo(responseJson));
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
         }
 
         [Test]
@@ -224,7 +223,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             Assert.That(Serializer.Serialize(sound), Is.EqualTo(responseJson));
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
             Assert.That(restRequest.Value.Parameters, Has.None.Matches<Parameter>(p => p.Name.Equals("FIELDS") && p.Value.Equals(FIELDS)));
         }
     }

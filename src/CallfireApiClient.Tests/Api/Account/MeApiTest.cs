@@ -95,7 +95,7 @@ namespace CallfireApiClient.Tests.Api.Account
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
 
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
             Assert.That(restRequest.Value.Resource, Is.StringContaining(request.CallerId));
         }
 
@@ -115,7 +115,7 @@ namespace CallfireApiClient.Tests.Api.Account
 
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
         }
 
         [Test]

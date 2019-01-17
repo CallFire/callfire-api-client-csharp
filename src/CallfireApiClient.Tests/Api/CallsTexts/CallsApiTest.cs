@@ -5,7 +5,6 @@ using CallfireApiClient.Api.CallsTexts.Model;
 using CallfireApiClient.Api.CallsTexts.Model.Request;
 using RestSharp;
 using System.Linq;
-using CallfireApiClient.Api.Common.Model.Request;
 using CallfireApiClient.Api.Campaigns.Model;
 using System;
 
@@ -30,7 +29,7 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             Assert.That(Serializer.Serialize(new ListHolder<Call>(calls)), Is.EqualTo(responseJson));
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
 
             calls = Client.CallsApi.Send(new List<CallRecipient> { r1, r2 }, 10, FIELDS);
             Assert.That(restRequest.Value.Resource, !Is.StringContaining("fields" + FIELDS));
@@ -65,7 +64,7 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             Assert.That(Serializer.Serialize(new ListHolder<Call>(calls)), Is.EqualTo(responseJson));
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
 
             calls = Client.CallsApi.Send(new List<CallRecipient> { r1, r2 }, 10, FIELDS);
             Assert.That(restRequest.Value.Resource, !Is.StringContaining("fields" + FIELDS));

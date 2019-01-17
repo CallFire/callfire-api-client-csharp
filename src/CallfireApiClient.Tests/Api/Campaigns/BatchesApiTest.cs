@@ -38,7 +38,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
 
             Assert.AreEqual(Method.PUT, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.AreEqual(requestBodyParam.Value, requestJson);
+            Assert.AreEqual(Serializer.Serialize(requestBodyParam.Value), requestJson);
             Assert.That(restRequest.Value.Resource, Is.StringEnding("/11"));
         }
 

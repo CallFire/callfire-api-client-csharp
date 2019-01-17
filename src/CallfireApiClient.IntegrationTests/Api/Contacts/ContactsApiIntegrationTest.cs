@@ -98,9 +98,9 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
         [Test]
         public void GetContactHistory()
         {
-            var request = new GetByIdRequest { Id = 1, Limit = 5 };
+            var request = new GetByIdRequest { Id = 466225637003, Limit = 5 };
             var contactHistory = Client.ContactsApi.GetHistory(request);
-            Assert.AreEqual(2, contactHistory.Calls.Count);
+            Assert.AreEqual(5, contactHistory.Calls.Count);
 
             Console.WriteLine("ContactHistory:" + contactHistory);
         }

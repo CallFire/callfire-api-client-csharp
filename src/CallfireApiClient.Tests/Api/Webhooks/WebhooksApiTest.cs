@@ -31,7 +31,7 @@ namespace CallfireApiClient.Tests.Api.Webhooks
 
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
         }
 
         [Test]
@@ -93,7 +93,7 @@ namespace CallfireApiClient.Tests.Api.Webhooks
 
             Assert.AreEqual(Method.PUT, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.AreEqual(requestBodyParam.Value, expectedJson);
+            Assert.AreEqual(Serializer.Serialize(requestBodyParam.Value), expectedJson);
             Assert.That(restRequest.Value.Resource, Is.StringEnding("/11"));
         }
 

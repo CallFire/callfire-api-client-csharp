@@ -45,7 +45,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
 
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("start") && p.Value.Equals("True")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("strictValidation") && p.Value.Equals("True")));
         }
@@ -73,7 +73,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
 
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("start") && p.Value.Equals("True")));
         }
 
@@ -125,7 +125,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
 
             Assert.AreEqual(Method.PUT, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.AreEqual(requestBodyParam.Value, expectedJson);
+            Assert.AreEqual(Serializer.Serialize(requestBodyParam.Value), expectedJson);
             Assert.That(restRequest.Value.Resource, Is.StringEnding("/11"));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("strictValidation") && p.Value.Equals("True")));
         }
@@ -147,7 +147,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
 
             Assert.AreEqual(Method.PUT, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.AreEqual(requestBodyParam.Value, expectedJson);
+            Assert.AreEqual(Serializer.Serialize(requestBodyParam.Value), expectedJson);
             Assert.That(restRequest.Value.Resource, Is.StringEnding("/12"));
         }
 
@@ -320,7 +320,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
 
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
             Assert.That(restRequest.Value.Parameters, Has.No.Some.Matches<Parameter>(p => p.Name.Equals("campaignId")));
             Assert.That(restRequest.Value.Resource, Is.StringEnding("/15/batches"));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("strictValidation") && p.Value.Equals("True")));
@@ -343,7 +343,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
 
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.That(requestBodyParam.Value, Is.EqualTo(requestJson));
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
             Assert.That(restRequest.Value.Resource, Is.StringEnding("/15/recipients"));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("strictValidation") && p.Value.Equals("True")));
 

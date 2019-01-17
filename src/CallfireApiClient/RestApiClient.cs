@@ -4,12 +4,11 @@ using RestSharp.Authenticators;
 using System.Collections.Generic;
 using System.Configuration;
 using CallfireApiClient.Api.Common.Model;
-using RestSharp.Deserializers;
-using RestSharp.Serializers;
 using System.Collections;
 using System.Text;
 using System.IO;
 using System.Net;
+using RestSharp.Serialization;
 
 namespace CallfireApiClient
 {
@@ -18,8 +17,8 @@ namespace CallfireApiClient
     /// </summary>
     public class RestApiClient
     {
-        private readonly ISerializer JsonSerializer;
-        private readonly IDeserializer JsonDeserializer;
+        private readonly IRestSerializer JsonSerializer;
+
         private static Logger Logger = new Logger();
 
         private static KeyValueConfigurationCollection ApplicationConfig;
@@ -80,12 +79,11 @@ namespace CallfireApiClient
             SetAppSettings();
 
             JsonSerializer = new CallfireJsonConverter();
-            JsonDeserializer = JsonSerializer as IDeserializer;
 
-            RestClient = new RestClient(_ClientConfig.ApiBasePath);
+            RestClient = new RestClient(_ClientConfig.ApiBasePath).UseSerializer(JsonSerializer);
             RestClient.Authenticator = authenticator;
             RestClient.UserAgent = this.GetType().Assembly.GetName().Name + "-csharp-" + this.GetType().Assembly.GetName().Version;
-            RestClient.AddHandler("application/json", JsonDeserializer);
+            RestClient.AddHandler("application/json", JsonSerializer);
 
             Filters = new SortedSet<RequestFilter>();
 
@@ -529,7 +527,7 @@ namespace CallfireApiClient
                 ErrorMessage message;
                 try
                 {
-                    message = JsonDeserializer.Deserialize<ErrorMessage>(response);
+                    message = JsonSerializer.Deserialize<ErrorMessage>(response);
                 }
                 catch (Exception e)
                 {
@@ -557,6 +555,7 @@ namespace CallfireApiClient
         private IRestRequest CreateRestRequest(string path, Method method, IEnumerable<KeyValuePair<string, object>> queryParams = null)
         {
             var request = new RestRequest(path, method);
+            request.AddHeader("Content-type", "application/json");
             request.RequestFormat = DataFormat.Json;
             request.JsonSerializer = JsonSerializer;
             if (queryParams != null)

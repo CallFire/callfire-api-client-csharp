@@ -68,7 +68,7 @@ namespace CallfireApiClient.Tests.Api.Numbers
 
             Assert.AreEqual(Method.PUT, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.That(requestBodyParam.Value, Is.EqualTo(expectedJson));
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(expectedJson));
             Assert.That(restRequest.Value.Resource, Is.StringEnding("/numbers/leases/12345678901"));
         }
 
@@ -153,7 +153,7 @@ namespace CallfireApiClient.Tests.Api.Numbers
 
             Assert.AreEqual(Method.PUT, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-            Assert.That(requestBodyParam.Value, Is.EqualTo(expectedJson));
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(expectedJson));
             Assert.That(restRequest.Value.Resource, Is.StringEnding("/numbers/leases/configs/12345678901"));
         }
     }
