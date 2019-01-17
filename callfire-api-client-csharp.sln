@@ -12,13 +12,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CallfireApiClient.IntegrationTests", "src\CallfireApiClient.IntegrationTests\CallfireApiClient.IntegrationTests.csproj", "{CAE3C5E6-7BBB-4673-BF70-7AA012A57F2C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{88EF74FD-46C2-4510-A4C2-BCFACA8E3399}"
-	ProjectSection(SolutionItems) = preProject
-		build.gradle = build.gradle
-		EzTextingApiClient.nuspec = CallfireApiClient.nuspec
-        README.adoc = README.adoc
-        LICENSE = LICENSE
-        Changelog = Changelog
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,14 +19,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{17AF49CB-38AF-484D-9151-B470F320221D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{17AF49CB-38AF-484D-9151-B470F320221D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{17AF49CB-38AF-484D-9151-B470F320221D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{17AF49CB-38AF-484D-9151-B470F320221D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7C6961C8-3576-4499-92B6-3B5D798BDBFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7C6961C8-3576-4499-92B6-3B5D798BDBFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C6961C8-3576-4499-92B6-3B5D798BDBFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C6961C8-3576-4499-92B6-3B5D798BDBFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17AF49CB-38AF-484D-9151-B470F320221D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17AF49CB-38AF-484D-9151-B470F320221D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17AF49CB-38AF-484D-9151-B470F320221D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17AF49CB-38AF-484D-9151-B470F320221D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CAE3C5E6-7BBB-4673-BF70-7AA012A57F2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CAE3C5E6-7BBB-4673-BF70-7AA012A57F2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAE3C5E6-7BBB-4673-BF70-7AA012A57F2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
