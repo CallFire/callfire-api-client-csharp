@@ -126,7 +126,7 @@ Version 1.0.0 - Dec 29 2015
     <tags>Callfire rest api client</tags>
     <dependencies>
       <dependency id="Newtonsoft.Json" version="10.0.2"/>
-      <dependency id="RestSharp" version="106.4.2"/>
+      <dependency id="RestSharp" version="106.6.4"/>
     </dependencies>
   </metadata>
   <files>
