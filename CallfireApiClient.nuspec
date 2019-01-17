@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><package>
   <metadata>
     <id>CallfireApiClient</id>
-    <version>1.1.25</version>
+    <version>1.1.26</version>
     <title>CallFire API v2 client</title>
     <authors>
       Vladimir Mikhailov
@@ -15,7 +15,7 @@
     <description>C# client library for integration with Callfire REST API v2 services</description>
     <releaseNotes>Callfire API client Changelog
 =============================
-Version 1.1.25 - Jan 17 2019
+Version 1.1.26 - Jan 17 2019
     - updated RestSharp version to 106.6
 
 Version 1.1.24 - Oct 17 2018
