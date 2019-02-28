@@ -10,7 +10,10 @@ namespace CallfireApiClient.Api.Campaigns.Model
         RUNNING,
         STOPPED,
         FINISHED,
-        ARCHIVED
+        ARCHIVED,
+        SCHEDULED,
+        SUSPENDED,
+        VALIDATING_EMAIL,
+        VALIDATING_START
     }
 }
-

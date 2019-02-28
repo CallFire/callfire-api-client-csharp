@@ -1,5 +1,8 @@
 Callfire API client Changelog
 =============================
+Version 1.1.27 - Feb 28 2019
+    - fixed isssue with Broadcast Status enum
+
 Version 1.1.26 - Jan 17 2019
     - updated RestSharp version to 106.6
 
