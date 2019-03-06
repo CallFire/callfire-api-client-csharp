@@ -88,7 +88,10 @@ namespace CallfireApiClient.Tests.Api.Campaigns
                 Limit = 5,
                 Name = "name",
                 Label = "label",
-                Running = true
+                Running = true,
+                Scheduled = true,
+                IntervalBegin = DateTime.UtcNow.AddMonths(-2),
+                IntervalEnd = DateTime.UtcNow
             };
             var broadcasts = Client.CallBroadcastsApi.Find(request);
             Assert.That(Serializer.Serialize(broadcasts), Is.EqualTo(expectedJson));
@@ -100,6 +103,15 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("name") && p.Value.Equals("name")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("label") && p.Value.Equals("label")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("running") && p.Value.Equals("True")));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("scheduled") && p.Value.Equals("True")));
+
+            DateTime intBeg = (DateTime)request.IntervalBegin;
+            DateTime intEnd = (DateTime)request.IntervalEnd;
+            long ib = (long)(intBeg.ToUniversalTime() - ClientConstants.EPOCH).TotalMilliseconds;
+            long ie = (long)(intEnd.ToUniversalTime() - ClientConstants.EPOCH).TotalMilliseconds;
+
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("intervalBegin") && p.Value.Equals(ib.ToString())));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("intervalEnd") && p.Value.Equals(ie.ToString())));
         }
 
         [Test]

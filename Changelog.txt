@@ -1,5 +1,8 @@
 Callfire API client Changelog
 =============================
+Version 1.1.28 - March 06 2019
+- added date interval filtering parameters to broadcasts lookup
+
 Version 1.1.27 - Feb 28 2019
     - fixed isssue with Broadcast Status enum
 
