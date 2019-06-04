@@ -138,7 +138,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             Assert.AreEqual(Method.PUT, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.AreEqual(Serializer.Serialize(requestBodyParam.Value), expectedJson);
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/11"));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/11"));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("strictValidation") && p.Value.Equals("True")));
         }
 
@@ -160,7 +160,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             Assert.AreEqual(Method.PUT, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.AreEqual(Serializer.Serialize(requestBodyParam.Value), expectedJson);
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/12"));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/12"));
         }
 
         [Test]
@@ -178,7 +178,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.IsNull(requestBodyParam);
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/11"));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/11"));
         }
 
         [Test]
@@ -187,7 +187,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             var restRequest = MockRestResponse();
             Client.CallBroadcastsApi.Start(10L);
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/10/start"));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/10/start"));
         }
 
         [Test]
@@ -196,7 +196,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             var restRequest = MockRestResponse();
             Client.CallBroadcastsApi.Stop(10L);
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/10/stop"));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/10/stop"));
         }
 
         [Test]
@@ -205,7 +205,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             var restRequest = MockRestResponse();
             Client.CallBroadcastsApi.Archive(10L);
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/10/archive"));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/10/archive"));
         }
 
         [Test]
@@ -226,7 +226,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             Assert.AreEqual(Method.GET, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.IsNull(requestBodyParam);
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/11/calls"));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/11/calls"));
             Assert.That(restRequest.Value.Parameters, Has.No.Some.Matches<Parameter>(p => p.Name.Equals("id")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("offset") && p.Value.Equals("5")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
@@ -251,7 +251,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             Assert.AreEqual(Method.GET, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.IsNull(requestBodyParam);
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/11/calls"));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/11/calls"));
             Assert.That(restRequest.Value.Parameters, Has.No.Some.Matches<Parameter>(p => p.Name.Equals("id")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("offset") && p.Value.Equals("5")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
@@ -270,12 +270,12 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             Assert.AreEqual(Method.GET, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.IsNull(requestBodyParam);
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/11/stats"));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/11/stats"));
 
             var begin = DateTime.Now.AddDays(-5d);
             var end = DateTime.Now;
             Client.CallBroadcastsApi.GetStats(11L, FIELDS, begin, end);
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/11/stats"));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/11/stats"));
 
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields")
                     && p.Value.Equals(FIELDS)));
@@ -306,7 +306,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("offset") && p.Value.Equals("0")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
             Assert.That(restRequest.Value.Parameters, Has.No.Some.Matches<Parameter>(p => p.Name.Equals("id")));
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/11/batches"));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/11/batches"));
         }
 
         [Test]
@@ -334,7 +334,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
             Assert.That(restRequest.Value.Parameters, Has.No.Some.Matches<Parameter>(p => p.Name.Equals("campaignId")));
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/15/batches"));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/15/batches"));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("strictValidation") && p.Value.Equals("True")));
         }
 
@@ -356,7 +356,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/15/recipients"));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/15/recipients"));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("strictValidation") && p.Value.Equals("True")));
 
             Client.CallBroadcastsApi.AddRecipients(15, recipients, FIELDS);

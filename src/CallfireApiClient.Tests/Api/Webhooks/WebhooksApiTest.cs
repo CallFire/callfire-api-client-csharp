@@ -94,7 +94,7 @@ namespace CallfireApiClient.Tests.Api.Webhooks
             Assert.AreEqual(Method.PUT, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.AreEqual(Serializer.Serialize(requestBodyParam.Value), expectedJson);
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/11"));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/11"));
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace CallfireApiClient.Tests.Api.Webhooks
             Client.WebhooksApi.Delete(11L);
 
             Assert.AreEqual(Method.DELETE, restRequest.Value.Method);
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/11"));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/11"));
         }
 
         [Test]
@@ -117,7 +117,7 @@ namespace CallfireApiClient.Tests.Api.Webhooks
                 Events = new HashSet<ResourceEvent> { ResourceEvent.FINISHED, ResourceEvent.STARTED, ResourceEvent.UNKNOWN }
             };
             var ex = Assert.Throws<ModelValidationException>(() => Client.WebhooksApi.Update(webhook));
-            Assert.That(ex.Message, Is.StringContaining("Event [unknown] is unsupported for CallBroadcast resource"));
+            Assert.That(ex.Message, Does.Contain("Event [unknown] is unsupported for CallBroadcast resource"));
         }
 
         [Test]

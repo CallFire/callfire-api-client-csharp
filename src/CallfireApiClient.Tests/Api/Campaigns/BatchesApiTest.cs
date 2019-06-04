@@ -39,15 +39,15 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             Assert.AreEqual(Method.PUT, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.AreEqual(Serializer.Serialize(requestBodyParam.Value), requestJson);
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/11"));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/11"));
         }
 
         [Test]
         public void UpdateNullId()
         {
             var ex = Assert.Throws<ArgumentNullException>(() => Client.BatchesApi.Update(new Batch()));
-            Assert.That(ex.Message, Is.StringContaining("Value cannot be null"));
-            Assert.That(ex.Message, Is.StringContaining("Parameter name: batch.id"));
+            Assert.That(ex.Message, Does.Contain("Value cannot be null"));
+            Assert.That(ex.Message, Does.Contain("Parameter name: batch.id"));
         }
     }
 }

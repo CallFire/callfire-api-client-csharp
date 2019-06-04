@@ -10,10 +10,10 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
     [TestFixture]
     public class MediaApiIntegrationTest : AbstractIntegrationTest
     {
-        private const string mp3FilePath = "Resources/File-examples/train1.mp3";
-        private const string wavFilePath = "Resources/File-examples/train1.wav";
-        private const string cfLogoFilePath = "Resources/File-examples/cf.png";
-        private const string ezLogoFilePath = "Resources/File-examples/ez.png";
+        private string mp3FilePath = GetFullPath("/Resources/File-examples/train1.mp3");
+        private string wavFilePath = GetFullPath("/Resources/File-examples/train1.wav");
+        private string cfLogoFilePath = GetFullPath("/Resources/File-examples/cf.png");
+        private string ezLogoFilePath = GetFullPath("/Resources/File-examples/ez.png");
         
         [Test]
         public void TestFind()
@@ -49,9 +49,10 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
         [Test]
         public void TestUploadWithFileData()
         {
-            String soundName = "mp3_test_" + DateTime.Now.Millisecond.ToString();
-            ResourceId wavResourceId = Client.MediaApi.Upload(File.ReadAllBytes(wavFilePath), MediaType.WAV);
-            ResourceId mp3ResourceId = Client.MediaApi.Upload(File.ReadAllBytes(mp3FilePath), MediaType.MP3, soundName);
+            string mp3Name = "mp3_test_" + DateTime.Now.Millisecond.ToString();
+            string wavName = "wav_test_" + DateTime.Now.Millisecond.ToString();
+            ResourceId wavResourceId = Client.MediaApi.Upload(File.ReadAllBytes(wavFilePath), MediaType.WAV, wavName);
+            ResourceId mp3ResourceId = Client.MediaApi.Upload(File.ReadAllBytes(mp3FilePath), MediaType.MP3, mp3Name);
             Assert.NotNull(mp3ResourceId.Id);
         }
 

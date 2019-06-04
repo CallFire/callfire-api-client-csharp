@@ -30,7 +30,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Numbers
             Assert.IsNotNull(lease.Region);
             Assert.AreEqual(number, lease.PhoneNumber);
             Assert.True(lease.Labels.Count > 0);
-            Assert.That(lease.Region.City, Is.StringContaining("LOS ANGELES"));
+            Assert.That(lease.Region.City, Does.Contain("LOS ANGELES"));
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Numbers
         }
 
         [Test]
-        [Ignore]
+        [Ignore("to avoid test account numbers configuration changes")]
         public void UpdateNumberLeaseConfig()
         {
             const string number = "12132041238";

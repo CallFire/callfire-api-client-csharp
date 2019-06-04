@@ -7,8 +7,8 @@ C# client for Callfire platform API version 2. See link:https://developers.callf
 * .NET 4.6+
 
 .*Dependencies:*
-* Newtonsoft.Json >= 7.0.1
-* RestSharp >= 106.4.2
+* Newtonsoft.Json >= 12.0.2
+* RestSharp = 106.6.4 (RestSharp have a bug with serialization to camelCase json string, wait for fix https://github.com/restsharp/RestSharp/issues/1251 before upgrade to newer)
 
 .*Table of contents*
 * link:https://developers.callfire.com/callfire-api-client-csharp.html[Getting Started]
