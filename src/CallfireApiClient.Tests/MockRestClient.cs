@@ -2,7 +2,6 @@
 using RestSharp;
 using System.Reflection;
 using NUnit.Framework;
-using System.Linq;
 using RestSharp.Deserializers;
 
 namespace CallfireApiClient.Tests

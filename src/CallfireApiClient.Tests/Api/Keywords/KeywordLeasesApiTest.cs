@@ -43,12 +43,12 @@ namespace CallfireApiClient.Tests.Api.Keywords
             KeywordLease keywordLease = Client.KeywordLeasesApi.Get(TEST_STRING, FIELDS);
             Assert.That(Serializer.Serialize(keywordLease), Is.EqualTo(expectedJson));
             Assert.AreEqual(Method.GET, restRequest.Value.Method);
-            Assert.That(restRequest.Value.Resource, Is.StringContaining("/" + TEST_STRING));
+            Assert.That(restRequest.Value.Resource, Does.Contain("/" + TEST_STRING));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
 
             Client.KeywordLeasesApi.Get(TEST_STRING);
             Assert.That(restRequest.Value.Parameters, Has.No.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
-            Assert.That(restRequest.Value.Resource, Is.StringContaining("/" + TEST_STRING));
+            Assert.That(restRequest.Value.Resource, Does.Contain("/" + TEST_STRING));
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace CallfireApiClient.Tests.Api.Keywords
             Client.KeywordLeasesApi.Update(keywordLease);
 
             Assert.AreEqual(Method.PUT, restRequest.Value.Method);
-            Assert.That(restRequest.Value.Resource, Is.StringContaining("/keywords/leases/" + TEST_STRING));
+            Assert.That(restRequest.Value.Resource, Does.Contain("/keywords/leases/" + TEST_STRING));
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
         }

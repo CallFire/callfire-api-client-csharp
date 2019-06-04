@@ -101,7 +101,7 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
         [Test]
         public void GetCallRecordingInMp3Format()
         {
-            string mp3FilePath = "Resources/File-examples/testDownloadRecordingById.mp3";
+            string mp3FilePath = GetFullPath("/Resources/File-examples/testDownloadRecordingById.mp3");
             MemoryStream ms = (MemoryStream)Client.CallsApi.GetCallRecordingMp3(64837518003);
             File.WriteAllBytes(mp3FilePath, ms.ToArray());
         }
@@ -139,7 +139,7 @@ namespace CallfireApiClient.IntegrationTests.Api.CallsTexts
         public void CallRecordingMp3ByName()
         {
             CallRecording rec = Client.CallsApi.GetCallRecording(18666772003);
-            string mp3FilePath = "Resources/File-examples/testDownloadRecordingByName.mp3";
+            string mp3FilePath = GetFullPath("/Resources/File-examples/testDownloadRecordingByName.mp3");
             MemoryStream ms = (MemoryStream)Client.CallsApi.GetCallRecordingMp3ByName((long) rec.CallId, rec.Name);
             File.WriteAllBytes(mp3FilePath, ms.ToArray());
         }

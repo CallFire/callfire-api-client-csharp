@@ -18,7 +18,7 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             string expectedJson = GetJsonPayload("/callstexts/mediaApi/response/uploadSound.json");
             var restRequest = MockRestResponse(expectedJson);
 
-            string mp3FilePath = "Resources/File-examples/train.mp3";
+            string mp3FilePath = GetFullPath("/Resources/File-examples/train.mp3");
             ResourceId id = Client.MediaApi.Upload(mp3FilePath, "fname");
 
             Assert.That(Serializer.Serialize(id), Is.EqualTo(expectedJson));
@@ -31,7 +31,7 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             string expectedJson = GetJsonPayload("/callstexts/mediaApi/response/uploadSound.json");
             var restRequest = MockRestResponse(expectedJson);
 
-            string mp3FilePath = "Resources/File-examples/train.mp3";
+            string mp3FilePath = GetFullPath("/Resources/File-examples/train.mp3");
             ResourceId id = Client.MediaApi.Upload(File.ReadAllBytes(mp3FilePath), MediaType.MP3, "fname");
 
             Assert.That(Serializer.Serialize(id), Is.EqualTo(expectedJson));

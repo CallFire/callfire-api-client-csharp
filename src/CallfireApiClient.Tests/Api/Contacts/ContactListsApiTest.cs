@@ -30,7 +30,7 @@ namespace CallfireApiClient.Tests.Api.Contacts
             };
 
             String serialized = Serializer.Serialize(requestString);
-            Assert.That(serialized, Is.StringContaining("\"contactNumbers\":"));
+            Assert.That(serialized, Does.Contain("\"contactNumbers\":"));
         }
 
         [Test]
@@ -43,8 +43,8 @@ namespace CallfireApiClient.Tests.Api.Contacts
             };
 
             String serialized = Serializer.Serialize(requestLong);
-            Assert.That(serialized, Is.StringContaining("\"contactIds\":"));
-            Assert.That(serialized, Is.StringContaining("\"listFromIds\""));
+            Assert.That(serialized, Does.Contain("\"contactIds\":"));
+            Assert.That(serialized, Does.Contain("\"listFromIds\""));
         }
 
         [Test]
@@ -58,8 +58,8 @@ namespace CallfireApiClient.Tests.Api.Contacts
             requestContact.Contacts = new List<Contact> { c1, c2 };
 
             String serialized = Serializer.Serialize(requestContact);
-            Assert.That(serialized, Is.StringContaining("\"contacts\":"));
-            Assert.That(serialized, Is.StringContaining("\"listFromContacts\""));
+            Assert.That(serialized, Does.Contain("\"contacts\":"));
+            Assert.That(serialized, Does.Contain("\"listFromContacts\""));
         }
 
         [Test]
@@ -73,8 +73,8 @@ namespace CallfireApiClient.Tests.Api.Contacts
             };
 
             String serialized = Serializer.Serialize(requestObjects);
-            Assert.That(serialized, Is.StringContaining("\"contactIds\":"));
-            Assert.That(serialized, Is.StringContaining("\"contactNumbersField\":\"field\""));
+            Assert.That(serialized, Does.Contain("\"contactIds\":"));
+            Assert.That(serialized, Does.Contain("\"contactNumbersField\":\"field\""));
         }
 
         [Test]
@@ -130,7 +130,7 @@ namespace CallfireApiClient.Tests.Api.Contacts
             string responseJson = GetJsonPayload("/contacts/contactsApi/response/createContactList.json");
             var restRequest = MockRestResponse(responseJson);
 
-            ResourceId resourceId = Client.ContactListsApi.CreateFromCsv("fileList", "Resources/File-examples/contacts1.csv", true);
+            ResourceId resourceId = Client.ContactListsApi.CreateFromCsv("fileList", GetFullPath("/Resources/File-examples/contacts1.csv"), true);
 
             Assert.That(Serializer.Serialize(resourceId), Is.EqualTo(responseJson));
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
@@ -168,7 +168,7 @@ namespace CallfireApiClient.Tests.Api.Contacts
 
             Client.ContactListsApi.Update(request);
 
-            Assert.That(restRequest.Value.Resource, Is.StringContaining("/" + TEST_LONG));
+            Assert.That(restRequest.Value.Resource, Does.Contain("/" + TEST_LONG));
             Assert.AreEqual(Method.PUT, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
@@ -182,7 +182,7 @@ namespace CallfireApiClient.Tests.Api.Contacts
             Client.ContactListsApi.Delete(TEST_LONG);
 
             Assert.AreEqual(Method.DELETE, restRequest.Value.Method);
-            Assert.That(restRequest.Value.Resource, Is.StringContaining("/" + TEST_LONG));
+            Assert.That(restRequest.Value.Resource, Does.Contain("/" + TEST_LONG));
         }
 
         [Test]
@@ -246,7 +246,7 @@ namespace CallfireApiClient.Tests.Api.Contacts
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.AreEqual(Serializer.Serialize(requestBodyParam.Value), requestJson);
             Assert.AreEqual(Method.POST, restRequest.Value.Method);
-            Assert.That(restRequest.Value.Resource, Is.StringContaining("/" + TEST_LONG));
+            Assert.That(restRequest.Value.Resource, Does.Contain("/" + TEST_LONG));
         }
 
         [Test]
@@ -257,8 +257,8 @@ namespace CallfireApiClient.Tests.Api.Contacts
             Client.ContactListsApi.RemoveListItem(TEST_LONG, 123456);
 
             Assert.AreEqual(Method.DELETE, restRequest.Value.Method);
-            Assert.That(restRequest.Value.Resource, Is.StringContaining("/" + TEST_LONG));
-            Assert.That(restRequest.Value.Resource, Is.StringContaining("/123456"));
+            Assert.That(restRequest.Value.Resource, Does.Contain("/" + TEST_LONG));
+            Assert.That(restRequest.Value.Resource, Does.Contain("/123456"));
         }
 
         [Test]
@@ -269,7 +269,7 @@ namespace CallfireApiClient.Tests.Api.Contacts
             Client.ContactListsApi.RemoveListItems(TEST_LONG, new List<long> { 123456, 123457 });
 
             Assert.AreEqual(Method.DELETE, restRequest.Value.Method);
-            Assert.That(restRequest.Value.Resource, Is.StringContaining("/" + TEST_LONG));
+            Assert.That(restRequest.Value.Resource, Does.Contain("/" + TEST_LONG));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("contactId") && p.Value.Equals("123456")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("contactId") && p.Value.Equals("123457")));
         }

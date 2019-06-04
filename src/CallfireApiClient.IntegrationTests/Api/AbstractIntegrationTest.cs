@@ -1,6 +1,7 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Configuration;
-
+using System.IO;
 
 namespace CallfireApiClient.IntegrationTests.Api
 {
@@ -37,6 +38,11 @@ namespace CallfireApiClient.IntegrationTests.Api
             {
                 Console.WriteLine("Error reading app settings");
             }
+        }
+
+        public static string GetFullPath(string path)
+        {
+            return Directory.GetParent(TestContext.CurrentContext.TestDirectory).Parent.FullName + path;
         }
     }
 }

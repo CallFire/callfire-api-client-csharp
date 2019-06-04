@@ -24,7 +24,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Contacts
         [Test]
         public void TestCreateContactListFromFile()
         {
-            string path = "Resources/File-examples/contacts1.csv";
+            string path = GetFullPath("/Resources/File-examples/contacts1.csv");
             ResourceId listId = Client.ContactListsApi.CreateFromCsv("fileList", Path.GetFullPath(path), true);
 
             ContactList contactList = Client.ContactListsApi.Get(listId.Id);

@@ -76,7 +76,7 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             Client.TextAutoRepliesApi.Delete(11L);
 
             Assert.AreEqual(Method.DELETE, restRequest.Value.Method);
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/11"));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/11"));
         }
     }
 }

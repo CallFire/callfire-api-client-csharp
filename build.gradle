@@ -15,6 +15,7 @@ plugins {
 }
 
 archivesBaseName = 'callfire-api-client'
+ext['nunitConsoleVersion'] = '3.6.1'
 ext['buildReleaseConfiguration'] = "CallfireApiClient"
 ext['buildReleaseConfiguration'] = "Release"
 ext['buildDebugConfiguration'] = "Debug"
@@ -45,6 +46,7 @@ task msbuildDebug (type: com.ullink.Msbuild) {
 msbuildDebug.dependsOn nunit
 
 nunit {
+    nunitVersion = nunitConsoleVersion
     testAssemblies = [ msbuild.projects['CallfireApiClient.Tests'].properties.TargetPath ]
 }
 nunit.dependsOn msbuild
@@ -162,6 +164,7 @@ task msbuildForIntegrationTests (type: com.ullink.Msbuild) {
 msbuildForIntegrationTests.dependsOn prepareTestData
 
 task integrationTests (type: com.ullink.gradle.nunit.NUnit) {
+    nunitVersion = nunitConsoleVersion
     testAssemblies = [ msbuild.projects['CallfireApiClient.IntegrationTests'].properties.TargetPath ]
 }
 integrationTests.dependsOn msbuildForIntegrationTests

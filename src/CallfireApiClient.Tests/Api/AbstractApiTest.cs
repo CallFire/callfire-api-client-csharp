@@ -5,6 +5,7 @@ using System.Net;
 using System.IO;
 using System.Text;
 using RestSharp.Deserializers;
+using NUnit.Framework;
 
 namespace CallfireApiClient.Tests.Api
 {
@@ -14,7 +15,7 @@ namespace CallfireApiClient.Tests.Api
         protected const string TEST_STRING = "test";
         protected const string FIELDS = "id,name,created";
         protected string ENCODED_FIELDS = "fields=" + Uri.EscapeUriString(FIELDS);
-        protected const string BASE_PATH = "../../JsonMocks";
+        protected const string MOCKS_PATH = "\\JsonMocks";
         protected const string EMPTY_ID_MSG = "id cannot be null";
         protected const string EMPTY_REQUEST_ID_MSG = "request.id cannot be null";
         protected CallfireClient Client;
@@ -32,7 +33,7 @@ namespace CallfireApiClient.Tests.Api
         protected string GetJsonPayload(string path)
         {
             var result = new StringBuilder();
-            string[] jsonLines = File.ReadAllLines(BASE_PATH + path);
+            string[] jsonLines = File.ReadAllLines(GetFullPath(MOCKS_PATH + path));
             foreach (var line in jsonLines)
             {
                 string formatted = line.Trim();
@@ -57,6 +58,11 @@ namespace CallfireApiClient.Tests.Api
                     ContentLength = payload.Length
                 });
             return ((MockRestClient)Client.RestApiClient.RestClient).CapturedRequest;
+        }
+
+        public static string GetFullPath(string path)
+        {
+            return Directory.GetParent(TestContext.CurrentContext.TestDirectory).Parent.FullName + path;
         }
     }
 }

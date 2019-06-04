@@ -60,7 +60,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Numbers
             };
             var regions = Client.NumbersApi.FindNumberRegions(request);
             Assert.AreEqual(2, regions.Items.Count);
-            Assert.That(regions.Items[0].City, Is.StringContaining("CHICAGO"));
+            Assert.That(regions.Items[0].City, Does.Contain("CHICAGO"));
             Assert.AreEqual("1773271", regions.Items[0].Prefix);
 
             Console.WriteLine(regions);

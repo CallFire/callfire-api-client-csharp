@@ -75,7 +75,7 @@ namespace CallfireApiClient.Tests.Api.Account
         
             Client.MeApi.SendVerificationCode(callerId);
             Assert.AreEqual(Method.POST, request.Value.Method);
-            Assert.That(request.Value.Resource, Is.StringContaining(callerId));
+            Assert.That(request.Value.Resource, Does.Contain(callerId));
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace CallfireApiClient.Tests.Api.Account
 
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
-            Assert.That(restRequest.Value.Resource, Is.StringContaining(request.CallerId));
+            Assert.That(restRequest.Value.Resource, Does.Contain(request.CallerId));
         }
 
         [Test]
@@ -157,7 +157,7 @@ namespace CallfireApiClient.Tests.Api.Account
 
             Client.MeApi.DeleteApiCredentials(11L);
             Assert.AreEqual(Method.DELETE, restRequest.Value.Method);
-            Assert.That(restRequest.Value.Resource, Is.StringContaining("/11"));
+            Assert.That(restRequest.Value.Resource, Does.Contain("/11"));
         }
     }
 }

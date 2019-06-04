@@ -32,8 +32,8 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
 
             calls = Client.CallsApi.Send(new List<CallRecipient> { r1, r2 }, 10, FIELDS);
-            Assert.That(restRequest.Value.Resource, !Is.StringContaining("fields" + FIELDS));
-            Assert.That(restRequest.Value.Resource, !Is.StringContaining("campaignId=100"));
+            Assert.That(restRequest.Value.Resource, !Does.Contain("fields" + FIELDS));
+            Assert.That(restRequest.Value.Resource, !Does.Contain("campaignId=100"));
         }
 
         [Test]
@@ -67,15 +67,15 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
 
             calls = Client.CallsApi.Send(new List<CallRecipient> { r1, r2 }, 10, FIELDS);
-            Assert.That(restRequest.Value.Resource, !Is.StringContaining("fields" + FIELDS));
-            Assert.That(restRequest.Value.Resource, !Is.StringContaining("campaignId=10"));
-            Assert.That(restRequest.Value.Resource, !Is.StringContaining("defaultLiveMessage=DefaultLiveMessage"));
-            Assert.That(restRequest.Value.Resource, !Is.StringContaining("defaultMachineMessage=DefaultMachineMessage"));
-            Assert.That(restRequest.Value.Resource, !Is.StringContaining("defaultLiveMessageSoundId=1"));
-            Assert.That(restRequest.Value.Resource, !Is.StringContaining("defaultMachineMessageSoundId=1"));
-            Assert.That(restRequest.Value.Resource, !Is.StringContaining("defaultMachineMessageSoundId=1"));
-            Assert.That(restRequest.Value.Resource, !Is.StringContaining("defaultVoice=FRENCHCANADIAN1"));
-            Assert.That(restRequest.Value.Resource, !Is.StringContaining("strictValidation=TRUE"));
+            Assert.That(restRequest.Value.Resource, !Does.Contain("fields" + FIELDS));
+            Assert.That(restRequest.Value.Resource, !Does.Contain("campaignId=10"));
+            Assert.That(restRequest.Value.Resource, !Does.Contain("defaultLiveMessage=DefaultLiveMessage"));
+            Assert.That(restRequest.Value.Resource, !Does.Contain("defaultMachineMessage=DefaultMachineMessage"));
+            Assert.That(restRequest.Value.Resource, !Does.Contain("defaultLiveMessageSoundId=1"));
+            Assert.That(restRequest.Value.Resource, !Does.Contain("defaultMachineMessageSoundId=1"));
+            Assert.That(restRequest.Value.Resource, !Does.Contain("defaultMachineMessageSoundId=1"));
+            Assert.That(restRequest.Value.Resource, !Does.Contain("defaultVoice=FRENCHCANADIAN1"));
+            Assert.That(restRequest.Value.Resource, !Does.Contain("strictValidation=TRUE"));
         }
 
         [Test]
@@ -131,7 +131,7 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             Assert.That(restRequest.Value.Parameters, Has.None.Matches<Parameter>(p => p.Name.Equals("fields")));
             Assert.That(Serializer.Serialize(new ListHolder<CallRecording>(callRecordings)), Is.EqualTo(expectedJson));
             Assert.AreEqual(Method.GET, restRequest.Value.Method);
-            Assert.That(restRequest.Value.Resource, Is.StringContaining("/calls/10/recordings"));
+            Assert.That(restRequest.Value.Resource, Does.Contain("/calls/10/recordings"));
         }
 
         [Test]
@@ -144,7 +144,7 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             Assert.That(Serializer.Serialize(new ListHolder<CallRecording>(callRecordings)), Is.EqualTo(expectedJson));
             Assert.AreEqual(Method.GET, restRequest.Value.Method);
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
-            Assert.That(restRequest.Value.Resource, Is.StringContaining("/calls/10/recordings"));
+            Assert.That(restRequest.Value.Resource, Does.Contain("/calls/10/recordings"));
         }
 
         [Test]
@@ -157,7 +157,7 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             Assert.That(Serializer.Serialize(callRecording), Is.EqualTo(expectedJson));
             Assert.AreEqual(Method.GET, restRequest.Value.Method);
             Assert.That(restRequest.Value.Parameters, Has.None.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
-            Assert.That(restRequest.Value.Resource, Is.StringContaining("/10/recordings/testName"));
+            Assert.That(restRequest.Value.Resource, Does.Contain("/10/recordings/testName"));
         }
 
         [Test]
@@ -172,7 +172,7 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             Assert.That(Serializer.Serialize(callRecording), Is.EqualTo(expectedJson));
             Assert.AreEqual(Method.GET, restRequest.Value.Method);
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
-            Assert.That(restRequest.Value.Resource, Is.StringContaining("/calls/10/recordings/testName"));
+            Assert.That(restRequest.Value.Resource, Does.Contain("/calls/10/recordings/testName"));
         }
 
         [Test]
@@ -205,7 +205,7 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             Assert.That(restRequest.Value.Parameters, Has.None.Matches<Parameter>(p => p.Name.Equals("fields")));
             Assert.That(Serializer.Serialize(callRecording), Is.EqualTo(expectedJson));
             Assert.AreEqual(Method.GET, restRequest.Value.Method);
-            Assert.That(restRequest.Value.Resource, Is.StringContaining("/calls/recordings/10"));
+            Assert.That(restRequest.Value.Resource, Does.Contain("/calls/recordings/10"));
         }
 
         [Test]
@@ -217,7 +217,7 @@ namespace CallfireApiClient.Tests.Api.CallsTexts
             CallRecording callRecording = Client.CallsApi.GetCallRecording(10, FIELDS);
             Assert.That(Serializer.Serialize(callRecording), Is.EqualTo(expectedJson));
             Assert.AreEqual(Method.GET, restRequest.Value.Method);
-            Assert.That(restRequest.Value.Resource, Is.StringContaining("/calls/recordings/10"));
+            Assert.That(restRequest.Value.Resource, Does.Contain("/calls/recordings/10"));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
         }
     }
