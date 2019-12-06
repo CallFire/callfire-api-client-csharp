@@ -1,7 +1,6 @@
 using System;
 using RestSharp;
 
-
 namespace CallfireApiClient
 {
     /// <summary>

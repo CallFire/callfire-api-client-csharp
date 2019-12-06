@@ -151,7 +151,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
             var texts = Client.TextBroadcastsApi.AddRecipients((long)id, recipients, null, true);
             Console.WriteLine(texts);
             Assert.AreEqual(2, texts.Count);
-            Assert.That(texts[0].Message, Is.StringStarting("test_msg"));
+            Assert.That(texts[0].Message, Does.StartWith("test_msg"));
 
             // get batches
             var getBatchesRequest = new GetByIdRequest { Id = id };

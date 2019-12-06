@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace CallfireApiClient.IntegrationTests.Api
 {
-    [TestFixture, Ignore]
+    [TestFixture, Ignore("proxy not configured on CI servers")]
     public class ProxyIntegrationTest
     {
         [Test]

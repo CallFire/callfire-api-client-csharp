@@ -36,7 +36,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
         public void TestUploadSoundAndDeleteIt()
         {
             String soundName = "mp3_test_" + DateTime.Now.ToString();
-            string mp3FilePath = "Resources/File-examples/train1.mp3";
+            string mp3FilePath = GetFullPath("/Resources/File-examples/train1.mp3");
             CampaignSound campaignSound = Client.CampaignSoundsApi.UploadAndGetSoundDetails(mp3FilePath, soundName);
             Assert.NotNull(campaignSound.Id);
 
@@ -52,7 +52,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
         public void TestUploadSoundWithFileDataAndDeleteIt()
         {
             String soundName = "mp3_test_" + DateTime.Now.ToString();
-            string mp3FilePath = "Resources/File-examples/train1.mp3";
+            string mp3FilePath = GetFullPath("/Resources/File-examples/train1.mp3");
             CampaignSound campaignSound = Client.CampaignSoundsApi.UploadAndGetSoundDetails(File.ReadAllBytes(mp3FilePath), soundName);
             Assert.NotNull(campaignSound.Id);
 
@@ -88,8 +88,8 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
         {
             String soundName = "mp3_test_" + DateTime.Now.ToString();
 
-            string mp3FilePath = "Resources/File-examples/train1.mp3";
-            string wavFilePath = "Resources/File-examples/train1.wav";
+            string mp3FilePath = GetFullPath("/Resources/File-examples/train1.mp3");
+            string wavFilePath = GetFullPath("/Resources/File-examples/train1.wav");
             ResourceId mp3ResourceId = Client.CampaignSoundsApi.Upload(mp3FilePath, soundName);
             ResourceId wavResourceId = Client.CampaignSoundsApi.Upload(wavFilePath);
 
@@ -105,13 +105,13 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
 
             // get mp3
             MemoryStream ms = (MemoryStream)Client.CampaignSoundsApi.GetMp3(mp3ResourceId.Id);
-            string existingFilePath = Path.GetFullPath("Resources/File-examples/train1.mp3");
+            string existingFilePath = GetFullPath("/Resources/File-examples/train1.mp3");
             string pathToSaveNewFile = existingFilePath.Replace("train.mp3", "mp3_sound.mp3");
             File.WriteAllBytes(pathToSaveNewFile, ms.ToArray());
 
             // get wav
             ms = (MemoryStream)Client.CampaignSoundsApi.GetWav(wavResourceId.Id);
-            existingFilePath = Path.GetFullPath("Resources/File-examples/train1.wav");
+            existingFilePath = GetFullPath("/Resources/File-examples/train1.wav");
             pathToSaveNewFile = existingFilePath.Replace("train.wav", "wav_sound.wav");
             File.WriteAllBytes(pathToSaveNewFile, ms.ToArray());
 

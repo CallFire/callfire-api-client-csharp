@@ -49,8 +49,8 @@ namespace CallfireApiClient.Tests.Api.Contacts
         public void GetByNullNumberParam()
         {
             var ex = Assert.Throws<ArgumentNullException>(() => Client.DncApi.Get(null));
-            Assert.That(ex.Message, Is.StringContaining("Value cannot be null"));
-            Assert.That(ex.Message, Is.StringContaining("Parameter name: number"));
+            Assert.That(ex.Message, Does.Contain("Value cannot be null"));
+            Assert.That(ex.Message, Does.Contain("Parameter name: number"));
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace CallfireApiClient.Tests.Api.Contacts
             var contact = Client.DncApi.Get("12135551188");
             Assert.AreEqual(Method.GET, restRequest.Value.Method);
             Assert.That(Serializer.Serialize(contact), Is.EqualTo(expectedJson));
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/12135551188"));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/12135551188"));
         }
 
         [Test]
@@ -74,8 +74,8 @@ namespace CallfireApiClient.Tests.Api.Contacts
                 Text = false
             };
             var ex = Assert.Throws<ArgumentNullException>(() => Client.DncApi.Update(updRequest));
-            Assert.That(ex.Message, Is.StringContaining("Value cannot be null"));
-            Assert.That(ex.Message, Is.StringContaining("Parameter name: number"));
+            Assert.That(ex.Message, Does.Contain("Value cannot be null"));
+            Assert.That(ex.Message, Does.Contain("Parameter name: number"));
         }
 
         [Test]
@@ -95,7 +95,7 @@ namespace CallfireApiClient.Tests.Api.Contacts
             Assert.AreEqual(Method.PUT, restRequest.Value.Method);
             var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
             Assert.AreEqual(Serializer.Serialize(requestBodyParam.Value), requestJson);
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/100500"));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/100500"));
         }
 
         [Test]
@@ -122,8 +122,8 @@ namespace CallfireApiClient.Tests.Api.Contacts
         public void DeleteByNullNumberParam()
         {
             var ex = Assert.Throws<ArgumentNullException>(() => Client.DncApi.Delete(null));
-            Assert.That(ex.Message, Is.StringContaining("Value cannot be null"));
-            Assert.That(ex.Message, Is.StringContaining("Parameter name: number"));
+            Assert.That(ex.Message, Does.Contain("Value cannot be null"));
+            Assert.That(ex.Message, Does.Contain("Parameter name: number"));
         }
 
         [Test]
@@ -133,15 +133,15 @@ namespace CallfireApiClient.Tests.Api.Contacts
             Client.DncApi.Delete("100500");
 
             Assert.AreEqual(Method.DELETE, restRequest.Value.Method);
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/100500"));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/100500"));
         }
 
         [Test]
         public void DeleteDncsFromSourceByNullSourceParam()
         {
             var ex = Assert.Throws<ArgumentNullException>(() => Client.DncApi.DeleteDncsFromSource(null));
-            Assert.That(ex.Message, Is.StringContaining("Value cannot be null"));
-            Assert.That(ex.Message, Is.StringContaining("Parameter name: source"));
+            Assert.That(ex.Message, Does.Contain("Value cannot be null"));
+            Assert.That(ex.Message, Does.Contain("Parameter name: source"));
         }
 
         [Test]
@@ -151,7 +151,7 @@ namespace CallfireApiClient.Tests.Api.Contacts
             Client.DncApi.DeleteDncsFromSource("testSource");
 
             Assert.AreEqual(Method.DELETE, restRequest.Value.Method);
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/testSource"));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/testSource"));
         }
 
         [Test]
@@ -172,7 +172,7 @@ namespace CallfireApiClient.Tests.Api.Contacts
             Assert.NotNull(dncs);
             Assert.That(Serializer.Serialize(new ListHolder<UniversalDnc>(dncs)), Is.EqualTo(expectedJson));
             Assert.AreEqual(Method.GET, restRequest.Value.Method);
-            Assert.That(restRequest.Value.Resource, Is.StringEnding("/12135551188"));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/12135551188"));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fromNumber") && p.Value.Equals("18442800143")));
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
          }

@@ -1,5 +1,9 @@
 Callfire API client Changelog
 =============================
+Version 1.1.29 - May 29 2019
+- dependecies upgraded (Nunit to v3)
+- added allowedVersions for dependencies
+
 Version 1.1.28 - March 06 2019
 - added date interval filtering parameters to broadcasts lookup
 
