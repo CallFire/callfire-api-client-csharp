@@ -11,20 +11,12 @@ namespace CallfireApiClient.IntegrationTests.Api.Keywords
         [Test]
         public void FindKeywords()
         {
-            string KW1 = "TEST1";
-            string KW2 = "TEST2";
+            string KW = "TEST_KEYWORD";
 
-            IList<string> keywordsNames = new List<string> { KW1, KW2 };
-            var keywords = Client.KeywordsApi.Find(keywordsNames);
+            var keywords = Client.KeywordsApi.Find(new List<string> { KW });
 
-            foreach (Keyword keyword in keywords)
-            {
-                Console.WriteLine(keyword.ToString());
-            }
-
-            Assert.AreEqual(2, keywords.Count);
-            Assert.AreEqual(KW1, keywords[0].KeywordName);
-            Assert.AreEqual(KW2, keywords[1].KeywordName);
+            Assert.AreEqual(1, keywords.Count);
+            Assert.AreEqual(KW, keywords[0].KeywordName);
         }
 
         [Test]

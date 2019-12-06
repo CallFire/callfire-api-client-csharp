@@ -183,6 +183,53 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
             Batch updatedBatch = Client.BatchesApi.Get(addedBatchId.Id);
             Assert.False((bool)updatedBatch.Enabled);
         }
+
+        [Test]
+        public void ToggleRecipientsStatus()
+        {
+            var broadcast = new TextBroadcast
+            {
+                Name = "text_broadcast",
+                BigMessageStrategy = BigMessageStrategy.SEND_MULTIPLE,
+                Message = "test_msg",
+                Recipients = new List<TextRecipient>
+                {
+                    new TextRecipient { PhoneNumber = "12132212384" },
+                    new TextRecipient { PhoneNumber = "12132212385" }
+                }
+            };
+            var id = Client.TextBroadcastsApi.Create(broadcast, false, false);
+
+            var getTextsRequest = new GetByIdRequest { Id = id.Id };
+            var texts = Client.TextBroadcastsApi.GetTexts(getTextsRequest);
+            Assert.That(texts.Items, Is.Not.Empty);
+            foreach (Text c in texts.Items)
+            {
+                Assert.AreEqual(StateType.READY, c.State);
+            }
+
+            var recipients = new List<Recipient>
+            {
+                new Recipient { PhoneNumber = "12132212384" },
+                new Recipient { PhoneNumber = "12132212385" }
+            };
+
+            Client.TextBroadcastsApi.ToggleRecipientsStatus(id.Id, recipients, false);
+
+            texts = Client.TextBroadcastsApi.GetTexts(getTextsRequest);
+            foreach (Text c in texts.Items)
+            {
+                Assert.AreEqual(StateType.DISABLED, c.State);
+            }
+
+            Client.TextBroadcastsApi.ToggleRecipientsStatus(id.Id, recipients, true);
+
+            texts = Client.TextBroadcastsApi.GetTexts(getTextsRequest);
+            foreach (Text c in texts.Items)
+            {
+                Assert.AreEqual(StateType.READY, c.State);
+            }
+        }
     }
 }
 

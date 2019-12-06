@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using CallfireApiClient.Api.Campaigns.Model.Request;
 using CallfireApiClient.Api.Common.Model.Request;
 using CallfireApiClient.Api.Common.Model;
+using CallfireApiClient.Api.CallsTexts.Model;
 
 namespace CallfireApiClient.IntegrationTests.Api.Campaigns
 {
@@ -24,10 +25,10 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
                     MachineSoundText = "This is an answering machine text to speech recording",
                     MachineSoundTextVoice = Voice.MALE1
                 },
-                Recipients = new List<Recipient>
+                Recipients = new List<CallRecipient>
                 {
-                    new Recipient { PhoneNumber = "12132212384" },
-                    new Recipient { PhoneNumber = "12132212385" }
+                    new CallRecipient { PhoneNumber = "12132212384" },
+                    new CallRecipient { PhoneNumber = "12132212385" }
                 },
                 ResumeNextDay = true
             };
@@ -56,10 +57,10 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
             {
                 Name = "ivr_broadcast1",
                 DialplanXml = "<dialplan name=\"Root\"></dialplan>",
-                Recipients = new List<Recipient>
+                Recipients = new List<CallRecipient>
                 {
-                    new Recipient { PhoneNumber = "12132212384" },
-                    new Recipient { PhoneNumber = "12132212385" }
+                    new CallRecipient { PhoneNumber = "12132212384" },
+                    new CallRecipient { PhoneNumber = "12132212385" }
                 }
             };
             var id = Client.CallBroadcastsApi.Create(broadcast, true);
@@ -91,10 +92,10 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
                     MachineSoundText = "This is an answering machine text to speech recording",
                     MachineSoundTextVoice = Voice.MALE1
                 },
-                Recipients = new List<Recipient>
+                Recipients = new List<CallRecipient>
                 {
-                    new Recipient { PhoneNumber = "12132041238" },
-                    new Recipient { PhoneNumber = "14246525473" }
+                    new CallRecipient { PhoneNumber = "12132041238" },
+                    new CallRecipient { PhoneNumber = "14246525473" }
                 }
             };
             var id = Client.CallBroadcastsApi.Create(broadcast, false);
@@ -130,10 +131,10 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
                     MachineSoundText = "This is an answering machine text to speech recording",
                     MachineSoundTextVoice = Voice.MALE1
                 },
-                Recipients = new List<Recipient>
+                Recipients = new List<CallRecipient>
                 {
-                    new Recipient { PhoneNumber = "12132041238" },
-                    new Recipient { PhoneNumber = "14246525473" }
+                    new CallRecipient { PhoneNumber = "12132041238" },
+                    new CallRecipient { PhoneNumber = "14246525473" }
                 }
             };
             var id = Client.CallBroadcastsApi.Create(broadcast, false);
@@ -203,6 +204,61 @@ namespace CallfireApiClient.IntegrationTests.Api.Campaigns
 
             var addedBatch = Client.BatchesApi.Get(addedBatchId.Id);
             Assert.AreEqual(addedBatch.BroadcastId, id);
+        }
+
+        [Test]
+        public void ToggleRecipientsStatus()
+        {
+            var broadcast = new CallBroadcast
+            {
+                Name = "call_broadcast1",
+                AnsweringMachineConfig = AnsweringMachineConfig.AM_AND_LIVE,
+                Sounds = new CallBroadcastSounds
+                {
+                    LiveSoundText = "Hello! This is a live answer text to speech recording",
+                    LiveSoundTextVoice = Voice.MALE1,
+                    MachineSoundText = "This is an answering machine text to speech recording",
+                    MachineSoundTextVoice = Voice.MALE1
+                },
+                Recipients = new List<CallRecipient>
+                {
+                    new CallRecipient { PhoneNumber = "12132212384" },
+                    new CallRecipient { PhoneNumber = "12132212385" }
+                },
+                ResumeNextDay = true
+            };
+            var id = Client.CallBroadcastsApi.Create(broadcast, false, false);
+            System.Console.WriteLine("broadcast id: " + id);
+
+            var getCallsRequest = new GetByIdRequest { Id = id.Id };
+            var calls = Client.CallBroadcastsApi.GetCalls(getCallsRequest);
+            Assert.That(calls.Items, Is.Not.Empty);
+            foreach (Call c in calls.Items)
+            {
+                Assert.AreEqual(StateType.READY, c.State);
+            }
+
+            var recipients = new List<Recipient>
+            {
+                new Recipient { PhoneNumber = "12132212384" },
+                new Recipient { PhoneNumber = "12132212385" }
+            };
+
+            Client.CallBroadcastsApi.ToggleRecipientsStatus(id.Id, recipients, false);
+
+            calls = Client.CallBroadcastsApi.GetCalls(getCallsRequest);
+            foreach (Call c in calls.Items)
+            {
+                Assert.AreEqual(StateType.DISABLED, c.State);
+            }
+
+            Client.CallBroadcastsApi.ToggleRecipientsStatus(id.Id, recipients, true);
+
+            calls = Client.CallBroadcastsApi.GetCalls(getCallsRequest);
+            foreach (Call c in calls.Items)
+            {
+                Assert.AreEqual(StateType.READY, c.State);
+            }
         }
     }
 }

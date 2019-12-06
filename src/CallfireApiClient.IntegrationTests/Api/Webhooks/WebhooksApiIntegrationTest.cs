@@ -32,6 +32,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Webhooks
             {
                 Limit = 30L,
                 Name = "test_name1",
+                Callback = "https://test_callback",
                 Fields = "items(id,callback,name,resource,events,singleUse)"
             };
             var page = api.Find(findRequest);

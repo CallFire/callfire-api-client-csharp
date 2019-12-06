@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CallfireApiClient.Api.CallsTexts.Model;
 
 namespace CallfireApiClient.Api.Campaigns.Model
 {
@@ -7,7 +8,7 @@ namespace CallfireApiClient.Api.Campaigns.Model
     {
         public RetryConfig RetryConfig { get; set; }
 
-        public IList<Recipient> Recipients { get; set; }
+        public IList<CallRecipient> Recipients { get; set; }
 
         /**
          * IVR xml document describing dialplan. If dialplanXml != null then this is IVR broadcast
