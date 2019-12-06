@@ -1,5 +1,8 @@
 Callfire API client Changelog
 =============================
+Version 1.1.30 - Dec 06 2019
+- added new toggle recipients status apis support for broadcasts
+
 Version 1.1.29 - May 29 2019
 - dependecies upgraded (Nunit to v3)
 - added allowedVersions for dependencies

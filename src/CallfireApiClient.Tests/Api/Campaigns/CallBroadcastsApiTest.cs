@@ -33,10 +33,10 @@ namespace CallfireApiClient.Tests.Api.Campaigns
                     MachineSoundText = "This is an answering machine text to speech recording",
                     MachineSoundTextVoice = Voice.MALE1 
                 },
-                Recipients = new List<Recipient>
+                Recipients = new List<CallRecipient>
                 {
-                    new Recipient { PhoneNumber = "13233832214" },
-                    new Recipient { PhoneNumber = "13233832215" },
+                    new CallRecipient { PhoneNumber = "13233832214" },
+                    new CallRecipient { PhoneNumber = "13233832215" },
                 },
                 ResumeNextDay = true
             };
@@ -62,10 +62,10 @@ namespace CallfireApiClient.Tests.Api.Campaigns
                 Name = "Example API IVR",
                 FromNumber = "12135551189",
                 DialplanXml = "<dialplan name=\"Root\"></dialplan>",
-                Recipients = new List<Recipient>
+                Recipients = new List<CallRecipient>
                 {
-                    new Recipient { PhoneNumber = "13233832214" },
-                    new Recipient { PhoneNumber = "13233832215" },
+                    new CallRecipient { PhoneNumber = "13233832214" },
+                    new CallRecipient { PhoneNumber = "13233832215" },
                 }
             };
             var id = Client.CallBroadcastsApi.Create(callBroadcast, true);
@@ -361,6 +361,26 @@ namespace CallfireApiClient.Tests.Api.Campaigns
 
             Client.CallBroadcastsApi.AddRecipients(15, recipients, FIELDS);
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
+        }
+
+        [Test]
+        public void ToggleRecipientsStatus()
+        {
+            var requestJson = GetJsonPayload("/campaigns/callBroadcastsApi/request/addRecipients.json");
+            var restRequest = MockRestResponse();
+
+            var recipients = new List<Recipient>
+            {
+                new Recipient { PhoneNumber = "12135551100" },
+                new Recipient { PhoneNumber = "12135551101" },
+            };
+            Client.CallBroadcastsApi.ToggleRecipientsStatus(15, recipients, true);
+
+            Assert.AreEqual(Method.POST, restRequest.Value.Method);
+            var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/15/toggleRecipientsStatus"));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("enable") && p.Value.Equals("True")));
         }
     }
 }

@@ -25,7 +25,7 @@ namespace CallfireApiClient.IntegrationTests.Api.Account
             var request = new NumberPurchaseRequest { Numbers = new List<string> { "12132212289" }, Zipcode = "90401", LocalCount = 2 };
             Assert.That(() => Client.OrdersApi.OrderNumbers(request), 
                 Throws.TypeOf<BadRequestException>().With.Property("ApiErrorMessage").With.Property("HttpStatusCode").EqualTo(400)
-                .And.Property("Message").StringContaining("no valid credit card on file"));
+                .And.Property("Message").StringContaining("unavailable numbers: 12132212289"));
             Assert.Throws<ResourceNotFoundException>(() => Client.OrdersApi.GetOrder(123));
         }
     }

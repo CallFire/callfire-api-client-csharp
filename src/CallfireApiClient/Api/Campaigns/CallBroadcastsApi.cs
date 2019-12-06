@@ -20,6 +20,7 @@ namespace CallfireApiClient.Api.Campaigns
         private const string CB_ITEM_STATS_PATH = "/calls/broadcasts/{}/stats";
         private const string CB_ITEM_RECIPIENTS_PATH = "/calls/broadcasts/{}/recipients";
         private const string CB_ITEM_RECIPIENTS_FILE_PATH = "/calls/broadcasts/{}/recipients-file";
+        private const string CB_ITEM_TOGGLE_RECIPIENTS_STATUS_PATH = "/calls/broadcasts/{}/toggleRecipientsStatus";
 
         private readonly RestApiClient Client;
 
@@ -285,6 +286,29 @@ namespace CallfireApiClient.Api.Campaigns
             ClientUtils.AddQueryParamIfSet("strictValidation", strictValidation, queryParams);
             string path = CB_ITEM_RECIPIENTS_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString());
             return Client.Post<ListHolder<Call>>(path, recipients, queryParams).Items;
+        }
+
+        /// <summary>
+        /// Use this API to toggle not dialed recipients in created call broadcast. Post a list of Recipient
+        /// objects which will be immediately disabled/enabled if still not sent. Recipients may be added
+        /// as a list of contact ids, or list of numbers. If recipients array contains already dialed contact - it would be ignored.
+        /// </summary>
+        /// <param name="id">id of call broadcast</param>
+        /// <param name="recipients">recipients to add</param>
+        /// <param name="enable">flag to indicate action (true is enabling and vice versa)</param>
+        /// <exception cref="BadRequestException">          in case HTTP response code is 400 - Bad request, the request was formatted improperly.</exception>
+        /// <exception cref="UnauthorizedException">        in case HTTP response code is 401 - Unauthorized, API Key missing or invalid.</exception>
+        /// <exception cref="AccessForbiddenException">     in case HTTP response code is 403 - Forbidden, insufficient permissions.</exception>
+        /// <exception cref="ResourceNotFoundException">    in case HTTP response code is 404 - NOT FOUND, the resource requested does not exist.</exception>
+        /// <exception cref="InternalServerErrorException"> in case HTTP response code is 500 - Internal Server Error.</exception>
+        /// <exception cref="CallfireApiException">         in case HTTP response code is something different from codes listed above.</exception>
+        /// <exception cref="CallfireClientException">      in case error has occurred in client.</exception>
+        public void ToggleRecipientsStatus(long id, IList<Recipient> recipients, bool enable = false)
+        {
+            var queryParams = new List<KeyValuePair<string, object>>(1);
+            ClientUtils.AddQueryParamIfSet("enable", enable, queryParams);
+            string path = CB_ITEM_TOGGLE_RECIPIENTS_STATUS_PATH.ReplaceFirst(ClientConstants.PLACEHOLDER, id.ToString());
+            Client.Post<object>(path, recipients, queryParams);
         }
     }
 }

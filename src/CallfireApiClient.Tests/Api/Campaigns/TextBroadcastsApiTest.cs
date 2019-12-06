@@ -290,6 +290,26 @@ namespace CallfireApiClient.Tests.Api.Campaigns
             Client.TextBroadcastsApi.AddRecipients(15, recipients, FIELDS);
             Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("fields") && p.Value.Equals(FIELDS)));
         }
+
+        [Test]
+        public void ToggleRecipientsStatus()
+        {
+            var requestJson = GetJsonPayload("/campaigns/textBroadcastsApi/request/addRecipients.json");
+            var restRequest = MockRestResponse();
+
+            var recipients = new List<Recipient>
+            {
+                new Recipient { PhoneNumber = "12135551100" },
+                new Recipient { PhoneNumber = "12135551101" },
+            };
+            Client.TextBroadcastsApi.ToggleRecipientsStatus(15, recipients, false);
+
+            Assert.AreEqual(Method.POST, restRequest.Value.Method);
+            var requestBodyParam = restRequest.Value.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
+            Assert.That(Serializer.Serialize(requestBodyParam.Value), Is.EqualTo(requestJson));
+            Assert.That(restRequest.Value.Resource, Does.EndWith("/15/toggleRecipientsStatus"));
+            Assert.That(restRequest.Value.Parameters, Has.Some.Matches<Parameter>(p => p.Name.Equals("enable") && p.Value.Equals("False")));
+        }
     }
 }
 
